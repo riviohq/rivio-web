@@ -1,0 +1,44 @@
+<svg
+  width="1024"
+  height="1024"
+  viewBox="0 0 1024 1024"
+  xmlns="http://www.w3.org/2000/svg"
+>
+
+  <!-- Background -->
+  <rect
+    width="1024"
+    height="1024"
+    rx="220"
+    fill="#000000"
+  />
+
+  <!-- RIVIO -->
+  <text
+    x="512"
+    y="420"
+    text-anchor="middle"
+    font-size="270"
+    font-weight="800"
+    letter-spacing="6"
+    font-family="Manrope, Inter, Arial, sans-serif"
+    fill="#D4AF37"
+  >
+    RIVIO
+  </text>
+
+  <!-- PARTNERS (ALL CAPS, starts before first I) -->
+  <text
+    x="380"
+    y="600"
+    text-anchor="start"
+    font-size="96"
+    font-weight="600"
+    letter-spacing="4"
+    font-family="Manrope, Inter, Arial, sans-serif"
+    fill="#D4AF37"
+  >
+    PARTNERS
+  </text>
+
+</svg>
