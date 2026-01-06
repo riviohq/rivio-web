@@ -69,10 +69,10 @@ export default function CitySearch() {
             animate={isInView ? { opacity: 1, scale: 1 } : {}}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            Find Venues <span className="bg-gradient-to-r from-emerald-400 to-gold-400 bg-clip-text text-transparent">Near You</span>
+            Expanding Across <span className="bg-gradient-to-r from-emerald-400 to-gold-400 bg-clip-text text-transparent">India</span>
           </motion.h2>
           <p className="text-xl md:text-2xl text-gray-200 font-medium">
-            Search for gyms, yoga studios, and wellness centers in your city
+            Our network spans major metros and emerging cities, bringing premium fitness access to millions
           </p>
         </motion.div>
 

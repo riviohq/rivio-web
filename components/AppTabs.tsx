@@ -13,21 +13,21 @@ export default function AppTabs() {
   const isInView = useInView(ref, { once: true, margin: '0px' })
 
   const userFeatures = [
-    'Pay-per-day access to any venue',
-    'Purchase flexible passes (weekly, monthly, yearly)',
-    'Build workout streaks and compete on leaderboards',
-    'Track progress and unlock achievements',
-    'Review and rate venues',
-    'Explore diverse fitness options',
+    'Pay-per-day access to premium venues nationwide',
+    'Flexible pass options: daily, weekly, monthly, or annual',
+    'Gamified experience with streaks, leaderboards, and achievements',
+    'Comprehensive progress tracking and analytics',
+    'Community-driven reviews and ratings system',
+    'Access to diverse fitness modalities: gyms, yoga, sports, wellness',
   ]
 
   const partnerFeatures = [
-    'Get unique QR codes for check-ins',
-    'Earn from pay-per-day users and pass purchases',
-    'Track visits and earnings in real-time',
-    'Manage multiple locations from one dashboard',
-    'Create pass groups for multiple venues',
-    'Respond to reviews and grow your business',
+    'Unique QR code system for seamless check-ins',
+    'Multiple revenue streams: pay-per-day and pass sales',
+    'Real-time analytics dashboard with actionable insights',
+    'Multi-location management from a single platform',
+    'Advanced pass group management for venue networks',
+    'Customer engagement tools and review management',
   ]
 
   return (
@@ -82,7 +82,7 @@ export default function AppTabs() {
             Our <span className="bg-gradient-to-r from-emerald-400 to-gold-400 bg-clip-text text-transparent">Apps</span>
           </motion.h2>
           <p className="text-xl md:text-2xl text-gray-200 font-medium">
-            Choose the app that fits your needs
+            Two powerful platforms. One unified ecosystem.
           </p>
         </motion.div>
 
@@ -142,11 +142,11 @@ export default function AppTabs() {
                     />
                     <div>
                       <h3 className="text-3xl font-bold text-white">RIVIO User App</h3>
-                      <p className="text-gray-200 font-medium">For Fitness Enthusiasts</p>
+                      <p className="text-gray-200 font-medium">Your Fitness Journey, Your Way</p>
                     </div>
                   </div>
-                  <p className="text-lg text-gray-200 mb-6 font-medium">
-                    Access gyms, yoga studios, and wellness centers with flexible pay-per-day or pass options. Build streaks, compete on leaderboards, and make fitness fun!
+                  <p className="text-lg text-gray-200 mb-6 font-medium leading-relaxed">
+                    Experience unprecedented freedom in fitness. Access premium gyms, yoga studios, sports facilities, and wellness centers across India with our revolutionary pay-per-day model. No subscriptions, no commitments—just pure flexibility. Build streaks, compete globally, and unlock achievements as you transform your fitness journey.
                   </p>
                   <ul className="space-y-3 mb-8">
                     {userFeatures.map((feature, index) => (
@@ -220,11 +220,11 @@ export default function AppTabs() {
                     />
                     <div>
                       <h3 className="text-3xl font-bold text-white">RIVIO Partners</h3>
-                      <p className="text-gray-200 font-medium">For Business Owners</p>
+                      <p className="text-gray-200 font-medium">Grow Your Fitness Business</p>
                     </div>
                   </div>
-                  <p className="text-lg text-gray-200 mb-6 font-medium">
-                    Join RIVIO's network and grow your fitness business. Maximize revenue, track everything in real-time, and manage multiple locations from one dashboard.
+                  <p className="text-lg text-gray-200 mb-6 font-medium leading-relaxed">
+                    Join India's fastest-growing fitness network and unlock new revenue streams. Our platform helps you maximize facility utilization, reduce customer acquisition costs, and increase revenue through pay-per-day users and flexible pass sales. Manage multiple locations, track performance in real-time, and scale your business with data-driven insights.
                   </p>
                   <ul className="space-y-3 mb-8">
                     {partnerFeatures.map((feature, index) => (

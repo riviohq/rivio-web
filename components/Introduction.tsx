@@ -12,23 +12,23 @@ export default function Introduction() {
   const features = [
     {
       icon: Zap,
-      title: 'Pay-Per-Day Revolution',
-      description: 'No more multiple subscriptions! Pay only for the days you use. Try a gym today, yoga tomorrow, wellness center next week.',
+      title: 'The Pay-Per-Day Revolution',
+      description: 'We\'ve eliminated the subscription trap. Users pay only for days they actually use, unlocking unprecedented flexibility. Try a premium gym today, a yoga studio tomorrow, and a wellness center next week—all without long-term commitments.',
     },
     {
       icon: Users,
-      title: 'Nationwide Network',
-      description: 'Access gyms, studios, and wellness centers across cities and villages. Your fitness journey isn\'t limited to one location.',
+      title: 'Scalable Network Effect',
+      description: 'Our platform creates a powerful network effect: more venues attract more users, and more users attract more venues. We\'re building India\'s largest fitness ecosystem, connecting millions of fitness enthusiasts with thousands of premium venues.',
     },
     {
       icon: Globe,
-      title: 'Instant Access',
-      description: 'Walk into any partner venue and start working out immediately. No waiting, no paperwork, no long-term commitments.',
+      title: 'Frictionless Experience',
+      description: 'QR code check-ins, instant payments, and seamless access. We\'ve removed every friction point between users and their fitness goals. Walk in, scan, work out—that\'s it. No paperwork, no waiting, no hassle.',
     },
     {
       icon: Shield,
-      title: 'Secure & Transparent',
-      description: 'Bank-level security for all transactions. Complete transparency in pricing, payments, and progress tracking.',
+      title: 'Enterprise-Grade Security',
+      description: 'Bank-level encryption, secure payment processing, and comprehensive data protection. We\'ve built trust into every transaction, ensuring both users and partners can operate with complete confidence.',
     },
   ]
 
@@ -82,10 +82,10 @@ export default function Introduction() {
             transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
             style={{ willChange: 'transform, opacity' }}
           >
-            Why <span className="bg-gradient-to-r from-emerald-400 to-gold-400 bg-clip-text text-transparent">RIVIO</span>?
+            Our <span className="bg-gradient-to-r from-emerald-400 to-gold-400 bg-clip-text text-transparent">Vision</span>
           </motion.h2>
           <p className="text-xl md:text-2xl text-gray-200 max-w-3xl mx-auto font-medium">
-            The fitness platform that solves real problems and delivers real value
+            Democratizing fitness access by eliminating barriers and creating a sustainable ecosystem for users and partners
           </p>
         </motion.div>
 
@@ -155,13 +155,16 @@ export default function Introduction() {
           </div>
           <div className="relative z-10">
             <h3 className="text-3xl md:text-4xl font-bold mb-6">
-              The Problem We Solved
+              The $50 Billion Problem We're Solving
             </h3>
             <p className="text-lg md:text-xl mb-6 text-white leading-relaxed font-medium">
-              The fitness industry has long been constrained by rigid membership models that force consumers to commit to single venues with long-term subscriptions. Why buy a gym membership when you want yoga today, a wellness center tomorrow, and a different gym next week?
+              The global fitness industry is broken. Consumers are locked into expensive, inflexible memberships they rarely use. Studies show 67% of gym memberships go unused, wasting billions annually. Meanwhile, fitness venues struggle with low utilization rates and high customer acquisition costs.
+            </p>
+            <p className="text-lg md:text-xl mb-6 text-white leading-relaxed font-medium">
+              <strong className="text-emerald-300">RIVIO disrupts this model entirely.</strong> Our pay-per-day platform eliminates waste for users while maximizing revenue for partners. Users access premium facilities only when needed, and venues fill capacity that would otherwise sit empty. It's a win-win model that creates sustainable value for everyone.
             </p>
             <p className="text-lg md:text-xl text-white leading-relaxed font-medium">
-              RIVIO solves this fundamental problem with our pay-per-day concept. Instead of multiple subscriptions, users can access any gym, yoga studio, or wellness center for just the days they need—no long-term commitments, no wasted money.
+              We're not just another fitness app—we're redefining how people access fitness and how venues monetize their facilities. With our proven model, we're positioned to capture significant market share in India's rapidly growing fitness industry.
             </p>
           </div>
         </motion.div>

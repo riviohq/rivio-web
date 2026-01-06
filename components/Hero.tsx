@@ -174,7 +174,7 @@ export default function Hero() {
                 transition={{ duration: 0.6, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
                 className="block gpu-accelerated"
               >
-                Universal Fitness
+                Revolutionizing Fitness
               </motion.span>
               <br />
               <motion.span 
@@ -188,7 +188,7 @@ export default function Hero() {
                   willChange: 'transform, opacity',
                 }}
               >
-                Access Platform
+                Access for Everyone
               </motion.span>
             </motion.h1>
             
@@ -202,7 +202,7 @@ export default function Hero() {
                 willChange: 'transform, opacity',
               }}
             >
-              Pay-per-day fitness access. No multiple subscriptions. Access any gym, yoga studio, or wellness center instantly.
+              The first pay-per-day fitness platform connecting millions of users with thousands of venues. No subscriptions. No commitments. Just pure flexibility.
             </motion.p>
             
             <motion.div
@@ -224,17 +224,17 @@ export default function Hero() {
                   transition={{ duration: 2.5, repeat: Infinity, ease: 'linear' }}
                 />
                 <span className="relative z-10">
-                  Explore Apps
+                  Explore Platform
                 </span>
               </motion.a>
               <motion.a
-                href="#cities"
+                href="#contact"
                 whileHover={{ scale: 1.1, y: -8 }}
                 whileTap={{ scale: 0.95 }}
                 className="px-10 py-5 bg-black/40 border-2 border-emerald-500/60 text-emerald-400 font-bold rounded-full hover:bg-emerald-500/10 hover:border-emerald-400 transition-all text-base backdrop-blur-xl relative overflow-hidden group shadow-lg shadow-emerald-500/20"
               >
                 <span className="relative z-10">
-                  Find Venues
+                  Partner With Us
                 </span>
               </motion.a>
             </motion.div>

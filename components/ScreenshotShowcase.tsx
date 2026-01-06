@@ -1738,8 +1738,8 @@ export default function ScreenshotShowcase() {
 
   const userScreens = [
     {
-      title: 'Home Screen',
-      description: 'Discover nearby gyms, yoga studios, and wellness centers',
+      title: 'Intelligent Discovery',
+      description: 'AI-powered venue discovery with real-time availability and proximity-based recommendations within 100m radius',
       icon: Smartphone,
       color: 'emerald',
       mockup: (
@@ -1747,8 +1747,8 @@ export default function ScreenshotShowcase() {
       ),
     },
     {
-      title: 'Check-In',
-      description: 'Scan QR code and check-in instantly with live animations',
+      title: 'Seamless Check-In',
+      description: 'One-tap QR code scanning with instant verification and automated attendance tracking',
       icon: QrCode,
       color: 'emerald',
       mockup: (
@@ -1756,8 +1756,8 @@ export default function ScreenshotShowcase() {
       ),
     },
     {
-      title: 'Dashboard',
-      description: 'Track your workouts, streaks increasing live, and achievements',
+      title: 'Gamified Engagement',
+      description: 'Real-time streak tracking, global leaderboards, and achievement system driving 3x user retention',
       icon: TrendingUp,
       color: 'emerald',
       mockup: (
@@ -1765,8 +1765,8 @@ export default function ScreenshotShowcase() {
       ),
     },
     {
-      title: 'Wallet',
-      description: 'Watch your balance increase live with real-time transactions',
+      title: 'Smart Wallet System',
+      description: 'Transparent transaction history, instant top-ups, and automated pay-per-day deductions with real-time balance updates',
       icon: Wallet,
       color: 'emerald',
       mockup: (
@@ -1774,8 +1774,8 @@ export default function ScreenshotShowcase() {
       ),
     },
     {
-      title: 'Booking',
-      description: 'Book venues with live booking status and confirmations',
+      title: 'Advanced Booking',
+      description: 'Reserve slots at premium venues with live availability, instant confirmations, and automated reminders',
       icon: Calendar,
       color: 'emerald',
       mockup: (
@@ -1783,8 +1783,8 @@ export default function ScreenshotShowcase() {
       ),
     },
     {
-      title: 'Profile',
-      description: 'View your fitness journey, stats, and leaderboard rank',
+      title: 'Personalized Analytics',
+      description: 'Comprehensive fitness journey tracking with detailed insights, progress metrics, and social rankings',
       icon: Users,
       color: 'emerald',
       mockup: (
@@ -1795,8 +1795,8 @@ export default function ScreenshotShowcase() {
 
   const partnerScreens = [
     {
-      title: 'Dashboard',
-      description: 'View earnings increasing live, check-ins, visits, and analytics in real-time',
+      title: 'Executive Dashboard',
+      description: 'Real-time revenue tracking, visitor analytics, and performance metrics with live updates on earnings and check-ins',
       icon: Building2,
       color: 'gold',
       mockup: (
@@ -1804,8 +1804,8 @@ export default function ScreenshotShowcase() {
       ),
     },
     {
-      title: 'Wallet',
-      description: 'Track earnings increasing live with transaction history and settlements',
+      title: 'Revenue Management',
+      description: 'Automated earnings tracking, instant settlement requests, and comprehensive transaction history with bank-level security',
       icon: Wallet,
       color: 'gold',
       mockup: (
@@ -1813,8 +1813,8 @@ export default function ScreenshotShowcase() {
       ),
     },
     {
-      title: 'Activities',
-      description: 'Monitor all customer check-ins and subscriptions happening live in real-time',
+      title: 'Live Activity Monitor',
+      description: 'Real-time feed of all customer interactions: check-ins, subscriptions, and pass purchases with instant notifications',
       icon: Activity,
       color: 'gold',
       mockup: (
@@ -1822,8 +1822,8 @@ export default function ScreenshotShowcase() {
       ),
     },
     {
-      title: 'QR Management',
-      description: 'Generate and manage QR codes for all your venue locations',
+      title: 'QR Code Infrastructure',
+      description: 'Enterprise-grade QR code generation and management system for seamless check-ins across all venue locations',
       icon: QrCode,
       color: 'gold',
       mockup: (
@@ -1831,8 +1831,8 @@ export default function ScreenshotShowcase() {
       ),
     },
     {
-      title: 'Venue Management',
-      description: 'Manage multiple venues, track visitors, and control status',
+      title: 'Multi-Location Control',
+      description: 'Centralized management platform for multiple venues with real-time visitor tracking and capacity monitoring',
       icon: MapPin,
       color: 'gold',
       mockup: (
@@ -1840,8 +1840,8 @@ export default function ScreenshotShowcase() {
       ),
     },
     {
-      title: 'Analytics',
-      description: 'View detailed revenue reports, peak hours, and performance metrics',
+      title: 'Business Intelligence',
+      description: 'Advanced analytics suite with revenue forecasting, peak hour analysis, and data-driven insights for growth optimization',
       icon: BarChart3,
       color: 'gold',
       mockup: (
@@ -1849,8 +1849,8 @@ export default function ScreenshotShowcase() {
       ),
     },
     {
-      title: 'Customers',
-      description: 'Manage customer database, track visits, and view customer status',
+      title: 'Customer Relationship Management',
+      description: 'Comprehensive customer database with visit history, engagement metrics, and automated retention tools',
       icon: UserCheck,
       color: 'gold',
       mockup: (
@@ -1858,8 +1858,8 @@ export default function ScreenshotShowcase() {
       ),
     },
     {
-      title: 'Subscriptions',
-      description: 'Manage all active subscriptions, track expiring passes, and renewals',
+      title: 'Subscription Lifecycle',
+      description: 'End-to-end subscription management with automated renewals, expiration alerts, and revenue optimization',
       icon: Star,
       color: 'gold',
       mockup: (
@@ -1867,8 +1867,8 @@ export default function ScreenshotShowcase() {
       ),
     },
     {
-      title: 'Business',
-      description: 'Active subscriptions, expiring passes, pricing, and location info',
+      title: 'Business Operations',
+      description: 'Complete business overview with active subscriptions, expiring passes, dynamic pricing, and location management',
       icon: Building2,
       color: 'gold',
       mockup: (
@@ -1886,7 +1886,7 @@ export default function ScreenshotShowcase() {
       {/* Optimized floating cloud background */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {[...Array(4)].map((_, i) => (
-          <motion.div
+        <motion.div
             key={i}
             className="absolute rounded-full blur-3xl opacity-[0.04] gpu-accelerated"
             style={{
@@ -1941,7 +1941,7 @@ export default function ScreenshotShowcase() {
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            See what makes RIVIO special - Live animated app previews
+            Experience the future of fitness access through interactive demonstrations
           </motion.p>
         </motion.div>
 

@@ -93,10 +93,10 @@ export default function ContactUs() {
             animate={isInView ? { opacity: 1, scale: 1 } : {}}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            Get in <span className="bg-gradient-to-r from-emerald-400 to-gold-400 bg-clip-text text-transparent">Touch</span>
+            Partner With <span className="bg-gradient-to-r from-emerald-400 to-gold-400 bg-clip-text text-transparent">Us</span>
           </motion.h2>
           <p className="text-xl md:text-2xl text-gray-200 font-medium">
-            Have questions? We'd love to hear from you
+            Join us in transforming India's fitness landscape. Investors, partners, and venues—let's build the future together
           </p>
         </motion.div>
 
