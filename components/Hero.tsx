@@ -49,7 +49,7 @@ export default function Hero() {
       className="relative min-h-screen flex overflow-hidden bg-black"
       ref={containerRef}
     >
-      {/* Left 50% - Logo with Revolving Animation */}
+      {/* Left 50% - Logo */}
       <div className="w-1/2 relative flex items-center justify-center overflow-hidden bg-gradient-to-br from-black via-gray-950 to-black">
         {/* Subtle background particles for left side */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -103,244 +103,55 @@ export default function Hero() {
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
             className="flex flex-col items-center transform-3d gpu-accelerated"
           >
-            {/* Revolving Sports Icons Around Logo */}
-            <div className="relative w-full h-full flex items-center justify-center mb-8">
-              {/* Main orbit container */}
+            {/* Logo */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.5 }}
+              animate={{ 
+                opacity: 1, 
+                scale: 1,
+                y: [0, -12, 0],
+              }}
+              transition={{ 
+                duration: 0.8, 
+                delay: 0.2,
+                ease: [0.22, 1, 0.36, 1],
+                y: {
+                  duration: 5,
+                  repeat: Infinity,
+                  ease: [0.4, 0, 0.6, 1],
+                }
+              }}
+              className="relative z-10 gpu-accelerated mb-8"
+              style={{ transformStyle: 'preserve-3d', willChange: 'transform' }}
+            >
+              {/* Glow effect behind logo */}
               <motion.div
-                className="absolute"
-                style={{
-                  width: '400px',
-                  height: '400px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
+                className="absolute inset-0 blur-3xl bg-emerald-500/30 rounded-full"
                 animate={{
-                  rotate: 360,
+                  scale: [1, 1.3, 1],
+                  opacity: [0.3, 0.6, 0.3],
                 }}
                 transition={{
-                  duration: 20,
+                  duration: 3,
                   repeat: Infinity,
-                  ease: 'linear',
+                  ease: 'easeInOut',
                 }}
-              >
-                {/* Sports activity icons positioned in circle */}
-                {[
-                  { Icon: Activity, label: 'Gym', color: 'emerald', initialAngle: 0 },
-                  { Icon: Leaf, label: 'Yoga', color: 'emerald', initialAngle: 60 },
-                  { Icon: Target, label: 'Cricket', color: 'gold', initialAngle: 120 },
-                  { Icon: Zap, label: 'Tennis', color: 'emerald', initialAngle: 180 },
-                  { Icon: Droplet, label: 'Swim', color: 'emerald', initialAngle: 240 },
-                  { Icon: Trophy, label: 'Sports', color: 'gold', initialAngle: 300 },
-                ].map(({ Icon, label, color, initialAngle }, index) => {
-                  const radius = 180
-                  
-                  return (
-                    <motion.div
-                      key={label}
-                      className={`absolute w-16 h-16 rounded-full flex items-center justify-center backdrop-blur-xl border-2 ${
-                        color === 'emerald'
-                          ? 'bg-emerald-500/20 border-emerald-400/40 text-emerald-300'
-                          : 'bg-gold-500/20 border-gold-400/40 text-gold-300'
-                      } shadow-2xl gpu-accelerated`}
-                      style={{
-                        left: '50%',
-                        top: '50%',
-                        marginLeft: '-32px',
-                        marginTop: '-32px',
-                        transformOrigin: 'center center',
-                        willChange: 'transform',
-                        boxShadow: `0 0 30px ${color === 'emerald' ? 'rgba(16, 185, 129, 0.4)' : 'rgba(212, 175, 55, 0.4)'}`,
-                      }}
-                      animate={{
-                        x: [
-                          Math.cos((initialAngle * Math.PI) / 180) * radius,
-                          Math.cos(((initialAngle + 360) * Math.PI) / 180) * radius,
-                        ],
-                        y: [
-                          Math.sin((initialAngle * Math.PI) / 180) * radius,
-                          Math.sin(((initialAngle + 360) * Math.PI) / 180) * radius,
-                        ],
-                        scale: [1, 1.15, 1],
-                        opacity: [0.8, 1, 0.8],
-                      }}
-                      transition={{
-                        x: {
-                          duration: 20,
-                          repeat: Infinity,
-                          ease: 'linear',
-                        },
-                        y: {
-                          duration: 20,
-                          repeat: Infinity,
-                          ease: 'linear',
-                        },
-                        scale: {
-                          duration: 2.5 + index * 0.2,
-                          repeat: Infinity,
-                          ease: 'easeInOut',
-                        },
-                        opacity: {
-                          duration: 3 + index * 0.2,
-                          repeat: Infinity,
-                          ease: 'easeInOut',
-                        },
-                      }}
-                    >
-                      <Icon className="w-8 h-8 relative z-10" />
-                      {/* Glow effect */}
-                      <motion.div
-                        className={`absolute inset-0 rounded-full blur-xl ${
-                          color === 'emerald' ? 'bg-emerald-400' : 'bg-gold-400'
-                        }`}
-                        animate={{
-                          opacity: [0, 0.6, 0],
-                          scale: [1, 1.4, 1],
-                        }}
-                        transition={{
-                          duration: 2.5 + index * 0.3,
-                          repeat: Infinity,
-                          ease: 'easeInOut',
-                        }}
-                      />
-                    </motion.div>
-                  )
-                })}
-              </motion.div>
-              
-              {/* Secondary orbit - smaller icons, reverse direction */}
+              />
               <motion.div
-                className="absolute"
-                style={{
-                  width: '450px',
-                  height: '450px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-                animate={{
-                  rotate: -360,
-                }}
-                transition={{
-                  duration: 25,
-                  repeat: Infinity,
-                  ease: 'linear',
-                }}
-              >
-                {[
-                  { Icon: Activity, color: 'emerald', initialAngle: 30, radius: 200 },
-                  { Icon: Leaf, color: 'emerald', initialAngle: 90, radius: 200 },
-                  { Icon: Trophy, color: 'gold', initialAngle: 210, radius: 200 },
-                  { Icon: Droplet, color: 'emerald', initialAngle: 270, radius: 200 },
-                ].map(({ Icon, color, initialAngle, radius }, index) => {
-                  return (
-                    <motion.div
-                      key={`secondary-${initialAngle}`}
-                      className={`absolute w-12 h-12 rounded-full flex items-center justify-center backdrop-blur-xl border ${
-                        color === 'emerald'
-                          ? 'bg-emerald-500/15 border-emerald-400/30 text-emerald-300/70'
-                          : 'bg-gold-500/15 border-gold-400/30 text-gold-300/70'
-                      } shadow-xl gpu-accelerated`}
-                      style={{
-                        left: '50%',
-                        top: '50%',
-                        marginLeft: '-24px',
-                        marginTop: '-24px',
-                        transformOrigin: 'center center',
-                        willChange: 'transform',
-                        boxShadow: `0 0 20px ${color === 'emerald' ? 'rgba(16, 185, 129, 0.3)' : 'rgba(212, 175, 55, 0.3)'}`,
-                      }}
-                      animate={{
-                        x: [
-                          Math.cos((initialAngle * Math.PI) / 180) * radius,
-                          Math.cos(((initialAngle - 360) * Math.PI) / 180) * radius,
-                        ],
-                        y: [
-                          Math.sin((initialAngle * Math.PI) / 180) * radius,
-                          Math.sin(((initialAngle - 360) * Math.PI) / 180) * radius,
-                        ],
-                        scale: [0.9, 1.1, 0.9],
-                        opacity: [0.6, 0.9, 0.6],
-                      }}
-                      transition={{
-                        x: {
-                          duration: 25,
-                          repeat: Infinity,
-                          ease: 'linear',
-                        },
-                        y: {
-                          duration: 25,
-                          repeat: Infinity,
-                          ease: 'linear',
-                        },
-                        scale: {
-                          duration: 2.5 + index * 0.3,
-                          repeat: Infinity,
-                          ease: 'easeInOut',
-                        },
-                        opacity: {
-                          duration: 3 + index * 0.2,
-                          repeat: Infinity,
-                          ease: 'easeInOut',
-                        },
-                      }}
-                    >
-                      <Icon className="w-6 h-6 relative z-10" />
-                    </motion.div>
-                  )
-                })}
-              </motion.div>
-
-              {/* Logo in Center */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.5 }}
-                animate={{ 
-                  opacity: 1, 
-                  scale: 1,
-                  y: [0, -12, 0],
-                }}
-                transition={{ 
-                  duration: 0.8, 
-                  delay: 0.2,
-                  ease: [0.22, 1, 0.36, 1],
-                  y: {
-                    duration: 5,
-                    repeat: Infinity,
-                    ease: [0.4, 0, 0.6, 1],
-                  }
-                }}
+                whileHover={{ scale: 1.1 }}
+                transition={{ type: 'spring', stiffness: 400, damping: 25 }}
                 className="relative z-10 gpu-accelerated"
-                style={{ transformStyle: 'preserve-3d', willChange: 'transform' }}
               >
-                {/* Glow effect behind logo */}
-                <motion.div
-                  className="absolute inset-0 blur-3xl bg-emerald-500/30 rounded-full"
-                  animate={{
-                    scale: [1, 1.3, 1],
-                    opacity: [0.3, 0.6, 0.3],
-                  }}
-                  transition={{
-                    duration: 3,
-                    repeat: Infinity,
-                    ease: 'easeInOut',
-                  }}
+                <Image
+                  src="/logos/rivio-user-light.png"
+                  alt="RIVIO Logo"
+                  width={200}
+                  height={200}
+                  className="w-48 h-48 md:w-64 md:h-64 drop-shadow-2xl filter brightness-110"
+                  priority
                 />
-                <motion.div
-                  whileHover={{ scale: 1.1 }}
-                  transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-                  className="relative z-10 gpu-accelerated"
-                >
-                  <Image
-                    src="/logos/rivio-user-light.png"
-                    alt="RIVIO Logo"
-                    width={200}
-                    height={200}
-                    className="w-48 h-48 md:w-64 md:h-64 drop-shadow-2xl filter brightness-110"
-                    priority
-                  />
-                </motion.div>
               </motion.div>
-            </div>
+            </motion.div>
             
             {/* Text Content */}
             <motion.h1
