@@ -46,11 +46,11 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="relative min-h-screen flex overflow-hidden bg-black"
+      className="relative min-h-screen flex flex-col lg:flex-row overflow-hidden bg-black"
       ref={containerRef}
     >
       {/* Left 50% - Logo */}
-      <div className="w-1/2 relative flex items-center justify-center overflow-hidden bg-gradient-to-br from-black via-gray-950 to-black">
+      <div className="w-full lg:w-1/2 relative flex items-center justify-center overflow-hidden bg-gradient-to-br from-black via-gray-950 to-black min-h-[50vh] lg:min-h-screen">
         {/* Subtle background particles for left side */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           {[...Array(15)].map((_, i) => {
@@ -87,7 +87,7 @@ export default function Hero() {
 
         {/* Content Container for Left Side */}
         <motion.div
-          className="relative z-20 text-center px-8 perspective-1000 gpu-accelerated"
+          className="relative z-20 text-center px-4 sm:px-6 lg:px-8 perspective-1000 gpu-accelerated py-8 lg:py-0"
           style={{
             rotateX,
             rotateY,
@@ -155,7 +155,7 @@ export default function Hero() {
             
             {/* Text Content */}
             <motion.h1
-              className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-4 leading-tight"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-4 sm:mb-6 leading-tight"
               initial={{ opacity: 0, y: 50, scale: 0.9 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               transition={{ duration: 1.2, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
@@ -176,9 +176,8 @@ export default function Hero() {
               >
                 Revolutionizing Fitness
               </motion.span>
-              <br />
               <motion.span 
-                className="block bg-gradient-to-r from-emerald-400 via-gold-400 via-emerald-300 to-emerald-400 bg-clip-text text-transparent bg-[length:300%_auto] animate-[gradient_4s_ease_infinite] gpu-accelerated"
+                className="block bg-gradient-to-r from-emerald-400 via-gold-400 via-emerald-300 to-emerald-400 bg-clip-text text-transparent bg-[length:300%_auto] animate-[gradient_4s_ease_infinite] gpu-accelerated mt-2"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
@@ -193,7 +192,7 @@ export default function Hero() {
             </motion.h1>
             
             <motion.p
-              className="text-base md:text-lg text-gray-300 mb-6 max-w-md mx-auto leading-relaxed font-medium gpu-accelerated"
+              className="text-sm sm:text-base md:text-lg text-gray-300 mb-4 sm:mb-6 max-w-2xl mx-auto leading-relaxed font-medium gpu-accelerated px-4"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
@@ -202,7 +201,7 @@ export default function Hero() {
                 willChange: 'transform, opacity',
               }}
             >
-              The first pay-per-day fitness platform connecting millions of users with thousands of venues. No subscriptions. No commitments. Just pure flexibility.
+              The world's first pay-per-day fitness platform revolutionizing how people access gyms, yoga studios, wellness centers, swimming pools, and sports facilities. No subscriptions, no long-term commitments—just pay for the days you use. Our innovative model eliminates waste for users while maximizing revenue for partners, creating a sustainable ecosystem that transforms the fitness industry.
             </motion.p>
             
             <motion.div
@@ -216,7 +215,7 @@ export default function Hero() {
                 href="#apps"
                 whileHover={{ scale: 1.1, y: -8 }}
                 whileTap={{ scale: 0.95 }}
-                className="px-10 py-5 bg-gradient-to-r from-emerald-500 via-emerald-400 to-emerald-500 text-white font-bold rounded-full shadow-2xl shadow-emerald-500/50 hover:shadow-emerald-500/80 transition-all text-base relative overflow-hidden group border-2 border-emerald-400/30"
+                className="px-6 sm:px-8 lg:px-10 py-3 sm:py-4 lg:py-5 bg-gradient-to-r from-emerald-500 via-emerald-400 to-emerald-500 text-white font-bold rounded-full shadow-2xl shadow-emerald-500/50 hover:shadow-emerald-500/80 transition-all text-sm sm:text-base relative overflow-hidden group border-2 border-emerald-400/30 w-full sm:w-auto"
               >
                 <motion.span
                   className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
@@ -231,7 +230,7 @@ export default function Hero() {
                 href="#contact"
                 whileHover={{ scale: 1.1, y: -8 }}
                 whileTap={{ scale: 0.95 }}
-                className="px-10 py-5 bg-black/40 border-2 border-emerald-500/60 text-emerald-400 font-bold rounded-full hover:bg-emerald-500/10 hover:border-emerald-400 transition-all text-base backdrop-blur-xl relative overflow-hidden group shadow-lg shadow-emerald-500/20"
+                className="px-6 sm:px-8 lg:px-10 py-3 sm:py-4 lg:py-5 bg-black/40 border-2 border-emerald-500/60 text-emerald-400 font-bold rounded-full hover:bg-emerald-500/10 hover:border-emerald-400 transition-all text-sm sm:text-base backdrop-blur-xl relative overflow-hidden group shadow-lg shadow-emerald-500/20 w-full sm:w-auto"
               >
                 <span className="relative z-10">
                   Partner With Us
@@ -243,7 +242,7 @@ export default function Hero() {
       </div>
 
       {/* Right 50% - Animated Video Background */}
-      <div className="w-1/2 relative flex items-center justify-center overflow-hidden bg-black">
+      <div className="w-full lg:w-1/2 relative flex items-center justify-center overflow-hidden bg-black min-h-[50vh] lg:min-h-screen">
         <motion.div
           className="absolute inset-0 w-full h-full"
           style={{

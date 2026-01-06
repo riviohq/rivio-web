@@ -72,9 +72,9 @@ export default function AnimatedVideoBackground() {
             transition={{ duration: 0.8, ease: 'easeInOut' }}
             className="flex flex-col items-center gap-8"
           >
-            {/* Phone Mockup - Larger and More Visible */}
+            {/* Phone Mockup - Responsive Size */}
             <motion.div
-              className="relative w-80 h-[600px] bg-gray-900 rounded-[3rem] p-5 shadow-2xl border-4 border-gray-700"
+              className="relative w-64 h-[480px] sm:w-72 sm:h-[540px] md:w-80 md:h-[600px] bg-gray-900 rounded-[2rem] sm:rounded-[3rem] p-3 sm:p-4 md:p-5 shadow-2xl border-2 sm:border-4 border-gray-700"
               animate={{
                 y: [0, -10, 0],
               }}
@@ -214,20 +214,20 @@ export default function AnimatedVideoBackground() {
             exit={{ opacity: 0 }}
           >
             <motion.div
-              className="bg-black/80 rounded-2xl p-6 backdrop-blur-xl border-2 border-emerald-400/40 max-w-md w-full mx-4"
+              className="bg-black/80 rounded-xl sm:rounded-2xl p-4 sm:p-6 backdrop-blur-xl border-2 border-emerald-400/40 max-w-md w-full mx-2 sm:mx-4"
               initial={{ scale: 0.9, y: 20 }}
               animate={{ scale: 1, y: 0 }}
               transition={{ duration: 0.5 }}
             >
               {/* Search Header */}
-              <div className="flex items-center gap-3 mb-4">
-                <MapPin className="w-6 h-6 text-emerald-400" />
-                <h4 className="text-xl font-bold text-emerald-300">Search Nearby Venues</h4>
+              <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+                <MapPin className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-400" />
+                <h4 className="text-lg sm:text-xl font-bold text-emerald-300">Search Nearby Venues</h4>
               </div>
               
               {/* Search Bar */}
               <motion.div
-                className="bg-gray-800/50 rounded-lg p-3 mb-4 flex items-center gap-2"
+                className="bg-gray-800/50 rounded-lg p-2 sm:p-3 mb-3 sm:mb-4 flex items-center gap-2"
                 animate={{
                   borderColor: ['rgba(16, 185, 129, 0.3)', 'rgba(16, 185, 129, 0.6)', 'rgba(16, 185, 129, 0.3)'],
                 }}
@@ -235,15 +235,15 @@ export default function AnimatedVideoBackground() {
                 style={{ border: '2px solid' }}
               >
                 <motion.div
-                  className="w-4 h-4 border-2 border-emerald-400 border-t-transparent rounded-full"
+                  className="w-3 h-3 sm:w-4 sm:h-4 border-2 border-emerald-400 border-t-transparent rounded-full"
                   animate={{ rotate: 360 }}
                   transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
                 />
-                <span className="text-gray-400 text-sm">Searching within 100m...</span>
+                <span className="text-gray-400 text-xs sm:text-sm">Searching within 100m...</span>
               </motion.div>
 
               {/* Nearby Venues List */}
-              <div className="space-y-2">
+              <div className="space-y-1.5 sm:space-y-2">
                 {[
                   { name: 'Elite Fitness', distance: '45m', price: '₹200/day', status: 'Open' },
                   { name: 'Zen Yoga Studio', distance: '78m', price: '₹150/day', status: 'Open' },
@@ -251,41 +251,41 @@ export default function AnimatedVideoBackground() {
                 ].map((venue, index) => (
                   <motion.div
                     key={venue.name}
-                    className="bg-emerald-500/20 rounded-lg p-3 border border-emerald-400/30"
+                    className="bg-emerald-500/20 rounded-lg p-2 sm:p-3 border border-emerald-400/30"
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.3 + index * 0.15 }}
                   >
                     <div className="flex justify-between items-start mb-1">
                       <div>
-                        <div className="text-sm font-semibold text-white">{venue.name}</div>
-                        <div className="text-xs text-emerald-300 flex items-center gap-1 mt-1">
-                          <MapPin className="w-3 h-3" />
+                        <div className="text-xs sm:text-sm font-semibold text-white">{venue.name}</div>
+                        <div className="text-xs text-emerald-300 flex items-center gap-1 mt-0.5 sm:mt-1">
+                          <MapPin className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
                           {venue.distance} away
                         </div>
                       </div>
                       <motion.span
-                        className="text-xs px-2 py-1 rounded bg-emerald-500/30 text-emerald-300"
+                        className="text-xs px-1.5 sm:px-2 py-0.5 sm:py-1 rounded bg-emerald-500/30 text-emerald-300"
                         animate={{ opacity: [1, 0.7, 1] }}
                         transition={{ duration: 2, repeat: Infinity }}
                       >
                         {venue.status}
                       </motion.span>
                     </div>
-                    <div className="text-xs text-gray-400 mt-1">{venue.price}</div>
+                    <div className="text-xs text-gray-400 mt-0.5 sm:mt-1">{venue.price}</div>
                   </motion.div>
                 ))}
               </div>
 
               {/* 100m Radius Indicator */}
               <motion.div
-                className="mt-4 text-center"
+                className="mt-3 sm:mt-4 text-center"
                 animate={{ opacity: [0.6, 1, 0.6] }}
                 transition={{ duration: 2, repeat: Infinity }}
               >
                 <span className="text-xs text-emerald-400 flex items-center justify-center gap-1">
                   <motion.div
-                    className="w-2 h-2 bg-emerald-400 rounded-full"
+                    className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-emerald-400 rounded-full"
                     animate={{ scale: [1, 1.5, 1], opacity: [1, 0.5, 1] }}
                     transition={{ duration: 1.5, repeat: Infinity }}
                   />

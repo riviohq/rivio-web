@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useInView } from 'framer-motion'
 import { useRef } from 'react'
-import { Search, MapPin, AlertCircle } from 'lucide-react'
+import { Search, MapPin, AlertCircle, TrendingUp, Users, Building2, Sparkles } from 'lucide-react'
 
 export default function CitySearch() {
   const [searchQuery, setSearchQuery] = useState('')
@@ -71,9 +71,28 @@ export default function CitySearch() {
           >
             Expanding Across <span className="bg-gradient-to-r from-emerald-400 to-gold-400 bg-clip-text text-transparent">India</span>
           </motion.h2>
-          <p className="text-xl md:text-2xl text-gray-200 font-medium">
-            Our network spans major metros and emerging cities, bringing premium fitness access to millions
+          <p className="text-xl md:text-2xl text-gray-200 font-medium mb-4">
+            We're actively onboarding partners across India to build the largest pay-per-day fitness network
           </p>
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="flex flex-wrap justify-center gap-6 text-sm md:text-base"
+          >
+            <div className="flex items-center gap-2 text-emerald-300">
+              <TrendingUp className="w-5 h-5" />
+              <span className="font-medium">Rapid Network Growth</span>
+            </div>
+            <div className="flex items-center gap-2 text-gold-300">
+              <Building2 className="w-5 h-5" />
+              <span className="font-medium">Partner Onboarding Active</span>
+            </div>
+            <div className="flex items-center gap-2 text-emerald-300">
+              <Users className="w-5 h-5" />
+              <span className="font-medium">Expanding City by City</span>
+            </div>
+          </motion.div>
         </motion.div>
 
         {/* Search Box */}
@@ -105,22 +124,73 @@ export default function CitySearch() {
             </div>
           </form>
 
-          {/* Future DB Integration Message */}
+          {/* Onboarding Partners Message */}
           {showMessage && (
             <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="mt-6 bg-emerald-500/10 border-2 border-emerald-500/30 rounded-2xl p-6"
+              initial={{ opacity: 0, y: -10, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+              className="mt-6 relative overflow-hidden"
             >
-              <div className="flex items-start gap-4">
-                <AlertCircle className="w-6 h-6 text-emerald-400 flex-shrink-0 mt-1" />
-                <div>
-                  <h4 className="font-semibold text-emerald-400 mb-2">
-                    Database Integration Coming Soon
-                  </h4>
-                  <p className="text-gray-200 font-medium">
-                    We're currently working on integrating our database. Once complete, searching for "{searchQuery}" will show all available partners in that city with their pricing, amenities, and ratings. Stay tuned!
-                  </p>
+              <div className="bg-gradient-to-br from-emerald-600/20 via-emerald-700/15 to-gold-600/20 backdrop-blur-xl rounded-3xl p-8 border-2 border-emerald-500/40 shadow-2xl shadow-emerald-500/20">
+                {/* Animated background glow */}
+                <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/10 to-gold-500/10 opacity-50" />
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent"
+                  animate={{
+                    x: ['-100%', '200%'],
+                  }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: 'linear',
+                  }}
+                />
+                
+                <div className="relative z-10">
+                  <div className="flex items-start gap-4 mb-4">
+                    <div className="w-14 h-14 bg-emerald-500/20 rounded-2xl flex items-center justify-center border-2 border-emerald-400/40 flex-shrink-0">
+                      <Sparkles className="w-7 h-7 text-emerald-300" />
+                    </div>
+                    <div className="flex-1">
+                      <h4 className="text-2xl font-bold text-white mb-2 flex items-center gap-2">
+                        <span className="bg-gradient-to-r from-emerald-300 to-gold-300 bg-clip-text text-transparent">
+                          We're Onboarding Partners in {searchQuery}
+                        </span>
+                      </h4>
+                      <p className="text-gray-200 font-medium leading-relaxed mb-4">
+                        We're actively building our network in <strong className="text-emerald-300">{searchQuery}</strong> and onboarding premium fitness partners. This feature will be available soon once we've onboarded enough partners to provide comprehensive coverage in your city.
+                      </p>
+                      <div className="bg-black/30 rounded-xl p-4 border border-emerald-500/20">
+                        <p className="text-sm text-gray-300 font-medium mb-2">
+                          <strong className="text-emerald-300">What's Coming:</strong>
+                        </p>
+                        <ul className="space-y-2 text-sm text-gray-300">
+                          <li className="flex items-start gap-2">
+                            <span className="text-emerald-400 mt-1">•</span>
+                            <span>Complete list of gyms, yoga studios, sports facilities, and wellness centers in {searchQuery}</span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <span className="text-emerald-400 mt-1">•</span>
+                            <span>Real-time pricing, availability, and amenities for each venue</span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <span className="text-emerald-400 mt-1">•</span>
+                            <span>Ratings, reviews, and photos from the RIVIO community</span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <span className="text-emerald-400 mt-1">•</span>
+                            <span>Instant booking and pay-per-day access</span>
+                          </li>
+                        </ul>
+                      </div>
+                      <div className="mt-4 flex items-center gap-2 text-sm text-emerald-300 font-medium">
+                        <TrendingUp className="w-4 h-4" />
+                        <span>Our network is growing rapidly. Check back soon!</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </motion.div>
@@ -152,44 +222,95 @@ export default function CitySearch() {
           </div>
         </motion.div>
 
-        {/* Future Features Preview */}
+        {/* Expansion Details */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, delay: 0.6 }}
-          className="bg-gradient-to-br from-gray-900/90 to-black/90 rounded-3xl p-10 md:p-16 shadow-2xl border border-emerald-500/20 backdrop-blur-xl"
+          className="bg-gradient-to-br from-gray-900/95 via-black/95 to-gray-900/95 rounded-3xl p-10 md:p-16 shadow-2xl border-2 border-emerald-500/30 backdrop-blur-xl relative overflow-hidden"
         >
-          <h3 className="text-2xl md:text-3xl font-bold text-white mb-6 text-center">
-            What You'll See When Searching
-          </h3>
-          <div className="grid md:grid-cols-3 gap-6">
-            <div className="text-center">
-              <div className="w-16 h-16 bg-emerald-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <MapPin className="w-8 h-8 text-emerald-400" />
-              </div>
-              <h4 className="font-semibold text-white mb-2">All Partners</h4>
-              <p className="text-gray-200 text-sm font-medium">
-                View all gyms, yoga studios, and wellness centers in the selected city
-              </p>
+          {/* Background pattern */}
+          <div className="absolute inset-0 opacity-10">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(16,185,129,0.2),transparent_70%)]" />
+          </div>
+          
+          <div className="relative z-10">
+            <h3 className="text-3xl md:text-4xl font-bold text-white mb-8 text-center">
+              Building India's Largest <span className="bg-gradient-to-r from-emerald-400 to-gold-400 bg-clip-text text-transparent">Pay-Per-Day</span> Fitness Network
+            </h3>
+            
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ delay: 0.7 }}
+                className="bg-gradient-to-br from-emerald-500/10 to-emerald-600/5 rounded-2xl p-6 border border-emerald-500/20 text-center"
+              >
+                <div className="w-16 h-16 bg-emerald-500/20 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-emerald-500/30">
+                  <Building2 className="w-8 h-8 text-emerald-300" />
+                </div>
+                <h4 className="font-bold text-white mb-2 text-lg">Active Onboarding</h4>
+                <p className="text-gray-300 text-sm font-medium leading-relaxed">
+                  We're continuously adding premium fitness partners across major cities and emerging markets
+                </p>
+              </motion.div>
+              
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ delay: 0.8 }}
+                className="bg-gradient-to-br from-gold-500/10 to-gold-600/5 rounded-2xl p-6 border border-gold-500/20 text-center"
+              >
+                <div className="w-16 h-16 bg-gold-500/20 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-gold-500/30">
+                  <MapPin className="w-8 h-8 text-gold-300" />
+                </div>
+                <h4 className="font-bold text-white mb-2 text-lg">City Coverage</h4>
+                <p className="text-gray-300 text-sm font-medium leading-relaxed">
+                  Expanding from metros to tier-2 and tier-3 cities, ensuring fitness access for everyone
+                </p>
+              </motion.div>
+              
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ delay: 0.9 }}
+                className="bg-gradient-to-br from-emerald-500/10 to-emerald-600/5 rounded-2xl p-6 border border-emerald-500/20 text-center"
+              >
+                <div className="w-16 h-16 bg-emerald-500/20 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-emerald-500/30">
+                  <Users className="w-8 h-8 text-emerald-300" />
+                </div>
+                <h4 className="font-bold text-white mb-2 text-lg">Community Growth</h4>
+                <p className="text-gray-300 text-sm font-medium leading-relaxed">
+                  Thousands of users joining daily, creating a vibrant fitness community across India
+                </p>
+              </motion.div>
+              
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ delay: 1.0 }}
+                className="bg-gradient-to-br from-gold-500/10 to-gold-600/5 rounded-2xl p-6 border border-gold-500/20 text-center"
+              >
+                <div className="w-16 h-16 bg-gold-500/20 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-gold-500/30">
+                  <TrendingUp className="w-8 h-8 text-gold-300" />
+                </div>
+                <h4 className="font-bold text-white mb-2 text-lg">Rapid Expansion</h4>
+                <p className="text-gray-300 text-sm font-medium leading-relaxed">
+                  Our network is growing exponentially as more partners recognize the pay-per-day opportunity
+                </p>
+              </motion.div>
             </div>
-            <div className="text-center">
-              <div className="w-16 h-16 bg-emerald-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">₹</span>
-              </div>
-              <h4 className="font-semibold text-white mb-2">Pricing</h4>
-              <p className="text-gray-200 text-sm font-medium">
-                See per-visit prices and pass options for each venue
+            
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ delay: 1.1 }}
+              className="bg-gradient-to-r from-emerald-600/20 to-gold-600/20 rounded-2xl p-8 border-2 border-emerald-500/30 text-center"
+            >
+              <p className="text-lg md:text-xl text-white font-medium leading-relaxed">
+                <strong className="text-emerald-300">Search functionality will be live soon!</strong> We're working tirelessly to onboard partners in every major city. Once we have sufficient coverage in a city, you'll be able to search, compare, and book venues instantly. <strong className="text-gold-300">Stay tuned for updates as we expand our network.</strong>
               </p>
-            </div>
-            <div className="text-center">
-              <div className="w-16 h-16 bg-emerald-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">⭐</span>
-              </div>
-              <h4 className="font-semibold text-white mb-2">Ratings & Reviews</h4>
-              <p className="text-gray-200 text-sm font-medium">
-                Check ratings, read reviews, and see amenities before visiting
-              </p>
-            </div>
+            </motion.div>
           </div>
         </motion.div>
       </div>

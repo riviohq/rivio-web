@@ -1,50 +1,13 @@
 'use client'
 
-import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useInView } from 'framer-motion'
 import { useRef } from 'react'
-import { Mail, MessageSquare, Send, AlertCircle } from 'lucide-react'
-import { sanitizeContactForm, type ContactFormData } from '@/lib/security'
+import { Mail, MessageSquare, Send, Sparkles, Building2, TrendingUp, Users, ExternalLink } from 'lucide-react'
 
 export default function ContactUs() {
-  const [formData, setFormData] = useState<ContactFormData>({
-    name: '',
-    email: '',
-    message: '',
-  })
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [errors, setErrors] = useState<string[]>([])
-  const [submitSuccess, setSubmitSuccess] = useState(false)
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: '0px' })
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setErrors([])
-    setSubmitSuccess(false)
-    setIsSubmitting(true)
-
-    // Validate and sanitize input
-    const sanitized = sanitizeContactForm(formData)
-
-    if (sanitized.errors.length > 0) {
-      setErrors(sanitized.errors)
-      setIsSubmitting(false)
-      return
-    }
-
-    // In the future, this will send to an API with sanitized data
-    // The API will receive: sanitized.name, sanitized.email, sanitized.message
-    setTimeout(() => {
-      setIsSubmitting(false)
-      setSubmitSuccess(true)
-      setFormData({ name: '', email: '', message: '' })
-      
-      // Clear success message after 5 seconds
-      setTimeout(() => setSubmitSuccess(false), 5000)
-    }, 1000)
-  }
 
   return (
     <section
@@ -52,34 +15,40 @@ export default function ContactUs() {
       ref={ref}
       className="py-16 md:py-24 bg-black relative overflow-hidden"
     >
-      {/* Optimized floating background elements */}
+      {/* Enhanced floating background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(2)].map((_, i) => (
+        {[...Array(4)].map((_, i) => (
           <motion.div
             key={i}
-            className="absolute rounded-full blur-3xl opacity-4 gpu-accelerated"
+            className="absolute rounded-full blur-3xl opacity-6 gpu-accelerated"
             style={{
-              width: `${400 + i * 100}px`,
-              height: `${400 + i * 100}px`,
-              background: '#10b981',
-              left: `${40 + i * 30}%`,
-              top: `${30 + i * 25}%`,
+              width: `${500 + i * 120}px`,
+              height: `${500 + i * 120}px`,
+              background: i % 2 === 0 ? '#10b981' : '#d4af37',
+              left: `${i * 25}%`,
+              top: `${i * 20}%`,
               willChange: 'transform',
             }}
             animate={{
-              x: [0, 40, -20, 0],
-              y: [0, 30, -15, 0],
-              scale: [1, 1.15, 0.95, 1],
+              x: [0, 60, -30, 0],
+              y: [0, 50, -25, 0],
+              scale: [1, 1.3, 0.95, 1],
             }}
             transition={{
-              duration: 20 + i * 5,
+              duration: 25 + i * 5,
               repeat: Infinity,
               ease: [0.4, 0, 0.6, 1],
-              delay: i * 2.5,
+              delay: i * 2,
             }}
           />
         ))}
       </div>
+      
+      {/* Grid pattern overlay */}
+      <div className="absolute inset-0 opacity-5" style={{
+        backgroundImage: 'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)',
+        backgroundSize: '50px 50px',
+      }} />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -101,161 +70,166 @@ export default function ContactUs() {
         </motion.div>
 
         <div className="grid md:grid-cols-2 gap-12">
-          {/* Contact Form */}
+          {/* Google Form Embedded - Most Reliable Method */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.2 }}
+            className="relative"
           >
-            <form onSubmit={handleSubmit} className="space-y-6">
-              {/* Error Messages */}
-              {errors.length > 0 && (
-                <motion.div
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="bg-red-500/10 border-2 border-red-500/30 rounded-lg p-4"
-                >
-                  <div className="flex items-start gap-3">
-                    <AlertCircle className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
-                    <div className="flex-1">
-                      <h4 className="font-semibold text-red-400 mb-2">Please fix the following errors:</h4>
-                      <ul className="list-disc list-inside space-y-1 text-sm text-red-300">
-                        {errors.map((error, index) => (
-                          <li key={index}>{error}</li>
-                        ))}
-                      </ul>
-                    </div>
+            <div className="bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-black/95 rounded-3xl p-8 md:p-10 border-2 border-emerald-500/30 backdrop-blur-xl shadow-2xl relative overflow-hidden">
+              {/* Animated background */}
+              <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/5 to-gold-500/5 opacity-50" />
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent"
+                animate={{
+                  x: ['-100%', '200%'],
+                }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  ease: 'linear',
+                }}
+              />
+              
+              <div className="relative z-10">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-12 h-12 bg-emerald-500/20 rounded-2xl flex items-center justify-center border-2 border-emerald-400/40">
+                    <Sparkles className="w-6 h-6 text-emerald-300" />
                   </div>
-                </motion.div>
-              )}
-
-              {/* Success Message */}
-              {submitSuccess && (
-                <motion.div
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="bg-emerald-500/10 border-2 border-emerald-500/30 rounded-lg p-4"
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="w-5 h-5 rounded-full bg-emerald-500 flex items-center justify-center">
-                      <span className="text-white text-xs">✓</span>
+                  <h3 className="text-2xl md:text-3xl font-bold text-white">Get In Touch</h3>
+                </div>
+                <p className="text-gray-300 mb-6 font-medium">
+                  Fill out the form below and we'll get back to you as soon as possible. Join us in transforming India's fitness landscape.
+                </p>
+                
+                {/* Direct Link to Google Form - No Entry IDs Needed */}
+                <div className="space-y-6">
+                  <div className="bg-gradient-to-r from-emerald-500/10 to-gold-500/10 rounded-2xl p-6 border-2 border-emerald-500/30">
+                    <div className="flex items-center gap-4 mb-4">
+                      <div className="w-14 h-14 bg-emerald-500/20 rounded-2xl flex items-center justify-center border-2 border-emerald-400/40">
+                        <Send className="w-7 h-7 text-emerald-300" />
+                      </div>
+                      <div>
+                        <h4 className="text-xl font-bold text-white mb-1">Ready to Partner With Us?</h4>
+                        <p className="text-gray-300 font-medium text-sm">
+                          Click the button below to fill out our partnership form
+                        </p>
+                      </div>
                     </div>
-                    <p className="text-emerald-400 font-medium">
-                      Thank you for your message! We'll get back to you soon.
+                    
+                    <motion.a
+                      href="https://docs.google.com/forms/d/e/1FAIpQLSeRYNKypv9jMJaT3Ws-0OesfYEaBnM_5oP5a3z27LlRw1ps2Q/viewform"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      whileHover={{ scale: 1.02, y: -2 }}
+                      whileTap={{ scale: 0.98 }}
+                      className="w-full px-8 py-4 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white rounded-xl font-bold text-lg hover:from-emerald-600 hover:to-emerald-700 transition-all flex items-center justify-center gap-3 shadow-lg shadow-emerald-500/30"
+                    >
+                      <Send className="w-5 h-5" />
+                      <span>Open Partnership Form</span>
+                      <ExternalLink className="w-5 h-5" />
+                    </motion.a>
+                    
+                    <p className="text-xs text-gray-400 mt-4 text-center font-medium">
+                      ✓ Opens in a new tab • All submissions stored directly in Google Forms
                     </p>
                   </div>
-                </motion.div>
-              )}
-
-              <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
-                  Name
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  value={formData.name}
-                  onChange={(e) => {
-                    setFormData({ ...formData, name: e.target.value })
-                    setErrors([])
-                  }}
-                  required
-                  maxLength={100}
-                  className="w-full px-4 py-3 bg-black/50 border-2 border-emerald-500/30 text-white placeholder-gray-500 rounded-lg focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/50 backdrop-blur-sm"
-                  placeholder="Your name"
-                />
+                  
+                  <div className="bg-white/5 rounded-xl p-4 border border-emerald-500/20">
+                    <p className="text-sm text-gray-300 font-medium text-center">
+                      Or contact us directly at{' '}
+                      <a href="mailto:partnerships@rivio.com" className="text-emerald-400 hover:text-emerald-300 font-semibold">
+                        partnerships@rivio.com
+                      </a>
+                    </p>
+                  </div>
+                </div>
               </div>
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  value={formData.email}
-                  onChange={(e) => {
-                    setFormData({ ...formData, email: e.target.value })
-                    setErrors([])
-                  }}
-                  required
-                  maxLength={254}
-                  className="w-full px-4 py-3 bg-black/50 border-2 border-emerald-500/30 text-white placeholder-gray-500 rounded-lg focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/50 backdrop-blur-sm"
-                  placeholder="your.email@example.com"
-                />
-              </div>
-              <div>
-                <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-2">
-                  Message
-                </label>
-                <textarea
-                  id="message"
-                  value={formData.message}
-                  onChange={(e) => {
-                    setFormData({ ...formData, message: e.target.value })
-                    setErrors([])
-                  }}
-                  required
-                  rows={6}
-                  maxLength={5000}
-                  className="w-full px-4 py-3 bg-black/50 border-2 border-emerald-500/30 text-white placeholder-gray-500 rounded-lg focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/50 resize-none backdrop-blur-sm"
-                  placeholder="Your message..."
-                />
-                <p className="text-xs text-gray-500 mt-1">
-                  {formData.message.length}/5000 characters
-                </p>
-              </div>
-              <motion.button
-                type="submit"
-                disabled={isSubmitting}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="w-full px-6 py-4 bg-emerald-500 text-white rounded-lg font-semibold hover:bg-emerald-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-              >
-                {isSubmitting ? (
-                  'Sending...'
-                ) : (
-                  <>
-                    <Send className="w-5 h-5" />
-                    Send Message
-                  </>
-                )}
-              </motion.button>
-            </form>
+            </div>
           </motion.div>
 
-          {/* Contact Info */}
+          {/* Contact Info & Benefits - Enhanced */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.4 }}
             className="space-y-6"
           >
-            <div className="bg-gradient-to-br from-gray-900/90 to-black/90 p-10 rounded-3xl border border-emerald-500/20 backdrop-blur-xl shadow-2xl">
-              <h3 className="text-2xl font-bold text-white mb-6">Contact Information</h3>
+            <div className="bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-black/95 p-10 rounded-3xl border-2 border-emerald-500/30 backdrop-blur-xl shadow-2xl relative overflow-hidden">
+              {/* Background glow */}
+              <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/5 to-gold-500/5" />
+              <div className="relative z-10">
+                <h3 className="text-3xl font-bold text-white mb-8 flex items-center gap-3">
+                  <Building2 className="w-8 h-8 text-emerald-400" />
+                  Why Partner With Us?
+                </h3>
+                <div className="space-y-6 mb-8">
+                  <div className="flex items-start gap-4">
+                    <div className="w-14 h-14 bg-emerald-500/20 rounded-2xl flex items-center justify-center flex-shrink-0 border border-emerald-500/30">
+                      <TrendingUp className="w-7 h-7 text-emerald-300" />
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-white mb-2 text-lg">Maximize Revenue</h4>
+                      <p className="text-gray-300 font-medium leading-relaxed">
+                        Fill unused capacity with pay-per-day users and increase facility utilization by up to 45%
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-4">
+                    <div className="w-14 h-14 bg-gold-500/20 rounded-2xl flex items-center justify-center flex-shrink-0 border border-gold-500/30">
+                      <Users className="w-7 h-7 text-gold-300" />
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-white mb-2 text-lg">Access New Customers</h4>
+                      <p className="text-gray-300 font-medium leading-relaxed">
+                        Reach thousands of fitness enthusiasts actively seeking flexible access to premium facilities
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-4">
+                    <div className="w-14 h-14 bg-emerald-500/20 rounded-2xl flex items-center justify-center flex-shrink-0 border border-emerald-500/30">
+                      <Sparkles className="w-7 h-7 text-emerald-300" />
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-white mb-2 text-lg">Complete Business Tools</h4>
+                      <p className="text-gray-300 font-medium leading-relaxed">
+                        Manage operations, track analytics, and scale your business with our comprehensive platform
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="bg-gradient-to-br from-gray-900/95 to-black/95 p-10 rounded-3xl border-2 border-emerald-500/30 backdrop-blur-xl shadow-2xl">
+              <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                <Mail className="w-6 h-6 text-emerald-400" />
+                Contact Information
+              </h3>
               <div className="space-y-4">
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-emerald-500/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <div className="w-12 h-12 bg-emerald-500/20 rounded-xl flex items-center justify-center flex-shrink-0 border border-emerald-500/30">
                     <Mail className="w-6 h-6 text-emerald-400" />
                   </div>
                   <div>
-                    <h4 className="font-semibold text-white mb-1">Email</h4>
-                    <a href="mailto:support@rivio.com" className="text-emerald-400 hover:text-emerald-300">
+                    <h4 className="font-semibold text-white mb-2">Email</h4>
+                    <a href="mailto:support@rivio.com" className="text-emerald-400 hover:text-emerald-300 font-medium block mb-1 transition-colors">
                       support@rivio.com
                     </a>
-                    <br />
-                    <a href="mailto:partnerships@rivio.com" className="text-emerald-400 hover:text-emerald-300">
+                    <a href="mailto:partnerships@rivio.com" className="text-emerald-400 hover:text-emerald-300 font-medium transition-colors">
                       partnerships@rivio.com
                     </a>
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-emerald-500/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <div className="w-12 h-12 bg-emerald-500/20 rounded-xl flex items-center justify-center flex-shrink-0 border border-emerald-500/30">
                     <MessageSquare className="w-6 h-6 text-emerald-400" />
                   </div>
                   <div>
-                    <h4 className="font-semibold text-white mb-1">Business Inquiries</h4>
-                    <p className="text-gray-200 font-medium">
-                      Interested in partnering with RIVIO? Contact us for business opportunities.
+                    <h4 className="font-semibold text-white mb-2">Business Inquiries</h4>
+                    <p className="text-gray-300 font-medium leading-relaxed">
+                      Interested in partnering with RIVIO? Fill out the form or contact us directly for business opportunities, investments, or venue partnerships.
                     </p>
                   </div>
                 </div>
