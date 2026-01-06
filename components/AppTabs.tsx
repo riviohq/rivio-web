@@ -134,7 +134,7 @@ export default function AppTabs() {
                 <div>
                   <div className="flex items-center gap-3 mb-6">
                     <Image
-                      src="/logos/rivio-user-dark.svg"
+                      src="/logos/rivio-user-light.png"
                       alt="RIVIO User App Logo"
                       width={64}
                       height={64}
@@ -212,7 +212,7 @@ export default function AppTabs() {
                 <div>
                   <div className="flex items-center gap-3 mb-6">
                     <Image
-                      src="/logos/rivio-partner-goldtext.svg"
+                      src="/logos/rivio-partner-gold-lighttext.png"
                       alt="RIVIO Partners Logo"
                       width={64}
                       height={64}

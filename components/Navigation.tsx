@@ -53,7 +53,7 @@ export default function Navigation({ isScrolled }: NavigationProps) {
           >
             <Link href="#home" onClick={() => scrollToSection('#home')}>
               <Image
-                src="/logos/rivio-user-dark.svg"
+                src="/logos/rivio-user-light.png"
                 alt="RIVIO Logo"
                 width={120}
                 height={120}

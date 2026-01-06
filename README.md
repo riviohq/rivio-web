@@ -8,7 +8,7 @@ A beautiful, animated single-page landing page for RIVIO - Universal Fitness Acc
 - ✨ **Smooth Animations**: Powered by Framer Motion
 - 📱 **Fully Responsive**: Works on all devices
 - 🚀 **Fast Performance**: Optimized with Next.js
-- 🔒 **Security**: Middleware setup for security headers
+- 🔒 **Enterprise Security**: Comprehensive security middleware, rate limiting, input validation, and encryption utilities
 - 🎯 **Smooth Scrolling**: Navigation with jump links
 
 ## Tech Stack
@@ -68,7 +68,12 @@ xpress-web/
 │   ├── CitySearch.tsx      # City search functionality
 │   ├── ContactUs.tsx       # Contact form
 │   └── Footer.tsx          # Footer with links
-├── middleware.ts        # Security middleware
+├── middleware.ts        # Security middleware with rate limiting
+├── lib/
+│   ├── security.ts     # Input validation & sanitization
+│   ├── env.ts          # Environment variable validation
+│   └── encryption.ts   # Encryption utilities
+├── SECURITY.md         # Comprehensive security documentation
 └── tailwind.config.js  # Tailwind configuration
 ```
 
@@ -88,6 +93,28 @@ xpress-web/
 - **Emerald**: `#10b981` (Primary brand color)
 - **White**: `#ffffff` (Background)
 - **Black**: `#000000` (Text and accents)
+
+## Security
+
+This application includes comprehensive security measures:
+
+- ✅ **Security Headers**: HSTS, CSP, XSS protection, frame options
+- ✅ **Rate Limiting**: 100 req/min (general), 30 req/min (API routes)
+- ✅ **Input Validation**: All forms validated and sanitized
+- ✅ **Environment Validation**: Required variables checked on startup
+- ✅ **Encryption Utilities**: Ready for sensitive data encryption
+
+For detailed security documentation, see [SECURITY.md](./SECURITY.md).
+
+### Environment Setup
+
+Create a `.env.local` file (see `SECURITY.md` for required variables):
+
+```env
+NODE_ENV=development
+NEXT_PUBLIC_API_URL=http://localhost:3001
+ENCRYPTION_KEY=your-32-character-minimum-key
+```
 
 ## Future Enhancements
 

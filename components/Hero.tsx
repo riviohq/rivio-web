@@ -1,7 +1,7 @@
 'use client'
 
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
-import { ChevronDown } from 'lucide-react'
+import { ChevronDown, Activity, Leaf, Target, Zap, Droplet, Trophy } from 'lucide-react'
 import Image from 'next/image'
 import { useEffect, useRef } from 'react'
 
@@ -118,9 +118,200 @@ export default function Hero() {
         </div>
       </div>
 
+      {/* Revolving Sports Icons Around Logo - Continuous Fast Animation */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none" style={{ zIndex: 1 }}>
+        <div className="relative w-full h-full flex items-center justify-center">
+          {/* Main orbit container - rotates continuously around center - FASTER */}
+          <motion.div
+            className="absolute"
+            style={{
+              width: '100%',
+              height: '100%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+            animate={{
+              rotate: 360,
+            }}
+            transition={{
+              duration: 20, // Slower: 20 seconds
+              repeat: Infinity,
+              ease: 'linear',
+            }}
+          >
+            {/* Sports activity icons positioned in circle, revolving around center */}
+            {[
+              { Icon: Activity, label: 'Gym', color: 'emerald', initialAngle: 0 },
+              { Icon: Leaf, label: 'Yoga', color: 'emerald', initialAngle: 60 },
+              { Icon: Target, label: 'Cricket', color: 'gold', initialAngle: 120 },
+              { Icon: Zap, label: 'Tennis', color: 'emerald', initialAngle: 180 },
+              { Icon: Droplet, label: 'Swim', color: 'emerald', initialAngle: 240 },
+              { Icon: Trophy, label: 'Sports', color: 'gold', initialAngle: 300 },
+            ].map(({ Icon, label, color, initialAngle }, index) => {
+              const radius = 380 // Increased radius more to avoid overlapping with logo
+              
+              return (
+                <motion.div
+                  key={label}
+                  className={`absolute w-16 h-16 rounded-full flex items-center justify-center backdrop-blur-xl border-2 ${
+                    color === 'emerald'
+                      ? 'bg-emerald-500/20 border-emerald-400/40 text-emerald-300'
+                      : 'bg-gold-500/20 border-gold-400/40 text-gold-300'
+                  } shadow-2xl gpu-accelerated`}
+                  style={{
+                    left: '50%',
+                    top: '50%',
+                    marginLeft: '-32px',
+                    marginTop: '-32px',
+                    transformOrigin: 'center center',
+                    willChange: 'transform',
+                    boxShadow: `0 0 30px ${color === 'emerald' ? 'rgba(16, 185, 129, 0.4)' : 'rgba(212, 175, 55, 0.4)'}`,
+                  }}
+                  animate={{
+                    x: [
+                      Math.cos((initialAngle * Math.PI) / 180) * radius,
+                      Math.cos(((initialAngle + 360) * Math.PI) / 180) * radius,
+                    ],
+                    y: [
+                      Math.sin((initialAngle * Math.PI) / 180) * radius,
+                      Math.sin(((initialAngle + 360) * Math.PI) / 180) * radius,
+                    ],
+                    scale: [1, 1.15, 1],
+                    opacity: [0.8, 1, 0.8],
+                  }}
+                  transition={{
+                    x: {
+                      duration: 20,
+                      repeat: Infinity,
+                      ease: 'linear',
+                    },
+                    y: {
+                      duration: 20,
+                      repeat: Infinity,
+                      ease: 'linear',
+                    },
+                    scale: {
+                      duration: 2.5 + index * 0.2,
+                      repeat: Infinity,
+                      ease: 'easeInOut',
+                    },
+                    opacity: {
+                      duration: 3 + index * 0.2,
+                      repeat: Infinity,
+                      ease: 'easeInOut',
+                    },
+                  }}
+                >
+                  <Icon className="w-8 h-8 relative z-10" />
+                  {/* Glow effect */}
+                  <motion.div
+                    className={`absolute inset-0 rounded-full blur-xl ${
+                      color === 'emerald' ? 'bg-emerald-400' : 'bg-gold-400'
+                    }`}
+                    animate={{
+                      opacity: [0, 0.6, 0],
+                      scale: [1, 1.4, 1],
+                    }}
+                    transition={{
+                      duration: 2.5 + index * 0.3,
+                      repeat: Infinity,
+                      ease: 'easeInOut',
+                    }}
+                  />
+                </motion.div>
+              )
+            })}
+          </motion.div>
+          
+          {/* Secondary orbit - smaller icons, reverse direction - FASTER */}
+          <motion.div
+            className="absolute"
+            style={{
+              width: '100%',
+              height: '100%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+            animate={{
+              rotate: -360,
+            }}
+            transition={{
+              duration: 25, // Slower: 25 seconds
+              repeat: Infinity,
+              ease: 'linear',
+            }}
+          >
+            {[
+              { Icon: Activity, color: 'emerald', initialAngle: 30, radius: 420 },
+              { Icon: Leaf, color: 'emerald', initialAngle: 90, radius: 420 },
+              { Icon: Trophy, color: 'gold', initialAngle: 210, radius: 420 },
+              { Icon: Droplet, color: 'emerald', initialAngle: 270, radius: 420 },
+            ].map(({ Icon, color, initialAngle, radius }, index) => {
+              return (
+                <motion.div
+                  key={`secondary-${initialAngle}`}
+                  className={`absolute w-12 h-12 rounded-full flex items-center justify-center backdrop-blur-xl border ${
+                    color === 'emerald'
+                      ? 'bg-emerald-500/15 border-emerald-400/30 text-emerald-300/70'
+                      : 'bg-gold-500/15 border-gold-400/30 text-gold-300/70'
+                  } shadow-xl gpu-accelerated`}
+                  style={{
+                    left: '50%',
+                    top: '50%',
+                    marginLeft: '-24px',
+                    marginTop: '-24px',
+                    transformOrigin: 'center center',
+                    willChange: 'transform',
+                    boxShadow: `0 0 20px ${color === 'emerald' ? 'rgba(16, 185, 129, 0.3)' : 'rgba(212, 175, 55, 0.3)'}`,
+                  }}
+                  animate={{
+                    x: [
+                      Math.cos((initialAngle * Math.PI) / 180) * radius,
+                      Math.cos(((initialAngle - 360) * Math.PI) / 180) * radius,
+                    ],
+                    y: [
+                      Math.sin((initialAngle * Math.PI) / 180) * radius,
+                      Math.sin(((initialAngle - 360) * Math.PI) / 180) * radius,
+                    ],
+                    scale: [0.9, 1.1, 0.9],
+                    opacity: [0.6, 0.9, 0.6],
+                  }}
+                  transition={{
+                    x: {
+                      duration: 25,
+                      repeat: Infinity,
+                      ease: 'linear',
+                    },
+                    y: {
+                      duration: 25,
+                      repeat: Infinity,
+                      ease: 'linear',
+                    },
+                    scale: {
+                      duration: 2.5 + index * 0.3,
+                      repeat: Infinity,
+                      ease: 'easeInOut',
+                    },
+                    opacity: {
+                      duration: 3 + index * 0.2,
+                      repeat: Infinity,
+                      ease: 'easeInOut',
+                    },
+                  }}
+                >
+                  <Icon className="w-6 h-6 relative z-10" />
+                </motion.div>
+              )
+            })}
+          </motion.div>
+        </div>
+      </div>
+
       {/* Content with optimized 3D effect */}
       <motion.div
-        className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto perspective-1000 gpu-accelerated"
+        className="relative z-20 text-center px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto perspective-1000 gpu-accelerated"
         style={{
           rotateX,
           rotateY,
@@ -174,7 +365,7 @@ export default function Hero() {
               className="relative z-10 gpu-accelerated"
             >
               <Image
-                src="/logos/rivio-user-dark.svg"
+                src="/logos/rivio-user-light.png"
                 alt="RIVIO Logo"
                 width={200}
                 height={200}
