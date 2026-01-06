@@ -28,10 +28,10 @@ export default function Footer() {
   }
 
   const socialLinks = [
-    { icon: Facebook, href: 'https://facebook.com/rivio', label: 'Facebook' },
-    { icon: Twitter, href: 'https://twitter.com/rivio', label: 'Twitter' },
-    { icon: Instagram, href: 'https://instagram.com/rivio', label: 'Instagram' },
-    { icon: Linkedin, href: 'https://linkedin.com/company/rivio', label: 'LinkedIn' },
+    { icon: Facebook, href: 'https://www.facebook.com/rivioapp', label: 'Facebook' },
+    { icon: Twitter, href: 'https://x.com/Rivioapp', label: 'Twitter' },
+    { icon: Instagram, href: 'https://www.instagram.com/rivioapp/', label: 'Instagram' },
+    { icon: Linkedin, href: 'https://www.linkedin.com/company/rivioapp', label: 'LinkedIn' },
   ]
 
   return (
