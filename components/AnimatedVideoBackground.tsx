@@ -204,52 +204,7 @@ export default function AnimatedVideoBackground() {
         </AnimatePresence>
       </div>
 
-      {/* Floating Elements - All Activity Icons (Gym, Yoga, Sports, Swim) */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[
-          { Icon: Activity, label: 'Gym', x: '8%', y: '15%', delay: 0, color: 'emerald' },
-          { Icon: Leaf, label: 'Yoga', x: '88%', y: '25%', delay: 0.8, color: 'emerald' },
-          { Icon: Target, label: 'Sports', x: '12%', y: '75%', delay: 1.6, color: 'gold' },
-          { Icon: Waves, label: 'Swim', x: '85%', y: '70%', delay: 2.4, color: 'emerald' },
-          { Icon: Zap, x: '50%', y: '10%', delay: 1, color: 'gold' },
-          { Icon: QrCode, x: '5%', y: '50%', delay: 1.5, color: 'emerald' },
-          { Icon: CheckCircle, x: '92%', y: '55%', delay: 2, color: 'emerald' },
-          { Icon: MapPin, x: '50%', y: '90%', delay: 0.5, color: 'gold' },
-        ].map(({ Icon, label, x, y, delay, color }, index) => (
-          <motion.div
-            key={index}
-            className={`absolute w-20 h-20 rounded-full ${
-              color === 'emerald'
-                ? 'bg-emerald-500/20 border-2 border-emerald-400/40'
-                : 'bg-gold-500/20 border-2 border-gold-400/40'
-            } flex items-center justify-center backdrop-blur-md shadow-xl`}
-            style={{
-              left: x,
-              top: y,
-              boxShadow: color === 'emerald'
-                ? '0 0 30px rgba(16, 185, 129, 0.4)'
-                : '0 0 30px rgba(212, 175, 55, 0.4)',
-            }}
-            animate={{
-              y: [0, -40, 0],
-              opacity: [0.5, 0.9, 0.5],
-              scale: [0.95, 1.15, 0.95],
-            }}
-            transition={{
-              duration: 4 + index * 0.5,
-              repeat: Infinity,
-              ease: 'easeInOut',
-              delay,
-            }}
-          >
-            <Icon className={`w-10 h-10 ${
-              color === 'emerald' ? 'text-emerald-300' : 'text-gold-300'
-            }`} />
-          </motion.div>
-        ))}
-      </div>
-
-      {/* Find Nearby (100m radius) Animation */}
+      {/* Find Nearby Venues (Search Interface) Animation */}
       <AnimatePresence>
         {currentScene === 1 && (
           <motion.div
@@ -259,35 +214,84 @@ export default function AnimatedVideoBackground() {
             exit={{ opacity: 0 }}
           >
             <motion.div
-              className="absolute w-96 h-96 border-4 border-emerald-400 rounded-full"
-              animate={{
-                scale: [0.8, 1.2, 0.8],
-                opacity: [0.4, 0.8, 0.4],
-              }}
-              transition={{
-                duration: 2,
-                repeat: Infinity,
-                ease: 'easeInOut',
-              }}
-              style={{
-                boxShadow: '0 0 60px rgba(16, 185, 129, 0.6)',
-              }}
-            />
-            <motion.div
-              className="absolute text-3xl font-bold text-emerald-300"
-              animate={{
-                scale: [1, 1.1, 1],
-              }}
-              transition={{
-                duration: 1.5,
-                repeat: Infinity,
-                ease: 'easeInOut',
-              }}
-              style={{
-                textShadow: '0 0 20px rgba(16, 185, 129, 0.8)',
-              }}
+              className="bg-black/80 rounded-2xl p-6 backdrop-blur-xl border-2 border-emerald-400/40 max-w-md w-full mx-4"
+              initial={{ scale: 0.9, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
             >
-              Within 100m
+              {/* Search Header */}
+              <div className="flex items-center gap-3 mb-4">
+                <MapPin className="w-6 h-6 text-emerald-400" />
+                <h4 className="text-xl font-bold text-emerald-300">Search Nearby Venues</h4>
+              </div>
+              
+              {/* Search Bar */}
+              <motion.div
+                className="bg-gray-800/50 rounded-lg p-3 mb-4 flex items-center gap-2"
+                animate={{
+                  borderColor: ['rgba(16, 185, 129, 0.3)', 'rgba(16, 185, 129, 0.6)', 'rgba(16, 185, 129, 0.3)'],
+                }}
+                transition={{ duration: 2, repeat: Infinity }}
+                style={{ border: '2px solid' }}
+              >
+                <motion.div
+                  className="w-4 h-4 border-2 border-emerald-400 border-t-transparent rounded-full"
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+                />
+                <span className="text-gray-400 text-sm">Searching within 100m...</span>
+              </motion.div>
+
+              {/* Nearby Venues List */}
+              <div className="space-y-2">
+                {[
+                  { name: 'Elite Fitness', distance: '45m', price: '₹200/day', status: 'Open' },
+                  { name: 'Zen Yoga Studio', distance: '78m', price: '₹150/day', status: 'Open' },
+                  { name: 'Swim Center', distance: '95m', price: '₹250/day', status: 'Open' },
+                ].map((venue, index) => (
+                  <motion.div
+                    key={venue.name}
+                    className="bg-emerald-500/20 rounded-lg p-3 border border-emerald-400/30"
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.3 + index * 0.15 }}
+                  >
+                    <div className="flex justify-between items-start mb-1">
+                      <div>
+                        <div className="text-sm font-semibold text-white">{venue.name}</div>
+                        <div className="text-xs text-emerald-300 flex items-center gap-1 mt-1">
+                          <MapPin className="w-3 h-3" />
+                          {venue.distance} away
+                        </div>
+                      </div>
+                      <motion.span
+                        className="text-xs px-2 py-1 rounded bg-emerald-500/30 text-emerald-300"
+                        animate={{ opacity: [1, 0.7, 1] }}
+                        transition={{ duration: 2, repeat: Infinity }}
+                      >
+                        {venue.status}
+                      </motion.span>
+                    </div>
+                    <div className="text-xs text-gray-400 mt-1">{venue.price}</div>
+                  </motion.div>
+                ))}
+              </div>
+
+              {/* 100m Radius Indicator */}
+              <motion.div
+                className="mt-4 text-center"
+                animate={{ opacity: [0.6, 1, 0.6] }}
+                transition={{ duration: 2, repeat: Infinity }}
+              >
+                <span className="text-xs text-emerald-400 flex items-center justify-center gap-1">
+                  <motion.div
+                    className="w-2 h-2 bg-emerald-400 rounded-full"
+                    animate={{ scale: [1, 1.5, 1], opacity: [1, 0.5, 1] }}
+                    transition={{ duration: 1.5, repeat: Infinity }}
+                  />
+                  Showing venues within 100m radius
+                </span>
+              </motion.div>
             </motion.div>
           </motion.div>
         )}
