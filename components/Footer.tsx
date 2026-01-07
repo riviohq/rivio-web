@@ -113,13 +113,19 @@ export default function Footer() {
 
         {/* Bottom Bar */}
         <div className="border-t border-gray-800 pt-8 mt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-gray-400 text-sm">
-              © {currentYear} RIVIO. All rights reserved.
-            </p>
-            <p className="text-gray-400 text-sm">
-              Made with ❤️ for fitness enthusiasts
-            </p>
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4 md:gap-0 text-sm">
+            <div className="flex flex-col md:flex-row items-center gap-4 text-gray-500">
+              <p className="whitespace-nowrap">© {currentYear} RIVIO APP. All rights reserved.</p>
+              <span className="hidden md:inline text-gray-700 mx-2">•</span>
+              <p className="whitespace-nowrap">RIVIO APP is a registered trademark.</p>
+            </div>
+            <div className="flex flex-wrap items-center justify-center gap-4">
+              <p className="text-gray-500 whitespace-nowrap">Licensed under applicable laws.</p>
+              <span className="text-gray-700 mx-2">•</span>
+              <a href="mailto:legal@rivio.com" className="text-gray-500 hover:text-gray-300 transition-colors whitespace-nowrap">
+                Legal Inquiries
+              </a>
+            </div>
           </div>
         </div>
       </div>
