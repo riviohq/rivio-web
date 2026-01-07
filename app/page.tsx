@@ -6,7 +6,6 @@ import Navigation from '@/components/Navigation'
 import Hero from '@/components/Hero'
 import Introduction from '@/components/Introduction'
 import AppTabs from '@/components/AppTabs'
-import ScreenshotShowcase from '@/components/ScreenshotShowcase'
 import CitySearch from '@/components/CitySearch'
 import ContactUs from '@/components/ContactUs'
 import Footer from '@/components/Footer'
@@ -30,7 +29,6 @@ export default function Home() {
       <Hero />
       <Introduction />
       <AppTabs />
-      <ScreenshotShowcase />
       <CitySearch />
       <ContactUs />
       <Footer />

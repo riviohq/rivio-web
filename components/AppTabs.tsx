@@ -1,80 +1,52 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import { useInView } from 'framer-motion'
-import { useRef } from 'react'
-import { Smartphone, Building2, Download, ExternalLink } from 'lucide-react'
+import { useRef, useEffect, useState } from 'react'
+import { Download, MapPin, QrCode, Star, CheckCircle, TrendingUp, CreditCard, Activity, BarChart3, Settings, Building2, DollarSign } from 'lucide-react'
 import Image from 'next/image'
 
 export default function AppTabs() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: '0px' })
 
-  const userProcess = [
-    {
-      step: '1',
-      title: 'Discover Nearby Venues',
-      description: 'Open the app and instantly see all fitness venues within 100m of your location. Filter by activity type (gym, yoga, sports, swimming), view real-time availability, compare pricing, and read authentic reviews from the community.',
-    },
-    {
-      step: '2',
-      title: 'Select Activity & Venue',
-      description: 'Choose your preferred activity and venue. Browse detailed amenities, check-in photos, operating hours, and current capacity. Make an informed decision based on your fitness goals and preferences.',
-    },
-    {
-      step: '3',
-      title: 'Scan QR Code & Check-In',
-      description: 'Arrive at the venue and scan the unique QR code displayed at the entrance. Instant verification grants you immediate access. No waiting, no paperwork—just seamless entry to start your workout.',
-    },
-    {
-      step: '4',
-      title: 'Select Amenities & Start',
-      description: 'Choose your preferred amenities (locker, towel service, equipment access) and begin your session. The app tracks your workout duration and automatically calculates your pay-per-day charge.',
-    },
-    {
-      step: '5',
-      title: 'Build Streaks & Achievements',
-      description: 'Every check-in increases your streak counter. Compete on global leaderboards, unlock achievements, and earn rewards. Track your fitness journey with comprehensive analytics showing your progress over time.',
-    },
-    {
-      step: '6',
-      title: 'Flexible Payment & Access',
-      description: 'Pay only for the days you use—no subscriptions, no commitments. Your wallet balance updates in real-time. Access any venue, any time, anywhere across India. Complete freedom to work out on your terms.',
-    },
+  const userSteps = [
+    { icon: MapPin, text: 'Discover Nearby Venues', description: 'Find gyms within 100m radius' },
+    { icon: Activity, text: 'Select Activity & Venue', description: 'Choose your preferred workout' },
+    { icon: QrCode, text: 'Scan QR Code & Check-In', description: 'Instant access, no waiting' },
+    { icon: Star, text: 'Select Amenities & Start', description: 'Customize your experience' },
+    { icon: TrendingUp, text: 'Build Streaks & Achievements', description: 'Track your fitness journey' },
+    { icon: CreditCard, text: 'Flexible Payment & Access', description: 'Pay only for days you use' },
   ]
 
-  const partnerProcess = [
-    {
-      step: '1',
-      title: 'Onboard Your Venue',
-      description: 'Register your fitness business and create your venue profile. Add multiple locations, set operating hours, upload photos, list amenities, and configure pricing for pay-per-day and subscription passes.',
-    },
-    {
-      step: '2',
-      title: 'Generate QR Codes',
-      description: 'Receive unique QR codes for each location and activity type. Display them at entrances for instant check-ins. The system automatically tracks all customer entries and manages access control.',
-    },
-    {
-      step: '3',
-      title: 'Real-Time Check-Ins',
-      description: 'Monitor live check-ins as customers scan QR codes. View active sessions, track facility utilization in real-time, and receive instant notifications for new check-ins and customer activities.',
-    },
-    {
-      step: '4',
-      title: 'Dual Revenue Streams',
-      description: 'Maximize earnings through pay-per-day users and subscription pass sales. Track both revenue channels separately, view earnings breakdown, and optimize pricing strategies to fill unused capacity.',
-    },
-    {
-      step: '5',
-      title: 'Advanced Analytics Dashboard',
-      description: 'Access comprehensive business intelligence: peak hours, customer demographics, revenue trends, facility utilization rates, subscription lifecycle, expiring passes, and predictive analytics for growth.',
-    },
-    {
-      step: '6',
-      title: 'Multi-Location Management',
-      description: 'Manage all your venues from one unified platform. Coordinate operations across multiple locations, track performance individually, manage pass groups, handle customer relationships, and scale your business efficiently.',
-    },
+  const partnerSteps = [
+    { icon: Building2, text: 'Onboard Your Venue', description: 'Register your fitness business' },
+    { icon: QrCode, text: 'Generate QR Codes', description: 'Get unique codes for each location' },
+    { icon: CheckCircle, text: 'Real-Time Check-Ins', description: 'Monitor live customer entries' },
+    { icon: DollarSign, text: 'Dual Revenue Streams', description: 'Maximize earnings potential' },
+    { icon: BarChart3, text: 'Advanced Analytics', description: 'Data-driven business insights' },
+    { icon: Settings, text: 'Multi-Location Management', description: 'Manage all venues from one platform' },
   ]
+
+  const [userStep, setUserStep] = useState(0)
+  const [partnerStep, setPartnerStep] = useState(0)
+
+  useEffect(() => {
+    if (!isInView) return
+
+    const userInterval = setInterval(() => {
+      setUserStep((prev) => (prev + 1) % userSteps.length)
+    }, 3000)
+
+    const partnerInterval = setInterval(() => {
+      setPartnerStep((prev) => (prev + 1) % partnerSteps.length)
+    }, 3200)
+
+    return () => {
+      clearInterval(userInterval)
+      clearInterval(partnerInterval)
+    }
+  }, [isInView, userSteps.length, partnerSteps.length])
 
   return (
     <section
@@ -116,183 +88,348 @@ export default function AppTabs() {
         backgroundImage: 'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)',
         backgroundSize: '50px 50px',
       }} />
+      
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="text-center mb-12 gpu-accelerated"
+          className="text-center mb-16 gpu-accelerated"
           style={{ willChange: 'transform, opacity' }}
         >
-            <motion.h2 
+          <motion.h2 
             className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 gpu-accelerated"
             initial={{ opacity: 0, scale: 0.95 }}
             animate={isInView ? { opacity: 1, scale: 1 } : {}}
             transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
             style={{ willChange: 'transform, opacity' }}
           >
-            Our <span className="bg-gradient-to-r from-emerald-400 to-gold-400 bg-clip-text text-transparent">Apps</span>
+            Explore Our <span className="bg-gradient-to-r from-emerald-400 to-amber-400 bg-clip-text text-transparent">Apps</span>
           </motion.h2>
           <p className="text-xl md:text-2xl text-gray-200 font-medium">
             Two powerful platforms. One unified ecosystem.
           </p>
         </motion.div>
 
-        {/* Both Apps Side by Side */}
-        <div className="grid lg:grid-cols-2 gap-8">
-          {/* User App */}
+        {/* Both Apps Side by Side with Animations */}
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
+          {/* User App Animation */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="bg-gradient-to-br from-gray-800/95 via-gray-900/95 to-black/95 rounded-3xl shadow-2xl p-8 md:p-10 border-2 border-emerald-500/30 backdrop-blur-xl gpu-accelerated"
-            style={{ willChange: 'transform, opacity' }}
+            className="relative"
           >
-            <div className="flex items-center gap-3 mb-6">
-              <Image
-                src="/logos/rivio-user-light.png"
-                alt="RIVIO User App Logo"
-                width={64}
-                height={64}
-                className="w-16 h-16"
-              />
-              <div>
-                <h3 className="text-3xl font-bold text-white">RIVIO User App</h3>
-                <p className="text-gray-200 font-medium">Your Fitness Journey, Your Way</p>
+            <div className="bg-gradient-to-br from-gray-900/95 via-black/95 to-gray-900/95 rounded-3xl shadow-2xl p-8 md:p-10 border-2 border-emerald-500/30 backdrop-blur-xl overflow-hidden">
+              {/* Header */}
+              <div className="flex items-center gap-3 mb-8">
+                <Image
+                  src="/logos/rivio-user-light.png"
+                  alt="RIVIO User App Logo"
+                  width={64}
+                  height={64}
+                  className="w-16 h-16"
+                />
+                <div>
+                  <h3 className="text-3xl font-bold text-white">RIVIO User App</h3>
+                  <p className="text-emerald-400 font-medium">Your Fitness Journey, Your Way</p>
+                </div>
               </div>
-            </div>
-            <p className="text-lg text-gray-200 mb-6 font-medium leading-relaxed">
-              Experience unprecedented freedom in fitness. Access premium gyms, yoga studios, sports facilities, and wellness centers across India with our revolutionary pay-per-day model.
-            </p>
-            <div className="space-y-4 mb-8">
-              {userProcess.map((item, index) => (
+
+              {/* Animated Phone Mockup */}
+              <div className="relative h-[500px] md:h-[600px] flex items-center justify-center">
                 <motion.div
-                  key={item.step}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={isInView ? { opacity: 1, x: 0 } : {}}
-                  transition={{ delay: 0.3 + index * 0.1 }}
-                  className="bg-gradient-to-r from-emerald-500/10 via-emerald-500/5 to-transparent rounded-xl p-5 border border-emerald-500/20 hover:border-emerald-500/40 transition-all group"
+                  className="relative w-64 h-[480px] md:w-72 md:h-[540px] bg-gray-900 rounded-[2rem] md:rounded-[3rem] p-3 md:p-4 shadow-2xl border-2 md:border-4 border-emerald-500/50"
+                  animate={{
+                    y: [0, -10, 0],
+                  }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: 'easeInOut',
+                  }}
+                  style={{
+                    boxShadow: '0 20px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(16, 185, 129, 0.4)',
+                  }}
                 >
-                  <div className="flex items-start gap-4">
-                    <div className="w-10 h-10 bg-emerald-500/20 rounded-lg flex items-center justify-center border border-emerald-500/30 flex-shrink-0 group-hover:bg-emerald-500/30 transition-colors">
-                      <span className="text-emerald-300 font-bold text-lg">{item.step}</span>
+                  {/* Phone Screen */}
+                  <div className="w-full h-full bg-black rounded-[2rem] overflow-hidden relative">
+                    {/* Status Bar */}
+                    <div className="absolute top-0 left-0 right-0 h-12 bg-gray-900 flex items-center justify-between px-6 z-10">
+                      <div className="text-white text-xs font-semibold">9:41</div>
+                      <div className="flex gap-1">
+                        <div className="w-1 h-1 bg-white rounded-full" />
+                        <div className="w-1 h-1 bg-white rounded-full" />
+                        <div className="w-1 h-1 bg-white rounded-full" />
+                      </div>
                     </div>
-                    <div className="flex-1">
-                      <h4 className="text-lg font-bold text-white mb-2 group-hover:text-emerald-300 transition-colors">
-                        {item.title}
-                      </h4>
-                      <p className="text-gray-300 leading-relaxed font-medium text-sm">
-                        {item.description}
-                      </p>
+
+                    {/* App Content */}
+                    <div className="pt-12 h-full flex flex-col items-center justify-center gap-6 px-6">
+                      <AnimatePresence mode="wait">
+                        <motion.div
+                          key={userStep}
+                          initial={{ opacity: 0, scale: 0.8, y: 50 }}
+                          animate={{ opacity: 1, scale: 1, y: 0 }}
+                          exit={{ opacity: 0, scale: 0.8, y: -50 }}
+                          transition={{ duration: 0.6, ease: 'easeInOut' }}
+                          className="flex flex-col items-center gap-6 w-full"
+                        >
+                          {/* Icon */}
+                          <motion.div
+                            className="w-32 h-32 md:w-40 md:h-40 rounded-3xl flex items-center justify-center bg-emerald-500/30 border-4 border-emerald-400/60 shadow-2xl"
+                            animate={{
+                              scale: [1, 1.1, 1],
+                              rotate: [0, 5, -5, 0],
+                            }}
+                            transition={{
+                              duration: 2,
+                              repeat: Infinity,
+                              ease: 'easeInOut',
+                            }}
+                            style={{
+                              boxShadow: '0 0 40px rgba(16, 185, 129, 0.6), 0 0 80px rgba(16, 185, 129, 0.3)',
+                            }}
+                          >
+                            <motion.div
+                              animate={{ rotate: [0, 360] }}
+                              transition={{ duration: 3, repeat: Infinity, ease: 'linear' }}
+                            >
+                              {(() => {
+                                const IconComponent = userSteps[userStep].icon
+                                return (
+                                  <IconComponent
+                                    className="w-16 h-16 md:w-20 md:h-20 text-emerald-300"
+                                    style={{ filter: 'drop-shadow(0 0 10px currentColor)' }}
+                                  />
+                                )
+                              })()}
+                            </motion.div>
+                          </motion.div>
+
+                          {/* Text */}
+                          <div className="text-center">
+                            <h3
+                              className="text-2xl md:text-3xl font-bold mb-2 text-emerald-300"
+                              style={{
+                                textShadow: '0 0 20px currentColor, 0 0 40px currentColor',
+                              }}
+                            >
+                              {userSteps[userStep].text}
+                            </h3>
+                            <p className="text-gray-300 text-sm md:text-base font-medium">
+                              {userSteps[userStep].description}
+                            </p>
+                          </div>
+
+                          {/* Progress Indicators */}
+                          <div className="flex gap-2 mt-4">
+                            {userSteps.map((_, index) => {
+                              const isActive = index === userStep
+                              return (
+                                <motion.div
+                                  key={index}
+                                  className={`h-2 rounded-full ${
+                                    isActive ? 'bg-emerald-400' : 'bg-gray-700'
+                                  }`}
+                                  animate={{
+                                    width: isActive ? 32 : 8,
+                                  }}
+                                  transition={{ duration: 0.3 }}
+                                />
+                              )
+                            })}
+                          </div>
+                        </motion.div>
+                      </AnimatePresence>
                     </div>
                   </div>
                 </motion.div>
-              ))}
-            </div>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <motion.a
-                href="#"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="flex items-center justify-center gap-2 px-6 py-3 bg-emerald-500 text-white rounded-full font-semibold hover:bg-emerald-600 transition-colors"
-              >
-                <Download className="w-5 h-5" />
-                Download for iOS
-              </motion.a>
-              <motion.a
-                href="#"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="flex items-center justify-center gap-2 px-6 py-3 bg-black text-white rounded-full font-semibold hover:bg-gray-800 transition-colors"
-              >
-                <Download className="w-5 h-5" />
-                Download for Android
-              </motion.a>
+              </div>
+
+              {/* Download Buttons */}
+              <div className="flex flex-col sm:flex-row gap-4 mt-8">
+                <motion.a
+                  href="#"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="flex items-center justify-center gap-2 px-6 py-3 bg-emerald-500 text-white rounded-full font-semibold hover:bg-emerald-600 transition-colors"
+                >
+                  <Download className="w-5 h-5" />
+                  Download for iOS
+                </motion.a>
+                <motion.a
+                  href="#"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="flex items-center justify-center gap-2 px-6 py-3 bg-black text-white rounded-full font-semibold hover:bg-gray-800 transition-colors border border-gray-700"
+                >
+                  <Download className="w-5 h-5" />
+                  Download for Android
+                </motion.a>
+              </div>
             </div>
           </motion.div>
 
-          {/* Partner App */}
+          {/* Partner App Animation */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="bg-gradient-to-br from-gray-800/95 via-gray-900/95 to-black/95 rounded-3xl shadow-2xl p-8 md:p-10 border-2 border-gold-500/30 backdrop-blur-xl gpu-accelerated"
-            style={{ willChange: 'transform, opacity' }}
+            className="relative"
           >
-            <div className="flex items-center gap-3 mb-6">
-              <Image
-                src="/logos/rivio-partner-gold-lighttext.png"
-                alt="RIVIO Partners Logo"
-                width={64}
-                height={64}
-                className="w-16 h-16"
-              />
-              <div>
-                <h3 className="text-3xl font-bold text-white">RIVIO Partners</h3>
-                <p className="text-gray-200 font-medium">Grow Your Fitness Business</p>
+            <div className="bg-gradient-to-br from-gray-900/95 via-black/95 to-gray-900/95 rounded-3xl shadow-2xl p-8 md:p-10 border-2 border-amber-500/30 backdrop-blur-xl overflow-hidden">
+              {/* Header */}
+              <div className="flex items-center gap-3 mb-8">
+                <Image
+                  src="/logos/rivio-partner-gold-lighttext.png"
+                  alt="RIVIO Partners Logo"
+                  width={64}
+                  height={64}
+                  className="w-16 h-16"
+                />
+                <div>
+                  <h3 className="text-3xl font-bold text-white">RIVIO Partners</h3>
+                  <p className="text-amber-400 font-medium">Grow Your Fitness Business</p>
+                </div>
               </div>
-            </div>
-            <p className="text-lg text-gray-200 mb-6 font-medium leading-relaxed">
-              Join India's fastest-growing fitness network and unlock new revenue streams. Maximize facility utilization, reduce costs, and scale your business with data-driven insights.
-            </p>
-            <div className="space-y-4 mb-8">
-              {partnerProcess.map((item, index) => (
+
+              {/* Animated Phone Mockup */}
+              <div className="relative h-[500px] md:h-[600px] flex items-center justify-center">
                 <motion.div
-                  key={item.step}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={isInView ? { opacity: 1, x: 0 } : {}}
-                  transition={{ delay: 0.4 + index * 0.1 }}
-                  className="bg-gradient-to-r from-gold-500/10 via-gold-500/5 to-transparent rounded-xl p-5 border border-gold-500/20 hover:border-gold-500/40 transition-all group"
+                  className="relative w-64 h-[480px] md:w-72 md:h-[540px] bg-gray-900 rounded-[2rem] md:rounded-[3rem] p-3 md:p-4 shadow-2xl border-2 md:border-4 border-amber-500/50"
+                  animate={{
+                    y: [0, -10, 0],
+                  }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: 'easeInOut',
+                  }}
+                  style={{
+                    boxShadow: '0 20px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(212, 175, 55, 0.4)',
+                  }}
                 >
-                  <div className="flex items-start gap-4">
-                    <div className="w-10 h-10 bg-gold-500/20 rounded-lg flex items-center justify-center border border-gold-500/30 flex-shrink-0 group-hover:bg-gold-500/30 transition-colors">
-                      <span className="text-gold-300 font-bold text-lg">{item.step}</span>
+                  {/* Phone Screen */}
+                  <div className="w-full h-full bg-black rounded-[2rem] overflow-hidden relative">
+                    {/* Status Bar */}
+                    <div className="absolute top-0 left-0 right-0 h-12 bg-gray-900 flex items-center justify-between px-6 z-10">
+                      <div className="text-white text-xs font-semibold">9:41</div>
+                      <div className="flex gap-1">
+                        <div className="w-1 h-1 bg-white rounded-full" />
+                        <div className="w-1 h-1 bg-white rounded-full" />
+                        <div className="w-1 h-1 bg-white rounded-full" />
+                      </div>
                     </div>
-                    <div className="flex-1">
-                      <h4 className="text-lg font-bold text-white mb-2 group-hover:text-gold-300 transition-colors">
-                        {item.title}
-                      </h4>
-                      <p className="text-gray-300 leading-relaxed font-medium text-sm">
-                        {item.description}
-                      </p>
+
+                    {/* App Content */}
+                    <div className="pt-12 h-full flex flex-col items-center justify-center gap-6 px-6">
+                      <AnimatePresence mode="wait">
+                        <motion.div
+                          key={partnerStep}
+                          initial={{ opacity: 0, scale: 0.8, y: 50 }}
+                          animate={{ opacity: 1, scale: 1, y: 0 }}
+                          exit={{ opacity: 0, scale: 0.8, y: -50 }}
+                          transition={{ duration: 0.6, ease: 'easeInOut' }}
+                          className="flex flex-col items-center gap-6 w-full"
+                        >
+                          {/* Icon */}
+                          <motion.div
+                            className="w-32 h-32 md:w-40 md:h-40 rounded-3xl flex items-center justify-center bg-amber-500/30 border-4 border-amber-400/60 shadow-2xl"
+                            animate={{
+                              scale: [1, 1.1, 1],
+                              rotate: [0, 5, -5, 0],
+                            }}
+                            transition={{
+                              duration: 2,
+                              repeat: Infinity,
+                              ease: 'easeInOut',
+                            }}
+                            style={{
+                              boxShadow: '0 0 40px rgba(212, 175, 55, 0.6), 0 0 80px rgba(212, 175, 55, 0.3)',
+                            }}
+                          >
+                            <motion.div
+                              animate={{ rotate: [0, 360] }}
+                              transition={{ duration: 3, repeat: Infinity, ease: 'linear' }}
+                            >
+                              {(() => {
+                                const IconComponent = partnerSteps[partnerStep].icon
+                                return (
+                                  <IconComponent
+                                    className="w-16 h-16 md:w-20 md:h-20 text-amber-300"
+                                    style={{ filter: 'drop-shadow(0 0 10px currentColor)' }}
+                                  />
+                                )
+                              })()}
+                            </motion.div>
+                          </motion.div>
+
+                          {/* Text */}
+                          <div className="text-center">
+                            <h3
+                              className="text-2xl md:text-3xl font-bold mb-2 text-amber-300"
+                              style={{
+                                textShadow: '0 0 20px currentColor, 0 0 40px currentColor',
+                              }}
+                            >
+                              {partnerSteps[partnerStep].text}
+                            </h3>
+                            <p className="text-gray-300 text-sm md:text-base font-medium">
+                              {partnerSteps[partnerStep].description}
+                            </p>
+                          </div>
+
+                          {/* Progress Indicators */}
+                          <div className="flex gap-2 mt-4">
+                            {partnerSteps.map((_, index) => {
+                              const isActive = index === partnerStep
+                              return (
+                                <motion.div
+                                  key={index}
+                                  className={`h-2 rounded-full ${
+                                    isActive ? 'bg-amber-400' : 'bg-gray-700'
+                                  }`}
+                                  animate={{
+                                    width: isActive ? 32 : 8,
+                                  }}
+                                  transition={{ duration: 0.3 }}
+                                />
+                              )
+                            })}
+                          </div>
+                        </motion.div>
+                      </AnimatePresence>
                     </div>
                   </div>
                 </motion.div>
-              ))}
+              </div>
+
+              {/* Download Buttons */}
+              <div className="flex flex-col sm:flex-row gap-4 mt-8">
+                <motion.a
+                  href="#"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="flex items-center justify-center gap-2 px-6 py-3 bg-amber-500 text-white rounded-full font-semibold hover:bg-amber-600 transition-colors"
+                >
+                  <Download className="w-5 h-5" />
+                  Download for iOS
+                </motion.a>
+                <motion.a
+                  href="#"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="flex items-center justify-center gap-2 px-6 py-3 bg-black text-white rounded-full font-semibold hover:bg-gray-800 transition-colors border border-gray-700"
+                >
+                  <Download className="w-5 h-5" />
+                  Download for Android
+                </motion.a>
+              </div>
             </div>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <motion.a
-                href="#"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="flex items-center justify-center gap-2 px-6 py-3 bg-gold-500 text-white rounded-full font-semibold hover:bg-gold-600 transition-colors"
-              >
-                <Download className="w-5 h-5" />
-                Download for iOS
-              </motion.a>
-              <motion.a
-                href="#"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="flex items-center justify-center gap-2 px-6 py-3 bg-black text-white rounded-full font-semibold hover:bg-gray-800 transition-colors"
-              >
-                <Download className="w-5 h-5" />
-                Download for Android
-              </motion.a>
-            </div>
-            <motion.a
-              href="#contact"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="mt-4 flex items-center justify-center gap-2 px-6 py-3 border-2 border-gold-500 text-gold-400 rounded-full font-semibold hover:bg-gold-500/10 transition-colors"
-            >
-              <ExternalLink className="w-5 h-5" />
-              Join as Partner
-            </motion.a>
           </motion.div>
         </div>
       </div>
     </section>
   )
 }
-

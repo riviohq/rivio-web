@@ -9,12 +9,14 @@ export default function Footer() {
 
   const footerLinks = {
     user: [
+      { name: 'App Features', href: '/features#user' },
       { name: 'About Us', href: '/user/about' },
       { name: 'Privacy Policy', href: '/user/privacy' },
       { name: 'Terms & Conditions', href: '/user/terms' },
       { name: 'Help & Support', href: '/user/help' },
     ],
     partner: [
+      { name: 'Partner Features', href: '/features#partner' },
       { name: 'About Us', href: '/partner/about' },
       { name: 'Privacy Policy', href: '/partner/privacy' },
       { name: 'Terms & Conditions', href: '/partner/terms' },
