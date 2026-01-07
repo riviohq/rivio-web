@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { ChevronDown, ChevronUp, HelpCircle, Mail, MessageCircle } from 'lucide-react'
+import { ChevronDown, ChevronUp, HelpCircle, Mail, MessageCircle, Flame, CheckCircle, CreditCard, Trophy } from 'lucide-react'
 
 export default function UserHelpPage() {
   const [openIndex, setOpenIndex] = useState<number | null>(null)
@@ -9,10 +9,9 @@ export default function UserHelpPage() {
   const faqs = [
     {
       category: 'Streaks & Stats',
-      icon: '🔥',
-      color: 'from-orange-500 to-red-500',
-      bgColor: 'bg-orange-500/10',
-      borderColor: 'border-orange-500/30',
+      icon: Flame,
+      color: 'from-orange-500/20 to-red-500/20',
+      borderColor: 'border-orange-500/20',
       items: [
         {
           question: "How do Streaks Work?",
@@ -38,14 +37,13 @@ export default function UserHelpPage() {
     },
     {
       category: 'Check-in',
-      icon: '✅',
-      color: 'from-green-500 to-emerald-500',
-      bgColor: 'bg-green-500/10',
-      borderColor: 'border-green-500/30',
+      icon: CheckCircle,
+      color: 'from-green-500/20 to-emerald-500/20',
+      borderColor: 'border-green-500/20',
       items: [
         {
           question: "How Does Attendance/Check-in Work?",
-          answer: "We offer two convenient ways to mark your gym attendance:\n\n1. QR Code Scan (Recommended):\n• Scan the gym's QR code displayed at the facility\n• Location verification ensures you're within 100 meters of the gym\n• Most secure and accurate method\n• Instant confirmation\n\n2. Self-Marked Attendance:\n• Manually mark attendance from anywhere\n• Useful when QR code is unavailable\n• Trust-based system\n• Flexibility for various situations\n\nCharges:\n• Without Pass: ₹40 per visit (day pass)\n• With Active Pass: ₹0 (unlimited visits)\n\nImportant: You can only check-in once per day per gym unless you have an active pass which allows unlimited re-entries."
+          answer: "We offer two convenient ways to mark your gym attendance:\n\n1. QR Code Scan (Recommended):\n• Scan the gym's QR code displayed at the facility\n• Location verification ensures you're within 100 meters of the gym\n• Most secure and accurate method\n• Instant confirmation\n\n2. Self-Marked Attendance:\n• Manually mark attendance from anywhere\n• Useful when QR code is unavailable\n• Trust-based system\n• Flexibility for various situations\n\nCharges:\n• Without Pass: Pay per visit based on the venue's day pass pricing\n• With Active Pass: ₹0 (unlimited visits)\n\nImportant: You can only check-in once per day per gym unless you have an active pass which allows unlimited re-entries."
         },
         {
           question: "Is Marking Attendance Mandatory?",
@@ -53,16 +51,15 @@ export default function UserHelpPage() {
         },
         {
           question: "Can I Check-in Multiple Times in a Day?",
-          answer: "This depends on whether you have an active pass:\n\nWithout Pass:\n• One check-in per day per gym\n• Each check-in charges ₹40 (day pass)\n• Cannot re-enter same gym on same day\n• Attempting duplicate check-in will show error\n\nWith Active Pass:\n• Unlimited check-ins per day\n• No additional charges\n• Re-entries are free\n• Perfect for multiple workout sessions\n\nImportant Note:\nOnly your FIRST check-in of the day counts toward your streak statistics. Additional re-entries update your check-in time but don't add to your daily count (since streaks count unique days, not total check-ins)."
+          answer: "This depends on whether you have an active pass:\n\nWithout Pass:\n• One check-in per day per gym\n• Each check-in charges based on the venue's day pass pricing\n• Cannot re-enter same gym on same day\n• Attempting duplicate check-in will show error\n\nWith Active Pass:\n• Unlimited check-ins per day\n• No additional charges\n• Re-entries are free\n• Perfect for multiple workout sessions\n\nImportant Note:\nOnly your FIRST check-in of the day counts toward your streak statistics. Additional re-entries update your check-in time but don't add to your daily count (since streaks count unique days, not total check-ins)."
         }
       ]
     },
     {
       category: 'Passes & Wallet',
-      icon: '💳',
-      color: 'from-blue-500 to-cyan-500',
-      bgColor: 'bg-blue-500/10',
-      borderColor: 'border-blue-500/30',
+      icon: CreditCard,
+      color: 'from-blue-500/20 to-cyan-500/20',
+      borderColor: 'border-blue-500/20',
       items: [
         {
           question: "What are Gym Passes and How Do They Work?",
@@ -70,11 +67,11 @@ export default function UserHelpPage() {
         },
         {
           question: "How Do Payments and Wallet Work?",
-          answer: "All payments in RIVIO are processed through your secure in-app wallet.\n\nWallet System:\n• Add money to wallet using multiple payment methods (UPI, Cards, Net Banking)\n• Instant balance updates\n• Secure encrypted transactions\n• Complete transaction history available\n• View balance anytime in your profile\n\nPayment Charges:\n• Day Pass: ₹40 per visit (without subscription)\n• Gym Passes: Varies by duration and gym\n• All charges auto-deducted from wallet on check-in\n\nTransaction History:\n• View all past transactions\n• See date, amount, and type of transaction\n• Download statements if needed\n\nImportant: Ensure sufficient wallet balance before check-in to avoid payment failures. Low balance will show a warning."
+          answer: "All payments in RIVIO are processed through your secure in-app wallet.\n\nWallet System:\n• Add money to wallet using multiple payment methods (UPI, Cards, Net Banking)\n• Instant balance updates\n• Secure encrypted transactions\n• Complete transaction history available\n• View balance anytime in your profile\n\nPayment Charges:\n• Day Pass: Pay per visit based on venue pricing (without subscription)\n• Gym Passes: Varies by duration and gym\n• All charges auto-deducted from wallet on check-in\n\nTransaction History:\n• View all past transactions\n• See date, amount, and type of transaction\n• Download statements if needed\n\nImportant: Ensure sufficient wallet balance before check-in to avoid payment failures. Low balance will show a warning."
         },
         {
           question: "Can I Visit Multiple Different Gyms?",
-          answer: "Yes! RIVIO gives you complete flexibility to visit any venue in our network.\n\nMulti-Gym Benefits:\n• Visit different venues based on your location\n• Try various fitness facilities and equipment\n• Find your preferred workout environment\n• Travel-friendly fitness routine\n• No restrictions on venue selection\n• Explore gyms near work, home, or travel destinations\n\nStreak Benefits:\nYour streaks work across ALL gyms in our network. Any venue visit counts toward your overall streak, regardless of which gym you choose!\n\nImportant Notes:\n• Passes are venue-specific: A pass purchased for Gym A will only work at Gym A, not at other gyms\n• Without a pass: Pay ₹40 per visit at any venue\n• You can have multiple active passes for different venues simultaneously"
+          answer: "Yes! RIVIO gives you complete flexibility to visit any venue in our network.\n\nMulti-Gym Benefits:\n• Visit different venues based on your location\n• Try various fitness facilities and equipment\n• Find your preferred workout environment\n• Travel-friendly fitness routine\n• No restrictions on venue selection\n• Explore gyms near work, home, or travel destinations\n\nStreak Benefits:\nYour streaks work across ALL gyms in our network. Any venue visit counts toward your overall streak, regardless of which gym you choose!\n\nImportant Notes:\n• Passes are venue-specific: A pass purchased for Gym A will only work at Gym A, not at other gyms\n• Without a pass: Pay per visit based on each venue's pricing\n• You can have multiple active passes for different venues simultaneously"
         },
         {
           question: "What Payment Methods Are Supported?",
@@ -84,10 +81,9 @@ export default function UserHelpPage() {
     },
     {
       category: 'Rankings',
-      icon: '🏆',
-      color: 'from-purple-500 to-pink-500',
-      bgColor: 'bg-purple-500/10',
-      borderColor: 'border-purple-500/30',
+      icon: Trophy,
+      color: 'from-purple-500/20 to-pink-500/20',
+      borderColor: 'border-purple-500/20',
       items: [
         {
           question: "How Does the Ranking System Work?",
@@ -112,21 +108,21 @@ export default function UserHelpPage() {
   return (
     <div className="min-h-screen bg-black">
       {/* Header */}
-      <div className="bg-black/80 backdrop-blur-sm border-b border-gray-800 sticky top-0 z-10">
+      <div className="bg-black/60 backdrop-blur-sm border-b border-gray-800/50 sticky top-0 z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl flex items-center justify-center shadow-lg">
-                <HelpCircle className="w-6 h-6 text-white" />
+              <div className="w-12 h-12 bg-emerald-500/20 rounded-xl flex items-center justify-center border border-emerald-500/20">
+                <HelpCircle className="w-6 h-6 text-emerald-400" />
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-white">Help & Support</h1>
-                <p className="text-sm text-gray-400">Find answers to common questions</p>
+                <h1 className="text-2xl font-bold text-gray-100">Help & Support</h1>
+                <p className="text-sm text-gray-500">Find answers to common questions</p>
               </div>
             </div>
             <a
               href="mailto:support@rivio.com"
-              className="hidden md:flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-emerald-500 to-emerald-600 rounded-lg text-white font-semibold hover:from-emerald-600 hover:to-emerald-700 transition-all shadow-lg"
+              className="hidden md:flex items-center gap-2 px-6 py-3 bg-emerald-500/20 rounded-lg text-emerald-300 font-medium hover:bg-emerald-500/30 transition-all border border-emerald-500/20"
             >
               <Mail className="w-4 h-4" />
               Contact Support
@@ -138,13 +134,13 @@ export default function UserHelpPage() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Hero Section */}
         <div className="text-center mb-16">
-          <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-emerald-500/20 to-emerald-600/20 rounded-2xl mb-6 border border-emerald-500/30">
-            <MessageCircle className="w-10 h-10 text-emerald-400" />
+          <div className="inline-flex items-center justify-center w-20 h-20 bg-emerald-500/10 rounded-2xl mb-6 border border-emerald-500/20">
+            <MessageCircle className="w-10 h-10 text-emerald-400/70" />
           </div>
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-100 mb-4">
             How can we help you?
           </h2>
-          <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+          <p className="text-xl text-gray-500 max-w-2xl mx-auto">
             Everything you need to know about RIVIO. Browse our frequently asked questions or contact our support team.
           </p>
         </div>
@@ -153,7 +149,7 @@ export default function UserHelpPage() {
         <div className="md:hidden mb-8">
           <a
             href="mailto:support@rivio.com"
-            className="flex items-center justify-center gap-3 px-6 py-4 bg-gradient-to-r from-emerald-500 to-emerald-600 rounded-xl text-white font-semibold hover:from-emerald-600 hover:to-emerald-700 transition-all shadow-lg"
+            className="flex items-center justify-center gap-3 px-6 py-4 bg-emerald-500/20 rounded-xl text-emerald-300 font-medium hover:bg-emerald-500/30 transition-all border border-emerald-500/20"
           >
             <Mail className="w-5 h-5" />
             Contact Support
@@ -165,11 +161,11 @@ export default function UserHelpPage() {
           {faqs.map((category, catIndex) => (
             <div key={catIndex} className="space-y-4">
               {/* Category Header */}
-              <div className={`flex items-center gap-4 p-6 rounded-2xl bg-gradient-to-r ${category.color} bg-opacity-10 border ${category.borderColor} backdrop-blur-sm`}>
-                <div className={`text-4xl`}>
-                  {category.icon}
+              <div className={`flex items-center gap-4 p-6 rounded-2xl bg-gradient-to-r ${category.color} border ${category.borderColor} backdrop-blur-sm`}>
+                <div className="w-10 h-10 flex items-center justify-center">
+                  <category.icon className="w-8 h-8 text-gray-300" />
                 </div>
-                <h3 className="text-2xl font-bold text-white">{category.category}</h3>
+                <h3 className="text-2xl font-bold text-gray-200">{category.category}</h3>
               </div>
 
               {/* FAQ Cards */}
@@ -181,28 +177,28 @@ export default function UserHelpPage() {
                   return (
                     <div
                       key={faqIndex}
-                      className={`bg-gray-900/80 backdrop-blur-sm rounded-xl border ${category.borderColor} overflow-hidden transition-all duration-300 hover:border-opacity-50 ${
-                        isOpen ? 'border-opacity-70 shadow-xl' : 'shadow-lg'
+                      className={`bg-gray-900/40 backdrop-blur-sm rounded-xl border ${category.borderColor} overflow-hidden transition-all duration-300 hover:border-opacity-40 ${
+                        isOpen ? 'border-opacity-50' : ''
                       }`}
                     >
                       <button
                         onClick={() => toggleFAQ(index)}
-                        className="w-full p-6 text-left flex items-center justify-between gap-4 hover:bg-gray-800/50 transition-colors"
+                        className="w-full p-6 text-left flex items-center justify-between gap-4 hover:bg-gray-800/30 transition-colors"
                       >
-                        <span className="font-semibold text-white text-lg flex-1 pr-4">
+                        <span className="font-semibold text-gray-200 text-lg flex-1 pr-4">
                           {faq.question}
                         </span>
-                        <div className={`flex-shrink-0 w-8 h-8 rounded-lg bg-gray-800 flex items-center justify-center transition-transform ${isOpen ? 'rotate-180' : ''}`}>
+                        <div className={`flex-shrink-0 w-8 h-8 rounded-lg bg-gray-800/50 flex items-center justify-center transition-transform ${isOpen ? 'rotate-180' : ''}`}>
                           {isOpen ? (
-                            <ChevronUp className="w-5 h-5 text-gray-400" />
+                            <ChevronUp className="w-5 h-5 text-gray-500" />
                           ) : (
-                            <ChevronDown className="w-5 h-5 text-gray-400" />
+                            <ChevronDown className="w-5 h-5 text-gray-500" />
                           )}
                         </div>
                       </button>
                       {isOpen && (
-                        <div className="px-6 pb-6 pt-0 border-t border-gray-800">
-                          <div className="pt-6 text-gray-300 leading-relaxed whitespace-pre-line">
+                        <div className="px-6 pb-6 pt-0 border-t border-gray-800/50">
+                          <div className="pt-6 text-gray-400 leading-relaxed whitespace-pre-line">
                             {faq.answer}
                           </div>
                         </div>
@@ -216,18 +212,18 @@ export default function UserHelpPage() {
         </div>
 
         {/* Contact Section */}
-        <div className="mt-16 bg-gradient-to-r from-emerald-500/10 to-emerald-600/10 rounded-2xl p-8 md:p-12 border border-emerald-500/20 text-center">
+        <div className="mt-16 bg-emerald-500/5 rounded-2xl p-8 md:p-12 border border-emerald-500/10 text-center">
           <div className="max-w-2xl mx-auto">
-            <div className="w-16 h-16 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg">
-              <Mail className="w-8 h-8 text-white" />
+            <div className="w-16 h-16 bg-emerald-500/20 rounded-2xl flex items-center justify-center mx-auto mb-6 border border-emerald-500/20">
+              <Mail className="w-8 h-8 text-emerald-400/70" />
             </div>
-            <h3 className="text-2xl font-bold text-white mb-3">Still have questions?</h3>
-            <p className="text-gray-400 mb-6">
+            <h3 className="text-2xl font-bold text-gray-100 mb-3">Still have questions?</h3>
+            <p className="text-gray-500 mb-6">
               Can't find the answer you're looking for? Our support team is here to help.
             </p>
             <a
               href="mailto:support@rivio.com"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-emerald-500 to-emerald-600 rounded-xl text-white font-semibold hover:from-emerald-600 hover:to-emerald-700 transition-all shadow-lg"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-emerald-500/20 rounded-xl text-emerald-300 font-medium hover:bg-emerald-500/30 transition-all border border-emerald-500/20"
             >
               <Mail className="w-5 h-5" />
               Email Support

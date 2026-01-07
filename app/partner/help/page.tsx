@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { ChevronDown, ChevronUp, HelpCircle, Mail, MessageCircle, Building2 } from 'lucide-react'
+import { ChevronDown, ChevronUp, HelpCircle, Mail, MessageCircle, Building2, Rocket, DollarSign, Ticket, BarChart3, Settings } from 'lucide-react'
 
 export default function PartnerHelpPage() {
   const [openIndex, setOpenIndex] = useState<number | null>(null)
@@ -9,10 +9,9 @@ export default function PartnerHelpPage() {
   const faqs = [
     {
       category: 'Getting Started',
-      icon: '🚀',
-      color: 'from-amber-500 to-orange-500',
-      bgColor: 'bg-amber-500/10',
-      borderColor: 'border-amber-500/30',
+      icon: Rocket,
+      color: 'from-amber-500/20 to-orange-500/20',
+      borderColor: 'border-amber-500/20',
       items: [
         {
           question: "How do I register my business on RIVIO Partner?",
@@ -30,14 +29,13 @@ export default function PartnerHelpPage() {
     },
     {
       category: 'Earnings & Payments',
-      icon: '💰',
-      color: 'from-green-500 to-emerald-500',
-      bgColor: 'bg-green-500/10',
-      borderColor: 'border-green-500/30',
+      icon: DollarSign,
+      color: 'from-green-500/20 to-emerald-500/20',
+      borderColor: 'border-green-500/20',
       items: [
         {
           question: "How do I earn money on RIVIO?",
-          answer: "You earn from two main sources:\n\n1. Per-Visit Payments (Day Passes):\n   • Users pay ₹40 per visit (or your set day pass price)\n   • Earnings credited instantly to your wallet\n   • No waiting period\n   • Real-time tracking\n\n2. Pass Purchases:\n   • Users buy weekly, monthly, quarterly, semiannual, or yearly passes\n   • Full payment received upfront\n   • Passes give users unlimited access to your facility\n   • Auto-attendance marked daily for pass holders\n\nAll earnings are tracked in real-time in your wallet. You can view detailed earnings reports, transaction history, and request settlements anytime."
+          answer: "You earn from two main sources:\n\n1. Per-Visit Payments (Day Passes):\n   • Users pay per visit based on your set day pass pricing\n   • Earnings credited instantly to your wallet\n   • No waiting period\n   • Real-time tracking\n\n2. Pass Purchases:\n   • Users buy weekly, monthly, quarterly, semiannual, or yearly passes\n   • Full payment received upfront\n   • Passes give users unlimited access to your facility\n   • Auto-attendance marked daily for pass holders\n\nAll earnings are tracked in real-time in your wallet. You can view detailed earnings reports, transaction history, and request settlements anytime."
         },
         {
           question: "How do I set up payment details for settlements?",
@@ -55,10 +53,9 @@ export default function PartnerHelpPage() {
     },
     {
       category: 'Pass Management',
-      icon: '🎫',
-      color: 'from-blue-500 to-cyan-500',
-      bgColor: 'bg-blue-500/10',
-      borderColor: 'border-blue-500/30',
+      icon: Ticket,
+      color: 'from-blue-500/20 to-cyan-500/20',
+      borderColor: 'border-blue-500/20',
       items: [
         {
           question: "How do I create and manage passes?",
@@ -76,10 +73,9 @@ export default function PartnerHelpPage() {
     },
     {
       category: 'Business Management',
-      icon: '📊',
-      color: 'from-purple-500 to-pink-500',
-      bgColor: 'bg-purple-500/10',
-      borderColor: 'border-purple-500/30',
+      icon: BarChart3,
+      color: 'from-purple-500/20 to-pink-500/20',
+      borderColor: 'border-purple-500/20',
       items: [
         {
           question: "How do I update my business information?",
@@ -97,10 +93,9 @@ export default function PartnerHelpPage() {
     },
     {
       category: 'Technical Support',
-      icon: '🔧',
-      color: 'from-gray-500 to-slate-500',
-      bgColor: 'bg-gray-500/10',
-      borderColor: 'border-gray-500/30',
+      icon: Settings,
+      color: 'from-gray-500/20 to-slate-500/20',
+      borderColor: 'border-gray-500/20',
       items: [
         {
           question: "What should I do if my QR code is not working?",
@@ -125,21 +120,21 @@ export default function PartnerHelpPage() {
   return (
     <div className="min-h-screen bg-black">
       {/* Header */}
-      <div className="bg-black/80 backdrop-blur-sm border-b border-gray-800 sticky top-0 z-10">
+      <div className="bg-black/60 backdrop-blur-sm border-b border-gray-800/50 sticky top-0 z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl flex items-center justify-center shadow-lg">
-                <Building2 className="w-6 h-6 text-white" />
+              <div className="w-12 h-12 bg-amber-500/20 rounded-xl flex items-center justify-center border border-amber-500/20">
+                <Building2 className="w-6 h-6 text-amber-400" />
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-white">Partner Help & Support</h1>
-                <p className="text-sm text-gray-400">Find answers for business owners</p>
+                <h1 className="text-2xl font-bold text-gray-100">Partner Help & Support</h1>
+                <p className="text-sm text-gray-500">Find answers for business owners</p>
               </div>
             </div>
             <a
               href="mailto:support@rivio.com"
-              className="hidden md:flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-amber-500 to-amber-600 rounded-lg text-white font-semibold hover:from-amber-600 hover:to-amber-700 transition-all shadow-lg"
+              className="hidden md:flex items-center gap-2 px-6 py-3 bg-amber-500/20 rounded-lg text-amber-300 font-medium hover:bg-amber-500/30 transition-all border border-amber-500/20"
             >
               <Mail className="w-4 h-4" />
               Contact Support
@@ -151,13 +146,13 @@ export default function PartnerHelpPage() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Hero Section */}
         <div className="text-center mb-16">
-          <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-amber-500/20 to-amber-600/20 rounded-2xl mb-6 border border-amber-500/30">
-            <MessageCircle className="w-10 h-10 text-amber-400" />
+          <div className="inline-flex items-center justify-center w-20 h-20 bg-amber-500/10 rounded-2xl mb-6 border border-amber-500/20">
+            <MessageCircle className="w-10 h-10 text-amber-400/70" />
           </div>
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-100 mb-4">
             How can we help your business?
           </h2>
-          <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+          <p className="text-xl text-gray-500 max-w-2xl mx-auto">
             Everything you need to know about managing your business on RIVIO Partner. Browse our frequently asked questions or contact our support team.
           </p>
         </div>
@@ -166,7 +161,7 @@ export default function PartnerHelpPage() {
         <div className="md:hidden mb-8">
           <a
             href="mailto:support@rivio.com"
-            className="flex items-center justify-center gap-3 px-6 py-4 bg-gradient-to-r from-amber-500 to-amber-600 rounded-xl text-white font-semibold hover:from-amber-600 hover:to-amber-700 transition-all shadow-lg"
+            className="flex items-center justify-center gap-3 px-6 py-4 bg-amber-500/20 rounded-xl text-amber-300 font-medium hover:bg-amber-500/30 transition-all border border-amber-500/20"
           >
             <Mail className="w-5 h-5" />
             Contact Support
@@ -178,11 +173,11 @@ export default function PartnerHelpPage() {
           {faqs.map((category, catIndex) => (
             <div key={catIndex} className="space-y-4">
               {/* Category Header */}
-              <div className={`flex items-center gap-4 p-6 rounded-2xl bg-gradient-to-r ${category.color} bg-opacity-10 border ${category.borderColor} backdrop-blur-sm`}>
-                <div className={`text-4xl`}>
-                  {category.icon}
+              <div className={`flex items-center gap-4 p-6 rounded-2xl bg-gradient-to-r ${category.color} border ${category.borderColor} backdrop-blur-sm`}>
+                <div className="w-10 h-10 flex items-center justify-center">
+                  <category.icon className="w-8 h-8 text-gray-300" />
                 </div>
-                <h3 className="text-2xl font-bold text-white">{category.category}</h3>
+                <h3 className="text-2xl font-bold text-gray-200">{category.category}</h3>
               </div>
 
               {/* FAQ Cards */}
@@ -194,28 +189,28 @@ export default function PartnerHelpPage() {
                   return (
                     <div
                       key={faqIndex}
-                      className={`bg-gray-900/80 backdrop-blur-sm rounded-xl border ${category.borderColor} overflow-hidden transition-all duration-300 hover:border-opacity-50 ${
-                        isOpen ? 'border-opacity-70 shadow-xl' : 'shadow-lg'
+                      className={`bg-gray-900/40 backdrop-blur-sm rounded-xl border ${category.borderColor} overflow-hidden transition-all duration-300 hover:border-opacity-40 ${
+                        isOpen ? 'border-opacity-50' : ''
                       }`}
                     >
                       <button
                         onClick={() => toggleFAQ(index)}
-                        className="w-full p-6 text-left flex items-center justify-between gap-4 hover:bg-gray-800/50 transition-colors"
+                        className="w-full p-6 text-left flex items-center justify-between gap-4 hover:bg-gray-800/30 transition-colors"
                       >
-                        <span className="font-semibold text-white text-lg flex-1 pr-4">
+                        <span className="font-semibold text-gray-200 text-lg flex-1 pr-4">
                           {faq.question}
                         </span>
-                        <div className={`flex-shrink-0 w-8 h-8 rounded-lg bg-gray-800 flex items-center justify-center transition-transform ${isOpen ? 'rotate-180' : ''}`}>
+                        <div className={`flex-shrink-0 w-8 h-8 rounded-lg bg-gray-800/50 flex items-center justify-center transition-transform ${isOpen ? 'rotate-180' : ''}`}>
                           {isOpen ? (
-                            <ChevronUp className="w-5 h-5 text-gray-400" />
+                            <ChevronUp className="w-5 h-5 text-gray-500" />
                           ) : (
-                            <ChevronDown className="w-5 h-5 text-gray-400" />
+                            <ChevronDown className="w-5 h-5 text-gray-500" />
                           )}
                         </div>
                       </button>
                       {isOpen && (
-                        <div className="px-6 pb-6 pt-0 border-t border-gray-800">
-                          <div className="pt-6 text-gray-300 leading-relaxed whitespace-pre-line">
+                        <div className="px-6 pb-6 pt-0 border-t border-gray-800/50">
+                          <div className="pt-6 text-gray-400 leading-relaxed whitespace-pre-line">
                             {faq.answer}
                           </div>
                         </div>
@@ -229,18 +224,18 @@ export default function PartnerHelpPage() {
         </div>
 
         {/* Contact Section */}
-        <div className="mt-16 bg-gradient-to-r from-amber-500/10 to-amber-600/10 rounded-2xl p-8 md:p-12 border border-amber-500/20 text-center">
+        <div className="mt-16 bg-amber-500/5 rounded-2xl p-8 md:p-12 border border-amber-500/10 text-center">
           <div className="max-w-2xl mx-auto">
-            <div className="w-16 h-16 bg-gradient-to-br from-amber-500 to-amber-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg">
-              <Mail className="w-8 h-8 text-white" />
+            <div className="w-16 h-16 bg-amber-500/20 rounded-2xl flex items-center justify-center mx-auto mb-6 border border-amber-500/20">
+              <Mail className="w-8 h-8 text-amber-400/70" />
             </div>
-            <h3 className="text-2xl font-bold text-white mb-3">Still have questions?</h3>
-            <p className="text-gray-400 mb-6">
+            <h3 className="text-2xl font-bold text-gray-100 mb-3">Still have questions?</h3>
+            <p className="text-gray-500 mb-6">
               Can't find the answer you're looking for? Our support team is here to help your business succeed.
             </p>
             <a
               href="mailto:support@rivio.com"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-amber-500 to-amber-600 rounded-xl text-white font-semibold hover:from-amber-600 hover:to-amber-700 transition-all shadow-lg"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-amber-500/20 rounded-xl text-amber-300 font-medium hover:bg-amber-500/30 transition-all border border-amber-500/20"
             >
               <Mail className="w-5 h-5" />
               Email Support

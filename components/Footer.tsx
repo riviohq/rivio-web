@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { Facebook, Twitter, Instagram, Linkedin, Mail } from 'lucide-react'
+import { Facebook, X, Instagram, Linkedin, Mail } from 'lucide-react'
 
 export default function Footer() {
   const currentYear = new Date().getFullYear()
@@ -25,7 +25,7 @@ export default function Footer() {
 
   const socialLinks = [
     { icon: Facebook, href: 'https://www.facebook.com/rivioapp', label: 'Facebook' },
-    { icon: Twitter, href: 'https://x.com/Rivioapp', label: 'Twitter' },
+    { icon: X, href: 'https://x.com/Rivioapp', label: 'X' },
     { icon: Instagram, href: 'https://www.instagram.com/rivioapp/', label: 'Instagram' },
     { icon: Linkedin, href: 'https://www.linkedin.com/company/rivioapp', label: 'LinkedIn' },
   ]

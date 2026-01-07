@@ -149,7 +149,7 @@ export default function UserAboutPage() {
                 { icon: "⚡", title: "Instant Access, Zero Hassle", desc: "Walk into any partner venue and start working out immediately. No waiting, no paperwork, no long-term commitments. Scan, pay, and go—fitness on your terms." },
                 { icon: "🏆", title: "Gamified Motivation", desc: "Turn fitness into an exciting game! Build impressive streaks, compete on global leaderboards, unlock achievements, and watch your progress grow." },
                 { icon: "🗺️", title: "Nationwide Network", desc: "Access gyms, studios, and wellness centers across cities and villages. Your fitness journey isn't limited to one location—explore, experience, and enjoy diverse workout options wherever you go." },
-                { icon: "💳", title: "Complete Financial Freedom", desc: "Choose pay-per-day for ultimate flexibility or purchase passes for your favorite venues. All payments are secure, transparent, and tracked. No hidden fees, no surprises—just honest pricing." },
+                { icon: "💳", title: "Complete Financial Freedom", desc: "Choose pay-per-day for ultimate flexibility or purchase passes for your favorite venues. All payments are secure, transparent, and tracked. Clear pricing from each venue—no surprises." },
                 { icon: "🛡️", title: "Trusted & Secure Platform", desc: "Bank-level security for all transactions. Complete transparency in pricing, payments, and progress tracking. Your data and money are always protected." }
               ].map((item, index) => (
                 <div key={index} className="p-6 bg-gray-800/50 rounded-2xl border border-gray-700 hover:border-emerald-500/30 transition-all">
