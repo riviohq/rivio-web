@@ -51,7 +51,7 @@ export default function Navigation({ isScrolled }: NavigationProps) {
             whileHover={{ scale: 1.05 }}
             className="flex items-center"
           >
-            <Link href="#home" onClick={() => scrollToSection('#home')}>
+            <Link href="/" onClick={() => scrollToSection('#home')}>
               <Image
                 src="/logos/rivio-user-light.png"
                 alt="RIVIO Logo"

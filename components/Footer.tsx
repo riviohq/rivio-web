@@ -9,19 +9,19 @@ export default function Footer() {
 
   const footerLinks = {
     user: [
-      { name: 'App Features', href: '/features#user' },
-      { name: 'About Us', href: '/user/about' },
-      { name: 'Privacy Policy', href: '/user/privacy' },
-      { name: 'Terms & Conditions', href: '/user/terms' },
-      { name: 'Help & Support', href: '/user/help' },
+      { name: 'App Features', href: '/features/member-app' },
+      { name: 'About Us', href: '/members/about-us' },
+      { name: 'Privacy Policy', href: '/members/privacy-policy' },
+      { name: 'Terms & Conditions', href: '/members/terms-conditions' },
+      { name: 'Help & Support', href: '/members/support' },
     ],
     partner: [
-      { name: 'Partner Features', href: '/features#partner' },
-      { name: 'About Us', href: '/partner/about' },
-      { name: 'Privacy Policy', href: '/partner/privacy' },
-      { name: 'Terms & Conditions', href: '/partner/terms' },
-      { name: 'Help & Support', href: '/partner/help' },
-      { name: 'Partner Program', href: '/partners' },
+      { name: 'App Features', href: '/features/business-app' },
+      { name: 'About Us', href: '/business/about-us' },
+      { name: 'Privacy Policy', href: '/business/privacy-policy' },
+      { name: 'Terms & Conditions', href: '/business/terms-conditions' },
+      { name: 'Help & Support', href: '/business/support' },
+      { name: 'Partner Program', href: '/business/partner-program' },
     ],
   }
 

@@ -1725,7 +1725,12 @@ function ScreenCard({ screen, index, isInView, delay }: any) {
   )
 }
 
-export default function ScreenshotShowcase() {
+interface ScreenshotShowcaseProps {
+  showUser?: boolean
+  showPartner?: boolean
+}
+
+export default function ScreenshotShowcase({ showUser = true, showPartner = true }: ScreenshotShowcaseProps) {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: false, margin: '0px' })
   const { scrollYProgress } = useScroll({
@@ -1946,59 +1951,63 @@ export default function ScreenshotShowcase() {
         </motion.div>
 
         {/* User App Screenshots */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
-          transition={{ duration: 1, delay: 0.3 }}
-          className="mb-16"
-        >
-          <motion.h3 
-            className="text-3xl md:text-4xl font-bold text-white mb-12 text-center"
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.2 }}
-        >
-            User App Features
-          </motion.h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {userScreens.map((screen, index) => (
-              <ScreenCard
-                key={screen.title}
-                screen={screen}
-                index={index}
-                isInView={isInView}
-                delay={0.3 + index * 0.08}
-              />
-            ))}
-          </div>
-        </motion.div>
+        {showUser && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={isInView ? { opacity: 1 } : {}}
+            transition={{ duration: 1, delay: 0.3 }}
+            className="mb-16"
+          >
+            <motion.h3 
+              className="text-3xl md:text-4xl font-bold text-white mb-12 text-center"
+              initial={{ opacity: 0, y: 30 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.5, delay: 0.2 }}
+            >
+              Member App Features
+            </motion.h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {userScreens.map((screen, index) => (
+                <ScreenCard
+                  key={screen.title}
+                  screen={screen}
+                  index={index}
+                  isInView={isInView}
+                  delay={0.3 + index * 0.08}
+                />
+              ))}
+            </div>
+          </motion.div>
+        )}
 
         {/* Partner App Screenshots */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.5, delay: 0.6 }}
-        >
-          <motion.h3 
-            className="text-3xl md:text-4xl font-bold text-white mb-12 text-center"
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.7 }}
-        >
-            Partner App Features
-          </motion.h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {partnerScreens.map((screen, index) => (
-              <ScreenCard
-                key={screen.title}
-                screen={screen}
-                index={index}
-                isInView={isInView}
-                delay={0.8 + index * 0.08}
-              />
-            ))}
-          </div>
-        </motion.div>
+        {showPartner && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={isInView ? { opacity: 1 } : {}}
+            transition={{ duration: 0.5, delay: 0.6 }}
+          >
+            <motion.h3 
+              className="text-3xl md:text-4xl font-bold text-white mb-12 text-center"
+              initial={{ opacity: 0, y: 30 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.5, delay: 0.7 }}
+            >
+              Business App Features
+            </motion.h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {partnerScreens.map((screen, index) => (
+                <ScreenCard
+                  key={screen.title}
+                  screen={screen}
+                  index={index}
+                  isInView={isInView}
+                  delay={0.8 + index * 0.08}
+                />
+              ))}
+            </div>
+          </motion.div>
+        )}
       </motion.div>
     </section>
   )

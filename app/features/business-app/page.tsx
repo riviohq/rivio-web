@@ -5,7 +5,7 @@ import { useInView } from 'framer-motion'
 import { useRef, useEffect } from 'react'
 import ScreenshotShowcase from '@/components/ScreenshotShowcase'
 
-export default function FeaturesPage() {
+export default function BusinessAppFeaturesPage() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: '0px' })
 
@@ -25,16 +25,16 @@ export default function FeaturesPage() {
             transition={{ duration: 0.6 }}
             className="text-4xl md:text-5xl font-bold text-white text-center"
           >
-            App <span className="bg-gradient-to-r from-emerald-400 to-amber-400 bg-clip-text text-transparent">Features</span>
+            Business <span className="bg-gradient-to-r from-emerald-400 to-amber-400 bg-clip-text text-transparent">App Features</span>
           </motion.h1>
           <p className="text-center text-gray-400 mt-2 text-lg">
-            Explore the powerful features of RIVIO Member and Business apps
+            Explore the enterprise-grade tools built for fitness businesses
           </p>
         </div>
       </div>
 
-      {/* Feature Cards Section - Show both sections */}
-      <ScreenshotShowcase showUser={true} showPartner={true} />
+      {/* Feature Cards Section - Show only partner/business cards */}
+      <ScreenshotShowcase showUser={false} showPartner={true} />
     </div>
   )
 }
