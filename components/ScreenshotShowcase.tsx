@@ -883,7 +883,14 @@ function AnimatedPartnerWallet() {
 
 // Enhanced Activities with Live Check-ins and Subscriptions
 function AnimatedActivities() {
-  const [activities, setActivities] = useState([
+  const [activities, setActivities] = useState<Array<{
+    type: string
+    user: string
+    time: string
+    id: number
+    icon: typeof CheckCircle
+    amount?: string
+  }>>([
     { type: 'Check-in', user: 'John Doe', time: 'Just now', id: 1, icon: CheckCircle },
     { type: 'Check-in', user: 'Jane Smith', time: '2 min ago', id: 2, icon: CheckCircle },
     { type: 'Subscription', user: 'Monthly Pass', time: '5 min ago', amount: '₹2,000', id: 3, icon: Star },
@@ -893,7 +900,7 @@ function AnimatedActivities() {
   useEffect(() => {
     const users = ['John Doe', 'Jane Smith', 'Mike Johnson', 'Sarah Williams', 'David Brown', 'Emma Davis']
     const types = [
-      { type: 'Check-in', icon: CheckCircle, amount: null },
+      { type: 'Check-in', icon: CheckCircle, amount: undefined },
       { type: 'Subscription', icon: Star, amount: '₹2,000' },
       { type: 'Daily Pass', icon: Calendar, amount: '₹200' },
     ]
@@ -909,7 +916,7 @@ function AnimatedActivities() {
         time: 'Just now',
         id: Date.now(),
         icon: randomType.icon,
-        amount: randomType.amount,
+        ...(randomType.amount && { amount: randomType.amount }),
       }
 
       setActivities(prev => [newAct, ...prev.slice(0, 2)])
