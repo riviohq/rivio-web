@@ -1,0 +1,137 @@
+'use client'
+
+import { motion } from 'framer-motion'
+import Link from 'next/link'
+import { Facebook, X, Instagram, Linkedin, Mail } from 'lucide-react'
+
+export default function Footer() {
+  const currentYear = new Date().getFullYear()
+
+  const footerLinks = {
+    user: [
+      { name: 'App Features', href: '/features/member-app' },
+      { name: 'About Us', href: '/members/about-us' },
+      { name: 'Privacy Policy', href: '/members/privacy-policy' },
+      { name: 'Terms & Conditions', href: '/members/terms-conditions' },
+      { name: 'Help & Support', href: '/members/support' },
+    ],
+    partner: [
+      { name: 'App Features', href: '/features/business-app' },
+      { name: 'About Us', href: '/business/about-us' },
+      { name: 'Privacy Policy', href: '/business/privacy-policy' },
+      { name: 'Terms & Conditions', href: '/business/terms-conditions' },
+      { name: 'Help & Support', href: '/business/support' },
+      { name: 'Partner Program', href: '/business/partner-program' },
+    ],
+  }
+
+  const socialLinks = [
+    { icon: Facebook, href: 'https://www.facebook.com/rivioapp', label: 'Facebook' },
+    { icon: X, href: 'https://x.com/Rivioapp', label: 'X' },
+    { icon: Instagram, href: 'https://www.instagram.com/rivioapp/', label: 'Instagram' },
+    { icon: Linkedin, href: 'https://www.linkedin.com/company/rivioapp', label: 'LinkedIn' },
+  ]
+
+  return (
+    <footer className="bg-black text-white border-t border-gray-800">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+          {/* Brand */}
+          <div>
+            <h3 className="text-2xl font-bold text-emerald-500 mb-2">RIVIO</h3>
+            <p className="text-sm text-gray-500 mb-3">Gym, Yoga & Sports Activities</p>
+            <p className="text-gray-400 mb-4 text-sm leading-relaxed">
+              Your route to movement. RIVIO is a universal fitness access platform that eliminates the need for multiple subscriptions. Pay-per-day for instant access to any gym, yoga studio, or wellness center. Build streaks, compete on leaderboards, and unlock achievements—fitness made fun and motivating.
+            </p>
+            <div className="flex items-center gap-2 text-gray-400 text-sm">
+              <Mail className="w-4 h-4" />
+              <a href="mailto:support@rivio.com" className="hover:text-emerald-500 transition-colors">
+                support@rivio.com
+              </a>
+            </div>
+          </div>
+
+          {/* User App Links */}
+          <div>
+            <h4 className="font-semibold text-white mb-4">User App</h4>
+            <ul className="space-y-2">
+              {footerLinks.user.map((link) => (
+                <li key={link.name}>
+                  <Link
+                    href={link.href}
+                    className="text-gray-400 hover:text-emerald-500 transition-colors text-sm"
+                  >
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Partner App Links */}
+          <div>
+            <h4 className="font-semibold text-white mb-4">Partner App</h4>
+            <ul className="space-y-2">
+              {footerLinks.partner.map((link) => (
+                <li key={link.name}>
+                  <Link
+                    href={link.href}
+                    className="text-gray-400 hover:text-amber-400 transition-colors text-sm"
+                  >
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Social */}
+          <div>
+            <h4 className="font-semibold text-white mb-4">Follow Us</h4>
+            <div className="flex gap-4 mb-6">
+              {socialLinks.map((social) => (
+                <motion.a
+                  key={social.label}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ scale: 1.1, y: -2 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-emerald-500 transition-colors"
+                  aria-label={social.label}
+                >
+                  <social.icon className="w-5 h-5" />
+                </motion.a>
+              ))}
+            </div>
+            <div className="text-gray-400 text-sm">
+              <p className="mb-2">Need help?</p>
+              <a href="mailto:support@rivio.com" className="text-emerald-500 hover:text-emerald-400">
+                Contact Support
+              </a>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom Bar */}
+        <div className="border-t border-gray-800 pt-8 mt-8">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4 md:gap-0 text-sm">
+            <div className="flex flex-col md:flex-row items-center gap-4 text-gray-500">
+              <p className="whitespace-nowrap">© {currentYear} RIVIO APP. All rights reserved.</p>
+              <span className="hidden md:inline text-gray-700 mx-2">•</span>
+              <p className="whitespace-nowrap">RIVIO APP is a registered trademark.</p>
+            </div>
+            <div className="flex flex-wrap items-center justify-center gap-4">
+              <p className="text-gray-500 whitespace-nowrap">Licensed under applicable laws.</p>
+              <span className="text-gray-700 mx-2">•</span>
+              <a href="mailto:legal@rivio.com" className="text-gray-500 hover:text-gray-300 transition-colors whitespace-nowrap">
+                Legal Inquiries
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  )
+}
+

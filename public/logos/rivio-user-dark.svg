@@ -1,0 +1,48 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+
+  <defs>
+    <linearGradient id="darkBgGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#111827"/>
+      <stop offset="100%" stop-color="#000000"/>
+    </linearGradient>
+
+    <filter id="darkInnerShadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feOffset dy="22"/>
+      <feGaussianBlur stdDeviation="40"/>
+      <feComposite operator="out" in2="SourceGraphic"/>
+      <feColorMatrix values="
+        0 0 0 0 0
+        0 0 0 0 0
+        0 0 0 0 0
+        0 0 0 0.65 0"/>
+    </filter>
+
+    <filter id="darkInnerHighlight" x="-50%" y="-50%" width="200%" height="200%">
+      <feOffset dy="-18"/>
+      <feGaussianBlur stdDeviation="36"/>
+      <feComposite operator="out" in2="SourceGraphic"/>
+      <feColorMatrix values="
+        1 0 0 0 1
+        1 0 0 0 1
+        1 0 0 0 1
+        0 0 0 0.2 0"/>
+    </filter>
+  </defs>
+
+  <rect width="1024" height="1024" rx="220" fill="url(#darkBgGrad)"/>
+  <rect width="1024" height="1024" rx="220" fill="transparent" filter="url(#darkInnerHighlight)"/>
+  <rect width="1024" height="1024" rx="220" fill="transparent" filter="url(#darkInnerShadow)"/>
+
+  <text
+    x="512"
+    y="565"
+    text-anchor="middle"
+    font-size="280"
+    font-weight="800"
+    letter-spacing="14"
+    font-family="Manrope, Inter, Arial, sans-serif"
+    fill="#10B981">
+    RIVIO
+  </text>
+
+</svg>
