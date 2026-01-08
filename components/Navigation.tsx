@@ -13,12 +13,12 @@ export default function Navigation({ isScrolled }: NavigationProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   const navLinks = [
-    { name: 'Home', href: '#home' },
-    { name: 'About', href: '#about' },
-    { name: 'Apps', href: '#apps' },
-    { name: 'Features', href: '#features' },
-    { name: 'Cities', href: '#cities' },
-    { name: 'Contact', href: '#contact' },
+    { name: 'Home', href: '#home', isRoute: false },
+    { name: 'About', href: '#about', isRoute: false },
+    { name: 'Apps', href: '#apps', isRoute: false },
+    { name: 'Features', href: '/features', isRoute: true },
+    { name: 'Cities', href: '#cities', isRoute: false },
+    { name: 'Contact', href: '#contact', isRoute: false },
   ]
 
   const scrollToSection = (href: string) => {
@@ -26,6 +26,15 @@ export default function Navigation({ isScrolled }: NavigationProps) {
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' })
       setIsMobileMenuOpen(false)
+    }
+  }
+
+  const handleNavClick = (link: typeof navLinks[0]) => {
+    if (link.isRoute) {
+      setIsMobileMenuOpen(false)
+      window.location.href = link.href
+    } else {
+      scrollToSection(link.href)
     }
   }
 
@@ -66,18 +75,33 @@ export default function Navigation({ isScrolled }: NavigationProps) {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
             {navLinks.map((link, index) => (
-              <motion.button
-                key={link.name}
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => scrollToSection(link.href)}
-                className="text-sm font-medium transition-colors text-gray-300 hover:text-emerald-400"
-              >
-                {link.name}
-              </motion.button>
+              link.isRoute ? (
+                <Link key={link.name} href={link.href}>
+                  <motion.button
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.1 }}
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="text-sm font-medium transition-colors text-gray-300 hover:text-emerald-400"
+                  >
+                    {link.name}
+                  </motion.button>
+                </Link>
+              ) : (
+                <motion.button
+                  key={link.name}
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => scrollToSection(link.href)}
+                  className="text-sm font-medium transition-colors text-gray-300 hover:text-emerald-400"
+                >
+                  {link.name}
+                </motion.button>
+              )
             ))}
           </div>
 
@@ -116,13 +140,24 @@ export default function Navigation({ isScrolled }: NavigationProps) {
           >
             <div className="px-4 py-4 space-y-2">
               {navLinks.map((link) => (
-                <button
-                  key={link.name}
-                  onClick={() => scrollToSection(link.href)}
-                  className="block w-full text-left px-4 py-2 text-gray-300 hover:bg-gray-800 hover:text-emerald-400 rounded-lg transition-colors"
-                >
-                  {link.name}
-                </button>
+                link.isRoute ? (
+                  <Link key={link.name} href={link.href}>
+                    <button
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="block w-full text-left px-4 py-2 text-gray-300 hover:bg-gray-800 hover:text-emerald-400 rounded-lg transition-colors"
+                    >
+                      {link.name}
+                    </button>
+                  </Link>
+                ) : (
+                  <button
+                    key={link.name}
+                    onClick={() => scrollToSection(link.href)}
+                    className="block w-full text-left px-4 py-2 text-gray-300 hover:bg-gray-800 hover:text-emerald-400 rounded-lg transition-colors"
+                  >
+                    {link.name}
+                  </button>
+                )
               ))}
             </div>
           </motion.div>
