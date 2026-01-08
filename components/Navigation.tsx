@@ -17,7 +17,7 @@ export default function Navigation({ isScrolled }: NavigationProps) {
     { name: 'About', href: '#about', isRoute: false },
     { name: 'Apps', href: '#apps', isRoute: false },
     { name: 'Features', href: '/features', isRoute: true },
-    { name: 'Cities', href: '#cities', isRoute: false },
+    { name: 'Rivio Network', href: '#cities', isRoute: false },
     { name: 'Contact', href: '#contact', isRoute: false },
   ]
 
