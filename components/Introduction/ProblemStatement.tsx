@@ -2,6 +2,15 @@
 
 import { motion } from "framer-motion";
 import { Lightbulb } from "lucide-react";
+import { 
+  DURATION, 
+  EASE_EXPO, 
+  EASE_IN_OUT, 
+  EASE_LINEAR,
+  PROBLEM_DELAY,
+  TRANSITION_ORB,
+  TRANSITION_ROTATE
+} from "@/animation-timing";
 
 interface ProblemStatementProps {
   isInView: boolean;
@@ -21,21 +30,21 @@ const STATISTICS = [
     description:
       "of gym memberships go completely unused, representing billions in wasted consumer spending annually",
     variant: "emerald" as const,
-    delay: 1.4,
+    delay: PROBLEM_DELAY.STAT_1,
   },
   {
     value: "$50B+",
     description:
       "wasted globally each year on unused fitness memberships and underutilized facilities",
     variant: "gold" as const,
-    delay: 1.5,
+    delay: PROBLEM_DELAY.STAT_2,
   },
   {
     value: "45%",
     description:
       "average facility utilization rate, leaving massive revenue potential untapped",
     variant: "emerald" as const,
-    delay: 1.6,
+    delay: PROBLEM_DELAY.STAT_3,
   },
 ];
 
@@ -51,9 +60,9 @@ const StatCard = ({
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.5, delay: stat.delay }}
+      transition={{ duration: DURATION.NORMAL, delay: stat.delay }}
       whileHover={{ scale: 1.05, y: -5 }}
-      className={`backdrop-blur-xl rounded-2xl p-8 border-2 transition-all shadow-xl relative overflow-hidden group ${
+      className={`backdrop-blur-xl rounded-xl md:rounded-2xl p-4 md:p-8 border-2 transition-all shadow-xl relative overflow-hidden group ${
         isGold
           ? "bg-gradient-to-br from-gold-600/30 via-gold-700/20 to-gold-800/30 border-gold-400/40 hover:border-gold-300/60 shadow-gold-500/20"
           : "bg-gradient-to-br from-emerald-600/30 via-emerald-700/20 to-emerald-800/30 border-emerald-400/40 hover:border-emerald-300/60 shadow-emerald-500/20"
@@ -66,7 +75,7 @@ const StatCard = ({
       />
       <div className="relative z-10">
         <div
-          className={`text-4xl md:text-6xl font-extrabold bg-clip-text text-transparent mb-3 ${
+          className={`text-2xl md:text-4xl lg:text-6xl font-extrabold bg-clip-text text-transparent mb-2 md:mb-3 ${
             isGold
               ? "bg-gradient-to-r from-gold-300 to-gold-100"
               : "bg-gradient-to-r from-emerald-300 to-emerald-100"
@@ -74,7 +83,7 @@ const StatCard = ({
         >
           {stat.value}
         </div>
-        <div className="text-sm md:text-base text-white/95 leading-relaxed font-medium">
+        <div className="text-xs md:text-sm lg:text-base text-white/95 leading-relaxed font-medium">
           {stat.description}
         </div>
       </div>
@@ -87,13 +96,13 @@ export const ProblemStatement = ({ isInView }: ProblemStatementProps) => {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, delay: 1.2, ease: [0.22, 1, 0.36, 1] }}
-      className="mt-20 relative"
+      transition={{ duration: DURATION.MEDIUM, delay: PROBLEM_DELAY.SECTION_START, ease: EASE_EXPO }}
+      className="mt-10 md:mt-20 relative"
     >
       {/* Enhanced Background with Multiple Gradient Layers */}
       <div className="absolute inset-0 bg-gradient-to-br from-emerald-600/90 via-emerald-700/90 to-emerald-800/90 rounded-3xl blur-2xl" />
       <div className="absolute inset-0 bg-gradient-to-tr from-gold-600/20 via-transparent to-emerald-600/20 rounded-3xl blur-xl" />
-      <div className="relative bg-gradient-to-br from-emerald-600/95 via-emerald-700/95 to-emerald-800/95 rounded-3xl p-4 sm:p-10 md:p-16 text-white border-2 border-emerald-400/50 backdrop-blur-xl overflow-hidden gpu-accelerated shadow-2xl shadow-emerald-500/30">
+      <div className="relative bg-gradient-to-br from-emerald-600/95 via-emerald-700/95 to-emerald-800/95 rounded-2xl md:rounded-3xl p-4 md:p-10 lg:p-16 text-white border-2 border-emerald-400/50 backdrop-blur-xl overflow-hidden gpu-accelerated shadow-2xl shadow-emerald-500/30">
         {/* Animated background pattern - Enhanced */}
         <div className="absolute inset-0 opacity-25">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.2),transparent_50%)]" />
@@ -112,11 +121,7 @@ export const ProblemStatement = ({ isInView }: ProblemStatementProps) => {
               x: [0, 50, 0],
               y: [0, 30, 0],
             }}
-            transition={{
-              duration: 8,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
+            transition={TRANSITION_ORB}
           />
           <motion.div
             className="absolute w-96 h-96 bg-gold-500/15 rounded-full blur-3xl"
@@ -128,9 +133,9 @@ export const ProblemStatement = ({ isInView }: ProblemStatementProps) => {
               y: [0, -20, 0],
             }}
             transition={{
-              duration: 10,
+              duration: DURATION.LOOP_ORB + 2,
               repeat: Infinity,
-              ease: "easeInOut",
+              ease: EASE_IN_OUT,
               delay: 1,
             }}
           />
@@ -176,20 +181,20 @@ export const ProblemStatement = ({ isInView }: ProblemStatementProps) => {
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={isInView ? { opacity: 1, scale: 1 } : {}}
-            transition={{ duration: 0.6, delay: 1.3 }}
-            className="mb-12 text-center"
+            transition={{ duration: DURATION.MEDIUM, delay: PROBLEM_DELAY.HEADING }}
+            className="mb-6 md:mb-12 text-center"
           >
             <motion.div
               initial={{ opacity: 0, y: -20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 1.4 }}
+              transition={{ duration: DURATION.MEDIUM, delay: PROBLEM_DELAY.BADGE }}
               className="inline-block mb-4"
             >
               <span className="text-sm md:text-base font-semibold text-emerald-300 uppercase tracking-wider bg-emerald-500/20 px-4 py-2 rounded-full border border-emerald-400/30">
                 Industry Analysis
               </span>
             </motion.div>
-            <h3 className="text-4xl md:text-6xl lg:text-7xl font-extrabold mb-6 leading-tight">
+            <h3 className="text-2xl md:text-5xl lg:text-7xl font-extrabold mb-3 md:mb-6 leading-tight">
               The{" "}
               <span className="bg-gradient-to-r from-emerald-300 via-gold-300 to-emerald-300 bg-clip-text text-transparent animate-gradient">
                 $50 Billion
@@ -201,25 +206,25 @@ export const ProblemStatement = ({ isInView }: ProblemStatementProps) => {
             <motion.div
               initial={{ width: 0 }}
               animate={isInView ? { width: "120px" } : {}}
-              transition={{ duration: 0.8, delay: 1.5 }}
+              transition={{ duration: DURATION.SLOW, delay: PROBLEM_DELAY.DIVIDER }}
               className="h-1.5 bg-gradient-to-r from-emerald-400 via-gold-400 to-emerald-400 rounded-full mx-auto shadow-lg shadow-emerald-500/50"
             />
           </motion.div>
 
           {/* Statistics Grid - Enhanced */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-6 md:mb-10">
             {STATISTICS.map((stat) => (
               <StatCard key={stat.value} stat={stat} isInView={isInView} />
             ))}
           </div>
 
           {/* Problem Description - Enhanced */}
-          <div className="space-y-6 mb-8">
+          <div className="space-y-3 md:space-y-6 mb-4 md:mb-8">
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 1.7 }}
-              className="text-lg md:text-xl text-white leading-relaxed font-medium"
+              transition={{ duration: DURATION.MEDIUM, delay: PROBLEM_DELAY.PARAGRAPH_1 }}
+              className="text-sm md:text-lg lg:text-xl text-white leading-relaxed font-medium"
             >
               After years of research, monitoring industry trends, and analyzing
               consumer behavior, we&apos;ve identified a fundamental flaw in the
@@ -236,8 +241,8 @@ export const ProblemStatement = ({ isInView }: ProblemStatementProps) => {
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 1.8 }}
-              className="text-lg md:text-xl text-white leading-relaxed font-medium"
+              transition={{ duration: DURATION.MEDIUM, delay: PROBLEM_DELAY.PARAGRAPH_2 }}
+              className="text-sm md:text-lg lg:text-xl text-white leading-relaxed font-medium"
             >
               Meanwhile, fitness venues face their own crisis. They invest
               millions in premium equipment, spacious facilities, and expert
@@ -253,8 +258,8 @@ export const ProblemStatement = ({ isInView }: ProblemStatementProps) => {
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 1.9 }}
-              className="text-lg md:text-xl text-white leading-relaxed font-medium"
+              transition={{ duration: DURATION.MEDIUM, delay: PROBLEM_DELAY.PARAGRAPH_3 }}
+              className="text-sm md:text-lg lg:text-xl text-white leading-relaxed font-medium"
             >
               We&apos;ve studied every step of this journey. We&apos;ve analyzed
               why people abandon gyms, why venues struggle to fill slots, and
@@ -274,8 +279,8 @@ export const ProblemStatement = ({ isInView }: ProblemStatementProps) => {
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={isInView ? { opacity: 1, scale: 1 } : {}}
-            transition={{ duration: 0.6, delay: 2 }}
-            className="relative bg-gradient-to-r from-emerald-500/40 via-gold-500/30 to-emerald-500/40 rounded-3xl p-4 md:p-10 border-2 border-emerald-300/50 backdrop-blur-xl shadow-2xl shadow-emerald-500/30 overflow-hidden"
+            transition={{ duration: DURATION.MEDIUM, delay: PROBLEM_DELAY.SOLUTION }}
+            className="relative bg-gradient-to-r from-emerald-500/40 via-gold-500/30 to-emerald-500/40 rounded-2xl md:rounded-3xl p-4 md:p-8 lg:p-10 border-2 border-emerald-300/50 backdrop-blur-xl shadow-2xl shadow-emerald-500/30 overflow-hidden"
           >
             {/* Animated background */}
             <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/20 to-gold-500/20 opacity-50" />
@@ -284,31 +289,27 @@ export const ProblemStatement = ({ isInView }: ProblemStatementProps) => {
               animate={{
                 x: ["-100%", "200%"],
               }}
-              transition={{
-                duration: 3,
-                repeat: Infinity,
-                ease: "linear",
-              }}
+              transition={TRANSITION_ROTATE}
             />
 
             <div className="relative z-10">
               <motion.h4
                 initial={{ opacity: 0, x: -20 }}
                 animate={isInView ? { opacity: 1, x: 0 } : {}}
-                transition={{ duration: 0.6, delay: 2.1 }}
-                className="text-3xl md:text-4xl font-extrabold text-white mb-6 flex items-center gap-4"
+                transition={{ duration: DURATION.MEDIUM, delay: PROBLEM_DELAY.SOLUTION_TITLE }}
+                className="text-xl md:text-3xl lg:text-4xl font-extrabold text-white mb-3 md:mb-6 flex items-center gap-2 md:gap-4"
               >
-                <div className="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center border-2 border-white/30 backdrop-blur-sm">
-                  <Lightbulb className="w-8 h-8 text-emerald-200" />
+                <div className="w-10 h-10 md:w-14 md:h-14 bg-white/20 rounded-xl md:rounded-2xl flex items-center justify-center border-2 border-white/30 backdrop-blur-sm flex-shrink-0">
+                  <Lightbulb className="w-5 h-5 md:w-8 md:h-8 text-emerald-200" />
                 </div>
                 <span>Our Solution: A Win-Win Revolution</span>
               </motion.h4>
-              <div className="space-y-4">
+              <div className="space-y-2 md:space-y-4">
                 <motion.p
                   initial={{ opacity: 0, y: 10 }}
                   animate={isInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.6, delay: 2.2 }}
-                  className="text-lg md:text-xl text-white/95 leading-relaxed font-medium"
+                  transition={{ duration: DURATION.MEDIUM, delay: PROBLEM_DELAY.SOLUTION_TEXT_1 }}
+                  className="text-sm md:text-lg lg:text-xl text-white/95 leading-relaxed font-medium"
                 >
                   <strong className="text-emerald-200 font-bold">
                     RIVIO disrupts this broken model entirely.
@@ -322,8 +323,8 @@ export const ProblemStatement = ({ isInView }: ProblemStatementProps) => {
                 <motion.p
                   initial={{ opacity: 0, y: 10 }}
                   animate={isInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.6, delay: 2.3 }}
-                  className="text-lg md:text-xl text-white/95 leading-relaxed font-medium"
+                  transition={{ duration: DURATION.MEDIUM, delay: PROBLEM_DELAY.SOLUTION_TEXT_2 }}
+                  className="text-sm md:text-lg lg:text-xl text-white/95 leading-relaxed font-medium"
                 >
                   We&apos;re not just another fitness app.{" "}
                   <strong className="text-emerald-200 font-bold">

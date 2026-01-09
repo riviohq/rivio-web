@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { DURATION, EASE_SMOOTH, getOrbDuration, getOrbDelay } from "@/animation-timing";
 
 const ORBS_CONFIG = [
   {
@@ -8,24 +9,24 @@ const ORBS_CONFIG = [
     background: "#10b981",
     left: "25%",
     top: "15%",
-    duration: 15,
-    delay: 0,
+    duration: DURATION.LOOP_AMBIENT,
+    delay: getOrbDelay(0),
   },
   {
     size: 520,
     background: "#d4af37",
     left: "55%",
     top: "35%",
-    duration: 18,
-    delay: 1.5,
+    duration: getOrbDuration(1),
+    delay: getOrbDelay(1),
   },
   {
     size: 640,
     background: "#10b981",
     left: "85%",
     top: "55%",
-    duration: 21,
-    delay: 3,
+    duration: getOrbDuration(2),
+    delay: getOrbDelay(2),
   },
 ];
 
@@ -52,7 +53,7 @@ export const FloatingBackground = () => {
           transition={{
             duration: orb.duration,
             repeat: Infinity,
-            ease: [0.4, 0, 0.6, 1],
+            ease: EASE_SMOOTH,
             delay: orb.delay,
           }}
         />

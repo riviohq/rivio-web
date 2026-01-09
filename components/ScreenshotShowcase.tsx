@@ -1,89 +1,510 @@
-'use client'
+"use client";
 
-import { motion, useInView, useScroll, useTransform, AnimatePresence } from 'framer-motion'
-import { useRef, useState, useEffect } from 'react'
-import { Smartphone, Building2, TrendingUp, Users, Wallet, Activity, MapPin, Star, Zap, Award, QrCode, CheckCircle, Calendar, Clock, BarChart3, Settings, UserCheck } from 'lucide-react'
+import {
+  motion,
+  useInView,
+  useScroll,
+  useTransform,
+  AnimatePresence,
+} from "framer-motion";
+import {
+  useRef,
+  useState,
+  useEffect,
+  ReactNode,
+  createContext,
+  useContext,
+} from "react";
+import {
+  Smartphone,
+  Building2,
+  TrendingUp,
+  Users,
+  Wallet,
+  Activity,
+  MapPin,
+  Star,
+  QrCode,
+  CheckCircle,
+  Calendar,
+  Clock,
+  BarChart3,
+  UserCheck,
+  LucideIcon,
+} from "lucide-react";
+import {
+  DURATION,
+  DELAY,
+  EASE_EXPO,
+  EASE_SMOOTH,
+  EASE_IN_OUT,
+  EASE_OUT,
+  EASE_LINEAR,
+  SPRING_DEFAULT,
+  TRANSITION_PULSE,
+  TRANSITION_BACKGROUND,
+  TRANSITION_ROTATE,
+  getStaggerDelay,
+} from "@/animation-timing";
 
-// Custom hook for count up animation - must be defined before components that use it
-function useCountUp(end: number, duration: number = 2, start: number = 0, autoStart: boolean = true) {
-  const [count, setCount] = useState(start)
-  const countRef = useRef(start)
-  const [hasStarted, setHasStarted] = useState(false)
-  const timerRef = useRef<NodeJS.Timeout | null>(null)
+// ============================================
+// Theme Configuration
+// ============================================
+type ThemeColor = "emerald" | "gold";
+
+const themeClasses = {
+  emerald: {
+    gradient: "from-emerald-500 to-emerald-600",
+    bgGradient: "bg-gradient-to-br from-emerald-500 to-emerald-600",
+    darkGradient: "bg-gradient-to-br from-gray-900 to-black",
+    accent: "bg-emerald-500/20",
+    accentBorder: "border-emerald-500/30",
+    text: "text-emerald-400",
+    textLight: "text-emerald-300",
+    textLighter: "text-emerald-200",
+    glow: "bg-emerald-400/30",
+    glowLight: "bg-emerald-500/50",
+    border: "border-emerald-400",
+    statusActive: "bg-emerald-500/30 text-emerald-300",
+    dot: "bg-emerald-400",
+  },
+  gold: {
+    gradient: "from-gold-500 to-gold-600",
+    bgGradient: "bg-gradient-to-br from-gold-500 to-gold-600",
+    darkGradient: "bg-gradient-to-br from-gray-900 to-black",
+    accent: "bg-gold-500/20",
+    accentBorder: "border-gold-500/30",
+    text: "text-gold-400",
+    textLight: "text-gold-300",
+    textLighter: "text-gold-200",
+    glow: "bg-gold-400/30",
+    glowLight: "bg-gold-500/50",
+    border: "border-gold-400",
+    statusActive: "bg-gold-500/30 text-gold-300",
+    dot: "bg-gold-400",
+  },
+} as const;
+
+// ============================================
+// Visibility Context - pauses animations for off-screen cards
+// ============================================
+const VisibilityContext = createContext(true);
+const useIsVisible = () => useContext(VisibilityContext);
+
+// ============================================
+// Custom Hooks
+// ============================================
+function useCountUp(
+  end: number,
+  duration: number = 2,
+  start: number = 0,
+  autoStart: boolean = true
+) {
+  const [count, setCount] = useState(start);
+  const countRef = useRef(start);
+  const [hasStarted, setHasStarted] = useState(false);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     if (autoStart && !hasStarted && end > start) {
-      setHasStarted(true)
-      const increment = (end - start) / (duration * 60)
+      setHasStarted(true);
+      const increment = (end - start) / (duration * 60);
       timerRef.current = setInterval(() => {
-        countRef.current += increment
+        countRef.current += increment;
         if (countRef.current >= end) {
-          setCount(end)
+          setCount(end);
           if (timerRef.current) {
-            clearInterval(timerRef.current)
-            timerRef.current = null
+            clearInterval(timerRef.current);
+            timerRef.current = null;
           }
         } else {
-          setCount(Math.floor(countRef.current))
+          setCount(Math.floor(countRef.current));
         }
-      }, 1000 / 60)
+      }, 1000 / 60);
     }
 
     return () => {
       if (timerRef.current) {
-        clearInterval(timerRef.current)
-        timerRef.current = null
+        clearInterval(timerRef.current);
+        timerRef.current = null;
       }
-    }
-  }, [hasStarted, end, duration, start, autoStart])
+    };
+  }, [hasStarted, end, duration, start, autoStart]);
 
   const reset = () => {
-    setCount(start)
-    countRef.current = start
-    setHasStarted(false)
+    setCount(start);
+    countRef.current = start;
+    setHasStarted(false);
     if (timerRef.current) {
-      clearInterval(timerRef.current)
-      timerRef.current = null
+      clearInterval(timerRef.current);
+      timerRef.current = null;
     }
-  }
+  };
 
-  return { count, reset }
+  return { count, reset };
+}
+
+function useAnimationCycle(intervalMs: number, animationDurationMs: number) {
+  const [isActive, setIsActive] = useState(false);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIsActive(true);
+      setTimeout(() => setIsActive(false), animationDurationMs);
+    }, intervalMs);
+    return () => clearInterval(interval);
+  }, [intervalMs, animationDurationMs]);
+
+  return isActive;
+}
+
+// ============================================
+// Reusable UI Components
+// ============================================
+function Spinner({
+  className = "w-4 h-4",
+  color = "emerald",
+}: Readonly<{ className?: string; color?: ThemeColor }>) {
+  const borderColor =
+    color === "emerald" ? "border-emerald-400" : "border-gold-400";
+  return (
+    <motion.div
+      className={`${className} border-2 ${borderColor} border-t-transparent rounded-full`}
+      animate={{ rotate: 360 }}
+      transition={{ duration: DURATION.VERY_SLOW, repeat: Infinity, ease: EASE_LINEAR }}
+    />
+  );
+}
+
+function PulsingGlow({
+  isActive,
+  color = "emerald",
+  size = "md",
+}: Readonly<{
+  isActive: boolean;
+  color?: ThemeColor;
+  size?: "sm" | "md" | "lg";
+}>) {
+  const sizeClasses = { sm: "w-12 h-12", md: "w-16 h-16", lg: "w-20 h-20" };
+  const theme = themeClasses[color];
+  return (
+    <motion.div
+      className={`absolute top-0 right-0 ${sizeClasses[size]} ${theme.glow} rounded-full blur-xl`}
+      animate={{
+        scale: isActive ? [1, 1.5, 1] : 1,
+        opacity: isActive ? [0.5, 0.8, 0.5] : 0.3,
+      }}
+      transition={{ duration: 1 }}
+    />
+  );
+}
+
+function ShimmerOverlay() {
+  return (
+    <motion.div
+      className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent"
+      animate={{ x: ["-100%", "200%"] }}
+      transition={TRANSITION_ROTATE}
+    />
+  );
+}
+
+// Floating cloud background configuration
+const FLOATING_CLOUDS = [
+  { id: "cloud-0", index: 0 },
+  { id: "cloud-1", index: 1 },
+  { id: "cloud-2", index: 2 },
+  { id: "cloud-3", index: 3 },
+] as const;
+
+function FloatingClouds() {
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {FLOATING_CLOUDS.map(({ id, index: i }) => (
+        <motion.div
+          key={id}
+          className="absolute rounded-full blur-3xl opacity-[0.04] gpu-accelerated"
+          style={{
+            width: `${500 + i * 100}px`,
+            height: `${500 + i * 100}px`,
+            background: i % 2 === 0 ? "#10b981" : "#d4af37",
+            left: `${15 + i * 25}%`,
+            top: `${10 + i * 20}%`,
+            willChange: "transform",
+          }}
+          animate={{
+            x: [0, 80, -40, 0],
+            y: [0, 60, -30, 0],
+            scale: [1, 1.3, 0.9, 1],
+          }}
+          transition={{
+            duration: 30 + i * 5,
+            repeat: Infinity,
+            ease: [0.4, 0, 0.6, 1],
+            delay: i * 2,
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
+interface StatCardProps {
+  readonly label: string;
+  readonly value: string | number;
+  readonly isAnimating?: boolean;
+  readonly incrementText?: string;
+  readonly color?: ThemeColor;
+  readonly icon?: LucideIcon;
+  readonly delay?: number;
+}
+
+function StatCard({
+  label,
+  value,
+  isAnimating = false,
+  incrementText,
+  color = "emerald",
+  icon: Icon,
+  delay = 0.3,
+}: StatCardProps) {
+  const theme = themeClasses[color];
+  return (
+    <motion.div
+      className={`${theme.accent} rounded-lg p-3 mb-3 backdrop-blur-sm relative overflow-hidden`}
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ delay }}
+      whileHover={{ scale: 1.02 }}
+    >
+      <div className="text-xs opacity-80 mb-1 flex items-center gap-2 truncate">
+        {Icon && <Icon className="w-3 h-3 flex-shrink-0" />}
+        <span className="truncate">{label}</span>
+      </div>
+      <motion.div
+        className={`text-xl md:text-2xl font-bold ${theme.textLight} flex items-center gap-2 overflow-hidden`}
+        key={String(value)}
+        initial={{ scale: 1 }}
+        animate={{ scale: 1 }}
+        transition={{ duration: DURATION.FAST }}
+      >
+        <span className="truncate">{value}</span>
+        {isAnimating && incrementText && (
+          <motion.span
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            className={`text-sm ${theme.textLighter}`}
+          >
+            {incrementText}
+          </motion.span>
+        )}
+      </motion.div>
+      <PulsingGlow isActive={isAnimating} color={color} />
+    </motion.div>
+  );
+}
+
+interface CardContainerProps {
+  readonly children: ReactNode;
+  readonly color?: ThemeColor;
+  readonly variant?: "gradient" | "dark" | "bordered";
+  readonly className?: string;
+}
+
+function CardContainer({
+  children,
+  color = "emerald",
+  variant = "gradient",
+  className = "",
+}: CardContainerProps) {
+  const theme = themeClasses[color];
+  const baseClasses = "p-4 rounded-lg h-full flex flex-col overflow-hidden";
+  const variantClasses = {
+    gradient: `${theme.bgGradient} text-white`,
+    dark: `${theme.darkGradient} text-white`,
+    bordered: `bg-gradient-to-br from-gray-800 to-black border-2 ${theme.accentBorder}`,
+  };
+  return (
+    <div className={`${baseClasses} ${variantClasses[variant]} ${className}`}>
+      {children}
+    </div>
+  );
+}
+
+function CardTitle({
+  children,
+  delay = 0.2,
+}: Readonly<{ children: ReactNode; delay?: number }>) {
+  return (
+    <motion.div
+      className="text-lg font-bold mb-4 truncate"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ delay }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+interface TransactionItemProps {
+  readonly type: string;
+  readonly amount: number | string;
+  readonly time: string;
+  readonly isPositive?: boolean;
+  readonly index: number;
+  readonly color?: ThemeColor;
+}
+
+function TransactionItem({
+  type,
+  amount,
+  time,
+  isPositive = true,
+  index,
+  color = "emerald",
+}: TransactionItemProps) {
+  const theme = themeClasses[color];
+  const bgClass = color === "emerald" ? "bg-white/10" : "bg-gold-500/10";
+  return (
+    <motion.div
+      className={`${bgClass} rounded p-2 text-sm backdrop-blur-sm`}
+      initial={{ opacity: 0, x: -20 }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: 20 }}
+      transition={{ delay: getStaggerDelay(index) }}
+      whileHover={{ scale: 1.05, x: 5 }}
+    >
+      <div className="flex justify-between">
+        <span className="text-xs">{type}</span>
+        <span
+          className={`${
+            isPositive ? theme.textLight : ""
+          } font-semibold text-xs`}
+        >
+          {isPositive ? "+" : ""}₹
+          {typeof amount === "number" ? Math.abs(amount) : amount}
+        </span>
+      </div>
+      <div className="text-xs opacity-60">{time}</div>
+    </motion.div>
+  );
+}
+
+interface VenueCardProps {
+  readonly name: string;
+  readonly price: string;
+  readonly time?: string;
+  readonly distance?: string;
+  readonly type: string;
+  readonly isSelected: boolean;
+  readonly isBooking?: boolean;
+  readonly isBooked?: boolean;
+  readonly index: number;
+}
+
+function VenueCard({
+  name,
+  price,
+  time,
+  distance,
+  type,
+  isSelected,
+  isBooking,
+  isBooked,
+  index,
+}: VenueCardProps) {
+  return (
+    <motion.div
+      className={`rounded-lg p-3 backdrop-blur-sm ${
+        isSelected
+          ? "bg-emerald-500/30 border-2 border-emerald-400"
+          : "bg-white/10 border border-white/20"
+      }`}
+      animate={{
+        scale: isSelected ? 1.05 : 1,
+        opacity: isSelected ? 1 : 0.7,
+      }}
+      transition={{ duration: DURATION.FAST }}
+    >
+      <div className="flex justify-between items-start mb-2">
+        <div>
+          <div className="text-sm font-semibold">{name}</div>
+          <div className="text-xs opacity-80">{type}</div>
+        </div>
+        <div className="text-right">
+          <div className="text-sm font-bold text-emerald-400">{price}</div>
+          <div className="text-xs opacity-80 flex items-center gap-1">
+            {time && (
+              <>
+                <Clock className="w-3 h-3" />
+                {time}
+              </>
+            )}
+            {distance && <>{distance}</>}
+          </div>
+        </div>
+      </div>
+      {isSelected && (
+        <AnimatePresence>
+          {isBooking && (
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0 }}
+              className="text-xs text-emerald-300 flex items-center gap-2 mt-2"
+            >
+              <Spinner className="w-4 h-4" />
+              Booking...
+            </motion.div>
+          )}
+          {isBooked && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0 }}
+              className="text-xs text-emerald-400 flex items-center gap-2 mt-2"
+            >
+              <CheckCircle className="w-4 h-4" />
+              Booked Successfully!
+            </motion.div>
+          )}
+        </AnimatePresence>
+      )}
+    </motion.div>
+  );
 }
 
 // Animated Check-in Component with Live QR Scanning
 function AnimatedCheckIn() {
-  const [isScanning, setIsScanning] = useState(false)
-  const [isCheckedIn, setIsCheckedIn] = useState(false)
-  const [checkInCount, setCheckInCount] = useState(0)
+  const isVisible = useIsVisible();
+  const [isScanning, setIsScanning] = useState(false);
+  const [isCheckedIn, setIsCheckedIn] = useState(false);
+  const [checkInCount, setCheckInCount] = useState(0);
 
   useEffect(() => {
+    if (!isVisible) return;
     const cycle = setInterval(() => {
-      setIsScanning(true)
+      setIsScanning(true);
       setTimeout(() => {
-        setIsScanning(false)
-        setIsCheckedIn(true)
-        setCheckInCount(prev => prev + 1)
-        setTimeout(() => {
-          setIsCheckedIn(false)
-        }, 2000)
-      }, 2000)
-    }, 5000)
-
-    return () => clearInterval(cycle)
-  }, [])
+        setIsScanning(false);
+        setIsCheckedIn(true);
+        setCheckInCount((prev) => prev + 1);
+        setTimeout(() => setIsCheckedIn(false), 2000);
+      }, 2000);
+    }, 5000);
+    return () => clearInterval(cycle);
+  }, [isVisible]);
 
   return (
-    <div className="bg-gradient-to-br from-emerald-500 to-emerald-600 text-white p-4 rounded-lg h-full flex flex-col relative overflow-hidden">
-      <motion.div
-        className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent"
-        animate={{ x: ['-100%', '200%'] }}
-        transition={{ duration: 3, repeat: Infinity, ease: 'linear' }}
-      />
+    <CardContainer color="emerald" className="relative overflow-hidden">
+      <ShimmerOverlay />
       <div className="flex items-center justify-between mb-4 relative z-10">
         <div className="text-lg font-bold">Check-In</div>
         <motion.div
           animate={{ rotate: [0, 360] }}
-          transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
+          transition={TRANSITION_BACKGROUND}
         >
           <QrCode className="w-5 h-5" />
         </motion.div>
@@ -103,7 +524,6 @@ function AnimatedCheckIn() {
               <div className="text-sm">Point camera at QR code</div>
             </motion.div>
           )}
-
           {isScanning && (
             <motion.div
               key="scanning"
@@ -114,32 +534,26 @@ function AnimatedCheckIn() {
             >
               <motion.div
                 className="w-48 h-48 border-4 border-white rounded-lg mx-auto mb-4 relative"
-                animate={{
-                  scale: [1, 1.1, 1],
-                  opacity: [0.6, 1, 0.6],
-                }}
+                animate={{ scale: [1, 1.1, 1], opacity: [0.6, 1, 0.6] }}
                 transition={{
                   duration: 1.5,
                   repeat: Infinity,
-                  ease: 'easeInOut',
+                  ease: "easeInOut",
                 }}
               >
                 <motion.div
                   className="absolute w-full h-1 bg-white"
-                  animate={{
-                    y: [0, 192, 0],
-                  }}
+                  animate={{ y: [0, 192, 0] }}
                   transition={{
                     duration: 1.5,
                     repeat: Infinity,
-                    ease: 'linear',
+                    ease: "linear",
                   }}
                 />
               </motion.div>
               <div className="text-sm font-semibold">Scanning...</div>
             </motion.div>
           )}
-
           {isCheckedIn && (
             <motion.div
               key="success"
@@ -149,14 +563,8 @@ function AnimatedCheckIn() {
               className="text-center"
             >
               <motion.div
-                animate={{
-                  scale: [0, 1.2, 1],
-                  rotate: [0, 360],
-                }}
-                transition={{
-                  duration: 0.6,
-                  ease: 'easeOut',
-                }}
+                animate={{ scale: [0, 1.2, 1], rotate: [0, 360] }}
+                transition={{ duration: DURATION.MEDIUM, ease: EASE_OUT }}
               >
                 <CheckCircle className="w-24 h-24 mx-auto mb-4 text-white" />
               </motion.div>
@@ -164,358 +572,237 @@ function AnimatedCheckIn() {
                 className="text-2xl font-bold mb-2"
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.2 }}
+                transition={{ delay: DELAY.SHORT }}
               >
                 Checked In! ✅
               </motion.div>
-              <div className="text-sm opacity-90">Total Check-ins: {checkInCount}</div>
+              <div className="text-sm opacity-90">
+                Total Check-ins: {checkInCount}
+              </div>
             </motion.div>
           )}
         </AnimatePresence>
       </div>
-    </div>
-  )
+    </CardContainer>
+  );
 }
 
 // Animated Booking Component
 function AnimatedBooking() {
-  const [selectedVenue, setSelectedVenue] = useState(0)
-  const [isBooking, setIsBooking] = useState(false)
-  const [isBooked, setIsBooked] = useState(false)
+  const isVisible = useIsVisible();
+  const [selectedVenue, setSelectedVenue] = useState(0);
+  const [isBooking, setIsBooking] = useState(false);
+  const [isBooked, setIsBooked] = useState(false);
   const venues = [
-    { name: 'Elite Fitness', price: '₹200', time: '10:00 AM', type: 'Gym' },
-    { name: 'Zen Yoga Studio', price: '₹150', time: '11:00 AM', type: 'Yoga' },
-    { name: 'Swim Center', price: '₹250', time: '2:00 PM', type: 'Swim' },
-  ]
+    { name: "Elite Fitness", price: "₹200", time: "10:00 AM", type: "Gym" },
+    { name: "Zen Yoga Studio", price: "₹150", time: "11:00 AM", type: "Yoga" },
+    { name: "Swim Center", price: "₹250", time: "2:00 PM", type: "Swim" },
+  ];
 
   useEffect(() => {
+    if (!isVisible) return;
     const cycle = setInterval(() => {
-      setSelectedVenue(prev => (prev + 1) % venues.length)
-      setIsBooking(true)
+      setSelectedVenue((prev) => (prev + 1) % venues.length);
+      setIsBooking(true);
       setTimeout(() => {
-        setIsBooking(false)
-        setIsBooked(true)
-        setTimeout(() => {
-          setIsBooked(false)
-        }, 2000)
-      }, 1500)
-    }, 5000)
-
-    return () => clearInterval(cycle)
-  }, [venues.length])
+        setIsBooking(false);
+        setIsBooked(true);
+        setTimeout(() => setIsBooked(false), 2000);
+      }, 1500);
+    }, 5000);
+    return () => clearInterval(cycle);
+  }, [isVisible, venues.length]);
 
   return (
-    <div className="bg-gradient-to-br from-gray-900 to-black text-white p-4 rounded-lg h-full flex flex-col relative overflow-hidden">
+    <CardContainer color="emerald" variant="dark">
       <div className="text-lg font-bold mb-4">Book Venue</div>
-      
       <div className="space-y-3 flex-1">
         {venues.map((venue, index) => (
-          <motion.div
-            key={index}
-            className={`rounded-lg p-3 backdrop-blur-sm ${
-              index === selectedVenue
-                ? 'bg-emerald-500/30 border-2 border-emerald-400'
-                : 'bg-white/10 border border-white/20'
-            }`}
-            animate={{
-              scale: index === selectedVenue ? 1.05 : 1,
-              opacity: index === selectedVenue ? 1 : 0.7,
-            }}
-            transition={{ duration: 0.3 }}
-          >
-            <div className="flex justify-between items-start mb-2">
-              <div>
-                <div className="text-sm font-semibold">{venue.name}</div>
-                <div className="text-xs opacity-80">{venue.type}</div>
-              </div>
-              <div className="text-right">
-                <div className="text-sm font-bold text-emerald-400">{venue.price}</div>
-                <div className="text-xs opacity-80 flex items-center gap-1">
-                  <Clock className="w-3 h-3" />
-                  {venue.time}
-                </div>
-              </div>
-            </div>
-            {index === selectedVenue && (
-              <AnimatePresence>
-                {isBooking && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0 }}
-                    className="text-xs text-emerald-300 flex items-center gap-2 mt-2"
-                  >
-                    <motion.div
-                      className="w-4 h-4 border-2 border-emerald-400 border-t-transparent rounded-full"
-                      animate={{ rotate: 360 }}
-                      transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
-                    />
-                    Booking...
-                  </motion.div>
-                )}
-                {isBooked && (
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0 }}
-                    className="text-xs text-emerald-400 flex items-center gap-2 mt-2"
-                  >
-                    <CheckCircle className="w-4 h-4" />
-                    Booked Successfully!
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            )}
-          </motion.div>
+          <VenueCard
+            key={venue.name}
+            {...venue}
+            isSelected={index === selectedVenue}
+            isBooking={index === selectedVenue && isBooking}
+            isBooked={index === selectedVenue && isBooked}
+            index={index}
+          />
         ))}
       </div>
-    </div>
-  )
+    </CardContainer>
+  );
 }
 
 // Enhanced Wallet with Live Balance Increase
 function AnimatedWallet() {
-  const { count: balance, reset } = useCountUp(1250, 3, 500, true)
+  const isVisible = useIsVisible();
+  const { count: balance, reset } = useCountUp(1250, 3, 500, true);
   const [transactions, setTransactions] = useState([
-    { type: 'Top Up', amount: 500, time: 'Just now', id: 1 },
-    { type: 'Gym Visit', amount: -200, time: 'Today, 10:30 AM', id: 2 },
-  ])
-  const [isAdding, setIsAdding] = useState(false)
+    { type: "Top Up", amount: 500, time: "Just now", id: 1 },
+    { type: "Gym Visit", amount: -200, time: "Today, 10:30 AM", id: 2 },
+  ]);
+  const [isAdding, setIsAdding] = useState(false);
 
   useEffect(() => {
+    if (!isVisible) return;
     const interval = setInterval(() => {
-      setIsAdding(true)
+      setIsAdding(true);
       setTimeout(() => {
-        const newAmount = Math.floor(Math.random() * 500) + 200
-        setTransactions(prev => [
-          { type: 'Top Up', amount: newAmount, time: 'Just now', id: Date.now() },
-          ...prev.slice(0, 2)
-        ])
-        reset()
-        setTimeout(() => {
-          setIsAdding(false)
-        }, 500)
-      }, 1000)
-    }, 6000)
-
-    return () => clearInterval(interval)
-  }, [reset])
+        const newAmount = Math.floor(Math.random() * 500) + 200;
+        setTransactions((prev) => [
+          {
+            type: "Top Up",
+            amount: newAmount,
+            time: "Just now",
+            id: Date.now(),
+          },
+          ...prev.slice(0, 2),
+        ]);
+        reset();
+        setTimeout(() => setIsAdding(false), 500);
+      }, 1000);
+    }, 6000);
+    return () => clearInterval(interval);
+  }, [isVisible, reset]);
 
   return (
-    <div className="bg-gradient-to-br from-emerald-500 to-emerald-600 text-white p-4 rounded-lg h-full flex flex-col">
-      <motion.div 
-        className="text-lg font-bold mb-4"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.2 }}
-      >
-        Wallet
-      </motion.div>
+    <CardContainer color="emerald">
+      <CardTitle>Wallet</CardTitle>
       <motion.div
         className="bg-white/20 rounded-lg p-4 mb-3 backdrop-blur-sm relative overflow-hidden"
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 0.3 }}
-        whileHover={{ scale: 1.05 }}
+        transition={{ delay: DELAY.MEDIUM_SHORT }}
+        whileHover={{ scale: 1.02 }}
       >
         <div className="text-xs opacity-80 mb-2">Available Balance</div>
-        <motion.div 
-          className="text-3xl font-bold flex items-center gap-2"
+        <motion.div
+          className="text-2xl md:text-3xl font-bold flex items-center gap-2 overflow-hidden"
           key={balance}
-          initial={{ scale: 1.2 }}
+          initial={{ scale: 1 }}
           animate={{ scale: 1 }}
         >
-          ₹{balance.toLocaleString()}
+          <span className="truncate">₹{balance.toLocaleString()}</span>
           {isAdding && (
             <motion.span
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
-              className="text-lg text-emerald-200"
+              className="text-sm md:text-lg text-emerald-200 flex-shrink-0"
             >
               +₹{transactions[0]?.amount || 0}
             </motion.span>
           )}
         </motion.div>
-        <motion.div
-          className="absolute top-0 right-0 w-20 h-20 bg-emerald-400/20 rounded-full blur-2xl"
-          animate={{
-            scale: isAdding ? [1, 1.5, 1] : 1,
-            opacity: isAdding ? [0.5, 0.8, 0.5] : 0.3,
-          }}
-          transition={{ duration: 1 }}
-        />
+        <PulsingGlow isActive={isAdding} color="emerald" size="lg" />
       </motion.div>
-      <div className="space-y-2 flex-1 overflow-y-auto">
+      <div className="space-y-2 flex-1 overflow-hidden">
         <AnimatePresence>
           {transactions.map((tx, index) => (
-            <motion.div
+            <TransactionItem
               key={tx.id}
-              className="bg-white/10 rounded p-2 text-sm backdrop-blur-sm"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 20 }}
-              transition={{ delay: index * 0.1 }}
-              whileHover={{ scale: 1.05, x: 5 }}
-            >
-              <div className="flex justify-between">
-                <span>{tx.type}</span>
-                <span className={tx.amount > 0 ? 'text-emerald-200 font-semibold' : ''}>
-                  {tx.amount > 0 ? '+' : ''}₹{Math.abs(tx.amount)}
-                </span>
-              </div>
-              <div className="text-xs opacity-80">{tx.time}</div>
-            </motion.div>
+              type={tx.type}
+              amount={tx.amount}
+              time={tx.time}
+              isPositive={tx.amount > 0}
+              index={index}
+              color="emerald"
+            />
           ))}
         </AnimatePresence>
       </div>
-    </div>
-  )
+    </CardContainer>
+  );
 }
 
 // Enhanced Dashboard with Live Streak Increase
 function AnimatedDashboard() {
-  const { count: streakCount } = useCountUp(12, 2, 0, true)
-  const { count: rankCount } = useCountUp(45, 2, 50, true)
-  const { count: visitsCount } = useCountUp(18, 2, 0, true)
-  const [streakIncreasing, setStreakIncreasing] = useState(false)
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setStreakIncreasing(true)
-      setTimeout(() => {
-        setStreakIncreasing(false)
-      }, 1500)
-    }, 5000)
-
-    return () => clearInterval(interval)
-  }, [])
+  const { count: streakCount } = useCountUp(12, 2, 0, true);
+  const { count: rankCount } = useCountUp(45, 2, 50, true);
+  const { count: visitsCount } = useCountUp(18, 2, 0, true);
+  const streakIncreasing = useAnimationCycle(5000, 1500);
 
   return (
-    <div className="bg-gradient-to-br from-gray-900 to-black text-white p-4 rounded-lg h-full flex flex-col">
-      <motion.div 
-        className="text-lg font-bold mb-4"
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.2 }}
-      >
-        Dashboard
-      </motion.div>
-      <motion.div
-        className="bg-emerald-500/20 rounded-lg p-3 mb-3 backdrop-blur-sm relative overflow-hidden"
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 0.3 }}
-        whileHover={{ scale: 1.05 }}
-      >
-        <div className="text-xs opacity-80 mb-1">Current Streak</div>
-        <motion.div 
-          className="text-2xl font-bold text-emerald-400 flex items-center gap-2"
-          key={streakCount}
-          initial={{ scale: 1.2 }}
-          animate={{ scale: streakIncreasing ? 1.3 : 1 }}
-          transition={{ duration: 0.3 }}
-        >
-          {streakCount} Days 🔥
-          {streakIncreasing && (
-            <motion.span
-              initial={{ opacity: 0, scale: 0 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0 }}
-              className="text-sm text-emerald-300"
-            >
-              +1
-            </motion.span>
-          )}
-        </motion.div>
-        <motion.div
-          className="absolute top-0 right-0 w-16 h-16 bg-emerald-400/30 rounded-full blur-xl"
-          animate={{
-            scale: streakIncreasing ? [1, 1.5, 1] : 1,
-            opacity: streakIncreasing ? [0.5, 0.8, 0.5] : 0.3,
-          }}
-          transition={{ duration: 1 }}
-        />
-      </motion.div>
-      <motion.div
-        className="bg-emerald-500/20 rounded-lg p-3 mb-3 backdrop-blur-sm"
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 0.4 }}
-        whileHover={{ scale: 1.05 }}
-      >
-        <div className="text-xs opacity-80 mb-1">Leaderboard Rank</div>
-        <motion.div 
-          className="text-xl font-bold text-emerald-400"
-          key={rankCount}
-          initial={{ scale: 1.2 }}
-          animate={{ scale: 1 }}
-        >
-          #{rankCount}
-        </motion.div>
-      </motion.div>
-      <motion.div
-        className="bg-emerald-500/20 rounded-lg p-3 backdrop-blur-sm"
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 0.5 }}
-        whileHover={{ scale: 1.05 }}
-      >
-        <div className="text-xs opacity-80 mb-1">This Month</div>
-        <motion.div 
-          className="text-lg font-semibold"
-          key={visitsCount}
-          initial={{ scale: 1.2 }}
-          animate={{ scale: 1 }}
-        >
-          {visitsCount} Visits
-        </motion.div>
-      </motion.div>
-    </div>
-  )
+    <CardContainer color="emerald" variant="dark">
+      <CardTitle>Dashboard</CardTitle>
+      <StatCard
+        label="Current Streak"
+        value={`${streakCount} Days 🔥`}
+        isAnimating={streakIncreasing}
+        incrementText="+1"
+        color="emerald"
+        delay={0.3}
+      />
+      <StatCard
+        label="Leaderboard Rank"
+        value={`#${rankCount}`}
+        color="emerald"
+        delay={0.4}
+      />
+      <StatCard
+        label="This Month"
+        value={`${visitsCount} Visits`}
+        color="emerald"
+        delay={0.5}
+      />
+    </CardContainer>
+  );
 }
 
 // Animated Home Screen Component
 function AnimatedHomeScreen() {
-  const [currentIndex, setCurrentIndex] = useState(0)
+  const isVisible = useIsVisible();
+  const [currentIndex, setCurrentIndex] = useState(0);
   const venues = [
-    { name: 'Elite Fitness Center', price: '₹200/day', distance: '0.5 km', type: 'Gym' },
-    { name: 'Zen Yoga Studio', price: '₹150/day', distance: '1.2 km', type: 'Yoga' },
-    { name: 'Swim Center', price: '₹250/day', distance: '2.1 km', type: 'Swim' },
-  ]
+    {
+      name: "Elite Fitness Center",
+      price: "₹200/day",
+      distance: "0.5 km",
+      type: "Gym",
+    },
+    {
+      name: "Zen Yoga Studio",
+      price: "₹150/day",
+      distance: "1.2 km",
+      type: "Yoga",
+    },
+    {
+      name: "Swim Center",
+      price: "₹250/day",
+      distance: "2.1 km",
+      type: "Swim",
+    },
+  ];
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % venues.length)
-    }, 3000)
-    return () => clearInterval(interval)
-  }, [venues.length])
+    if (!isVisible) return;
+    const interval = setInterval(
+      () => setCurrentIndex((prev) => (prev + 1) % venues.length),
+      3000
+    );
+    return () => clearInterval(interval);
+  }, [isVisible, venues.length]);
 
   return (
-    <div className="bg-gradient-to-br from-emerald-500 to-emerald-600 text-white p-4 rounded-lg h-full flex flex-col relative overflow-hidden">
-      <motion.div
-        className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent"
-        animate={{ x: ['-100%', '200%'] }}
-        transition={{ duration: 3, repeat: Infinity, ease: 'linear' }}
-      />
+    <CardContainer color="emerald" className="relative overflow-hidden">
+      <ShimmerOverlay />
       <div className="flex items-center justify-between mb-4 relative z-10">
-        <motion.div 
+        <motion.div
           className="text-lg font-bold"
           animate={{ opacity: [1, 0.7, 1] }}
-          transition={{ duration: 2, repeat: Infinity }}
+          transition={TRANSITION_PULSE}
         >
           RIVIO
         </motion.div>
         <motion.div
           animate={{ rotate: [0, 360] }}
-          transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
+          transition={TRANSITION_BACKGROUND}
         >
           <MapPin className="w-5 h-5" />
         </motion.div>
       </div>
       {venues.map((venue, index) => (
         <motion.div
-          key={index}
+          key={venue.name}
           className="bg-white/20 rounded-lg p-3 mb-2 backdrop-blur-sm relative z-10"
           initial={{ opacity: 0, x: -20 }}
           animate={{
@@ -523,500 +810,476 @@ function AnimatedHomeScreen() {
             x: 0,
             scale: index === currentIndex ? 1.02 : 1,
           }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: DURATION.NORMAL }}
         >
           <div className="text-xs opacity-80 mb-1">{venue.type}</div>
           <div className="text-sm font-semibold">{venue.name}</div>
-          <div className="text-xs opacity-80">{venue.price} • {venue.distance}</div>
+          <div className="text-xs opacity-80">
+            {venue.price} • {venue.distance}
+          </div>
         </motion.div>
       ))}
-    </div>
-  )
+    </CardContainer>
+  );
 }
 
 // Animated Profile Component
 function AnimatedProfile() {
+  const profileStats = [
+    { label: "Total Visits", value: "127", delay: 0.4 },
+    { label: "Achievements", value: "8 Unlocked", delay: 0.5 },
+  ];
+
   return (
-    <div className="bg-gradient-to-br from-gray-800 to-black p-4 rounded-lg h-full flex flex-col border-2 border-emerald-500/30">
+    <CardContainer color="emerald" variant="bordered">
       <motion.div
         className="w-20 h-20 bg-emerald-500 rounded-full mx-auto mb-3 flex items-center justify-center text-white text-xl font-bold relative"
         animate={{ rotate: [0, 360] }}
-        transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
+        transition={TRANSITION_BACKGROUND}
       >
         <motion.div
           className="absolute inset-0 bg-emerald-400 rounded-full"
           animate={{ scale: [1, 1.3, 1], opacity: [0.5, 0, 0.5] }}
-          transition={{ duration: 2, repeat: Infinity }}
+          transition={TRANSITION_PULSE}
         />
         <span className="relative z-10">AB</span>
       </motion.div>
-      <motion.div 
+      <motion.div
         className="text-center mb-4"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 0.3 }}
+        transition={{ delay: DELAY.MEDIUM_SHORT }}
       >
         <div className="font-bold text-white mb-1">Your Profile</div>
         <div className="text-xs text-gray-400">Fitness Enthusiast</div>
       </motion.div>
       <div className="space-y-2">
-        <motion.div
-          className="bg-emerald-500/20 rounded-lg p-2 text-center backdrop-blur-sm"
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.4 }}
-          whileHover={{ scale: 1.05 }}
-        >
-          <div className="text-xs text-gray-400">Total Visits</div>
-          <motion.div 
-            className="font-bold text-emerald-400"
-            animate={{ scale: [1, 1.1, 1] }}
-            transition={{ duration: 2, repeat: Infinity }}
+        {profileStats.map((stat, index) => (
+          <motion.div
+            key={stat.label}
+            className="bg-emerald-500/20 rounded-lg p-2 text-center backdrop-blur-sm"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: stat.delay }}
+            whileHover={{ scale: 1.05 }}
           >
-            127
+            <div className="text-xs text-gray-400">{stat.label}</div>
+            <motion.div
+              className="font-bold text-emerald-400"
+              animate={{ scale: [1, 1.1, 1] }}
+              transition={{ duration: 2, repeat: Infinity, delay: index * 0.5 }}
+            >
+              {stat.value}
+            </motion.div>
           </motion.div>
-        </motion.div>
-        <motion.div
-          className="bg-emerald-500/20 rounded-lg p-2 text-center backdrop-blur-sm"
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.5 }}
-          whileHover={{ scale: 1.05 }}
-        >
-          <div className="text-xs text-gray-400">Achievements</div>
-          <motion.div 
-            className="font-bold text-emerald-400"
-            animate={{ scale: [1, 1.1, 1] }}
-            transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
-          >
-            8 Unlocked
-          </motion.div>
-        </motion.div>
+        ))}
       </div>
-    </div>
-  )
+    </CardContainer>
+  );
 }
 
 // Animated Partner Dashboard with Live Earnings and Check-ins
 function AnimatedPartnerDashboard() {
-  const { count: earnings, reset: resetEarnings } = useCountUp(12450, 3, 10000, true)
-  const { count: visits, reset: resetVisits } = useCountUp(1247, 2, 1200, true)
-  const { count: monthly } = useCountUp(245600, 3, 240000, true)
-  const { count: checkIns, reset: resetCheckIns } = useCountUp(45, 2, 40, true)
-  const [isEarning, setIsEarning] = useState(false)
-  const [isCheckIn, setIsCheckIn] = useState(false)
+  const isVisible = useIsVisible();
+  const { count: earnings, reset: resetEarnings } = useCountUp(
+    12450,
+    3,
+    10000,
+    true
+  );
+  const { count: visits, reset: resetVisits } = useCountUp(1247, 2, 1200, true);
+  const { count: monthly } = useCountUp(245600, 3, 240000, true);
+  const { count: checkIns, reset: resetCheckIns } = useCountUp(45, 2, 40, true);
+  const [isEarning, setIsEarning] = useState(false);
+  const [isCheckIn, setIsCheckIn] = useState(false);
 
   useEffect(() => {
-    // Earnings increase
+    if (!isVisible) return;
     const earningsInterval = setInterval(() => {
-      setIsEarning(true)
+      setIsEarning(true);
       setTimeout(() => {
-        resetEarnings()
-        setTimeout(() => {
-          setIsEarning(false)
-        }, 500)
-      }, 1000)
-    }, 6000)
-
-    // Check-in increase
+        resetEarnings();
+        setTimeout(() => setIsEarning(false), 500);
+      }, 1000);
+    }, 6000);
     const checkInInterval = setInterval(() => {
-      setIsCheckIn(true)
+      setIsCheckIn(true);
       setTimeout(() => {
-        resetCheckIns()
-        resetVisits()
-        setTimeout(() => {
-          setIsCheckIn(false)
-        }, 500)
-      }, 1000)
-    }, 5000)
-
+        resetCheckIns();
+        resetVisits();
+        setTimeout(() => setIsCheckIn(false), 500);
+      }, 1000);
+    }, 5000);
     return () => {
-      clearInterval(earningsInterval)
-      clearInterval(checkInInterval)
-    }
-  }, [resetEarnings, resetCheckIns, resetVisits])
+      clearInterval(earningsInterval);
+      clearInterval(checkInInterval);
+    };
+  }, [isVisible, resetEarnings, resetCheckIns, resetVisits]);
 
   return (
-    <div className="bg-gradient-to-br from-gold-500 to-gold-600 text-white p-4 rounded-lg h-full flex flex-col">
-      <motion.div 
-        className="text-lg font-bold mb-4"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.2 }}
-      >
-        Business Dashboard
-      </motion.div>
-      <motion.div
-        className="bg-white/20 rounded-lg p-3 mb-3 backdrop-blur-sm relative overflow-hidden"
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 0.3 }}
-        whileHover={{ scale: 1.05 }}
-      >
-        <div className="text-xs opacity-80 mb-1">Today's Earnings</div>
-        <motion.div 
-          className="text-2xl font-bold flex items-center gap-2"
-          key={earnings}
-          initial={{ scale: 1.2 }}
-          animate={{ scale: isEarning ? 1.3 : 1 }}
-          transition={{ duration: 0.3 }}
-        >
-          ₹{earnings.toLocaleString()}
-          {isEarning && (
-            <motion.span
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              className="text-sm text-gold-200"
-            >
-              +₹200
-            </motion.span>
-          )}
-        </motion.div>
-        <motion.div
-          className="absolute top-0 right-0 w-16 h-16 bg-gold-400/30 rounded-full blur-xl"
-          animate={{
-            scale: isEarning ? [1, 1.5, 1] : 1,
-            opacity: isEarning ? [0.5, 0.8, 0.5] : 0.3,
-          }}
-          transition={{ duration: 1 }}
-        />
-      </motion.div>
-      <motion.div
-        className="bg-white/20 rounded-lg p-3 mb-3 backdrop-blur-sm relative overflow-hidden"
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 0.4 }}
-        whileHover={{ scale: 1.05 }}
-      >
-        <div className="text-xs opacity-80 mb-1">Today's Check-ins</div>
-        <motion.div 
-          className="text-xl font-bold flex items-center gap-2"
-          key={checkIns}
-          initial={{ scale: 1.2 }}
-          animate={{ scale: isCheckIn ? 1.3 : 1 }}
-          transition={{ duration: 0.3 }}
-        >
-          {checkIns}
-          {isCheckIn && (
-            <motion.span
-              initial={{ opacity: 0, scale: 0 }}
-              animate={{ opacity: 1, scale: [0, 1.5, 1] }}
-              exit={{ opacity: 0, scale: 0 }}
-              className="text-sm text-gold-200 flex items-center gap-1"
-            >
-              <CheckCircle className="w-4 h-4" />
-              +1
-            </motion.span>
-          )}
-        </motion.div>
-        <motion.div
-          className="absolute top-0 right-0 w-12 h-12 bg-gold-400/30 rounded-full blur-xl"
-          animate={{
-            scale: isCheckIn ? [1, 1.5, 1] : 1,
-            opacity: isCheckIn ? [0.5, 0.8, 0.5] : 0.3,
-          }}
-          transition={{ duration: 1 }}
-        />
-      </motion.div>
-      <motion.div
-        className="bg-white/20 rounded-lg p-3 mb-3 backdrop-blur-sm"
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 0.5 }}
-        whileHover={{ scale: 1.05 }}
-      >
-        <div className="text-xs opacity-80 mb-1">Total Visits</div>
-        <motion.div 
-          className="text-lg font-semibold"
-          key={visits}
-          initial={{ scale: 1.2 }}
-          animate={{ scale: 1 }}
-        >
-          {visits.toLocaleString()}
-        </motion.div>
-      </motion.div>
-      <motion.div
-        className="bg-white/20 rounded-lg p-3 backdrop-blur-sm"
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 0.6 }}
-        whileHover={{ scale: 1.05 }}
-      >
-        <div className="text-xs opacity-80 mb-1">This Month</div>
-        <motion.div 
-          className="text-lg font-semibold"
-          key={monthly}
-          initial={{ scale: 1.2 }}
-          animate={{ scale: 1 }}
-        >
-          ₹{monthly.toLocaleString()}
-        </motion.div>
-      </motion.div>
-    </div>
-  )
+    <CardContainer color="gold">
+      <CardTitle>Business Dashboard</CardTitle>
+      <StatCard
+        label="Today's Earnings"
+        value={`₹${earnings.toLocaleString()}`}
+        isAnimating={isEarning}
+        incrementText="+₹200"
+        color="gold"
+        delay={0.3}
+      />
+      <StatCard
+        label="Today's Check-ins"
+        value={checkIns}
+        isAnimating={isCheckIn}
+        incrementText="+1"
+        color="gold"
+        delay={0.4}
+      />
+      <StatCard
+        label="Total Visits"
+        value={visits.toLocaleString()}
+        color="gold"
+        delay={0.5}
+      />
+      <StatCard
+        label="This Month"
+        value={`₹${monthly.toLocaleString()}`}
+        color="gold"
+        delay={0.6}
+      />
+    </CardContainer>
+  );
 }
 
 // Animated Partner Wallet with Live Balance Increases
 function AnimatedPartnerWallet() {
-  const { count: balance, reset } = useCountUp(185250, 3, 180000, true)
+  const isVisible = useIsVisible();
+  const { count: balance, reset } = useCountUp(185250, 3, 180000, true);
   const [transactions, setTransactions] = useState([
-    { type: 'Check-in Payment', amount: 200, time: 'Just now', id: 1 },
-    { type: 'Subscription Payment', amount: 2000, time: '2 min ago', id: 2 },
-    { type: 'Daily Pass', amount: 200, time: '5 min ago', id: 3 },
-  ])
-  const [isAdding, setIsAdding] = useState(false)
+    { type: "Check-in Payment", amount: 200, time: "Just now", id: 1 },
+    { type: "Subscription Payment", amount: 2000, time: "2 min ago", id: 2 },
+    { type: "Daily Pass", amount: 200, time: "5 min ago", id: 3 },
+  ]);
+  const [isAdding, setIsAdding] = useState(false);
 
   useEffect(() => {
+    if (!isVisible) return;
+    const amounts = [200, 500, 1000, 2000];
+    const types = [
+      "Check-in Payment",
+      "Daily Pass",
+      "Weekly Pass",
+      "Subscription Payment",
+    ];
     const interval = setInterval(() => {
-      setIsAdding(true)
+      setIsAdding(true);
       setTimeout(() => {
-        const amounts = [200, 500, 1000, 2000]
-        const types = ['Check-in Payment', 'Daily Pass', 'Weekly Pass', 'Subscription Payment']
-        const randomAmount = amounts[Math.floor(Math.random() * amounts.length)]
-        const randomType = types[Math.floor(Math.random() * types.length)]
-        
-        setTransactions(prev => [
-          { type: randomType, amount: randomAmount, time: 'Just now', id: Date.now() },
-          ...prev.slice(0, 2)
-        ])
-        reset()
-        setTimeout(() => {
-          setIsAdding(false)
-        }, 500)
-      }, 1000)
-    }, 5000)
-
-    return () => clearInterval(interval)
-  }, [reset])
+        const randomAmount =
+          amounts[Math.floor(Math.random() * amounts.length)];
+        const randomType = types[Math.floor(Math.random() * types.length)];
+        setTransactions((prev) => [
+          {
+            type: randomType,
+            amount: randomAmount,
+            time: "Just now",
+            id: Date.now(),
+          },
+          ...prev.slice(0, 2),
+        ]);
+        reset();
+        setTimeout(() => setIsAdding(false), 500);
+      }, 1000);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [isVisible, reset]);
 
   return (
-    <div className="bg-gradient-to-br from-gray-900 to-black text-white p-4 rounded-lg h-full flex flex-col">
-      <motion.div 
-        className="text-lg font-bold mb-4"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.2 }}
-      >
-        Partner Wallet
-      </motion.div>
+    <CardContainer color="gold" variant="dark">
+      <CardTitle>Partner Wallet</CardTitle>
       <motion.div
         className="bg-gold-500/20 rounded-lg p-4 mb-3 backdrop-blur-sm relative overflow-hidden"
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 0.3 }}
-        whileHover={{ scale: 1.05 }}
+        transition={{ delay: DELAY.MEDIUM_SHORT }}
+        whileHover={{ scale: 1.02 }}
       >
         <div className="text-xs opacity-80 mb-2">Available Balance</div>
-        <motion.div 
-          className="text-3xl font-bold text-gold-300 flex items-center gap-2"
+        <motion.div
+          className="text-2xl md:text-3xl font-bold text-gold-300 flex items-center gap-2 overflow-hidden"
           key={balance}
-          initial={{ scale: 1.2 }}
-          animate={{ scale: isAdding ? 1.3 : 1 }}
-          transition={{ duration: 0.3 }}
+          initial={{ scale: 1 }}
+          animate={{ scale: 1 }}
+          transition={{ duration: DURATION.FAST }}
         >
-          ₹{balance.toLocaleString()}
+          <span className="truncate">₹{balance.toLocaleString()}</span>
           {isAdding && (
             <motion.span
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
-              className="text-sm text-gold-200"
+              className="text-sm text-gold-200 flex-shrink-0"
             >
               +₹{transactions[0]?.amount || 0}
             </motion.span>
           )}
         </motion.div>
-        <motion.div
-          className="absolute top-0 right-0 w-20 h-20 bg-gold-400/20 rounded-full blur-2xl"
-          animate={{
-            scale: isAdding ? [1, 1.5, 1] : 1,
-            opacity: isAdding ? [0.5, 0.8, 0.5] : 0.3,
-          }}
-          transition={{ duration: 1 }}
-        />
+        <PulsingGlow isActive={isAdding} color="gold" size="lg" />
       </motion.div>
-      <div className="space-y-2 flex-1 overflow-y-auto mb-3">
+      <div className="space-y-2 flex-1 overflow-hidden mb-3">
         <div className="text-xs opacity-80 mb-2">Recent Transactions</div>
         <AnimatePresence>
           {transactions.map((tx, index) => (
-            <motion.div
+            <TransactionItem
               key={tx.id}
-              className="bg-gold-500/10 rounded p-2 text-sm backdrop-blur-sm"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 20 }}
-              transition={{ delay: index * 0.1 }}
-              whileHover={{ scale: 1.05, x: 5 }}
-            >
-              <div className="flex justify-between">
-                <span className="text-xs">{tx.type}</span>
-                <span className="text-gold-300 font-semibold text-xs">
-                  +₹{tx.amount}
-                </span>
-              </div>
-              <div className="text-xs opacity-60">{tx.time}</div>
-            </motion.div>
+              type={tx.type}
+              amount={tx.amount}
+              time={tx.time}
+              isPositive
+              index={index}
+              color="gold"
+            />
           ))}
         </AnimatePresence>
       </div>
-      <motion.div
-        className="bg-gold-500/20 rounded-lg p-3 backdrop-blur-sm"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.4 }}
+      <SettlementButton />
+    </CardContainer>
+  );
+}
+
+// Reusable Settlement Button
+function SettlementButton() {
+  return (
+    <motion.div
+      className="bg-gold-500/20 rounded-lg p-3 backdrop-blur-sm"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: DELAY.MEDIUM }}
+    >
+      <div className="text-sm font-semibold mb-2">Settle to Bank</div>
+      <motion.button
+        className="bg-gold-500 text-white text-center py-2 rounded-lg text-sm font-semibold w-full"
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        animate={{
+          boxShadow: [
+            "0 0 0px rgba(212, 175, 55, 0)",
+            "0 0 20px rgba(212, 175, 55, 0.5)",
+            "0 0 0px rgba(212, 175, 55, 0)",
+          ],
+        }}
+        transition={TRANSITION_PULSE}
       >
-        <div className="text-sm font-semibold mb-2">Settle to Bank</div>
-        <motion.button
-          className="bg-gold-500 text-white text-center py-2 rounded-lg text-sm font-semibold w-full"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          animate={{ boxShadow: ['0 0 0px rgba(212, 175, 55, 0)', '0 0 20px rgba(212, 175, 55, 0.5)', '0 0 0px rgba(212, 175, 55, 0)'] }}
-          transition={{ duration: 2, repeat: Infinity }}
-        >
-          Request Settlement
-        </motion.button>
-      </motion.div>
-    </div>
-  )
+        Request Settlement
+      </motion.button>
+    </motion.div>
+  );
+}
+
+// Activity Item Type
+interface ActivityItem {
+  readonly type: string;
+  readonly user: string;
+  readonly time: string;
+  readonly id: number;
+  readonly icon: LucideIcon;
+  readonly amount?: string;
 }
 
 // Enhanced Activities with Live Check-ins and Subscriptions
 function AnimatedActivities() {
-  const [activities, setActivities] = useState<Array<{
-    type: string
-    user: string
-    time: string
-    id: number
-    icon: typeof CheckCircle
-    amount?: string
-  }>>([
-    { type: 'Check-in', user: 'John Doe', time: 'Just now', id: 1, icon: CheckCircle },
-    { type: 'Check-in', user: 'Jane Smith', time: '2 min ago', id: 2, icon: CheckCircle },
-    { type: 'Subscription', user: 'Monthly Pass', time: '5 min ago', amount: '₹2,000', id: 3, icon: Star },
-  ])
-  const [newActivity, setNewActivity] = useState(false)
+  const isVisible = useIsVisible();
+  const [activities, setActivities] = useState<ActivityItem[]>([
+    {
+      type: "Check-in",
+      user: "John Doe",
+      time: "Just now",
+      id: 1,
+      icon: CheckCircle,
+    },
+    {
+      type: "Check-in",
+      user: "Jane Smith",
+      time: "2 min ago",
+      id: 2,
+      icon: CheckCircle,
+    },
+    {
+      type: "Subscription",
+      user: "Monthly Pass",
+      time: "5 min ago",
+      amount: "₹2,000",
+      id: 3,
+      icon: Star,
+    },
+  ]);
+  const [newActivity, setNewActivity] = useState(false);
 
   useEffect(() => {
-    const users = ['John Doe', 'Jane Smith', 'Mike Johnson', 'Sarah Williams', 'David Brown', 'Emma Davis']
-    const types = [
-      { type: 'Check-in', icon: CheckCircle, amount: undefined },
-      { type: 'Subscription', icon: Star, amount: '₹2,000' },
-      { type: 'Daily Pass', icon: Calendar, amount: '₹200' },
-    ]
+    if (!isVisible) return;
+    const users = [
+      "John Doe",
+      "Jane Smith",
+      "Mike Johnson",
+      "Sarah Williams",
+      "David Brown",
+      "Emma Davis",
+    ];
+    const types: Array<{ type: string; icon: LucideIcon; amount?: string }> = [
+      { type: "Check-in", icon: CheckCircle },
+      { type: "Subscription", icon: Star, amount: "₹2,000" },
+      { type: "Daily Pass", icon: Calendar, amount: "₹200" },
+    ];
 
     const interval = setInterval(() => {
-      setNewActivity(true)
-      const randomUser = users[Math.floor(Math.random() * users.length)]
-      const randomType = types[Math.floor(Math.random() * types.length)]
-      
-      const newAct = {
+      setNewActivity(true);
+      const randomUser = users[Math.floor(Math.random() * users.length)];
+      const randomType = types[Math.floor(Math.random() * types.length)];
+      const newAct: ActivityItem = {
         type: randomType.type,
         user: randomUser,
-        time: 'Just now',
+        time: "Just now",
         id: Date.now(),
         icon: randomType.icon,
         ...(randomType.amount && { amount: randomType.amount }),
-      }
-
-      setActivities(prev => [newAct, ...prev.slice(0, 2)])
-      setTimeout(() => {
-        setNewActivity(false)
-      }, 1500)
-    }, 4000)
-    return () => clearInterval(interval)
-  }, [])
+      };
+      setActivities((prev) => [newAct, ...prev.slice(0, 2)]);
+      setTimeout(() => setNewActivity(false), 1500);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, [isVisible]);
 
   return (
-    <div className="bg-gradient-to-br from-gray-800 to-black p-4 rounded-lg h-full flex flex-col border-2 border-gold-500/30">
-      <motion.div 
-        className="text-lg font-bold text-white mb-4"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.2 }}
-      >
-        Recent Activities
-      </motion.div>
-      <div className="space-y-2 flex-1 overflow-y-auto">
+    <CardContainer color="gold" variant="bordered">
+      <CardTitle>Recent Activities</CardTitle>
+      <div className="space-y-2 flex-1 overflow-hidden">
         <AnimatePresence>
-          {activities.map((activity, index) => {
-            const IconComponent = activity.icon
-            return (
-              <motion.div
-                key={activity.id}
-                className="bg-gold-500/20 rounded-lg p-3 backdrop-blur-sm"
-                initial={{ opacity: 0, x: -20, scale: 0.9 }}
-                animate={{
-                  opacity: index === 0 ? 1 : 0.7,
-                  x: 0,
-                  scale: index === 0 ? 1.02 : 1,
-                }}
-                exit={{ opacity: 0, x: 20 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                whileHover={{ scale: 1.05, x: 5 }}
-              >
-                <div className="flex justify-between items-center mb-1">
-                  <span className="text-sm font-semibold text-white flex items-center gap-2">
-                    <IconComponent className="w-4 h-4 text-gold-400" />
-                    {activity.type}
-                    {index === 0 && newActivity && (
-                      <motion.span
-                        initial={{ scale: 0 }}
-                        animate={{ scale: [0, 1.5, 1] }}
-                        className="w-2 h-2 bg-gold-400 rounded-full"
-                      />
-                    )}
-                  </span>
-                  <span className="text-xs text-gray-400">{activity.time}</span>
-                </div>
-                <div className="text-xs text-gray-400">
-                  {activity.user}
-                  {activity.amount && ` - ${activity.amount}`}
-                </div>
-              </motion.div>
-            )
-          })}
+          {activities.map((activity, index) => (
+            <ActivityListItem
+              key={activity.id}
+              activity={activity}
+              index={index}
+              isNew={index === 0 && newActivity}
+            />
+          ))}
         </AnimatePresence>
       </div>
-    </div>
-  )
+    </CardContainer>
+  );
+}
+
+// Reusable Activity List Item
+function ActivityListItem({
+  activity,
+  index,
+  isNew,
+}: Readonly<{ activity: ActivityItem; index: number; isNew: boolean }>) {
+  const IconComponent = activity.icon;
+  return (
+    <motion.div
+      className="bg-gold-500/20 rounded-lg p-3 backdrop-blur-sm"
+      initial={{ opacity: 0, x: -20, scale: 0.9 }}
+      animate={{
+        opacity: index === 0 ? 1 : 0.7,
+        x: 0,
+        scale: index === 0 ? 1.02 : 1,
+      }}
+      exit={{ opacity: 0, x: 20 }}
+      transition={{ duration: DURATION.NORMAL, delay: getStaggerDelay(index) }}
+      whileHover={{ scale: 1.05, x: 5 }}
+    >
+      <div className="flex justify-between items-center mb-1">
+        <span className="text-sm font-semibold text-white flex items-center gap-2">
+          <IconComponent className="w-4 h-4 text-gold-400" />
+          {activity.type}
+          {isNew && (
+            <motion.span
+              initial={{ scale: 0 }}
+              animate={{ scale: [0, 1.5, 1] }}
+              className="w-2 h-2 bg-gold-400 rounded-full"
+            />
+          )}
+        </span>
+        <span className="text-xs text-gray-400">{activity.time}</span>
+      </div>
+      <div className="text-xs text-gray-400">
+        {activity.user}
+        {activity.amount && ` - ${activity.amount}`}
+      </div>
+    </motion.div>
+  );
+}
+
+// Status Badge Component
+function StatusBadge({
+  status,
+  animate = false,
+}: Readonly<{ status: string; animate?: boolean }>) {
+  const isActive = status === "Active";
+  return (
+    <motion.span
+      className={`text-xs px-2 py-1 rounded ${
+        isActive
+          ? "bg-emerald-500/30 text-emerald-300"
+          : "bg-gray-500/30 text-gray-400"
+      }`}
+      animate={isActive && animate ? { opacity: [1, 0.7, 1] } : {}}
+      transition={TRANSITION_PULSE}
+    >
+      {status}
+    </motion.span>
+  );
+}
+
+// Gold Action Button
+function GoldActionButton({ children }: Readonly<{ children: ReactNode }>) {
+  return (
+    <motion.button
+      className="bg-gold-500 text-white text-center py-2 rounded-lg text-sm font-semibold w-full mt-3"
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+      animate={{
+        boxShadow: [
+          "0 0 0px rgba(212, 175, 55, 0)",
+          "0 0 20px rgba(212, 175, 55, 0.5)",
+          "0 0 0px rgba(212, 175, 55, 0)",
+        ],
+      }}
+      transition={TRANSITION_PULSE}
+    >
+      {children}
+    </motion.button>
+  );
 }
 
 // Animated QR Code Management
 function AnimatedQRManagement() {
+  const isVisible = useIsVisible();
   const [qrCodes, setQrCodes] = useState([
-    { location: 'Main Entrance', status: 'Active', id: 1 },
-    { location: 'Reception', status: 'Active', id: 2 },
-    { location: 'Yoga Studio', status: 'Inactive', id: 3 },
-  ])
-  const [isGenerating, setIsGenerating] = useState(false)
+    { location: "Main Entrance", status: "Active", id: 1 },
+    { location: "Reception", status: "Active", id: 2 },
+    { location: "Yoga Studio", status: "Inactive", id: 3 },
+  ]);
+  const [isGenerating, setIsGenerating] = useState(false);
 
   useEffect(() => {
+    if (!isVisible) return;
     const interval = setInterval(() => {
-      setIsGenerating(true)
+      setIsGenerating(true);
       setTimeout(() => {
-        setQrCodes(prev => [
-          { location: 'Gym Floor', status: 'Active', id: Date.now() },
-          ...prev.slice(0, 2)
-        ])
-        setIsGenerating(false)
-      }, 1500)
-    }, 5000)
-
-    return () => clearInterval(interval)
-  }, [])
+        setQrCodes((prev) => [
+          { location: "Gym Floor", status: "Active", id: Date.now() },
+          ...prev.slice(0, 2),
+        ]);
+        setIsGenerating(false);
+      }, 1500);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [isVisible]);
 
   return (
-    <div className="bg-gradient-to-br from-gray-900 to-black text-white p-4 rounded-lg h-full flex flex-col border-2 border-gold-500/30">
-      <motion.div 
-        className="text-lg font-bold text-white mb-4"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.2 }}
-      >
-        QR Code Management
-      </motion.div>
-      <div className="space-y-3 flex-1 overflow-y-auto">
+    <CardContainer color="gold" variant="bordered">
+      <CardTitle>QR Code Management</CardTitle>
+      <div className="space-y-3 flex-1 overflow-hidden">
         <AnimatePresence>
           {qrCodes.map((qr, index) => (
             <motion.div
@@ -1025,7 +1288,7 @@ function AnimatedQRManagement() {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: 20 }}
-              transition={{ delay: index * 0.1 }}
+              transition={{ delay: getStaggerDelay(index) }}
               whileHover={{ scale: 1.05, x: 5 }}
             >
               <div className="flex justify-between items-center mb-2">
@@ -1033,15 +1296,7 @@ function AnimatedQRManagement() {
                   <QrCode className="w-5 h-5 text-gold-400" />
                   <span className="text-sm font-semibold">{qr.location}</span>
                 </div>
-                <motion.span
-                  className={`text-xs px-2 py-1 rounded ${
-                    qr.status === 'Active' ? 'bg-emerald-500/30 text-emerald-300' : 'bg-gray-500/30 text-gray-400'
-                  }`}
-                  animate={qr.status === 'Active' ? { opacity: [1, 0.7, 1] } : {}}
-                  transition={{ duration: 2, repeat: Infinity }}
-                >
-                  {qr.status}
-                </motion.span>
+                <StatusBadge status={qr.status} animate />
               </div>
               {index === 0 && isGenerating && (
                 <motion.div
@@ -1049,11 +1304,7 @@ function AnimatedQRManagement() {
                   animate={{ opacity: 1 }}
                   className="text-xs text-gold-300 flex items-center gap-2"
                 >
-                  <motion.div
-                    className="w-3 h-3 border-2 border-gold-400 border-t-transparent rounded-full"
-                    animate={{ rotate: 360 }}
-                    transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
-                  />
+                  <Spinner className="w-3 h-3" color="gold" />
                   Generating...
                 </motion.div>
               )}
@@ -1061,54 +1312,41 @@ function AnimatedQRManagement() {
           ))}
         </AnimatePresence>
       </div>
-      <motion.button
-        className="bg-gold-500 text-white text-center py-2 rounded-lg text-sm font-semibold w-full mt-3"
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        animate={{ boxShadow: ['0 0 0px rgba(212, 175, 55, 0)', '0 0 20px rgba(212, 175, 55, 0.5)', '0 0 0px rgba(212, 175, 55, 0)'] }}
-        transition={{ duration: 2, repeat: Infinity }}
-      >
-        Generate New QR
-      </motion.button>
-    </div>
-  )
+      <GoldActionButton>Generate New QR</GoldActionButton>
+    </CardContainer>
+  );
 }
 
 // Animated Venue Management
 function AnimatedVenueManagement() {
+  const isVisible = useIsVisible();
   const [venues, setVenues] = useState([
-    { name: 'Elite Fitness', status: 'Open', visitors: 45, id: 1 },
-    { name: 'Yoga Studio', status: 'Open', visitors: 23, id: 2 },
-    { name: 'Swim Center', status: 'Closed', visitors: 0, id: 3 },
-  ])
-  const [isUpdating, setIsUpdating] = useState(false)
+    { name: "Elite Fitness", status: "Open", visitors: 45, id: 1 },
+    { name: "Yoga Studio", status: "Open", visitors: 23, id: 2 },
+    { name: "Swim Center", status: "Closed", visitors: 0, id: 3 },
+  ]);
+  const isUpdating = useAnimationCycle(4000, 1000);
 
   useEffect(() => {
+    if (!isVisible) return;
     const interval = setInterval(() => {
-      setIsUpdating(true)
-      setTimeout(() => {
-        setVenues(prev => prev.map(v => ({
+      setVenues((prev) =>
+        prev.map((v) => ({
           ...v,
-          visitors: v.status === 'Open' ? v.visitors + Math.floor(Math.random() * 3) : v.visitors
-        })))
-        setIsUpdating(false)
-      }, 1000)
-    }, 4000)
-
-    return () => clearInterval(interval)
-  }, [])
+          visitors:
+            v.status === "Open"
+              ? v.visitors + Math.floor(Math.random() * 3)
+              : v.visitors,
+        }))
+      );
+    }, 4000);
+    return () => clearInterval(interval);
+  }, [isVisible]);
 
   return (
-    <div className="bg-gradient-to-br from-gold-500 to-gold-600 text-white p-4 rounded-lg h-full flex flex-col">
-      <motion.div 
-        className="text-lg font-bold mb-4"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.2 }}
-      >
-        Venue Management
-      </motion.div>
-      <div className="space-y-3 flex-1 overflow-y-auto">
+    <CardContainer color="gold">
+      <CardTitle>Venue Management</CardTitle>
+      <div className="space-y-3 flex-1 overflow-hidden">
         {venues.map((venue, index) => (
           <motion.div
             key={venue.id}
@@ -1124,18 +1362,24 @@ function AnimatedVenueManagement() {
                 <div className="text-xs opacity-80 flex items-center gap-2 mt-1">
                   <motion.span
                     className={`w-2 h-2 rounded-full ${
-                      venue.status === 'Open' ? 'bg-emerald-400' : 'bg-gray-400'
+                      venue.status === "Open" ? "bg-emerald-400" : "bg-gray-400"
                     }`}
-                    animate={venue.status === 'Open' ? { opacity: [1, 0.5, 1] } : {}}
-                    transition={{ duration: 2, repeat: Infinity }}
+                    animate={
+                      venue.status === "Open" ? { opacity: [1, 0.5, 1] } : {}
+                    }
+                    transition={TRANSITION_PULSE}
                   />
                   {venue.status}
                 </div>
               </div>
               <motion.div
                 className="text-right"
-                animate={isUpdating && venue.status === 'Open' ? { scale: [1, 1.2, 1] } : {}}
-                transition={{ duration: 0.3 }}
+                animate={
+                  isUpdating && venue.status === "Open"
+                    ? { scale: [1, 1.2, 1] }
+                    : {}
+                }
+                transition={{ duration: DURATION.FAST }}
               >
                 <div className="text-xs opacity-80">Current Visitors</div>
                 <div className="text-lg font-bold">{venue.visitors}</div>
@@ -1144,132 +1388,98 @@ function AnimatedVenueManagement() {
           </motion.div>
         ))}
       </div>
-    </div>
-  )
+    </CardContainer>
+  );
 }
 
 // Animated Analytics/Reports
 function AnimatedAnalytics() {
-  const { count: totalRevenue } = useCountUp(245600, 3, 240000, true)
-  const { count: avgDaily } = useCountUp(12450, 2, 12000, true)
-  const { count: peakHours } = useCountUp(18, 2, 15, true)
-  const [isUpdating, setIsUpdating] = useState(false)
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setIsUpdating(true)
-      setTimeout(() => {
-        setIsUpdating(false)
-      }, 500)
-    }, 5000)
-
-    return () => clearInterval(interval)
-  }, [])
+  const { count: totalRevenue } = useCountUp(245600, 3, 240000, true);
+  const { count: avgDaily } = useCountUp(12450, 2, 12000, true);
+  const { count: peakHours } = useCountUp(18, 2, 15, true);
+  const isUpdating = useAnimationCycle(5000, 500);
 
   return (
-    <div className="bg-gradient-to-br from-gray-800 to-black p-4 rounded-lg h-full flex flex-col border-2 border-gold-500/30">
-      <motion.div 
-        className="text-lg font-bold text-white mb-4 flex items-center gap-2"
+    <CardContainer color="gold" variant="bordered">
+      <motion.div
+        className="text-lg font-bold text-white mb-4 flex items-center gap-2 overflow-hidden"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 0.2 }}
+        transition={{ delay: DELAY.SHORT }}
       >
-        <BarChart3 className="w-5 h-5 text-gold-400" />
-        Analytics & Reports
+        <BarChart3 className="w-5 h-5 text-gold-400 flex-shrink-0" />
+        <span className="truncate">Analytics & Reports</span>
       </motion.div>
-      <motion.div
-        className="bg-gold-500/20 rounded-lg p-3 mb-3 backdrop-blur-sm"
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 0.3 }}
-        whileHover={{ scale: 1.05 }}
-      >
-        <div className="text-xs opacity-80 mb-1">Total Revenue (Month)</div>
-        <motion.div 
-          className="text-2xl font-bold text-gold-300"
-          key={totalRevenue}
-          initial={{ scale: 1.2 }}
-          animate={{ scale: isUpdating ? 1.3 : 1 }}
-          transition={{ duration: 0.3 }}
-        >
-          ₹{totalRevenue.toLocaleString()}
-        </motion.div>
-      </motion.div>
-      <motion.div
-        className="bg-gold-500/20 rounded-lg p-3 mb-3 backdrop-blur-sm"
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 0.4 }}
-        whileHover={{ scale: 1.05 }}
-      >
-        <div className="text-xs opacity-80 mb-1">Avg Daily Earnings</div>
-        <motion.div 
-          className="text-xl font-bold text-gold-300"
-          key={avgDaily}
-          initial={{ scale: 1.2 }}
-          animate={{ scale: 1 }}
-        >
-          ₹{avgDaily.toLocaleString()}
-        </motion.div>
-      </motion.div>
-      <motion.div
-        className="bg-gold-500/20 rounded-lg p-3 backdrop-blur-sm"
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 0.5 }}
-        whileHover={{ scale: 1.05 }}
-      >
-        <div className="text-xs opacity-80 mb-1">Peak Hours Visitors</div>
-        <motion.div 
-          className="text-lg font-semibold text-gold-300"
-          key={peakHours}
-          initial={{ scale: 1.2 }}
-          animate={{ scale: 1 }}
-        >
-          {peakHours} visitors/hr
-        </motion.div>
-      </motion.div>
-    </div>
-  )
+      <StatCard
+        label="Total Revenue (Month)"
+        value={`₹${totalRevenue.toLocaleString()}`}
+        isAnimating={isUpdating}
+        color="gold"
+        delay={0.3}
+      />
+      <StatCard
+        label="Avg Daily Earnings"
+        value={`₹${avgDaily.toLocaleString()}`}
+        color="gold"
+        delay={0.4}
+      />
+      <StatCard
+        label="Peak Hours Visitors"
+        value={`${peakHours} visitors/hr`}
+        color="gold"
+        delay={0.5}
+      />
+    </CardContainer>
+  );
+}
+
+// Customer Status Badge
+function CustomerStatusBadge({ status }: Readonly<{ status: string }>) {
+  const statusClasses = {
+    Active: "bg-emerald-500/30",
+    New: "bg-blue-500/30",
+    Regular: "bg-gray-500/30",
+  };
+  return (
+    <span
+      className={`text-xs px-2 py-1 rounded ${
+        statusClasses[status as keyof typeof statusClasses] || "bg-gray-500/30"
+      }`}
+    >
+      {status}
+    </span>
+  );
 }
 
 // Animated Customer Management
 function AnimatedCustomerManagement() {
+  const isVisible = useIsVisible();
   const [customers, setCustomers] = useState([
-    { name: 'John Doe', visits: 12, status: 'Active', id: 1 },
-    { name: 'Jane Smith', visits: 8, status: 'Active', id: 2 },
-    { name: 'Mike Johnson', visits: 5, status: 'Regular', id: 3 },
-  ])
-  const [isNewCustomer, setIsNewCustomer] = useState(false)
+    { name: "John Doe", visits: 12, status: "Active", id: 1 },
+    { name: "Jane Smith", visits: 8, status: "Active", id: 2 },
+    { name: "Mike Johnson", visits: 5, status: "Regular", id: 3 },
+  ]);
+  const [isNewCustomer, setIsNewCustomer] = useState(false);
 
   useEffect(() => {
+    if (!isVisible) return;
     const interval = setInterval(() => {
-      setIsNewCustomer(true)
+      setIsNewCustomer(true);
       setTimeout(() => {
-        setCustomers(prev => [
-          { name: 'Sarah Williams', visits: 1, status: 'New', id: Date.now() },
-          ...prev.slice(0, 2)
-        ])
-        setTimeout(() => {
-          setIsNewCustomer(false)
-        }, 1500)
-      }, 1000)
-    }, 6000)
-
-    return () => clearInterval(interval)
-  }, [])
+        setCustomers((prev) => [
+          { name: "Sarah Williams", visits: 1, status: "New", id: Date.now() },
+          ...prev.slice(0, 2),
+        ]);
+        setTimeout(() => setIsNewCustomer(false), 1500);
+      }, 1000);
+    }, 6000);
+    return () => clearInterval(interval);
+  }, [isVisible]);
 
   return (
-    <div className="bg-gradient-to-br from-gold-500 to-gold-600 text-white p-4 rounded-lg h-full flex flex-col">
-      <motion.div 
-        className="text-lg font-bold mb-4"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.2 }}
-      >
-        Customer Management
-      </motion.div>
-      <div className="space-y-3 flex-1 overflow-y-auto">
+    <CardContainer color="gold">
+      <CardTitle>Customer Management</CardTitle>
+      <div className="space-y-3 flex-1 overflow-hidden">
         <AnimatePresence>
           {customers.map((customer, index) => (
             <motion.div
@@ -1278,7 +1488,7 @@ function AnimatedCustomerManagement() {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: 20 }}
-              transition={{ delay: index * 0.1 }}
+              transition={{ delay: getStaggerDelay(index) }}
               whileHover={{ scale: 1.05, x: 5 }}
             >
               <div className="flex justify-between items-center mb-2">
@@ -1295,118 +1505,161 @@ function AnimatedCustomerManagement() {
                     </motion.span>
                   )}
                 </div>
-                <span className={`text-xs px-2 py-1 rounded ${
-                  customer.status === 'Active' ? 'bg-emerald-500/30' : 
-                  customer.status === 'New' ? 'bg-blue-500/30' : 'bg-gray-500/30'
-                }`}>
-                  {customer.status}
-                </span>
+                <CustomerStatusBadge status={customer.status} />
               </div>
-              <div className="text-xs opacity-80">Total Visits: {customer.visits}</div>
+              <div className="text-xs opacity-80">
+                Total Visits: {customer.visits}
+              </div>
             </motion.div>
           ))}
         </AnimatePresence>
       </div>
-    </div>
-  )
+    </CardContainer>
+  );
+}
+
+// Subscription Item Component
+interface SubscriptionItem {
+  readonly user: string;
+  readonly plan: string;
+  readonly daysLeft: number;
+  readonly amount: string;
+  readonly id: number;
+}
+
+function SubscriptionCard({
+  sub,
+  index,
+  isNew,
+}: Readonly<{ sub: SubscriptionItem; index: number; isNew: boolean }>) {
+  const isExpiring = sub.daysLeft <= 7;
+  return (
+    <motion.div
+      className={`rounded-lg p-3 backdrop-blur-sm ${
+        isExpiring
+          ? "bg-orange-500/20 border border-orange-400/40"
+          : "bg-gold-500/20 border border-gold-400/30"
+      }`}
+      initial={{ opacity: 0, x: -20 }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: 20 }}
+      transition={{ delay: getStaggerDelay(index) }}
+      whileHover={{ scale: 1.05, x: 5 }}
+    >
+      <div className="flex justify-between items-start mb-2">
+        <div>
+          <div className="text-sm font-semibold text-white flex items-center gap-2">
+            {sub.user}
+            {isNew && (
+              <motion.span
+                initial={{ scale: 0 }}
+                animate={{ scale: [0, 1.5, 1] }}
+                className="text-xs bg-emerald-500/50 px-2 py-0.5 rounded"
+              >
+                New
+              </motion.span>
+            )}
+          </div>
+          <div className="text-xs opacity-80 mt-1">{sub.plan} Plan</div>
+        </div>
+        <div className="text-right">
+          <div className="text-sm font-bold text-gold-300">{sub.amount}</div>
+          <div
+            className={`text-xs ${
+              isExpiring ? "text-orange-300" : "text-gray-400"
+            }`}
+          >
+            {sub.daysLeft} days left
+          </div>
+        </div>
+      </div>
+      {isExpiring && (
+        <motion.div
+          className="text-xs text-orange-300 flex items-center gap-1 mt-2"
+          animate={{ opacity: [1, 0.7, 1] }}
+          transition={{ duration: DURATION.EXTRA_SLOW, repeat: Infinity }}
+        >
+          <Clock className="w-3 h-3" />
+          Expiring soon
+        </motion.div>
+      )}
+    </motion.div>
+  );
 }
 
 // Animated Subscriptions Management
 function AnimatedSubscriptionsManagement() {
-  const [subscriptions, setSubscriptions] = useState([
-    { user: 'John Doe', plan: 'Monthly', daysLeft: 15, amount: '₹2,000', id: 1 },
-    { user: 'Jane Smith', plan: 'Weekly', daysLeft: 3, amount: '₹500', id: 2 },
-    { user: 'Mike Johnson', plan: 'Monthly', daysLeft: 28, amount: '₹2,000', id: 3 },
-  ])
-  const [isNewSubscription, setIsNewSubscription] = useState(false)
+  const isVisible = useIsVisible();
+  const [subscriptions, setSubscriptions] = useState<SubscriptionItem[]>([
+    {
+      user: "John Doe",
+      plan: "Monthly",
+      daysLeft: 15,
+      amount: "₹2,000",
+      id: 1,
+    },
+    { user: "Jane Smith", plan: "Weekly", daysLeft: 3, amount: "₹500", id: 2 },
+    {
+      user: "Mike Johnson",
+      plan: "Monthly",
+      daysLeft: 28,
+      amount: "₹2,000",
+      id: 3,
+    },
+  ]);
+  const [isNewSubscription, setIsNewSubscription] = useState(false);
 
   useEffect(() => {
-    const users = ['Sarah Williams', 'David Brown', 'Emma Davis', 'Robert Lee']
-    const plans = ['Monthly', 'Weekly', 'Quarterly']
-    const amounts = { 'Monthly': '₹2,000', 'Weekly': '₹500', 'Quarterly': '₹5,000' }
+    if (!isVisible) return;
+    const users = ["Sarah Williams", "David Brown", "Emma Davis", "Robert Lee"];
+    const plans = ["Monthly", "Weekly", "Quarterly"] as const;
+    const planDetails = {
+      Monthly: { days: 30, amount: "₹2,000" },
+      Weekly: { days: 7, amount: "₹500" },
+      Quarterly: { days: 90, amount: "₹5,000" },
+    };
 
     const interval = setInterval(() => {
-      setIsNewSubscription(true)
+      setIsNewSubscription(true);
       setTimeout(() => {
-        const randomPlan = plans[Math.floor(Math.random() * plans.length)]
-        setSubscriptions(prev => [
-          { 
-            user: users[Math.floor(Math.random() * users.length)], 
-            plan: randomPlan, 
-            daysLeft: randomPlan === 'Monthly' ? 30 : randomPlan === 'Weekly' ? 7 : 90,
-            amount: amounts[randomPlan as keyof typeof amounts],
-            id: Date.now() 
+        const randomPlan = plans[Math.floor(Math.random() * plans.length)];
+        const { days, amount } = planDetails[randomPlan];
+        setSubscriptions((prev) => [
+          {
+            user: users[Math.floor(Math.random() * users.length)],
+            plan: randomPlan,
+            daysLeft: days,
+            amount,
+            id: Date.now(),
           },
-          ...prev.slice(0, 2)
-        ])
-        setTimeout(() => {
-          setIsNewSubscription(false)
-        }, 1500)
-      }, 1000)
-    }, 6000)
-
-    return () => clearInterval(interval)
-  }, [])
+          ...prev.slice(0, 2),
+        ]);
+        setTimeout(() => setIsNewSubscription(false), 1500);
+      }, 1000);
+    }, 6000);
+    return () => clearInterval(interval);
+  }, [isVisible]);
 
   return (
-    <div className="bg-gradient-to-br from-gray-800 to-black p-4 rounded-lg h-full flex flex-col border-2 border-gold-500/30">
-      <motion.div 
-        className="text-lg font-bold text-white mb-4 flex items-center gap-2"
+    <CardContainer color="gold" variant="bordered">
+      <motion.div
+        className="text-lg font-bold text-white mb-4 flex items-center gap-2 overflow-hidden"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 0.2 }}
+        transition={{ delay: DELAY.SHORT }}
       >
-        <Star className="w-5 h-5 text-gold-400" />
-        Subscriptions
+        <Star className="w-5 h-5 text-gold-400 flex-shrink-0" />
+        <span className="truncate">Subscriptions</span>
       </motion.div>
-      <div className="space-y-3 flex-1 overflow-y-auto">
+      <div className="space-y-3 flex-1 overflow-hidden">
         <AnimatePresence>
           {subscriptions.map((sub, index) => (
-            <motion.div
+            <SubscriptionCard
               key={sub.id}
-              className={`rounded-lg p-3 backdrop-blur-sm ${
-                sub.daysLeft <= 7 ? 'bg-orange-500/20 border border-orange-400/40' : 'bg-gold-500/20 border border-gold-400/30'
-              }`}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 20 }}
-              transition={{ delay: index * 0.1 }}
-              whileHover={{ scale: 1.05, x: 5 }}
-            >
-              <div className="flex justify-between items-start mb-2">
-                <div>
-                  <div className="text-sm font-semibold text-white flex items-center gap-2">
-                    {sub.user}
-                    {index === 0 && isNewSubscription && (
-                      <motion.span
-                        initial={{ scale: 0 }}
-                        animate={{ scale: [0, 1.5, 1] }}
-                        className="text-xs bg-emerald-500/50 px-2 py-0.5 rounded"
-                      >
-                        New
-                      </motion.span>
-                    )}
-                  </div>
-                  <div className="text-xs opacity-80 mt-1">{sub.plan} Plan</div>
-                </div>
-                <div className="text-right">
-                  <div className="text-sm font-bold text-gold-300">{sub.amount}</div>
-                  <div className={`text-xs ${sub.daysLeft <= 7 ? 'text-orange-300' : 'text-gray-400'}`}>
-                    {sub.daysLeft} days left
-                  </div>
-                </div>
-              </div>
-              {sub.daysLeft <= 7 && (
-                <motion.div
-                  className="text-xs text-orange-300 flex items-center gap-1 mt-2"
-                  animate={{ opacity: [1, 0.7, 1] }}
-                  transition={{ duration: 1.5, repeat: Infinity }}
-                >
-                  <Clock className="w-3 h-3" />
-                  Expiring soon
-                </motion.div>
-              )}
-            </motion.div>
+              sub={sub}
+              index={index}
+              isNew={index === 0 && isNewSubscription}
+            />
           ))}
         </AnimatePresence>
       </div>
@@ -1414,152 +1667,89 @@ function AnimatedSubscriptionsManagement() {
         className="bg-gold-500/20 rounded-lg p-2 mt-3 backdrop-blur-sm"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.4 }}
+        transition={{ delay: DELAY.MEDIUM }}
       >
         <div className="text-xs opacity-80 text-center">
           Total Active: {subscriptions.length}
         </div>
       </motion.div>
-    </div>
-  )
+    </CardContainer>
+  );
 }
 
 // Animated Business with Active Subscriptions and Expiring Passes
 function AnimatedBusiness() {
-  const { count: activeSubscriptions, reset: resetSubs } = useCountUp(127, 2, 120, true)
-  const { count: expiringPasses, reset: resetExpiring } = useCountUp(8, 2, 5, true)
-  const [isNewSubscription, setIsNewSubscription] = useState(false)
-  const [isPassExpiring, setIsPassExpiring] = useState(false)
+  const isVisible = useIsVisible();
+  const { count: activeSubscriptions, reset: resetSubs } = useCountUp(
+    127,
+    2,
+    120,
+    true
+  );
+  const { count: expiringPasses, reset: resetExpiring } = useCountUp(
+    8,
+    2,
+    5,
+    true
+  );
+  const [isNewSubscription, setIsNewSubscription] = useState(false);
+  const [isPassExpiring, setIsPassExpiring] = useState(false);
 
   useEffect(() => {
-    // New subscription
+    if (!isVisible) return;
     const subInterval = setInterval(() => {
-      setIsNewSubscription(true)
+      setIsNewSubscription(true);
       setTimeout(() => {
-        resetSubs()
-        setTimeout(() => {
-          setIsNewSubscription(false)
-        }, 500)
-      }, 1000)
-    }, 6000)
-
-    // Expiring passes update
+        resetSubs();
+        setTimeout(() => setIsNewSubscription(false), 500);
+      }, 1000);
+    }, 6000);
     const expiringInterval = setInterval(() => {
-      setIsPassExpiring(true)
+      setIsPassExpiring(true);
       setTimeout(() => {
-        resetExpiring()
-        setTimeout(() => {
-          setIsPassExpiring(false)
-        }, 500)
-      }, 1000)
-    }, 8000)
-
+        resetExpiring();
+        setTimeout(() => setIsPassExpiring(false), 500);
+      }, 1000);
+    }, 8000);
     return () => {
-      clearInterval(subInterval)
-      clearInterval(expiringInterval)
-    }
-  }, [resetSubs, resetExpiring])
+      clearInterval(subInterval);
+      clearInterval(expiringInterval);
+    };
+  }, [isVisible, resetSubs, resetExpiring]);
 
   return (
-    <div className="bg-gradient-to-br from-gold-500 to-gold-600 text-white p-4 rounded-lg h-full flex flex-col">
-      <motion.div 
-        className="text-lg font-bold mb-4"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.2 }}
-      >
-        Business Overview
-      </motion.div>
-      <motion.div
-        className="bg-white/20 rounded-lg p-3 mb-3 backdrop-blur-sm relative overflow-hidden"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.3 }}
-        whileHover={{ scale: 1.05 }}
-      >
-        <div className="text-xs opacity-80 mb-1 flex items-center gap-2">
-          <Star className="w-3 h-3" />
-          Active Subscriptions
-        </div>
-        <motion.div 
-          className="text-2xl font-bold flex items-center gap-2"
-          key={activeSubscriptions}
-          initial={{ scale: 1.2 }}
-          animate={{ scale: isNewSubscription ? 1.3 : 1 }}
-          transition={{ duration: 0.3 }}
-        >
-          {activeSubscriptions}
-          {isNewSubscription && (
-            <motion.span
-              initial={{ opacity: 0, scale: 0 }}
-              animate={{ opacity: 1, scale: [0, 1.5, 1] }}
-              exit={{ opacity: 0, scale: 0 }}
-              className="text-sm text-gold-200 flex items-center gap-1"
-            >
-              <Star className="w-3 h-3" />
-              +1
-            </motion.span>
-          )}
-        </motion.div>
-        <motion.div
-          className="absolute top-0 right-0 w-12 h-12 bg-gold-400/30 rounded-full blur-xl"
-          animate={{
-            scale: isNewSubscription ? [1, 1.5, 1] : 1,
-            opacity: isNewSubscription ? [0.5, 0.8, 0.5] : 0.3,
-          }}
-          transition={{ duration: 1 }}
-        />
-      </motion.div>
-      <motion.div
-        className="bg-white/20 rounded-lg p-3 mb-3 backdrop-blur-sm relative overflow-hidden"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.4 }}
-        whileHover={{ scale: 1.05 }}
-      >
-        <div className="text-xs opacity-80 mb-1 flex items-center gap-2">
-          <Calendar className="w-3 h-3" />
-          Passes Expiring (2-4 days)
-        </div>
-        <motion.div 
-          className="text-xl font-bold flex items-center gap-2"
-          key={expiringPasses}
-          initial={{ scale: 1.2 }}
-          animate={{ scale: isPassExpiring ? 1.3 : 1 }}
-          transition={{ duration: 0.3 }}
-        >
-          {expiringPasses}
-          {isPassExpiring && (
-            <motion.span
-              initial={{ opacity: 0 }}
-              animate={{ opacity: [0, 1, 0] }}
-              className="text-xs text-gold-200"
-            >
-              ⚠️
-            </motion.span>
-          )}
-        </motion.div>
-        <motion.div
-          className="absolute top-0 right-0 w-12 h-12 bg-orange-400/30 rounded-full blur-xl"
-          animate={{
-            scale: isPassExpiring ? [1, 1.5, 1] : 1,
-            opacity: isPassExpiring ? [0.5, 0.8, 0.5] : 0.3,
-          }}
-          transition={{ duration: 1 }}
-        />
-      </motion.div>
+    <CardContainer color="gold">
+      <CardTitle>Business Overview</CardTitle>
+      <StatCard
+        label="Active Subscriptions"
+        value={activeSubscriptions}
+        isAnimating={isNewSubscription}
+        incrementText="+1"
+        icon={Star}
+        color="gold"
+        delay={0.3}
+      />
+      <StatCard
+        label="Passes Expiring (2-4 days)"
+        value={expiringPasses}
+        isAnimating={isPassExpiring}
+        incrementText="⚠️"
+        icon={Calendar}
+        color="gold"
+        delay={0.4}
+      />
       <motion.div
         className="bg-white/20 rounded-lg p-3 mb-3 backdrop-blur-sm"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.5 }}
+        transition={{ delay: DELAY.MEDIUM_LONG }}
         whileHover={{ scale: 1.05 }}
       >
         <div className="text-xs opacity-80 mb-1">Per-Visit Price</div>
-        <motion.div 
+        <motion.div
           className="text-xl font-bold"
           animate={{ scale: [1, 1.1, 1] }}
-          transition={{ duration: 2, repeat: Infinity }}
+          transition={TRANSITION_PULSE}
         >
           ₹200
         </motion.div>
@@ -1568,95 +1758,107 @@ function AnimatedBusiness() {
         className="bg-white/20 rounded-lg p-3 backdrop-blur-sm"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.6 }}
+        transition={{ delay: DELAY.LONG }}
         whileHover={{ scale: 1.05 }}
       >
         <div className="text-xs opacity-80 mb-1">Location</div>
         <div className="text-sm font-semibold">Elite Fitness Center</div>
         <div className="text-xs opacity-80">Delhi, India</div>
       </motion.div>
-    </div>
-  )
+    </CardContainer>
+  );
 }
 
 // Screen Card Component with enhanced animations
 function ScreenCard({ screen, index, isInView, delay }: any) {
-  const [isHovered, setIsHovered] = useState(false)
-  const cardRef = useRef(null)
-  const cardInView = useInView(cardRef, { once: false, margin: '0px' })
+  const [isHovered, setIsHovered] = useState(false);
+  const cardRef = useRef(null);
+  const cardInView = useInView(cardRef, { once: false, margin: "0px" });
 
   return (
     <motion.div
       ref={cardRef}
       initial={{ opacity: 0, y: 40, scale: 0.95 }}
-      animate={cardInView ? { 
-        opacity: 1, 
-        y: 0, 
-        scale: 1,
-      } : {}}
-        transition={{ 
-        duration: 0.5, 
+      animate={
+        cardInView
+          ? {
+              opacity: 1,
+              y: 0,
+              scale: 1,
+            }
+          : {}
+      }
+      transition={{
+        duration: 0.5,
         delay: delay * 0.2,
         ease: [0.22, 1, 0.36, 1],
       }}
-      whileHover={{ 
-        y: -10, 
+      whileHover={{
+        y: -10,
         scale: 1.02,
-        transition: { type: 'spring', stiffness: 400, damping: 25 }
+        transition: { type: "spring", stiffness: 400, damping: 25 },
       }}
-      style={{ willChange: 'transform, opacity' }}
+      style={{ willChange: "transform, opacity" }}
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
-      className="bg-gradient-to-br from-gray-900/95 via-gray-800/60 to-black/95 p-10 rounded-3xl shadow-2xl border border-emerald-500/30 backdrop-blur-xl relative overflow-hidden group gpu-accelerated"
+      className="bg-gradient-to-br from-gray-900/95 via-gray-800/60 to-black/95 p-4 md:p-10 rounded-3xl shadow-2xl border border-emerald-500/30 backdrop-blur-xl relative overflow-hidden group gpu-accelerated"
     >
       {/* Enhanced animated background glow */}
       <motion.div
         className={`absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${
-          screen.color === 'emerald' ? 'bg-emerald-500/15' : 'bg-gold-500/15'
+          screen.color === "emerald" ? "bg-emerald-500/15" : "bg-gold-500/15"
         }`}
-        animate={isHovered ? {
-          scale: [1, 1.3, 1],
-        } : {}}
-        transition={{ duration: 2.5, repeat: Infinity }}
+        animate={
+          isHovered
+            ? {
+                scale: [1, 1.3, 1],
+              }
+            : {}
+        }
+        transition={{ duration: DURATION.LOOP_MEDIUM, repeat: Infinity }}
       />
-      
+
       {/* Shimmer effect on hover */}
       <motion.div
         className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent opacity-0 group-hover:opacity-100"
-        animate={isHovered ? { x: ['-100%', '200%'] } : {}}
-        transition={{ duration: 1.5, repeat: Infinity, ease: 'linear' }}
+        animate={isHovered ? { x: ["-100%", "200%"] } : {}}
+        transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
       />
-      
+
       {/* Corner accent */}
-      <div className={`absolute top-0 right-0 w-32 h-32 ${
-        screen.color === 'emerald' ? 'bg-emerald-500/10' : 'bg-gold-500/10'
-      } rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
+      <div
+        className={`absolute top-0 right-0 w-32 h-32 ${
+          screen.color === "emerald" ? "bg-emerald-500/10" : "bg-gold-500/10"
+        } rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500`}
+      />
 
       {/* Enhanced Icon with premium animation */}
-      <motion.div 
-        className={`w-28 h-28 ${
-          screen.color === 'emerald' 
-            ? 'bg-gradient-to-br from-emerald-500/30 to-emerald-600/20' 
-            : 'bg-gradient-to-br from-gold-500/30 to-gold-600/20'
-        } rounded-3xl flex items-center justify-center mb-8 relative mx-auto border ${
-          screen.color === 'emerald' ? 'border-emerald-500/30' : 'border-gold-500/30'
+      <motion.div
+        className={`w-16 h-16 md:w-28 md:h-28 ${
+          screen.color === "emerald"
+            ? "bg-gradient-to-br from-emerald-500/30 to-emerald-600/20"
+            : "bg-gradient-to-br from-gold-500/30 to-gold-600/20"
+        } rounded-2xl md:rounded-3xl flex items-center justify-center mb-4 md:mb-8 relative mx-auto border ${
+          screen.color === "emerald"
+            ? "border-emerald-500/30"
+            : "border-gold-500/30"
         } group-hover:scale-110 transition-transform duration-300`}
         whileHover={{ rotate: [0, 360], scale: 1.25 }}
-        transition={{ duration: 0.8, ease: 'easeInOut' }}
+        transition={{ duration: DURATION.SLOW, ease: EASE_IN_OUT }}
       >
-        <motion.div 
+        <motion.div
           className={`absolute inset-0 ${
-            screen.color === 'emerald' ? 'bg-emerald-500/50' : 'bg-gold-500/50'
+            screen.color === "emerald" ? "bg-emerald-500/50" : "bg-gold-500/50"
           } rounded-3xl blur-2xl`}
           animate={{
             scale: [1, 1.4, 1],
             opacity: [0.4, 0.8, 0.4],
           }}
-          transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
+          transition={{ duration: DURATION.LOOP_MEDIUM, repeat: Infinity, ease: EASE_IN_OUT }}
         />
         <motion.div
           className={`absolute inset-0 ${
-            screen.color === 'emerald' ? 'bg-emerald-400/20' : 'bg-gold-400/20'
+            screen.color === "emerald" ? "bg-emerald-400/20" : "bg-gold-400/20"
           } rounded-3xl blur-xl`}
           animate={{
             rotate: [0, 360],
@@ -1664,17 +1866,21 @@ function ScreenCard({ screen, index, isInView, delay }: any) {
           transition={{
             duration: 20,
             repeat: Infinity,
-            ease: 'linear',
+            ease: "linear",
           }}
         />
-        <screen.icon className={`w-14 h-14 ${
-          screen.color === 'emerald' ? 'text-emerald-300' : 'text-gold-300'
-        } relative z-10 drop-shadow-2xl filter brightness-110`} />
+        <screen.icon
+          className={`w-8 h-8 md:w-14 md:h-14 ${
+            screen.color === "emerald" ? "text-emerald-300" : "text-gold-300"
+          } relative z-10 drop-shadow-2xl filter brightness-110`}
+        />
       </motion.div>
 
-      <motion.h4 
-        className={`text-2xl font-extrabold mb-4 text-center relative z-10 group-hover:scale-105 transition-transform ${
-          screen.color === 'emerald' ? 'text-white group-hover:text-emerald-300' : 'text-white group-hover:text-gold-300'
+      <motion.h4
+        className={`text-lg md:text-2xl font-extrabold mb-2 md:mb-4 text-center relative z-10 group-hover:scale-105 transition-transform ${
+          screen.color === "emerald"
+            ? "text-white group-hover:text-emerald-300"
+            : "text-white group-hover:text-gold-300"
         }`}
         initial={{ opacity: 0 }}
         animate={cardInView ? { opacity: 1 } : {}}
@@ -1682,8 +1888,8 @@ function ScreenCard({ screen, index, isInView, delay }: any) {
       >
         {screen.title}
       </motion.h4>
-      <motion.p 
-        className="text-gray-300 mb-8 leading-relaxed text-center relative z-10 text-base"
+      <motion.p
+        className="text-gray-300 mb-4 md:mb-8 leading-relaxed text-center relative z-10 text-sm md:text-base md:min-h-[72px]"
         initial={{ opacity: 0 }}
         animate={cardInView ? { opacity: 1 } : {}}
         transition={{ delay: delay + 0.15 }}
@@ -1691,203 +1897,180 @@ function ScreenCard({ screen, index, isInView, delay }: any) {
         {screen.description}
       </motion.p>
 
-      {/* Enhanced animated mockup container */}
+      {/* Animated mockup container - consistent aspect ratio for all cards */}
       <motion.div
-        className={`bg-black/70 rounded-2xl p-6 border-2 ${
-          screen.color === 'emerald' ? 'border-emerald-500/40' : 'border-gold-500/40'
-        } backdrop-blur-xl relative overflow-hidden group-hover:border-opacity-60 transition-all`}
+        className="relative md:aspect-[9/16] mt-auto overflow-hidden md:overflow-visible"
         whileHover={{ scale: 1.03 }}
-        transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+        transition={SPRING_DEFAULT}
       >
-        {/* Glow effect */}
         <motion.div
-          className={`absolute -inset-1 ${
-            screen.color === 'emerald' ? 'bg-emerald-500/20' : 'bg-gold-500/20'
-          } rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500`}
-        />
-        
-        <motion.div
-          className="aspect-[9/16] rounded-xl overflow-hidden relative z-10"
-          animate={isHovered ? {
-            y: [0, -8, 0],
-          } : {}}
-          transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
+          className="w-full h-full relative z-10"
+          animate={
+            isHovered
+              ? {
+                  y: [0, -8, 0],
+                }
+              : {}
+          }
+          transition={{ duration: DURATION.LOOP_MEDIUM, repeat: Infinity, ease: EASE_IN_OUT }}
         >
-          {/* Subtle shine overlay */}
-          <motion.div
-            className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent pointer-events-none"
-            animate={{
-              opacity: [0, 0.3, 0],
-            }}
-            transition={{
-              duration: 3,
-              repeat: Infinity,
-              ease: 'easeInOut',
-            }}
-          />
-          {screen.mockup}
+          <VisibilityContext.Provider value={cardInView}>
+            {screen.mockup}
+          </VisibilityContext.Provider>
         </motion.div>
       </motion.div>
     </motion.div>
-  )
+  );
 }
 
 interface ScreenshotShowcaseProps {
-  showUser?: boolean
-  showPartner?: boolean
+  readonly showUser?: boolean;
+  readonly showPartner?: boolean;
 }
 
-export default function ScreenshotShowcase({ showUser = true, showPartner = true }: ScreenshotShowcaseProps) {
-  const ref = useRef(null)
-  const isInView = useInView(ref, { once: false, margin: '0px' })
+export default function ScreenshotShowcase({
+  showUser = true,
+  showPartner = true,
+}: ScreenshotShowcaseProps) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: false, margin: "0px" });
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ['start end', 'end start']
-  })
+    offset: ["start end", "end start"],
+  });
 
-  const y = useTransform(scrollYProgress, [0, 1], [50, -50])
-  const opacity = useTransform(scrollYProgress, [0, 0.1, 0.9, 1], [1, 1, 1, 0.8])
+  const y = useTransform(scrollYProgress, [0, 1], [50, -50]);
+  const opacity = useTransform(
+    scrollYProgress,
+    [0, 0.1, 0.9, 1],
+    [1, 1, 1, 0.8]
+  );
 
   const userScreens = [
     {
-      title: 'Intelligent Discovery',
-      description: 'AI-powered venue discovery with real-time availability and proximity-based recommendations within 100m radius',
+      title: "Intelligent Discovery",
+      description:
+        "AI-powered venue discovery with real-time availability and proximity-based recommendations within 100m radius",
       icon: Smartphone,
-      color: 'emerald',
-      mockup: (
-        <AnimatedHomeScreen />
-      ),
+      color: "emerald",
+      mockup: <AnimatedHomeScreen />,
     },
     {
-      title: 'Seamless Check-In',
-      description: 'One-tap QR code scanning with instant verification and automated attendance tracking',
+      title: "Seamless Check-In",
+      description:
+        "One-tap QR code scanning with instant verification and automated attendance tracking",
       icon: QrCode,
-      color: 'emerald',
-      mockup: (
-        <AnimatedCheckIn />
-      ),
+      color: "emerald",
+      mockup: <AnimatedCheckIn />,
     },
     {
-      title: 'Gamified Engagement',
-      description: 'Real-time streak tracking, global leaderboards, and achievement system driving 3x user retention',
+      title: "Gamified Engagement",
+      description:
+        "Real-time streak tracking, global leaderboards, and achievement system driving 3x user retention",
       icon: TrendingUp,
-      color: 'emerald',
-      mockup: (
-        <AnimatedDashboard />
-      ),
+      color: "emerald",
+      mockup: <AnimatedDashboard />,
     },
     {
-      title: 'Smart Wallet System',
-      description: 'Transparent transaction history, instant top-ups, and automated pay-per-day deductions with real-time balance updates',
+      title: "Smart Wallet System",
+      description:
+        "Transparent transaction history, instant top-ups, and automated pay-per-day deductions with real-time updates",
       icon: Wallet,
-      color: 'emerald',
-      mockup: (
-        <AnimatedWallet />
-      ),
+      color: "emerald",
+      mockup: <AnimatedWallet />,
     },
     {
-      title: 'Advanced Booking',
-      description: 'Reserve slots at premium venues with live availability, instant confirmations, and automated reminders',
+      title: "Advanced Booking",
+      description:
+        "Reserve slots at premium venues with live availability, instant confirmations, and automated reminders",
       icon: Calendar,
-      color: 'emerald',
-      mockup: (
-        <AnimatedBooking />
-      ),
+      color: "emerald",
+      mockup: <AnimatedBooking />,
     },
     {
-      title: 'Personalized Analytics',
-      description: 'Comprehensive fitness journey tracking with detailed insights, progress metrics, and social rankings',
+      title: "Personalized Analytics",
+      description:
+        "Comprehensive fitness journey tracking with detailed insights, progress metrics, and social rankings",
       icon: Users,
-      color: 'emerald',
-      mockup: (
-        <AnimatedProfile />
-      ),
+      color: "emerald",
+      mockup: <AnimatedProfile />,
     },
-  ]
+  ];
 
   const partnerScreens = [
     {
-      title: 'Executive Dashboard',
-      description: 'Real-time revenue tracking, visitor analytics, and performance metrics with live updates on earnings and check-ins',
+      title: "Executive Dashboard",
+      description:
+        "Real-time revenue tracking, visitor analytics, and performance metrics with live updates on earnings, clients and check-ins",
       icon: Building2,
-      color: 'gold',
-      mockup: (
-        <AnimatedPartnerDashboard />
-      ),
+      color: "gold",
+      mockup: <AnimatedPartnerDashboard />,
     },
     {
-      title: 'Revenue Management',
-      description: 'Automated earnings tracking, instant settlement requests, and comprehensive transaction history with bank-level security',
+      title: "Revenue Management",
+      description:
+        "Automated earnings tracking, instant settlement requests, and comprehensive transaction history with bank-level security",
       icon: Wallet,
-      color: 'gold',
-      mockup: (
-        <AnimatedPartnerWallet />
-      ),
+      color: "gold",
+      mockup: <AnimatedPartnerWallet />,
     },
     {
-      title: 'Live Activity Monitor',
-      description: 'Real-time feed of all customer interactions: check-ins, subscriptions, and pass purchases with instant notifications',
+      title: "Live Activity Monitor",
+      description:
+        "Real-time feed of all customer interactions: check-ins, subscriptions, and pass purchases with instant notifications",
       icon: Activity,
-      color: 'gold',
-      mockup: (
-        <AnimatedActivities />
-      ),
+      color: "gold",
+      mockup: <AnimatedActivities />,
     },
     {
-      title: 'QR Code Infrastructure',
-      description: 'Enterprise-grade QR code generation and management system for seamless check-ins across all venue locations',
+      title: "QR Code Infrastructure",
+      description:
+        "Enterprise-grade QR code generation and management system for seamless check-ins across all venue locations",
       icon: QrCode,
-      color: 'gold',
-      mockup: (
-        <AnimatedQRManagement />
-      ),
+      color: "gold",
+      mockup: <AnimatedQRManagement />,
     },
     {
-      title: 'Multi-Location Control',
-      description: 'Centralized management platform for multiple venues with real-time visitor tracking and capacity monitoring',
+      title: "Multi-Location Control",
+      description:
+        "Centralized management platform for multiple venues with real-time visitor tracking and capacity monitoring",
       icon: MapPin,
-      color: 'gold',
-      mockup: (
-        <AnimatedVenueManagement />
-      ),
+      color: "gold",
+      mockup: <AnimatedVenueManagement />,
     },
     {
-      title: 'Business Intelligence',
-      description: 'Advanced analytics suite with revenue forecasting, peak hour analysis, and data-driven insights for growth optimization',
+      title: "Business Intelligence",
+      description:
+        "Advanced analytics suite with revenue forecasting, peak hour analysis, and data-driven insights for growth",
       icon: BarChart3,
-      color: 'gold',
-      mockup: (
-        <AnimatedAnalytics />
-      ),
+      color: "gold",
+      mockup: <AnimatedAnalytics />,
     },
     {
-      title: 'Customer Relationship Management',
-      description: 'Comprehensive customer database with visit history, engagement metrics, and automated retention tools',
+      title: "Customer Relationship",
+      description:
+        "Comprehensive customer database with visit history, engagement metrics, and automated retention tools",
       icon: UserCheck,
-      color: 'gold',
-      mockup: (
-        <AnimatedCustomerManagement />
-      ),
+      color: "gold",
+      mockup: <AnimatedCustomerManagement />,
     },
     {
-      title: 'Subscription Lifecycle',
-      description: 'End-to-end subscription management with automated renewals, expiration alerts, and revenue optimization',
+      title: "Subscription Lifecycle",
+      description:
+        "End-to-end subscription management with automated renewals, expiration alerts, and revenue optimization",
       icon: Star,
-      color: 'gold',
-      mockup: (
-        <AnimatedSubscriptionsManagement />
-      ),
+      color: "gold",
+      mockup: <AnimatedSubscriptionsManagement />,
     },
     {
-      title: 'Business Operations',
-      description: 'Complete business overview with active subscriptions, expiring passes, dynamic pricing, and location management',
+      title: "Business Operations",
+      description:
+        "Complete business overview with active subscriptions, expiring passes, dynamic pricing, and location management",
       icon: Building2,
-      color: 'gold',
-      mockup: (
-        <AnimatedBusiness />
-      ),
+      color: "gold",
+      mockup: <AnimatedBusiness />,
     },
-  ]
+  ];
 
   return (
     <section
@@ -1896,33 +2079,7 @@ export default function ScreenshotShowcase({ showUser = true, showPartner = true
       className="py-16 md:py-24 bg-black relative overflow-hidden"
     >
       {/* Optimized floating cloud background */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(4)].map((_, i) => (
-        <motion.div
-            key={i}
-            className="absolute rounded-full blur-3xl opacity-[0.04] gpu-accelerated"
-            style={{
-              width: `${500 + i * 100}px`,
-              height: `${500 + i * 100}px`,
-              background: i % 2 === 0 ? '#10b981' : '#d4af37',
-              left: `${15 + i * 25}%`,
-              top: `${10 + i * 20}%`,
-              willChange: 'transform',
-            }}
-            animate={{
-              x: [0, 80, -40, 0],
-              y: [0, 60, -30, 0],
-              scale: [1, 1.3, 0.9, 1],
-            }}
-            transition={{
-              duration: 30 + i * 5,
-              repeat: Infinity,
-              ease: [0.4, 0, 0.6, 1],
-              delay: i * 2,
-            }}
-          />
-        ))}
-      </div>
+      <FloatingClouds />
 
       <motion.div
         style={{ y, opacity }}
@@ -1931,29 +2088,34 @@ export default function ScreenshotShowcase({ showUser = true, showPartner = true
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: DURATION.MEDIUM, ease: EASE_EXPO }}
           className="text-center mb-12 gpu-accelerated"
-          style={{ willChange: 'transform, opacity' }}
+          style={{ willChange: "transform, opacity" }}
         >
-          <motion.h2 
+          <motion.h2
             className="text-5xl md:text-6xl lg:text-8xl font-bold text-white mb-8 gpu-accelerated"
             initial={{ opacity: 0, scale: 0.95 }}
             animate={isInView ? { opacity: 1, scale: 1 } : {}}
-            transition={{ duration: 0.6, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
-            style={{ willChange: 'transform, opacity' }}
+            transition={{
+              duration: 0.6,
+              delay: 0.05,
+              ease: [0.22, 1, 0.36, 1],
+            }}
+            style={{ willChange: "transform, opacity" }}
           >
-            Explore Our{' '}
+            Explore Our{" "}
             <span className="bg-gradient-to-r from-emerald-400 via-gold-400 to-emerald-400 bg-clip-text text-transparent bg-[length:200%_auto] animate-[gradient_3s_ease_infinite]">
               Apps
             </span>
           </motion.h2>
-          <motion.p 
+          <motion.p
             className="text-xl md:text-2xl text-gray-200 font-medium"
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            transition={{ duration: DURATION.MEDIUM, delay: DELAY.SHORT }}
           >
-            Experience the future of fitness access through interactive demonstrations
+            Experience the future of fitness access through interactive
+            demonstrations
           </motion.p>
         </motion.div>
 
@@ -1962,14 +2124,14 @@ export default function ScreenshotShowcase({ showUser = true, showPartner = true
           <motion.div
             initial={{ opacity: 0 }}
             animate={isInView ? { opacity: 1 } : {}}
-            transition={{ duration: 1, delay: 0.3 }}
+            transition={{ duration: DURATION.VERY_SLOW, delay: DELAY.MEDIUM_SHORT }}
             className="mb-16"
           >
-            <motion.h3 
+            <motion.h3
               className="text-3xl md:text-4xl font-bold text-white mb-12 text-center"
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.2 }}
+              transition={{ duration: DURATION.NORMAL, delay: DELAY.SHORT }}
             >
               Member App Features
             </motion.h3>
@@ -1992,13 +2154,13 @@ export default function ScreenshotShowcase({ showUser = true, showPartner = true
           <motion.div
             initial={{ opacity: 0 }}
             animate={isInView ? { opacity: 1 } : {}}
-            transition={{ duration: 0.5, delay: 0.6 }}
+            transition={{ duration: DURATION.NORMAL, delay: DELAY.LONG }}
           >
-            <motion.h3 
+            <motion.h3
               className="text-3xl md:text-4xl font-bold text-white mb-12 text-center"
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.7 }}
+              transition={{ duration: DURATION.NORMAL, delay: DELAY.VERY_LONG }}
             >
               Business App Features
             </motion.h3>
@@ -2017,5 +2179,5 @@ export default function ScreenshotShowcase({ showUser = true, showPartner = true
         )}
       </motion.div>
     </section>
-  )
+  );
 }

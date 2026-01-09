@@ -2,6 +2,14 @@
 
 import { motion } from "framer-motion";
 import { LucideIcon } from "lucide-react";
+import { 
+  DURATION, 
+  DELAY, 
+  EASE_EXPO, 
+  EASE_SMOOTH, 
+  SPRING_DEFAULT,
+  TRANSITION_GLOW 
+} from "@/animation-timing";
 
 interface VisionCardProps {
   feature: {
@@ -50,16 +58,16 @@ export const VisionCard = ({
       initial={{ opacity: 0, y: 30 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{
-        duration: 0.5,
-        delay: baseDelay + index * 0.08,
-        ease: [0.22, 1, 0.36, 1],
+        duration: DURATION.NORMAL,
+        delay: baseDelay + index * DELAY.STAGGER_MEDIUM,
+        ease: EASE_EXPO,
       }}
       whileHover={{
         y: -10,
         scale: 1.02,
-        transition: { type: "spring", stiffness: 400, damping: 25 },
+        transition: SPRING_DEFAULT,
       }}
-      className={`bg-gradient-to-br from-gray-900/90 via-gray-800/50 to-black/90 p-8 lg:p-4 rounded-3xl hover:shadow-2xl ${styles.card} transition-all backdrop-blur-xl relative overflow-hidden group gpu-accelerated`}
+      className={`bg-gradient-to-br from-gray-900/90 via-gray-800/50 to-black/90 p-4 md:p-6 lg:p-8 rounded-2xl md:rounded-3xl hover:shadow-2xl ${styles.card} transition-all backdrop-blur-xl relative overflow-hidden group gpu-accelerated`}
       style={{ willChange: "transform, opacity" }}
     >
       {/* Optimized background gradient */}
@@ -68,9 +76,9 @@ export const VisionCard = ({
       />
 
       <motion.div
-        className={`w-20 h-20 bg-gradient-to-br ${styles.iconContainer} rounded-3xl flex items-center justify-center mb-6 relative mx-auto group-hover:scale-105 transition-transform duration-300 gpu-accelerated`}
+        className={`w-14 h-14 md:w-16 md:h-16 lg:w-20 lg:h-20 bg-gradient-to-br ${styles.iconContainer} rounded-2xl md:rounded-3xl flex items-center justify-center mb-3 md:mb-6 relative mx-auto group-hover:scale-105 transition-transform duration-300 gpu-accelerated`}
         whileHover={{ scale: 1.1 }}
-        transition={{ type: "spring", stiffness: 400, damping: 25 }}
+        transition={SPRING_DEFAULT}
         style={{ willChange: "transform" }}
       >
         <motion.div
@@ -79,24 +87,20 @@ export const VisionCard = ({
             scale: [1, 1.2, 1],
             opacity: [0.3, 0.6, 0.3],
           }}
-          transition={{
-            duration: 4,
-            repeat: Infinity,
-            ease: [0.4, 0, 0.6, 1],
-          }}
+          transition={TRANSITION_GLOW}
           style={{ willChange: "transform, opacity" }}
         />
         <Icon
-          className={`w-10 h-10 ${styles.iconColor} relative z-10 drop-shadow-lg`}
+          className={`w-6 h-6 md:w-8 md:h-8 lg:w-10 lg:h-10 ${styles.iconColor} relative z-10 drop-shadow-lg`}
         />
       </motion.div>
 
       <h3
-        className={`text-xl lg:text-2xl font-extrabold text-white mb-4 relative z-10 ${styles.titleHover} transition-colors`}
+        className={`text-lg md:text-xl lg:text-2xl font-extrabold text-white mb-2 md:mb-4 relative z-10 ${styles.titleHover} transition-colors`}
       >
         {feature.title}
       </h3>
-      <p className="text-gray-200 leading-relaxed relative z-10 text-sm lg:text-base font-medium">
+      <p className="text-gray-200 leading-relaxed relative z-10 text-xs md:text-sm lg:text-base font-medium">
         {feature.description}
       </p>
     </motion.div>

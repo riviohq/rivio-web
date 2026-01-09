@@ -1,58 +1,128 @@
-'use client'
+"use client";
 
-import { motion, AnimatePresence } from 'framer-motion'
-import { useInView } from 'framer-motion'
-import { useRef, useEffect, useState } from 'react'
-import { Download, MapPin, QrCode, Star, CheckCircle, TrendingUp, CreditCard, Activity, BarChart3, Settings, Building2, DollarSign } from 'lucide-react'
-import Image from 'next/image'
+import { motion, AnimatePresence } from "framer-motion";
+import { useInView } from "framer-motion";
+import { useRef, useEffect, useState } from "react";
+import { 
+  DURATION, 
+  DELAY, 
+  EASE_EXPO, 
+  EASE_SMOOTH, 
+  EASE_IN_OUT, 
+  EASE_LINEAR,
+  TRANSITION_FADE_IN
+} from "@/animation-timing";
+import {
+  Download,
+  MapPin,
+  QrCode,
+  Star,
+  CheckCircle,
+  TrendingUp,
+  CreditCard,
+  Activity,
+  BarChart3,
+  Settings,
+  Building2,
+  DollarSign,
+} from "lucide-react";
+import Image from "next/image";
 
 export default function AppTabs() {
-  const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: '0px' })
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "0px" });
 
   const userSteps = [
-    { icon: MapPin, text: 'Discover Nearby Venues', description: 'Find gyms within 100m radius' },
-    { icon: Activity, text: 'Select Activity & Venue', description: 'Choose your preferred workout' },
-    { icon: QrCode, text: 'Scan QR Code & Check-In', description: 'Instant access, no waiting' },
-    { icon: Star, text: 'Select Amenities & Start', description: 'Customize your experience' },
-    { icon: TrendingUp, text: 'Build Streaks & Achievements', description: 'Track your fitness journey' },
-    { icon: CreditCard, text: 'Flexible Payment & Access', description: 'Pay only for days you use' },
-  ]
+    {
+      icon: MapPin,
+      text: "Discover Nearby Venues",
+      description: "Find gyms within 100m radius",
+    },
+    {
+      icon: Activity,
+      text: "Select Activity & Venue",
+      description: "Choose your preferred workout",
+    },
+    {
+      icon: QrCode,
+      text: "Scan QR Code & Check-In",
+      description: "Instant access, no waiting",
+    },
+    {
+      icon: Star,
+      text: "Select Amenities & Start",
+      description: "Customize your experience",
+    },
+    {
+      icon: TrendingUp,
+      text: "Build Streaks & Achievements",
+      description: "Track your fitness journey",
+    },
+    {
+      icon: CreditCard,
+      text: "Flexible Payment & Access",
+      description: "Pay only for days you use",
+    },
+  ];
 
   const partnerSteps = [
-    { icon: Building2, text: 'Onboard Your Venue', description: 'Register your fitness business' },
-    { icon: QrCode, text: 'Generate QR Codes', description: 'Get unique codes for each location' },
-    { icon: CheckCircle, text: 'Real-Time Check-Ins', description: 'Monitor live customer entries' },
-    { icon: DollarSign, text: 'Dual Revenue Streams', description: 'Maximize earnings potential' },
-    { icon: BarChart3, text: 'Advanced Analytics', description: 'Data-driven business insights' },
-    { icon: Settings, text: 'Multi-Location Management', description: 'Manage all venues from one platform' },
-  ]
+    {
+      icon: Building2,
+      text: "Onboard Your Venue",
+      description: "Register your fitness business",
+    },
+    {
+      icon: QrCode,
+      text: "Generate QR Codes",
+      description: "Get unique codes for each location",
+    },
+    {
+      icon: CheckCircle,
+      text: "Real-Time Check-Ins",
+      description: "Monitor live customer entries",
+    },
+    {
+      icon: DollarSign,
+      text: "Dual Revenue Streams",
+      description: "Maximize earnings potential",
+    },
+    {
+      icon: BarChart3,
+      text: "Advanced Analytics",
+      description: "Data-driven business insights",
+    },
+    {
+      icon: Settings,
+      text: "Multi-Location Management",
+      description: "Manage all venues from one platform",
+    },
+  ];
 
-  const [userStep, setUserStep] = useState(0)
-  const [partnerStep, setPartnerStep] = useState(0)
+  const [userStep, setUserStep] = useState(0);
+  const [partnerStep, setPartnerStep] = useState(0);
 
   useEffect(() => {
-    if (!isInView) return
+    if (!isInView) return;
 
     const userInterval = setInterval(() => {
-      setUserStep((prev) => (prev + 1) % userSteps.length)
-    }, 3000)
+      setUserStep((prev) => (prev + 1) % userSteps.length);
+    }, 3000);
 
     const partnerInterval = setInterval(() => {
-      setPartnerStep((prev) => (prev + 1) % partnerSteps.length)
-    }, 3200)
+      setPartnerStep((prev) => (prev + 1) % partnerSteps.length);
+    }, 3200);
 
     return () => {
-      clearInterval(userInterval)
-      clearInterval(partnerInterval)
-    }
-  }, [isInView, userSteps.length, partnerSteps.length])
+      clearInterval(userInterval);
+      clearInterval(partnerInterval);
+    };
+  }, [isInView, userSteps.length, partnerSteps.length]);
 
   return (
     <section
       id="apps"
       ref={ref}
-      className="py-16 md:py-24 bg-black relative overflow-hidden"
+      className="py-12 md:py-24 bg-black relative overflow-hidden"
     >
       {/* Enhanced floating background with gradient layers */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -63,10 +133,10 @@ export default function AppTabs() {
             style={{
               width: `${600 + i * 120}px`,
               height: `${600 + i * 120}px`,
-              background: i % 2 === 0 ? '#10b981' : '#d4af37',
+              background: i % 2 === 0 ? "#10b981" : "#d4af37",
               left: `${i * 25}%`,
               top: `${i * 20}%`,
-              willChange: 'transform',
+              willChange: "transform",
             }}
             animate={{
               x: [0, 80, -40, 0],
@@ -82,57 +152,68 @@ export default function AppTabs() {
           />
         ))}
       </div>
-      
+
       {/* Grid pattern overlay */}
-      <div className="absolute inset-0 opacity-5" style={{
-        backgroundImage: 'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)',
-        backgroundSize: '50px 50px',
-      }} />
-      
+      <div
+        className="absolute inset-0 opacity-5"
+        style={{
+          backgroundImage:
+            "linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)",
+          backgroundSize: "50px 50px",
+        }}
+      />
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="text-center mb-16 gpu-accelerated"
-          style={{ willChange: 'transform, opacity' }}
+          transition={TRANSITION_FADE_IN}
+          className="text-center mb-8 md:mb-16 gpu-accelerated"
+          style={{ willChange: "transform, opacity" }}
         >
-          <motion.h2 
-            className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 gpu-accelerated"
+          <motion.h2
+            className="text-3xl md:text-5xl lg:text-7xl font-bold text-white mb-3 md:mb-6 gpu-accelerated"
             initial={{ opacity: 0, scale: 0.95 }}
             animate={isInView ? { opacity: 1, scale: 1 } : {}}
-            transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-            style={{ willChange: 'transform, opacity' }}
+            transition={{ duration: DURATION.MEDIUM, delay: DELAY.VERY_SHORT, ease: EASE_EXPO }}
+            style={{ willChange: "transform, opacity" }}
           >
-            Explore Our <span className="bg-gradient-to-r from-emerald-400 to-amber-400 bg-clip-text text-transparent">Apps</span>
+            Explore Our{" "}
+            <span className="bg-gradient-to-r from-emerald-400 to-amber-400 bg-clip-text text-transparent">
+              Apps
+            </span>
           </motion.h2>
-          <p className="text-xl md:text-2xl text-gray-200 font-medium">
+          <p className="text-base md:text-xl lg:text-2xl text-gray-200 font-medium">
             Two powerful platforms. One unified ecosystem.
           </p>
         </motion.div>
 
         {/* Both Apps Side by Side with Animations */}
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
+        <div className="grid lg:grid-cols-2 gap-6 md:gap-8 lg:gap-12">
           {/* User App Animation */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            transition={{ duration: DURATION.MEDIUM, delay: DELAY.SHORT }}
             className="relative"
           >
-            <div className="bg-gradient-to-br from-gray-900/95 via-black/95 to-gray-900/95 rounded-3xl shadow-2xl p-8 md:p-10 border-2 border-emerald-500/30 backdrop-blur-xl overflow-hidden">
+            <div className="bg-gradient-to-br from-gray-900/95 via-black/95 to-gray-900/95 rounded-2xl md:rounded-3xl shadow-2xl p-4 md:p-8 lg:p-10 border-2 border-emerald-500/30 backdrop-blur-xl overflow-hidden">
               {/* Header */}
-              <div className="flex items-center gap-3 mb-8">
+              <div className="flex items-center gap-2 md:gap-3 mb-4 md:mb-8">
                 <Image
                   src="/logos/rivio-user-light.png"
                   alt="RIVIO User App Logo"
                   width={64}
                   height={64}
-                  className="w-16 h-16"
+                  className="w-12 h-12 md:w-16 md:h-16"
                 />
                 <div>
-                  <h3 className="text-3xl font-bold text-white">RIVIO User App</h3>
-                  <p className="text-emerald-400 font-medium">Your Fitness Journey, Your Way</p>
+                  <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-white">
+                    RIVIO User App
+                  </h3>
+                  <p className="text-emerald-400 font-medium text-sm md:text-base">
+                    Your Fitness Journey, Your Way
+                  </p>
                 </div>
               </div>
 
@@ -144,19 +225,22 @@ export default function AppTabs() {
                     y: [0, -10, 0],
                   }}
                   transition={{
-                    duration: 3,
+                    duration: DURATION.LOOP_SLOW,
                     repeat: Infinity,
-                    ease: 'easeInOut',
+                    ease: EASE_IN_OUT,
                   }}
                   style={{
-                    boxShadow: '0 20px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(16, 185, 129, 0.4)',
+                    boxShadow:
+                      "0 20px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(16, 185, 129, 0.4)",
                   }}
                 >
                   {/* Phone Screen */}
                   <div className="w-full h-full bg-black rounded-[2rem] overflow-hidden relative">
                     {/* Status Bar */}
                     <div className="absolute top-0 left-0 right-0 h-12 bg-gray-900 flex items-center justify-between px-6 z-10">
-                      <div className="text-white text-xs font-semibold">9:41</div>
+                      <div className="text-white text-xs font-semibold">
+                        9:41
+                      </div>
                       <div className="flex gap-1">
                         <div className="w-1 h-1 bg-white rounded-full" />
                         <div className="w-1 h-1 bg-white rounded-full" />
@@ -172,7 +256,7 @@ export default function AppTabs() {
                           initial={{ opacity: 0, scale: 0.8, y: 50 }}
                           animate={{ opacity: 1, scale: 1, y: 0 }}
                           exit={{ opacity: 0, scale: 0.8, y: -50 }}
-                          transition={{ duration: 0.6, ease: 'easeInOut' }}
+                          transition={{ duration: DURATION.MEDIUM, ease: EASE_IN_OUT }}
                           className="flex flex-col items-center gap-6 w-full"
                         >
                           {/* Icon */}
@@ -183,26 +267,34 @@ export default function AppTabs() {
                               rotate: [0, 5, -5, 0],
                             }}
                             transition={{
-                              duration: 2,
+                              duration: DURATION.LOOP_FAST,
                               repeat: Infinity,
-                              ease: 'easeInOut',
+                              ease: EASE_IN_OUT,
                             }}
                             style={{
-                              boxShadow: '0 0 40px rgba(16, 185, 129, 0.6), 0 0 80px rgba(16, 185, 129, 0.3)',
+                              boxShadow:
+                                "0 0 40px rgba(16, 185, 129, 0.6), 0 0 80px rgba(16, 185, 129, 0.3)",
                             }}
                           >
                             <motion.div
                               animate={{ rotate: [0, 360] }}
-                              transition={{ duration: 3, repeat: Infinity, ease: 'linear' }}
+                              transition={{
+                                duration: DURATION.LOOP_SLOW,
+                                repeat: Infinity,
+                                ease: EASE_LINEAR,
+                              }}
                             >
                               {(() => {
-                                const IconComponent = userSteps[userStep].icon
+                                const IconComponent = userSteps[userStep].icon;
                                 return (
                                   <IconComponent
                                     className="w-16 h-16 md:w-20 md:h-20 text-emerald-300"
-                                    style={{ filter: 'drop-shadow(0 0 10px currentColor)' }}
+                                    style={{
+                                      filter:
+                                        "drop-shadow(0 0 10px currentColor)",
+                                    }}
                                   />
-                                )
+                                );
                               })()}
                             </motion.div>
                           </motion.div>
@@ -212,7 +304,8 @@ export default function AppTabs() {
                             <h3
                               className="text-2xl md:text-3xl font-bold mb-2 text-emerald-300"
                               style={{
-                                textShadow: '0 0 20px currentColor, 0 0 40px currentColor',
+                                textShadow:
+                                  "0 0 20px currentColor, 0 0 40px currentColor",
                               }}
                             >
                               {userSteps[userStep].text}
@@ -225,19 +318,19 @@ export default function AppTabs() {
                           {/* Progress Indicators */}
                           <div className="flex gap-2 mt-4">
                             {userSteps.map((_, index) => {
-                              const isActive = index === userStep
+                              const isActive = index === userStep;
                               return (
                                 <motion.div
                                   key={index}
                                   className={`h-2 rounded-full ${
-                                    isActive ? 'bg-emerald-400' : 'bg-gray-700'
+                                    isActive ? "bg-emerald-400" : "bg-gray-700"
                                   }`}
                                   animate={{
                                     width: isActive ? 32 : 8,
                                   }}
-                                  transition={{ duration: 0.3 }}
+                                  transition={{ duration: DURATION.FAST }}
                                 />
-                              )
+                              );
                             })}
                           </div>
                         </motion.div>
@@ -248,23 +341,23 @@ export default function AppTabs() {
               </div>
 
               {/* Download Buttons */}
-              <div className="flex flex-col sm:flex-row gap-4 mt-8">
+              <div className="flex flex-col sm:flex-row gap-3 md:gap-4 mt-4 md:mt-8">
                 <motion.a
                   href="#"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="flex items-center justify-center gap-2 px-6 py-3 bg-emerald-500 text-white rounded-full font-semibold hover:bg-emerald-600 transition-colors"
+                  className="flex items-center justify-center gap-2 px-4 md:px-6 py-2 md:py-3 bg-emerald-500 text-white rounded-full font-semibold hover:bg-emerald-600 transition-colors text-sm md:text-base"
                 >
-                  <Download className="w-5 h-5" />
+                  <Download className="w-4 h-4 md:w-5 md:h-5" />
                   Download for iOS
                 </motion.a>
                 <motion.a
                   href="#"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="flex items-center justify-center gap-2 px-6 py-3 bg-black text-white rounded-full font-semibold hover:bg-gray-800 transition-colors border border-gray-700"
+                  className="flex items-center justify-center gap-2 px-4 md:px-6 py-2 md:py-3 bg-black text-white rounded-full font-semibold hover:bg-gray-800 transition-colors border border-gray-700 text-sm md:text-base"
                 >
-                  <Download className="w-5 h-5" />
+                  <Download className="w-4 h-4 md:w-5 md:h-5" />
                   Download for Android
                 </motion.a>
               </div>
@@ -275,22 +368,26 @@ export default function AppTabs() {
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.3 }}
+            transition={{ duration: DURATION.MEDIUM, delay: DELAY.MEDIUM_SHORT }}
             className="relative"
           >
-            <div className="bg-gradient-to-br from-gray-900/95 via-black/95 to-gray-900/95 rounded-3xl shadow-2xl p-8 md:p-10 border-2 border-amber-500/30 backdrop-blur-xl overflow-hidden">
+            <div className="bg-gradient-to-br from-gray-900/95 via-black/95 to-gray-900/95 rounded-2xl md:rounded-3xl shadow-2xl p-4 md:p-8 lg:p-10 border-2 border-amber-500/30 backdrop-blur-xl overflow-hidden">
               {/* Header */}
-              <div className="flex items-center gap-3 mb-8">
+              <div className="flex items-center gap-2 md:gap-3 mb-4 md:mb-8">
                 <Image
                   src="/logos/rivio-partner-gold-lighttext.png"
                   alt="RIVIO Partners Logo"
                   width={64}
                   height={64}
-                  className="w-16 h-16"
+                  className="w-12 h-12 md:w-16 md:h-16"
                 />
                 <div>
-                  <h3 className="text-3xl font-bold text-white">RIVIO Partners</h3>
-                  <p className="text-amber-400 font-medium">Grow Your Fitness Business</p>
+                  <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-white">
+                    RIVIO Partners
+                  </h3>
+                  <p className="text-amber-400 font-medium text-sm md:text-base">
+                    Grow Your Fitness Business
+                  </p>
                 </div>
               </div>
 
@@ -302,19 +399,22 @@ export default function AppTabs() {
                     y: [0, -10, 0],
                   }}
                   transition={{
-                    duration: 3,
+                    duration: DURATION.LOOP_SLOW,
                     repeat: Infinity,
-                    ease: 'easeInOut',
+                    ease: EASE_IN_OUT,
                   }}
                   style={{
-                    boxShadow: '0 20px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(212, 175, 55, 0.4)',
+                    boxShadow:
+                      "0 20px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(212, 175, 55, 0.4)",
                   }}
                 >
                   {/* Phone Screen */}
                   <div className="w-full h-full bg-black rounded-[2rem] overflow-hidden relative">
                     {/* Status Bar */}
                     <div className="absolute top-0 left-0 right-0 h-12 bg-gray-900 flex items-center justify-between px-6 z-10">
-                      <div className="text-white text-xs font-semibold">9:41</div>
+                      <div className="text-white text-xs font-semibold">
+                        9:41
+                      </div>
                       <div className="flex gap-1">
                         <div className="w-1 h-1 bg-white rounded-full" />
                         <div className="w-1 h-1 bg-white rounded-full" />
@@ -330,7 +430,7 @@ export default function AppTabs() {
                           initial={{ opacity: 0, scale: 0.8, y: 50 }}
                           animate={{ opacity: 1, scale: 1, y: 0 }}
                           exit={{ opacity: 0, scale: 0.8, y: -50 }}
-                          transition={{ duration: 0.6, ease: 'easeInOut' }}
+                          transition={{ duration: DURATION.MEDIUM, ease: EASE_IN_OUT }}
                           className="flex flex-col items-center gap-6 w-full"
                         >
                           {/* Icon */}
@@ -341,26 +441,35 @@ export default function AppTabs() {
                               rotate: [0, 5, -5, 0],
                             }}
                             transition={{
-                              duration: 2,
+                              duration: DURATION.LOOP_FAST,
                               repeat: Infinity,
-                              ease: 'easeInOut',
+                              ease: EASE_IN_OUT,
                             }}
                             style={{
-                              boxShadow: '0 0 40px rgba(212, 175, 55, 0.6), 0 0 80px rgba(212, 175, 55, 0.3)',
+                              boxShadow:
+                                "0 0 40px rgba(212, 175, 55, 0.6), 0 0 80px rgba(212, 175, 55, 0.3)",
                             }}
                           >
                             <motion.div
                               animate={{ rotate: [0, 360] }}
-                              transition={{ duration: 3, repeat: Infinity, ease: 'linear' }}
+                              transition={{
+                                duration: DURATION.LOOP_SLOW,
+                                repeat: Infinity,
+                                ease: EASE_LINEAR,
+                              }}
                             >
                               {(() => {
-                                const IconComponent = partnerSteps[partnerStep].icon
+                                const IconComponent =
+                                  partnerSteps[partnerStep].icon;
                                 return (
                                   <IconComponent
                                     className="w-16 h-16 md:w-20 md:h-20 text-amber-300"
-                                    style={{ filter: 'drop-shadow(0 0 10px currentColor)' }}
+                                    style={{
+                                      filter:
+                                        "drop-shadow(0 0 10px currentColor)",
+                                    }}
                                   />
-                                )
+                                );
                               })()}
                             </motion.div>
                           </motion.div>
@@ -370,7 +479,8 @@ export default function AppTabs() {
                             <h3
                               className="text-2xl md:text-3xl font-bold mb-2 text-amber-300"
                               style={{
-                                textShadow: '0 0 20px currentColor, 0 0 40px currentColor',
+                                textShadow:
+                                  "0 0 20px currentColor, 0 0 40px currentColor",
                               }}
                             >
                               {partnerSteps[partnerStep].text}
@@ -383,19 +493,19 @@ export default function AppTabs() {
                           {/* Progress Indicators */}
                           <div className="flex gap-2 mt-4">
                             {partnerSteps.map((_, index) => {
-                              const isActive = index === partnerStep
+                              const isActive = index === partnerStep;
                               return (
                                 <motion.div
                                   key={index}
                                   className={`h-2 rounded-full ${
-                                    isActive ? 'bg-amber-400' : 'bg-gray-700'
+                                    isActive ? "bg-amber-400" : "bg-gray-700"
                                   }`}
                                   animate={{
                                     width: isActive ? 32 : 8,
                                   }}
-                                  transition={{ duration: 0.3 }}
+                                  transition={{ duration: DURATION.FAST }}
                                 />
-                              )
+                              );
                             })}
                           </div>
                         </motion.div>
@@ -406,23 +516,23 @@ export default function AppTabs() {
               </div>
 
               {/* Download Buttons */}
-              <div className="flex flex-col sm:flex-row gap-4 mt-8">
+              <div className="flex flex-col sm:flex-row gap-3 md:gap-4 mt-4 md:mt-8">
                 <motion.a
                   href="#"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="flex items-center justify-center gap-2 px-6 py-3 bg-amber-500 text-white rounded-full font-semibold hover:bg-amber-600 transition-colors"
+                  className="flex items-center justify-center gap-2 px-4 md:px-6 py-2 md:py-3 bg-amber-500 text-white rounded-full font-semibold hover:bg-amber-600 transition-colors text-sm md:text-base"
                 >
-                  <Download className="w-5 h-5" />
+                  <Download className="w-4 h-4 md:w-5 md:h-5" />
                   Download for iOS
                 </motion.a>
                 <motion.a
                   href="#"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="flex items-center justify-center gap-2 px-6 py-3 bg-black text-white rounded-full font-semibold hover:bg-gray-800 transition-colors border border-gray-700"
+                  className="flex items-center justify-center gap-2 px-4 md:px-6 py-2 md:py-3 bg-black text-white rounded-full font-semibold hover:bg-gray-800 transition-colors border border-gray-700 text-sm md:text-base"
                 >
-                  <Download className="w-5 h-5" />
+                  <Download className="w-4 h-4 md:w-5 md:h-5" />
                   Download for Android
                 </motion.a>
               </div>
@@ -431,5 +541,5 @@ export default function AppTabs() {
         </div>
       </div>
     </section>
-  )
+  );
 }

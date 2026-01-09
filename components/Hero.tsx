@@ -12,10 +12,17 @@ import { ChevronDown } from "lucide-react";
 import Image from "next/image";
 import { memo, useCallback, useEffect, useMemo, useRef } from "react";
 import AnimatedVideoBackground from "./AnimatedVideoBackground";
-
-const SPRING_CONFIG = { stiffness: 150, damping: 15 };
-const EASE_EXPO: [number, number, number, number] = [0.22, 1, 0.36, 1];
-const EASE_SMOOTH: [number, number, number, number] = [0.4, 0, 0.6, 1];
+import {
+  SPRING_SOFT,
+  SPRING_DEFAULT,
+  EASE_EXPO,
+  EASE_SMOOTH,
+  EASE_IN_OUT,
+  EASE_LINEAR,
+  DURATION,
+  DELAY,
+  TRANSITION_PULSE,
+} from "@/animation-timing";
 
 const fadeInUpInitial = { opacity: 0, y: 20 };
 const fadeInUpAnimate = { opacity: 1, y: 0 };
@@ -83,7 +90,7 @@ const LogoGlow = memo(() => (
   <motion.div
     className="absolute inset-0 blur-3xl bg-emerald-500/30 rounded-full"
     animate={{ scale: [1, 1.3, 1], opacity: [0.3, 0.6, 0.3] }}
-    transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+    transition={{ duration: DURATION.LOOP_SLOW, repeat: Infinity, ease: EASE_IN_OUT }}
   />
 ));
 LogoGlow.displayName = "LogoGlow";
@@ -95,17 +102,17 @@ const HeroLogo = memo(() => (
     initial={{ opacity: 0, scale: 0.5 }}
     animate={{ opacity: 1, scale: 1, y: [0, -12, 0] }}
     transition={{
-      duration: 0.8,
-      delay: 0.2,
+      duration: DURATION.SLOW,
+      delay: DELAY.SHORT,
       ease: EASE_EXPO,
-      y: { duration: 5, repeat: Infinity, ease: EASE_SMOOTH },
+      y: { duration: DURATION.LOOP_FLOAT, repeat: Infinity, ease: EASE_SMOOTH },
     }}
   >
     <LogoGlow />
     <motion.div
       className="relative z-10"
       whileHover={{ scale: 1.1 }}
-      transition={{ type: "spring", stiffness: 400, damping: 25 }}
+      transition={SPRING_DEFAULT}
     >
       <Image
         src="/logos/rivio-user-light.png"
@@ -129,13 +136,13 @@ const HeroHeading = memo(() => (
     }}
     initial={fadeInUpInitial}
     animate={fadeInUpAnimate}
-    transition={{ duration: 0.6, delay: 0.4, ease: EASE_EXPO }}
+    transition={{ duration: DURATION.MEDIUM, delay: DELAY.MEDIUM, ease: EASE_EXPO }}
   >
     <motion.span
       className="block"
       initial={fadeInUpInitial}
       animate={fadeInUpAnimate}
-      transition={{ duration: 0.6, delay: 0.4, ease: EASE_EXPO }}
+      transition={{ duration: DURATION.MEDIUM, delay: DELAY.MEDIUM, ease: EASE_EXPO }}
     >
       Revolutionizing Fitness
     </motion.span>
@@ -148,7 +155,7 @@ const HeroHeading = memo(() => (
       }}
       initial={fadeInUpInitial}
       animate={fadeInUpAnimate}
-      transition={{ duration: 0.6, delay: 0.5, ease: EASE_EXPO }}
+      transition={{ duration: DURATION.MEDIUM, delay: DELAY.MEDIUM_LONG, ease: EASE_EXPO }}
     >
       Access for Everyone
     </motion.span>
@@ -162,7 +169,7 @@ const HeroDescription = memo(() => (
     style={{ textShadow: "0 2px 10px rgba(0, 0, 0, 0.5)" }}
     initial={fadeInUpInitial}
     animate={fadeInUpAnimate}
-    transition={{ duration: 0.6, delay: 0.6, ease: EASE_EXPO }}
+    transition={{ duration: DURATION.MEDIUM, delay: DELAY.LONG, ease: EASE_EXPO }}
   >
     The world's first pay-per-day fitness platform revolutionizing how people
     access gyms, yoga studios, wellness centers, swimming pools, and sports
@@ -178,7 +185,7 @@ const ShimmerEffect = memo(() => (
   <motion.span
     className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
     animate={{ x: ["-100%", "200%"] }}
-    transition={{ duration: 2.5, repeat: Infinity, ease: "linear" }}
+    transition={{ duration: DURATION.LOOP_MEDIUM, repeat: Infinity, ease: EASE_LINEAR }}
   />
 ));
 ShimmerEffect.displayName = "ShimmerEffect";
@@ -217,7 +224,7 @@ const HeroCTAButtons = memo(() => (
     className="flex flex-col sm:flex-row gap-4 justify-center items-center"
     initial={fadeInUpInitial}
     animate={fadeInUpAnimate}
-    transition={{ duration: 0.6, delay: 0.7, ease: EASE_EXPO }}
+    transition={{ duration: DURATION.MEDIUM, delay: DELAY.VERY_LONG, ease: EASE_EXPO }}
   >
     <PrimaryButton href="#apps">Explore Platform</PrimaryButton>
     <SecondaryButton href="#contact">Partner With Us</SecondaryButton>
@@ -231,7 +238,7 @@ const HeroContent = memo(() => (
     style={{ transformStyle: "preserve-3d" }}
     initial={{ opacity: 0, y: 50, scale: 0.9 }}
     animate={{ opacity: 1, y: 0, scale: 1 }}
-    transition={{ duration: 0.8, ease: EASE_EXPO }}
+    transition={{ duration: DURATION.SLOW, ease: EASE_EXPO }}
   >
     <HeroLogo />
     <HeroHeading />
@@ -292,7 +299,7 @@ const ScrollIndicator = memo(({ onClick }: ScrollIndicatorProps) => (
     onClick={onClick}
     className="absolute bottom-10 left-1/2 -translate-x-1/2 text-emerald-400 z-30"
     animate={{ y: [0, 15, 0], opacity: [0.6, 1, 0.6] }}
-    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+    transition={TRANSITION_PULSE}
     whileHover={{ scale: 1.2 }}
     aria-label="Scroll to next section"
   >
@@ -315,11 +322,11 @@ export default function Hero() {
 
   const rotateX = useSpring(
     useTransform(mouseY, [-0.5, 0.5], [5, -5]),
-    SPRING_CONFIG
+    SPRING_SOFT
   );
   const rotateY = useSpring(
     useTransform(mouseX, [-0.5, 0.5], [-5, 5]),
-    SPRING_CONFIG
+    SPRING_SOFT
   );
 
   const scrollToNext = useCallback(() => {

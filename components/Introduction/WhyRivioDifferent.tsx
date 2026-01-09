@@ -2,6 +2,12 @@
 
 import { motion } from "framer-motion";
 import { X, Check, Star, Circle } from "lucide-react";
+import { 
+  DURATION, 
+  EASE_EXPO, 
+  EASE_IN_OUT, 
+  PROBLEM_DELAY 
+} from "@/animation-timing";
 
 interface WhyRivioDifferentProps {
   isInView: boolean;
@@ -26,9 +32,9 @@ const DifferentiatorCard = ({
     <motion.div
       initial={{ opacity: 0, y: 30 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, delay }}
+      transition={{ duration: DURATION.MEDIUM, delay }}
       whileHover={{ y: -8, scale: 1.02 }}
-      className={`p-4 lg:p-8 rounded-3xl border-2 transition-all backdrop-blur-xl relative overflow-hidden group flex flex-col h-full ${
+      className={`p-4 md:p-6 lg:p-8 rounded-2xl md:rounded-3xl border-2 transition-all backdrop-blur-xl relative overflow-hidden group flex flex-col h-full ${
         isGold
           ? "bg-gradient-to-br from-gold-500/20 via-gold-600/15 to-gold-500/20 border-gold-500/50 hover:border-gold-400/70"
           : "bg-gradient-to-br from-gray-800/90 via-gray-900/90 to-black/90 border-emerald-500/40 hover:border-emerald-400/60"
@@ -48,21 +54,21 @@ const DifferentiatorCard = ({
             opacity: [0, 0.3, 0],
           }}
           transition={{
-            duration: 3,
+            duration: DURATION.LOOP_SLOW,
             repeat: Infinity,
-            ease: "easeInOut",
+            ease: EASE_IN_OUT,
           }}
         />
       )}
 
       <div className="relative z-10 flex flex-col h-full">
-        <div className="flex items-start gap-3 mb-6 min-h-[4rem]">
-          <h4 className="text-2xl md:text-3xl font-bold text-white leading-tight">
+        <div className="flex items-start gap-2 md:gap-3 mb-3 md:mb-6 min-h-[2rem] md:min-h-[4rem]">
+          <h4 className="text-lg md:text-2xl lg:text-3xl font-bold text-white leading-tight">
             {title}
           </h4>
         </div>
 
-        <div className="space-y-4 flex-grow">{children}</div>
+        <div className="space-y-2 md:space-y-4 flex-grow">{children}</div>
       </div>
     </motion.div>
   );
@@ -95,7 +101,7 @@ const ApproachBox = ({
 
   if (type === "highlight") {
     return (
-      <div className="bg-gold-500/20 border-2 border-gold-500/40 rounded-xl p-4 mb-4 h-auto flex flex-col">
+      <div className="bg-gold-500/20 border border-gold-500/40 rounded-xl p-4 mb-4 h-auto flex flex-col">
         <div className="flex items-center justify-center gap-2 mb-2 flex-shrink-0">
           <Star className="w-5 h-5 text-gold-300 fill-gold-300 flex-shrink-0" />
           <p className="text-base text-gold-200 font-bold text-center">
@@ -171,12 +177,12 @@ export const WhyRivioDifferent = ({ isInView }: WhyRivioDifferentProps) => {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, delay: 1.2, ease: [0.22, 1, 0.36, 1] }}
-      className="mt-20 relative"
+      transition={{ duration: DURATION.MEDIUM, delay: PROBLEM_DELAY.SECTION_START, ease: EASE_EXPO }}
+      className="mt-10 md:mt-20 relative"
     >
       {/* Background with gradient layers */}
       <div className="absolute inset-0 bg-gradient-to-br from-gray-900/90 via-black/90 to-gray-900/90 rounded-3xl blur-xl" />
-      <div className="relative bg-gradient-to-br from-gray-900/95 via-black/95 to-gray-900/95 rounded-3xl p-4 md:p-16 text-white border-2 border-emerald-500/30 backdrop-blur-xl overflow-hidden gpu-accelerated shadow-2xl shadow-emerald-500/10">
+      <div className="relative bg-gradient-to-br from-gray-900/95 via-black/95 to-gray-900/95 rounded-2xl md:rounded-3xl p-4 md:p-10 lg:p-16 text-white border-2 border-emerald-500/30 backdrop-blur-xl overflow-hidden gpu-accelerated shadow-2xl shadow-emerald-500/10">
         {/* Animated background elements */}
         <div className="absolute inset-0 opacity-10">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(16,185,129,0.2),transparent_70%)]" />
@@ -187,17 +193,17 @@ export const WhyRivioDifferent = ({ isInView }: WhyRivioDifferentProps) => {
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={isInView ? { opacity: 1, scale: 1 } : {}}
-            transition={{ duration: 0.6, delay: 1.3 }}
-            className="text-center mb-12"
+            transition={{ duration: DURATION.MEDIUM, delay: PROBLEM_DELAY.HEADING }}
+            className="text-center mb-6 md:mb-12"
           >
-            <h3 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 leading-tight">
+            <h3 className="text-2xl md:text-4xl lg:text-6xl font-bold mb-2 md:mb-4 leading-tight">
               Why{" "}
               <span className="bg-gradient-to-r from-emerald-400 to-gold-400 bg-clip-text text-transparent">
                 RIVIO
               </span>{" "}
               is Different
             </h3>
-            <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto font-medium">
+            <p className="text-base md:text-xl lg:text-2xl text-gray-300 max-w-3xl mx-auto font-medium">
               We&apos;re not just another fitness app. Here&apos;s what makes us
               fundamentally different.
             </p>
@@ -205,7 +211,7 @@ export const WhyRivioDifferent = ({ isInView }: WhyRivioDifferentProps) => {
           </motion.div>
 
           {/* Three Key Differentiators */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8 mb-6 md:mb-12">
             {/* 1. Physical Space Access Platform */}
             <DifferentiatorCard
               number={1}
@@ -313,10 +319,10 @@ export const WhyRivioDifferent = ({ isInView }: WhyRivioDifferentProps) => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 1.7 }}
-            className="text-center bg-gradient-to-r from-emerald-600/20 to-gold-600/20 rounded-2xl p-4 lg:p-8 border border-emerald-500/30 backdrop-blur-sm"
+            transition={{ duration: DURATION.MEDIUM, delay: PROBLEM_DELAY.PARAGRAPH_1 }}
+            className="text-center bg-gradient-to-r from-emerald-600/20 to-gold-600/20 rounded-xl md:rounded-2xl p-4 md:p-6 lg:p-8 border border-emerald-500/30 backdrop-blur-sm"
           >
-            <p className="text-xl md:text-2xl text-white leading-relaxed font-medium">
+            <p className="text-sm md:text-xl lg:text-2xl text-white leading-relaxed font-medium">
               <strong className="text-emerald-300">
                 RIVIO isn&apos;t trying to be everything to everyone.
               </strong>{" "}

@@ -16,6 +16,17 @@ import {
   Leaf,
 } from "lucide-react";
 import { memo, useEffect, useState } from "react";
+import {
+  DURATION,
+  DELAY,
+  EASE_IN_OUT,
+  EASE_LINEAR,
+  SPRING_BOUNCY,
+  TRANSITION_PULSE,
+  TRANSITION_ROTATE,
+  TRANSITION_ORB,
+  getStaggerDelay,
+} from "@/animation-timing";
 
 // ============================================================================
 // Scene Data
@@ -98,7 +109,7 @@ const AnimatedGradientBackground = memo(() => (
         "radial-gradient(circle at 20% 50%, rgba(16, 185, 129, 0.4) 0%, transparent 60%), radial-gradient(circle at 80% 50%, rgba(212, 175, 55, 0.3) 0%, transparent 60%), #000000",
       ],
     }}
-    transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+    transition={TRANSITION_ORB}
   />
 ));
 AnimatedGradientBackground.displayName = "AnimatedGradientBackground";
@@ -146,7 +157,7 @@ const SceneIcon = memo(({ scene }: { scene: SceneType }) => {
           : "bg-gold-500/30 border-2 border-gold-400/60"
       }`}
       animate={{ scale: [1, 1.1, 1], rotate: [0, 3, -3, 0] }}
-      transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+      transition={TRANSITION_PULSE}
       style={{
         boxShadow: isEmerald
           ? "0 0 30px rgba(16, 185, 129, 0.5), 0 0 60px rgba(16, 185, 129, 0.2)"
@@ -155,7 +166,7 @@ const SceneIcon = memo(({ scene }: { scene: SceneType }) => {
     >
       <motion.div
         animate={{ rotate: [0, 360] }}
-        transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+        transition={TRANSITION_ROTATE}
       >
         <IconComponent
           className={`w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 ${
@@ -177,7 +188,7 @@ const SceneText = memo(({ scene }: { scene: SceneType }) => {
       className="text-center px-2"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ delay: 0.3 }}
+      transition={{ delay: DELAY.MEDIUM_SHORT }}
     >
       <h3
         className={`text-base sm:text-lg md:text-xl lg:text-2xl font-bold mb-1 sm:mb-2 ${
@@ -210,7 +221,7 @@ const ProgressIndicators = memo(({ currentScene }: { currentScene: number }) => 
               : "bg-gray-700"
           }`}
           animate={{ width: isActive ? 24 : 6 }}
-          transition={{ duration: 0.3 }}
+          transition={{ duration: DURATION.FAST }}
         />
       );
     })}
@@ -222,7 +233,7 @@ const PhoneMockup = memo(({ currentScene }: { currentScene: number }) => (
   <motion.div
     className="relative w-44 h-[300px] sm:w-52 sm:h-[360px] md:w-60 md:h-[420px] lg:w-72 lg:h-[500px] bg-gray-900 rounded-[1.5rem] sm:rounded-[2rem] md:rounded-[2.5rem] p-1.5 sm:p-2 md:p-3 shadow-2xl border-2 sm:border-3 md:border-4 border-gray-700 flex-shrink-0"
     animate={{ y: [0, -8, 0] }}
-    transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+    transition={{ duration: DURATION.LOOP_SLOW, repeat: Infinity, ease: EASE_IN_OUT }}
     style={{
       boxShadow:
         "0 15px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(16, 185, 129, 0.25)",
@@ -254,7 +265,7 @@ const VenueSearchOverlay = memo(() => (
       className="bg-black/80 rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-5 backdrop-blur-xl border-2 border-emerald-400/40 w-full max-w-xs sm:max-w-sm"
       initial={{ scale: 0.9, y: 20 }}
       animate={{ scale: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
+      transition={{ duration: DURATION.NORMAL }}
     >
       <div className="flex items-center gap-2 mb-2 sm:mb-3">
         <MapPin className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-400" />
@@ -272,13 +283,13 @@ const VenueSearchOverlay = memo(() => (
             "rgba(16, 185, 129, 0.3)",
           ],
         }}
-        transition={{ duration: 2, repeat: Infinity }}
+        transition={TRANSITION_PULSE}
         style={{ border: "2px solid" }}
       >
         <motion.div
           className="w-3 h-3 border-2 border-emerald-400 border-t-transparent rounded-full"
           animate={{ rotate: 360 }}
-          transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+          transition={{ duration: DURATION.VERY_SLOW, repeat: Infinity, ease: EASE_LINEAR }}
         />
         <span className="text-gray-400 text-[10px] sm:text-xs">
           Searching within 100m...
@@ -296,7 +307,7 @@ const VenueSearchOverlay = memo(() => (
             className="bg-emerald-500/20 rounded-lg p-2 border border-emerald-400/30"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.3 + index * 0.15 }}
+            transition={{ delay: getStaggerDelay(index, DELAY.MEDIUM_SHORT, DELAY.STAGGER_LARGE) }}
           >
             <div className="flex justify-between items-start">
               <div>
@@ -311,7 +322,7 @@ const VenueSearchOverlay = memo(() => (
               <motion.span
                 className="text-[9px] sm:text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/30 text-emerald-300"
                 animate={{ opacity: [1, 0.7, 1] }}
-                transition={{ duration: 2, repeat: Infinity }}
+                transition={TRANSITION_PULSE}
               >
                 Open
               </motion.span>
@@ -326,13 +337,13 @@ const VenueSearchOverlay = memo(() => (
       <motion.div
         className="mt-2 sm:mt-3 text-center"
         animate={{ opacity: [0.6, 1, 0.6] }}
-        transition={{ duration: 2, repeat: Infinity }}
+        transition={TRANSITION_PULSE}
       >
         <span className="text-[9px] sm:text-[10px] text-emerald-400 flex items-center justify-center gap-1">
           <motion.div
             className="w-1.5 h-1.5 bg-emerald-400 rounded-full"
             animate={{ scale: [1, 1.5, 1], opacity: [1, 0.5, 1] }}
-            transition={{ duration: 1.5, repeat: Infinity }}
+            transition={{ duration: DURATION.EXTRA_SLOW, repeat: Infinity }}
           />
           Showing venues within 100m radius
         </span>
@@ -365,7 +376,7 @@ const ActivitySelectionOverlay = memo(() => (
           }`}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: index * 0.15, type: "spring", stiffness: 200 }}
+          transition={{ delay: getStaggerDelay(index, 0, DELAY.STAGGER_LARGE), ...SPRING_BOUNCY }}
           style={{
             boxShadow:
               color === "emerald"
@@ -402,7 +413,7 @@ const QRScanOverlay = memo(() => (
     <motion.div
       className="absolute w-40 h-40 sm:w-52 sm:h-52 md:w-64 md:h-64 border-3 sm:border-4 border-emerald-400 rounded-lg"
       animate={{ scale: [1, 1.2, 1], opacity: [0.6, 1, 0.6] }}
-      transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+      transition={TRANSITION_PULSE}
       style={{
         boxShadow:
           "0 0 30px rgba(16, 185, 129, 0.7), 0 0 60px rgba(16, 185, 129, 0.3)",
@@ -411,7 +422,7 @@ const QRScanOverlay = memo(() => (
     <motion.div
       className="absolute w-40 sm:w-52 md:w-64 h-1.5 sm:h-2 bg-emerald-400"
       animate={{ y: [-80, 80, -80] }}
-      transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+      transition={{ duration: DURATION.LOOP_FAST, repeat: Infinity, ease: EASE_LINEAR }}
       style={{ boxShadow: "0 0 15px rgba(16, 185, 129, 1)" }}
     />
   </motion.div>
@@ -432,7 +443,7 @@ const AmenitiesOverlay = memo(() => (
           className="px-3 sm:px-4 py-1.5 sm:py-2 bg-gold-500/30 border-2 border-gold-400/60 rounded-lg text-gold-300 font-bold text-xs sm:text-sm"
           initial={{ opacity: 0, scale: 0 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: index * 0.2, type: "spring", stiffness: 200 }}
+          transition={{ delay: getStaggerDelay(index, 0, DELAY.SHORT), ...SPRING_BOUNCY }}
           style={{ boxShadow: "0 0 15px rgba(212, 175, 55, 0.5)" }}
         >
           {amenity}
@@ -453,7 +464,7 @@ const PaymentOverlay = memo(() => (
     <motion.div
       className="text-4xl sm:text-5xl md:text-6xl font-bold text-gold-300"
       animate={{ scale: [1, 1.2, 1], opacity: [0.8, 1, 0.8] }}
-      transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+      transition={{ duration: DURATION.EXTRA_SLOW, repeat: Infinity, ease: EASE_IN_OUT }}
       style={{
         textShadow:
           "0 0 30px rgba(212, 175, 55, 0.7), 0 0 60px rgba(212, 175, 55, 0.3)",
@@ -475,7 +486,7 @@ const StreakOverlay = memo(() => (
     <motion.div
       className="text-center"
       animate={{ scale: [1, 1.15, 1] }}
-      transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+      transition={{ duration: DURATION.EXTRA_SLOW, repeat: Infinity, ease: EASE_IN_OUT }}
     >
       <div
         className="text-2xl sm:text-3xl md:text-4xl font-bold text-emerald-300 mb-2"
@@ -518,7 +529,7 @@ export default function AnimatedVideoBackground() {
             initial={{ opacity: 0, scale: 0.8, y: 30 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.8, y: -30 }}
-            transition={{ duration: 0.8, ease: "easeInOut" }}
+            transition={{ duration: DURATION.SLOW, ease: EASE_IN_OUT }}
             className="flex flex-col items-center"
           >
             <PhoneMockup currentScene={currentScene} />

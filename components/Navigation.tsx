@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
+import { getStaggerDelay } from '@/animation-timing'
 
 interface NavigationProps {
   isScrolled: boolean
@@ -80,7 +81,7 @@ export default function Navigation({ isScrolled }: NavigationProps) {
                   <motion.button
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.1 }}
+                    transition={{ delay: getStaggerDelay(index) }}
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.95 }}
                     className="text-sm font-medium transition-colors text-gray-300 hover:text-emerald-400"
@@ -93,7 +94,7 @@ export default function Navigation({ isScrolled }: NavigationProps) {
                   key={link.name}
                   initial={{ opacity: 0, y: -20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
+                  transition={{ delay: getStaggerDelay(index) }}
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => scrollToSection(link.href)}
