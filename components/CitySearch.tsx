@@ -40,7 +40,7 @@ export default function CitySearch() {
     <section
       id="cities"
       ref={ref}
-      className="py-12 md:py-24 bg-black relative overflow-hidden"
+      className="py-8 md:py-12 bg-black relative overflow-hidden"
     >
       {/* Optimized floating clouds */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -75,7 +75,7 @@ export default function CitySearch() {
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={TRANSITION_REVEAL}
-          className="text-center mb-6 md:mb-12"
+          className="text-center mb-4 md:mb-6"
         >
           <motion.h2
             className="text-3xl md:text-5xl lg:text-7xl font-bold text-white mb-3 md:mb-6"
@@ -118,7 +118,7 @@ export default function CitySearch() {
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: DURATION.SLOW, delay: DELAY.SHORT, ease: EASE_EXPO }}
-          className="max-w-2xl mx-auto mb-6 md:mb-12"
+          className="max-w-2xl mx-auto mb-4 md:mb-6"
         >
           <form onSubmit={handleSearch} className="relative">
             <div className="relative">
@@ -270,7 +270,7 @@ export default function CitySearch() {
           </div>
 
           <div className="relative z-10">
-            <h3 className="text-xl md:text-3xl lg:text-4xl font-bold text-white mb-4 md:mb-8 text-center">
+            <h3 className="text-xl md:text-3xl lg:text-4xl font-bold text-white mb-3 md:mb-6 text-center">
               Building India's Largest{" "}
               <span className="bg-gradient-to-r from-emerald-400 to-gold-400 bg-clip-text text-transparent">
                 Pay-Per-Day

@@ -22,7 +22,7 @@ export const Introduction = () => {
     <section
       id="about"
       ref={ref}
-      className="py-12 md:py-24 bg-black relative overflow-hidden"
+      className="py-8 md:py-12 bg-black relative overflow-hidden"
     >
       <FloatingBackground />
 
@@ -31,7 +31,7 @@ export const Introduction = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={TRANSITION_FADE_IN}
-          className="text-center mb-6 md:mb-12 gpu-accelerated"
+          className="text-center mb-4 md:mb-6 gpu-accelerated"
           style={{ willChange: "transform, opacity" }}
         >
           <motion.h2
@@ -57,12 +57,12 @@ export const Introduction = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: DURATION.MEDIUM, delay: DELAY.MEDIUM }}
-          className="mb-8 md:mb-16"
+          className="mb-6 md:mb-8"
         >
-          <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-4 md:mb-8 text-center">
+          <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-3 md:mb-6 text-center">
             Vision for <span className="text-emerald-400">Users</span>
           </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 lg:gap-6">
             {userVision.map((feature, index) => (
               <VisionCard
                 key={feature.title}
@@ -81,10 +81,10 @@ export const Introduction = () => {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: DURATION.MEDIUM, delay: DELAY.EXTRA_LONG }}
         >
-          <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-4 md:mb-8 text-center">
+          <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-3 md:mb-6 text-center">
             Vision for <span className="text-gold-400">Partners</span>
           </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 lg:gap-6">
             {partnerVision.map((feature, index) => (
               <VisionCard
                 key={feature.title}

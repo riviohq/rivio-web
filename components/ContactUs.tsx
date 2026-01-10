@@ -31,7 +31,7 @@ export default function ContactUs() {
     <section
       id="contact"
       ref={ref}
-      className="py-12 md:py-24 bg-black relative overflow-hidden"
+      className="py-8 md:py-12 bg-black relative overflow-hidden"
     >
       {/* Enhanced floating background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -76,7 +76,7 @@ export default function ContactUs() {
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={TRANSITION_REVEAL}
-          className="text-center mb-6 md:mb-12"
+          className="text-center mb-4 md:mb-6"
         >
           <motion.h2
             className="text-3xl md:text-5xl lg:text-7xl font-bold text-white mb-3 md:mb-6"
@@ -95,7 +95,7 @@ export default function ContactUs() {
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-3 gap-4 md:gap-8">
+        <div className="grid md:grid-cols-3 gap-3 md:gap-6">
           {/* Google Form Embedded - Most Reliable Method */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -103,7 +103,7 @@ export default function ContactUs() {
             transition={{ duration: DURATION.SLOW, delay: DELAY.SHORT, ease: EASE_EXPO }}
             className="relative"
           >
-            <div className="bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-black/95 rounded-2xl md:rounded-3xl p-4 md:p-6 lg:p-8 border-2 border-emerald-500/30 backdrop-blur-xl shadow-2xl relative overflow-hidden h-full">
+            <div className="bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-black/95 rounded-2xl md:rounded-3xl p-4 md:p-5 lg:p-6 border-2 border-emerald-500/30 backdrop-blur-xl shadow-2xl relative overflow-hidden h-full">
               {/* Animated background */}
               <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/5 to-gold-500/5 opacity-50" />
               <motion.div
@@ -187,11 +187,11 @@ export default function ContactUs() {
             <div className="bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-black/95 p-4 md:p-6 lg:p-8 rounded-2xl md:rounded-3xl border-2 border-emerald-500/30 backdrop-blur-xl shadow-2xl relative overflow-hidden h-full">
               <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/5 to-gold-500/5" />
               <div className="relative z-10">
-                <h3 className="text-xl md:text-2xl font-bold text-white mb-4 md:mb-6 flex items-center gap-2 md:gap-3">
+                <h3 className="text-xl md:text-2xl font-bold text-white mb-3 md:mb-4 flex items-center gap-2 md:gap-3">
                   <Building2 className="w-5 h-5 md:w-7 md:h-7 text-emerald-400" />
                   Why Partner With Us?
                 </h3>
-                <div className="space-y-3 md:space-y-5">
+                <div className="space-y-2 md:space-y-3">
                   <div className="flex items-start gap-2 md:gap-3">
                     <div className="w-9 h-9 md:w-11 md:h-11 bg-emerald-500/20 rounded-lg md:rounded-xl flex items-center justify-center flex-shrink-0 border border-emerald-500/30">
                       <TrendingUp className="w-4 h-4 md:w-5 md:h-5 text-emerald-300" />
@@ -245,7 +245,7 @@ export default function ContactUs() {
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: DURATION.SLOW, delay: DELAY.MEDIUM, ease: EASE_EXPO }}
           >
-            <div className="bg-gradient-to-br from-gray-900/95 to-black/95 p-4 md:p-6 lg:p-8 rounded-2xl md:rounded-3xl border-2 border-emerald-500/30 backdrop-blur-xl shadow-2xl h-full">
+            <div className="bg-gradient-to-br from-gray-900/95 to-black/95 p-4 md:p-5 lg:p-6 rounded-2xl md:rounded-3xl border-2 border-emerald-500/30 backdrop-blur-xl shadow-2xl h-full">
               <h3 className="text-xl md:text-2xl font-bold text-white mb-4 md:mb-6 flex items-center gap-2 md:gap-3">
                 <Mail className="w-5 h-5 md:w-6 md:h-6 text-emerald-400" />
                 Contact Information

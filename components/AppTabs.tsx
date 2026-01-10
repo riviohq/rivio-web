@@ -122,7 +122,7 @@ export default function AppTabs() {
     <section
       id="apps"
       ref={ref}
-      className="py-12 md:py-24 bg-black relative overflow-hidden"
+      className="py-8 md:py-12 bg-black relative overflow-hidden"
     >
       {/* Enhanced floating background with gradient layers */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -152,7 +152,7 @@ export default function AppTabs() {
           />
         ))}
       </div>
-
+      
       {/* Grid pattern overlay */}
       <div
         className="absolute inset-0 opacity-5"
@@ -168,10 +168,10 @@ export default function AppTabs() {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={TRANSITION_FADE_IN}
-          className="text-center mb-8 md:mb-16 gpu-accelerated"
+          className="text-center mb-6 md:mb-8 gpu-accelerated"
           style={{ willChange: "transform, opacity" }}
         >
-          <motion.h2
+            <motion.h2 
             className="text-3xl md:text-5xl lg:text-7xl font-bold text-white mb-3 md:mb-6 gpu-accelerated"
             initial={{ opacity: 0, scale: 0.95 }}
             animate={isInView ? { opacity: 1, scale: 1 } : {}}
@@ -189,25 +189,25 @@ export default function AppTabs() {
         </motion.div>
 
         {/* Both Apps Side by Side with Animations */}
-        <div className="grid lg:grid-cols-2 gap-6 md:gap-8 lg:gap-12">
+        <div className="grid lg:grid-cols-2 gap-4 md:gap-6 lg:gap-8">
           {/* User App Animation */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: DURATION.MEDIUM, delay: DELAY.SHORT }}
-            className="relative"
+            className="relative h-full"
           >
-            <div className="bg-gradient-to-br from-gray-900/95 via-black/95 to-gray-900/95 rounded-2xl md:rounded-3xl shadow-2xl p-4 md:p-8 lg:p-10 border-2 border-emerald-500/30 backdrop-blur-xl overflow-hidden">
+            <div className="bg-gradient-to-br from-gray-900/95 via-black/95 to-gray-900/95 rounded-2xl md:rounded-3xl shadow-2xl p-4 md:p-6 lg:p-8 border-2 border-emerald-500/30 backdrop-blur-xl overflow-hidden h-full flex flex-col">
               {/* Header */}
-              <div className="flex items-center gap-2 md:gap-3 mb-4 md:mb-8">
-                <Image
-                  src="/logos/rivio-user-light.png"
-                  alt="RIVIO User App Logo"
-                  width={64}
-                  height={64}
+              <div className="flex items-center gap-2 md:gap-3 mb-3 md:mb-6">
+              <Image
+                src="/logos/rivio-user-light.png"
+                alt="RIVIO User App Logo"
+                width={64}
+                height={64}
                   className="w-12 h-12 md:w-16 md:h-16"
-                />
-                <div>
+              />
+              <div>
                   <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-white">
                     RIVIO User App
                   </h3>
@@ -218,9 +218,9 @@ export default function AppTabs() {
               </div>
 
               {/* Animated Phone Mockup */}
-              <div className="relative h-[500px] md:h-[600px] flex items-center justify-center">
+              <div className="relative h-[400px] md:h-[480px] flex items-center justify-center">
                 <motion.div
-                  className="relative w-64 h-[480px] md:w-72 md:h-[540px] bg-gray-900 rounded-[2rem] md:rounded-[3rem] p-3 md:p-4 shadow-2xl border-2 md:border-4 border-emerald-500/50"
+                  className="relative w-56 h-[380px] md:w-64 md:h-[460px] bg-gray-900 rounded-[2rem] md:rounded-[3rem] p-3 md:p-4 shadow-2xl border-2 md:border-4 border-emerald-500/50"
                   animate={{
                     y: [0, -10, 0],
                   }}
@@ -249,7 +249,7 @@ export default function AppTabs() {
                     </div>
 
                     {/* App Content */}
-                    <div className="pt-12 h-full flex flex-col items-center justify-center gap-6 px-6">
+                    <div className="pt-12 h-full flex flex-col items-center justify-center gap-4 px-6">
                       <AnimatePresence mode="wait">
                         <motion.div
                           key={userStep}
@@ -257,7 +257,7 @@ export default function AppTabs() {
                           animate={{ opacity: 1, scale: 1, y: 0 }}
                           exit={{ opacity: 0, scale: 0.8, y: -50 }}
                           transition={{ duration: DURATION.MEDIUM, ease: EASE_IN_OUT }}
-                          className="flex flex-col items-center gap-6 w-full"
+                          className="flex flex-col items-center gap-4 w-full"
                         >
                           {/* Icon */}
                           <motion.div
@@ -338,28 +338,28 @@ export default function AppTabs() {
                     </div>
                   </div>
                 </motion.div>
-              </div>
+            </div>
 
               {/* Download Buttons */}
-              <div className="flex flex-col sm:flex-row gap-3 md:gap-4 mt-4 md:mt-8">
-                <motion.a
-                  href="#"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+              <div className="flex flex-col sm:flex-row gap-3 md:gap-4 mt-3 md:mt-6">
+              <motion.a
+                href="#"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                   className="flex items-center justify-center gap-2 px-4 md:px-6 py-2 md:py-3 bg-emerald-500 text-white rounded-full font-semibold hover:bg-emerald-600 transition-colors text-sm md:text-base"
-                >
+              >
                   <Download className="w-4 h-4 md:w-5 md:h-5" />
-                  Download for iOS
-                </motion.a>
-                <motion.a
-                  href="#"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+                Download for iOS
+              </motion.a>
+              <motion.a
+                href="#"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                   className="flex items-center justify-center gap-2 px-4 md:px-6 py-2 md:py-3 bg-black text-white rounded-full font-semibold hover:bg-gray-800 transition-colors border border-gray-700 text-sm md:text-base"
-                >
+              >
                   <Download className="w-4 h-4 md:w-5 md:h-5" />
-                  Download for Android
-                </motion.a>
+                Download for Android
+              </motion.a>
               </div>
             </div>
           </motion.div>
@@ -369,19 +369,19 @@ export default function AppTabs() {
             initial={{ opacity: 0, x: 20 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: DURATION.MEDIUM, delay: DELAY.MEDIUM_SHORT }}
-            className="relative"
+            className="relative h-full"
           >
-            <div className="bg-gradient-to-br from-gray-900/95 via-black/95 to-gray-900/95 rounded-2xl md:rounded-3xl shadow-2xl p-4 md:p-8 lg:p-10 border-2 border-amber-500/30 backdrop-blur-xl overflow-hidden">
+            <div className="bg-gradient-to-br from-gray-900/95 via-black/95 to-gray-900/95 rounded-2xl md:rounded-3xl shadow-2xl p-4 md:p-6 lg:p-8 border-2 border-amber-500/30 backdrop-blur-xl overflow-hidden h-full flex flex-col">
               {/* Header */}
-              <div className="flex items-center gap-2 md:gap-3 mb-4 md:mb-8">
-                <Image
-                  src="/logos/rivio-partner-gold-lighttext.png"
-                  alt="RIVIO Partners Logo"
-                  width={64}
-                  height={64}
+              <div className="flex items-center gap-2 md:gap-3 mb-3 md:mb-6">
+              <Image
+                src="/logos/rivio-partner-gold-lighttext.png"
+                alt="RIVIO Partners Logo"
+                width={64}
+                height={64}
                   className="w-12 h-12 md:w-16 md:h-16"
-                />
-                <div>
+              />
+              <div>
                   <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-white">
                     RIVIO Partners
                   </h3>
@@ -392,9 +392,9 @@ export default function AppTabs() {
               </div>
 
               {/* Animated Phone Mockup */}
-              <div className="relative h-[500px] md:h-[600px] flex items-center justify-center">
+              <div className="relative h-[400px] md:h-[480px] flex items-center justify-center">
                 <motion.div
-                  className="relative w-64 h-[480px] md:w-72 md:h-[540px] bg-gray-900 rounded-[2rem] md:rounded-[3rem] p-3 md:p-4 shadow-2xl border-2 md:border-4 border-amber-500/50"
+                  className="relative w-56 h-[380px] md:w-64 md:h-[460px] bg-gray-900 rounded-[2rem] md:rounded-[3rem] p-3 md:p-4 shadow-2xl border-2 md:border-4 border-amber-500/50"
                   animate={{
                     y: [0, -10, 0],
                   }}
@@ -423,7 +423,7 @@ export default function AppTabs() {
                     </div>
 
                     {/* App Content */}
-                    <div className="pt-12 h-full flex flex-col items-center justify-center gap-6 px-6">
+                    <div className="pt-12 h-full flex flex-col items-center justify-center gap-4 px-6">
                       <AnimatePresence mode="wait">
                         <motion.div
                           key={partnerStep}
@@ -431,7 +431,7 @@ export default function AppTabs() {
                           animate={{ opacity: 1, scale: 1, y: 0 }}
                           exit={{ opacity: 0, scale: 0.8, y: -50 }}
                           transition={{ duration: DURATION.MEDIUM, ease: EASE_IN_OUT }}
-                          className="flex flex-col items-center gap-6 w-full"
+                          className="flex flex-col items-center gap-4 w-full"
                         >
                           {/* Icon */}
                           <motion.div
@@ -513,28 +513,28 @@ export default function AppTabs() {
                     </div>
                   </div>
                 </motion.div>
-              </div>
+            </div>
 
               {/* Download Buttons */}
-              <div className="flex flex-col sm:flex-row gap-3 md:gap-4 mt-4 md:mt-8">
-                <motion.a
-                  href="#"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+              <div className="flex flex-col sm:flex-row gap-3 md:gap-4 mt-3 md:mt-6">
+              <motion.a
+                href="#"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                   className="flex items-center justify-center gap-2 px-4 md:px-6 py-2 md:py-3 bg-amber-500 text-white rounded-full font-semibold hover:bg-amber-600 transition-colors text-sm md:text-base"
-                >
+              >
                   <Download className="w-4 h-4 md:w-5 md:h-5" />
-                  Download for iOS
-                </motion.a>
-                <motion.a
-                  href="#"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+                Download for iOS
+              </motion.a>
+              <motion.a
+                href="#"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                   className="flex items-center justify-center gap-2 px-4 md:px-6 py-2 md:py-3 bg-black text-white rounded-full font-semibold hover:bg-gray-800 transition-colors border border-gray-700 text-sm md:text-base"
-                >
+              >
                   <Download className="w-4 h-4 md:w-5 md:h-5" />
-                  Download for Android
-                </motion.a>
+                Download for Android
+              </motion.a>
               </div>
             </div>
           </motion.div>

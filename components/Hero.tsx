@@ -257,7 +257,7 @@ interface LeftPanelProps {
 
 const HeroLeftPanel = memo(
   ({ rotateX, rotateY, contentY, leftRef }: LeftPanelProps) => (
-    <div className="w-full lg:w-1/2 relative flex items-center justify-center overflow-hidden bg-gradient-to-br from-black via-gray-950 to-black min-h-[50vh] lg:min-h-screen py-24 pb-8 lg:py-32 h-full">
+    <div className="w-full lg:w-1/2 relative flex items-center justify-center overflow-hidden bg-gradient-to-br from-black via-gray-950 to-black min-h-[50vh] lg:min-h-[90vh] pt-24 pb-6 lg:pt-28 lg:pb-8 h-full">
       <ParticlesBackground />
       <motion.div
         ref={leftRef}

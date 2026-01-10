@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import NavigationWrapper from "@/components/NavigationWrapper";
 import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
@@ -38,7 +39,8 @@ export default function RootLayout({
         />
       </head>
       <body className="antialiased bg-black text-white">
-        <main className="min-h-screen">{children}</main>
+        <NavigationWrapper />
+        <main className="min-h-screen pt-20">{children}</main>
         <Footer />
       </body>
     </html>

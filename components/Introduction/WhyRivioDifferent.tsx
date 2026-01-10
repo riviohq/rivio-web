@@ -34,7 +34,7 @@ const DifferentiatorCard = ({
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: DURATION.MEDIUM, delay }}
       whileHover={{ y: -8, scale: 1.02 }}
-      className={`p-4 md:p-6 lg:p-8 rounded-2xl md:rounded-3xl border-2 transition-all backdrop-blur-xl relative overflow-hidden group flex flex-col h-full ${
+      className={`p-3 md:p-4 lg:p-6 rounded-2xl md:rounded-3xl border-2 transition-all backdrop-blur-xl relative overflow-hidden group flex flex-col h-full ${
         isGold
           ? "bg-gradient-to-br from-gold-500/20 via-gold-600/15 to-gold-500/20 border-gold-500/50 hover:border-gold-400/70"
           : "bg-gradient-to-br from-gray-800/90 via-gray-900/90 to-black/90 border-emerald-500/40 hover:border-emerald-400/60"
@@ -62,13 +62,13 @@ const DifferentiatorCard = ({
       )}
 
       <div className="relative z-10 flex flex-col h-full">
-        <div className="flex items-start gap-2 md:gap-3 mb-3 md:mb-6 min-h-[2rem] md:min-h-[4rem]">
+        <div className="flex items-start gap-2 md:gap-3 mb-2 md:mb-4 min-h-[2rem] md:min-h-[3rem]">
           <h4 className="text-lg md:text-2xl lg:text-3xl font-bold text-white leading-tight">
             {title}
           </h4>
         </div>
 
-        <div className="space-y-2 md:space-y-4 flex-grow">{children}</div>
+        <div className="space-y-2 md:space-y-3 flex-grow">{children}</div>
       </div>
     </motion.div>
   );

@@ -62,7 +62,7 @@ const StatCard = ({
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: DURATION.NORMAL, delay: stat.delay }}
       whileHover={{ scale: 1.05, y: -5 }}
-      className={`backdrop-blur-xl rounded-xl md:rounded-2xl p-4 md:p-8 border-2 transition-all shadow-xl relative overflow-hidden group ${
+      className={`backdrop-blur-xl rounded-xl md:rounded-2xl p-3 md:p-5 lg:p-6 border-2 transition-all shadow-xl relative overflow-hidden group ${
         isGold
           ? "bg-gradient-to-br from-gold-600/30 via-gold-700/20 to-gold-800/30 border-gold-400/40 hover:border-gold-300/60 shadow-gold-500/20"
           : "bg-gradient-to-br from-emerald-600/30 via-emerald-700/20 to-emerald-800/30 border-emerald-400/40 hover:border-emerald-300/60 shadow-emerald-500/20"
@@ -182,7 +182,7 @@ export const ProblemStatement = ({ isInView }: ProblemStatementProps) => {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={isInView ? { opacity: 1, scale: 1 } : {}}
             transition={{ duration: DURATION.MEDIUM, delay: PROBLEM_DELAY.HEADING }}
-            className="mb-6 md:mb-12 text-center"
+            className="mb-4 md:mb-6 text-center"
           >
             <motion.div
               initial={{ opacity: 0, y: -20 }}
@@ -219,7 +219,7 @@ export const ProblemStatement = ({ isInView }: ProblemStatementProps) => {
           </div>
 
           {/* Problem Description - Enhanced */}
-          <div className="space-y-3 md:space-y-6 mb-4 md:mb-8">
+          <div className="space-y-2 md:space-y-4 mb-3 md:mb-6">
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}

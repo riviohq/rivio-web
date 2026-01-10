@@ -1,35 +1,15 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import {
-  Navigation,
-  Hero,
-  Introduction,
-  AppTabs,
-  CitySearch,
-  ContactUs,
-  Footer,
-} from "@/components";
+import { Hero, Introduction, AppTabs, CitySearch, ContactUs } from "@/components";
 
 export default function Home() {
-  const [isScrolled, setIsScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
   return (
-    <main className="min-h-screen overflow-x-hidden relative bg-black">
-      <Navigation isScrolled={isScrolled} />
+    <div className="min-h-screen overflow-x-hidden relative bg-black -mt-20">
       <Hero />
       <Introduction />
       <AppTabs />
       <CitySearch />
       <ContactUs />
-    </main>
+    </div>
   );
 }
