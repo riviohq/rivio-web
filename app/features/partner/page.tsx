@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { useInView } from 'framer-motion'
 import { Building2, QrCode, CheckCircle, DollarSign, BarChart3, Settings, MapPin, Activity, Wallet, Calendar, Star, Download } from 'lucide-react'
 import Image from 'next/image'
+import { DURATION, DELAY, EASE_IN_OUT, getStaggerDelay, getOrbDuration } from '@/animation-timing'
 
 const partnerSteps = [
   { icon: Building2, text: 'Onboard Your Venue', description: 'Register your fitness business' },
@@ -45,7 +46,7 @@ export default function PartnerFeaturesPage() {
           <motion.h1
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: DURATION.MEDIUM }}
             className="text-4xl md:text-5xl font-bold text-white text-center"
           >
             RIVIO Partner <span className="bg-gradient-to-r from-amber-400 to-amber-200 bg-clip-text text-transparent">Features</span>
@@ -70,7 +71,7 @@ export default function PartnerFeaturesPage() {
                 top: `${i * 20}%`,
               }}
               animate={{ x: [0, 60, -40, 0], y: [0, 40, -20, 0], scale: [1, 1.2, 1] }}
-              transition={{ duration: 18 + i * 3, repeat: Infinity, ease: 'easeInOut', delay: i }}
+              transition={{ duration: getOrbDuration(i, 18), repeat: Infinity, ease: EASE_IN_OUT, delay: i }}
             />
           ))}
         </div>
@@ -83,7 +84,7 @@ export default function PartnerFeaturesPage() {
                 key={feature.title}
                 initial={{ opacity: 0, y: 20, scale: 0.95 }}
                 animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
-                transition={{ duration: 0.4, delay: 0.1 + index * 0.05 }}
+                transition={{ duration: DURATION.MEDIUM_FAST, delay: getStaggerDelay(index, DELAY.VERY_SHORT, DELAY.STAGGER_SMALL) }}
                 whileHover={{ y: -6, scale: 1.02 }}
                 className="bg-gradient-to-br from-gray-900 via-gray-800 to-black border border-amber-500/20 rounded-2xl p-6 shadow-xl"
               >

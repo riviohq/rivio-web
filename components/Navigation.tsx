@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
+import { usePathname, useRouter } from 'next/navigation'
+import { getStaggerDelay } from '@/animation-timing'
 
 interface NavigationProps {
   isScrolled: boolean
@@ -11,18 +13,21 @@ interface NavigationProps {
 
 export default function Navigation({ isScrolled }: NavigationProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const pathname = usePathname()
+  const router = useRouter()
+  const isHomePage = pathname === '/'
 
   const navLinks = [
-    { name: 'Home', href: '#home', isRoute: false },
-    { name: 'About', href: '#about', isRoute: false },
-    { name: 'Apps', href: '#apps', isRoute: false },
-    { name: 'Features', href: '/features', isRoute: true },
-    { name: 'Rivio Network', href: '#cities', isRoute: false },
-    { name: 'Contact', href: '#contact', isRoute: false },
+    { name: 'Home', href: '/', sectionId: null },
+    { name: 'About', href: '/', sectionId: 'about' },
+    { name: 'Apps', href: '/', sectionId: 'apps' },
+    { name: 'Features', href: '/features', sectionId: null },
+    { name: 'Rivio Network', href: '/', sectionId: 'cities' },
+    { name: 'Contact', href: '/', sectionId: 'contact' },
   ]
 
-  const scrollToSection = (href: string) => {
-    const element = document.querySelector(href)
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId)
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' })
       setIsMobileMenuOpen(false)
@@ -30,11 +35,22 @@ export default function Navigation({ isScrolled }: NavigationProps) {
   }
 
   const handleNavClick = (link: typeof navLinks[0]) => {
-    if (link.isRoute) {
-      setIsMobileMenuOpen(false)
-      window.location.href = link.href
+    setIsMobileMenuOpen(false)
+    
+    if (link.sectionId) {
+      // If it has a section, navigate to home first, then scroll
+      if (isHomePage) {
+        scrollToSection(link.sectionId)
+      } else {
+        router.push('/')
+        // Wait for navigation to complete, then scroll
+        setTimeout(() => {
+          scrollToSection(link.sectionId!)
+        }, 300)
+      }
     } else {
-      scrollToSection(link.href)
+      // Regular route navigation
+      router.push(link.href)
     }
   }
 
@@ -60,7 +76,7 @@ export default function Navigation({ isScrolled }: NavigationProps) {
             whileHover={{ scale: 1.05 }}
             className="flex items-center"
           >
-            <Link href="/" onClick={() => scrollToSection('#home')}>
+            <Link href="/">
               <Image
                 src="/logos/rivio-user-light.png"
                 alt="RIVIO Logo"
@@ -75,33 +91,18 @@ export default function Navigation({ isScrolled }: NavigationProps) {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
             {navLinks.map((link, index) => (
-              link.isRoute ? (
-                <Link key={link.name} href={link.href}>
-                  <motion.button
-                    initial={{ opacity: 0, y: -20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.1 }}
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="text-sm font-medium transition-colors text-gray-300 hover:text-emerald-400"
-                  >
-                    {link.name}
-                  </motion.button>
-                </Link>
-              ) : (
-                <motion.button
-                  key={link.name}
-                  initial={{ opacity: 0, y: -20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => scrollToSection(link.href)}
-                  className="text-sm font-medium transition-colors text-gray-300 hover:text-emerald-400"
-                >
-                  {link.name}
-                </motion.button>
-              )
+              <motion.button
+                key={link.name}
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: getStaggerDelay(index) }}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => handleNavClick(link)}
+                className="text-sm font-medium transition-colors text-gray-300 hover:text-emerald-400"
+              >
+                {link.name}
+              </motion.button>
             ))}
           </div>
 
@@ -140,24 +141,13 @@ export default function Navigation({ isScrolled }: NavigationProps) {
           >
             <div className="px-4 py-4 space-y-2">
               {navLinks.map((link) => (
-                link.isRoute ? (
-                  <Link key={link.name} href={link.href}>
-                    <button
-                      onClick={() => setIsMobileMenuOpen(false)}
-                      className="block w-full text-left px-4 py-2 text-gray-300 hover:bg-gray-800 hover:text-emerald-400 rounded-lg transition-colors"
-                    >
-                      {link.name}
-                    </button>
-                  </Link>
-                ) : (
-                  <button
-                    key={link.name}
-                    onClick={() => scrollToSection(link.href)}
-                    className="block w-full text-left px-4 py-2 text-gray-300 hover:bg-gray-800 hover:text-emerald-400 rounded-lg transition-colors"
-                  >
-                    {link.name}
-                  </button>
-                )
+                <button
+                  key={link.name}
+                  onClick={() => handleNavClick(link)}
+                  className="block w-full text-left px-4 py-2 text-gray-300 hover:bg-gray-800 hover:text-emerald-400 rounded-lg transition-colors"
+                >
+                  {link.name}
+                </button>
               ))}
             </div>
           </motion.div>
