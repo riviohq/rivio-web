@@ -24,6 +24,192 @@ import {
   TRANSITION_PULSE,
 } from "@/animation-timing";
 
+// Photorealistic Golf Ball SVG with detailed dimples
+const PhotorealisticGolfBall = memo(() => {
+  // Generate dimple positions in a spherical pattern
+  const dimples = useMemo(() => {
+    const positions: { cx: number; cy: number; r: number; opacity: number }[] =
+      [];
+    // Create multiple rings of dimples
+    const rings = [
+      { y: 15, count: 5, radius: 2.8 },
+      { y: 25, count: 8, radius: 3 },
+      { y: 37, count: 10, radius: 3.2 },
+      { y: 50, count: 12, radius: 3.3 },
+      { y: 63, count: 10, radius: 3.2 },
+      { y: 75, count: 8, radius: 3 },
+      { y: 85, count: 5, radius: 2.8 },
+    ];
+
+    rings.forEach((ring) => {
+      for (let i = 0; i < ring.count; i++) {
+        const angle =
+          (i / ring.count) * Math.PI * 2 + (ring.y % 2 === 0 ? 0.1 : 0);
+        const radiusAtY = Math.sin((ring.y / 100) * Math.PI) * 38;
+        const cx = 50 + Math.cos(angle) * radiusAtY;
+        const cy = ring.y;
+        // Calculate opacity based on position (dimples on edges are less visible)
+        const distFromCenter = Math.sqrt(
+          Math.pow(cx - 50, 2) + Math.pow(cy - 50, 2)
+        );
+        const opacity = Math.max(0.3, 1 - distFromCenter / 50);
+        positions.push({ cx, cy, r: ring.radius, opacity });
+      }
+    });
+    return positions;
+  }, []);
+
+  return (
+    <svg width="200" height="200" viewBox="0 0 100 100" className="w-14 h-14">
+      <defs>
+        {/* Photorealistic ball gradient */}
+        <radialGradient
+          id="golfBallMain"
+          cx="35%"
+          cy="30%"
+          r="65%"
+          fx="25%"
+          fy="25%"
+        >
+          <stop offset="0%" stopColor="#ffffff" />
+          <stop offset="15%" stopColor="#fafafa" />
+          <stop offset="35%" stopColor="#f0f0f0" />
+          <stop offset="55%" stopColor="#e0e0e0" />
+          <stop offset="75%" stopColor="#d0d0d0" />
+          <stop offset="90%" stopColor="#b8b8b8" />
+          <stop offset="100%" stopColor="#a0a0a0" />
+        </radialGradient>
+
+        {/* Specular highlight */}
+        <radialGradient id="golfSpecular" cx="30%" cy="25%" r="30%">
+          <stop offset="0%" stopColor="#ffffff" stopOpacity="1" />
+          <stop offset="50%" stopColor="#ffffff" stopOpacity="0.6" />
+          <stop offset="100%" stopColor="#ffffff" stopOpacity="0" />
+        </radialGradient>
+
+        {/* Secondary highlight */}
+        <radialGradient id="golfSecondary" cx="70%" cy="75%" r="25%">
+          <stop offset="0%" stopColor="#ffffff" stopOpacity="0.3" />
+          <stop offset="100%" stopColor="#ffffff" stopOpacity="0" />
+        </radialGradient>
+
+        {/* Dimple gradient - inset shadow effect */}
+        <radialGradient id="golfDimple" cx="40%" cy="35%" r="60%">
+          <stop offset="0%" stopColor="#c8c8c8" />
+          <stop offset="50%" stopColor="#b0b0b0" />
+          <stop offset="100%" stopColor="#d8d8d8" />
+        </radialGradient>
+
+        {/* Emerald glow */}
+        <radialGradient id="golfGlow" cx="50%" cy="50%" r="55%">
+          <stop offset="60%" stopColor="#10b981" stopOpacity="0" />
+          <stop offset="85%" stopColor="#10b981" stopOpacity="0.3" />
+          <stop offset="100%" stopColor="#10b981" stopOpacity="0.5" />
+        </radialGradient>
+
+        {/* Drop shadow filter */}
+        <filter id="golfShadow" x="-50%" y="-50%" width="200%" height="200%">
+          <feDropShadow
+            dx="0"
+            dy="2"
+            stdDeviation="3"
+            floodColor="#10b981"
+            floodOpacity="0.4"
+          />
+          <feDropShadow
+            dx="0"
+            dy="4"
+            stdDeviation="6"
+            floodColor="#000000"
+            floodOpacity="0.2"
+          />
+        </filter>
+      </defs>
+
+      {/* Outer glow */}
+      <circle cx="50" cy="50" r="48" fill="url(#golfGlow)" />
+
+      {/* Main ball body with shadow */}
+      <circle
+        cx="50"
+        cy="50"
+        r="42"
+        fill="url(#golfBallMain)"
+        filter="url(#golfShadow)"
+      />
+
+      {/* Dimples */}
+      {dimples.map((d, i) => (
+        <circle
+          key={`dimple-${d.cx.toFixed(1)}-${d.cy}`}
+          cx={d.cx}
+          cy={d.cy}
+          r={d.r}
+          fill="url(#golfDimple)"
+          opacity={d.opacity * 0.7}
+        />
+      ))}
+
+      {/* Main specular highlight */}
+      <ellipse cx="38" cy="32" rx="18" ry="14" fill="url(#golfSpecular)" />
+
+      {/* Secondary rim highlight */}
+      <circle cx="50" cy="50" r="42" fill="url(#golfSecondary)" />
+
+      {/* Subtle edge definition */}
+      <circle
+        cx="50"
+        cy="50"
+        r="42"
+        fill="none"
+        stroke="rgba(255,255,255,0.3)"
+        strokeWidth="0.5"
+      />
+    </svg>
+  );
+});
+PhotorealisticGolfBall.displayName = "PhotorealisticGolfBall";
+
+// Golf Ball Component with scroll-based scaling
+const GolfBall = memo(() => {
+  const { scrollY } = useScroll();
+
+  // Scale from small (1) to massive background (80) based on pixel scroll
+  const scale = useTransform(scrollY, [0, 300, 800], [1, 15, 80]);
+  // Move from right to left while scrolling (negative x values move left)
+  const x = useTransform(scrollY, [0, 400, 800], [0, -400, -700]);
+  const y = useTransform(scrollY, [0, 400, 800], [0, 250, 450]);
+  // Fade as it becomes background
+  const opacity = useTransform(
+    scrollY,
+    [0, 200, 500, 900],
+    [0.9, 0.6, 0.15, 0.05]
+  );
+
+  // Smooth spring animation
+  const smoothScale = useSpring(scale, { stiffness: 50, damping: 20 });
+  const smoothX = useSpring(x, { stiffness: 50, damping: 20 });
+  const smoothY = useSpring(y, { stiffness: 50, damping: 20 });
+  const smoothOpacity = useSpring(opacity, { stiffness: 80, damping: 25 });
+
+  return (
+    <motion.div
+      className="fixed top-28 right-6 z-[5] pointer-events-none"
+      style={{
+        scale: smoothScale,
+        x: smoothX,
+        y: smoothY,
+        opacity: smoothOpacity,
+        willChange: "transform, opacity",
+        transformOrigin: "center center",
+      }}
+    >
+      <PhotorealisticGolfBall />
+    </motion.div>
+  );
+});
+GolfBall.displayName = "GolfBall";
+
 const fadeInUpInitial = { opacity: 0, y: 20 };
 const fadeInUpAnimate = { opacity: 1, y: 0 };
 
@@ -90,7 +276,11 @@ const LogoGlow = memo(() => (
   <motion.div
     className="absolute inset-0 blur-3xl bg-emerald-500/30 rounded-full"
     animate={{ scale: [1, 1.3, 1], opacity: [0.3, 0.6, 0.3] }}
-    transition={{ duration: DURATION.LOOP_SLOW, repeat: Infinity, ease: EASE_IN_OUT }}
+    transition={{
+      duration: DURATION.LOOP_SLOW,
+      repeat: Infinity,
+      ease: EASE_IN_OUT,
+    }}
   />
 ));
 LogoGlow.displayName = "LogoGlow";
@@ -136,13 +326,21 @@ const HeroHeading = memo(() => (
     }}
     initial={fadeInUpInitial}
     animate={fadeInUpAnimate}
-    transition={{ duration: DURATION.MEDIUM, delay: DELAY.MEDIUM, ease: EASE_EXPO }}
+    transition={{
+      duration: DURATION.MEDIUM,
+      delay: DELAY.MEDIUM,
+      ease: EASE_EXPO,
+    }}
   >
     <motion.span
       className="block"
       initial={fadeInUpInitial}
       animate={fadeInUpAnimate}
-      transition={{ duration: DURATION.MEDIUM, delay: DELAY.MEDIUM, ease: EASE_EXPO }}
+      transition={{
+        duration: DURATION.MEDIUM,
+        delay: DELAY.MEDIUM,
+        ease: EASE_EXPO,
+      }}
     >
       Revolutionizing Fitness
     </motion.span>
@@ -155,7 +353,11 @@ const HeroHeading = memo(() => (
       }}
       initial={fadeInUpInitial}
       animate={fadeInUpAnimate}
-      transition={{ duration: DURATION.MEDIUM, delay: DELAY.MEDIUM_LONG, ease: EASE_EXPO }}
+      transition={{
+        duration: DURATION.MEDIUM,
+        delay: DELAY.MEDIUM_LONG,
+        ease: EASE_EXPO,
+      }}
     >
       Access for Everyone
     </motion.span>
@@ -169,7 +371,11 @@ const HeroDescription = memo(() => (
     style={{ textShadow: "0 2px 10px rgba(0, 0, 0, 0.5)" }}
     initial={fadeInUpInitial}
     animate={fadeInUpAnimate}
-    transition={{ duration: DURATION.MEDIUM, delay: DELAY.LONG, ease: EASE_EXPO }}
+    transition={{
+      duration: DURATION.MEDIUM,
+      delay: DELAY.LONG,
+      ease: EASE_EXPO,
+    }}
   >
     The world's first pay-per-day fitness platform revolutionizing how people
     access gyms, yoga studios, wellness centers, swimming pools, and sports
@@ -185,7 +391,11 @@ const ShimmerEffect = memo(() => (
   <motion.span
     className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
     animate={{ x: ["-100%", "200%"] }}
-    transition={{ duration: DURATION.LOOP_MEDIUM, repeat: Infinity, ease: EASE_LINEAR }}
+    transition={{
+      duration: DURATION.LOOP_MEDIUM,
+      repeat: Infinity,
+      ease: EASE_LINEAR,
+    }}
   />
 ));
 ShimmerEffect.displayName = "ShimmerEffect";
@@ -224,7 +434,11 @@ const HeroCTAButtons = memo(() => (
     className="flex flex-col sm:flex-row gap-4 justify-center items-center"
     initial={fadeInUpInitial}
     animate={fadeInUpAnimate}
-    transition={{ duration: DURATION.MEDIUM, delay: DELAY.VERY_LONG, ease: EASE_EXPO }}
+    transition={{
+      duration: DURATION.MEDIUM,
+      delay: DELAY.VERY_LONG,
+      ease: EASE_EXPO,
+    }}
   >
     <PrimaryButton href="#apps">Explore Platform</PrimaryButton>
     <SecondaryButton href="#contact">Partner With Us</SecondaryButton>
@@ -351,19 +565,22 @@ export default function Hero() {
   }, [mouseX, mouseY]);
 
   return (
-    <section
-      id="home"
-      ref={containerRef}
-      className="relative min-h-screen flex flex-col lg:flex-row overflow-hidden bg-black"
-    >
-      <HeroLeftPanel
-        rotateX={rotateX}
-        rotateY={rotateY}
-        contentY={contentY}
-        leftRef={leftRef}
-      />
-      <HeroRightPanel />
-      <ScrollIndicator onClick={scrollToNext} />
-    </section>
+    <>
+      <GolfBall />
+      <section
+        id="home"
+        ref={containerRef}
+        className="relative min-h-screen flex flex-col lg:flex-row overflow-hidden bg-black"
+      >
+        <HeroLeftPanel
+          rotateX={rotateX}
+          rotateY={rotateY}
+          contentY={contentY}
+          leftRef={leftRef}
+        />
+        <HeroRightPanel />
+        <ScrollIndicator onClick={scrollToNext} />
+      </section>
+    </>
   );
 }
