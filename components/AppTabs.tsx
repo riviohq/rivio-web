@@ -3,15 +3,6 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef, useEffect, useState } from "react";
-import { 
-  DURATION, 
-  DELAY, 
-  EASE_EXPO, 
-  EASE_SMOOTH, 
-  EASE_IN_OUT, 
-  EASE_LINEAR,
-  TRANSITION_FADE_IN
-} from "@/animation-timing";
 import {
   Download,
   MapPin,
@@ -25,516 +16,401 @@ import {
   Settings,
   Building2,
   DollarSign,
+  Zap,
+  Users,
+  ArrowRight,
 } from "lucide-react";
 import Image from "next/image";
+
+// User App Steps
+const userSteps = [
+  {
+    icon: MapPin,
+    title: "Find",
+    subtitle: "Discover nearby venues",
+    description: "500+ gyms, studios, pools",
+    color: "emerald",
+  },
+  {
+    icon: Activity,
+    title: "Choose",
+    subtitle: "Pick your activity",
+    description: "Gym, Yoga, Swimming, Sports",
+    color: "blue",
+  },
+  {
+    icon: Star,
+    title: "Compare",
+    subtitle: "Check amenities",
+    description: "AC, WiFi, Parking, Showers",
+    color: "purple",
+  },
+  {
+    icon: QrCode,
+    title: "Scan",
+    subtitle: "Walk in & check-in",
+    description: "Quick QR entry",
+    color: "emerald",
+  },
+  {
+    icon: CreditCard,
+    title: "Pay",
+    subtitle: "Only for today",
+    description: "No contracts ever",
+    color: "blue",
+  },
+  {
+    icon: TrendingUp,
+    title: "Track",
+    subtitle: "Build your streak",
+    description: "Earn rewards",
+    color: "purple",
+  },
+];
+
+// Business App Steps
+const businessSteps = [
+  {
+    icon: Building2,
+    title: "Register",
+    subtitle: "Onboard your venue",
+    description: "Quick setup process",
+    color: "amber",
+  },
+  {
+    icon: QrCode,
+    title: "Generate",
+    subtitle: "Get QR codes",
+    description: "Unique codes per location",
+    color: "orange",
+  },
+  {
+    icon: Users,
+    title: "Welcome",
+    subtitle: "Real-time check-ins",
+    description: "Monitor live entries",
+    color: "amber",
+  },
+  {
+    icon: DollarSign,
+    title: "Earn",
+    subtitle: "Dual revenue streams",
+    description: "Maximize earnings",
+    color: "orange",
+  },
+  {
+    icon: BarChart3,
+    title: "Analyze",
+    subtitle: "Advanced analytics",
+    description: "Data-driven insights",
+    color: "amber",
+  },
+  {
+    icon: Settings,
+    title: "Manage",
+    subtitle: "Multi-location control",
+    description: "One dashboard",
+    color: "orange",
+  },
+];
+
+// Color configurations
+const colorConfig = {
+  emerald: { bg: "bg-emerald-500", light: "bg-emerald-50", text: "text-emerald-600", glow: "rgba(16, 185, 129, 0.3)" },
+  blue: { bg: "bg-blue-500", light: "bg-blue-50", text: "text-blue-600", glow: "rgba(59, 130, 246, 0.3)" },
+  purple: { bg: "bg-purple-500", light: "bg-purple-50", text: "text-purple-600", glow: "rgba(147, 51, 234, 0.3)" },
+  amber: { bg: "bg-amber-500", light: "bg-amber-50", text: "text-amber-600", glow: "rgba(245, 158, 11, 0.3)" },
+  orange: { bg: "bg-orange-500", light: "bg-orange-50", text: "text-orange-600", glow: "rgba(249, 115, 22, 0.3)" },
+};
+
+// Animated Journey Display Component
+const JourneyDisplay = ({ 
+  steps, 
+  currentStep, 
+  accentColor 
+}: { 
+  steps: typeof userSteps; 
+  currentStep: number;
+  accentColor: "emerald" | "amber";
+}) => {
+  const step = steps[currentStep];
+  const Icon = step.icon;
+  const colors = colorConfig[step.color as keyof typeof colorConfig];
+
+  return (
+    <div className="relative h-[320px] md:h-[380px] flex flex-col items-center justify-center">
+      {/* Floating background orbs */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <motion.div
+          className="absolute w-32 h-32 rounded-full opacity-20"
+          style={{
+            background: `radial-gradient(circle, ${accentColor === 'emerald' ? 'rgba(16, 185, 129, 0.4)' : 'rgba(245, 158, 11, 0.4)'} 0%, transparent 70%)`,
+            top: "10%",
+            right: "10%",
+          }}
+          animate={{ scale: [1, 1.3, 1], opacity: [0.2, 0.4, 0.2] }}
+          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.div
+          className="absolute w-24 h-24 rounded-full opacity-20"
+          style={{
+            background: `radial-gradient(circle, ${accentColor === 'emerald' ? 'rgba(59, 130, 246, 0.4)' : 'rgba(249, 115, 22, 0.4)'} 0%, transparent 70%)`,
+            bottom: "15%",
+            left: "15%",
+          }}
+          animate={{ scale: [1, 1.2, 1], opacity: [0.15, 0.3, 0.15] }}
+          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+        />
+      </div>
+
+      {/* Main Icon */}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={currentStep}
+          initial={{ scale: 0, rotate: -180 }}
+          animate={{ scale: 1, rotate: 0 }}
+          exit={{ scale: 0, rotate: 180 }}
+          transition={{ duration: 0.5, ease: [0.34, 1.56, 0.64, 1] }}
+          className={`${colors.bg} w-20 h-20 md:w-24 md:h-24 rounded-2xl flex items-center justify-center mb-6`}
+          style={{ boxShadow: `0 15px 40px ${colors.glow}` }}
+        >
+          <motion.div
+            animate={{ y: [0, -4, 0] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <Icon className="w-10 h-10 md:w-12 md:h-12 text-white" />
+          </motion.div>
+        </motion.div>
+      </AnimatePresence>
+
+      {/* Text Content */}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={currentStep}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+          transition={{ duration: 0.4 }}
+          className="text-center"
+        >
+          <h3 className="text-3xl md:text-4xl font-bold text-[#1d1d1f] mb-2 tracking-[-0.02em]">
+            {step.title}
+          </h3>
+          <p className={`text-base md:text-lg font-medium ${colors.text} mb-1`}>
+            {step.subtitle}
+          </p>
+          <p className="text-sm text-[#86868b]">
+            {step.description}
+          </p>
+        </motion.div>
+      </AnimatePresence>
+
+      {/* Step Indicators */}
+      <div className="flex items-center gap-2 mt-8">
+        {steps.map((s, index) => {
+          const stepColors = colorConfig[s.color as keyof typeof colorConfig];
+          return (
+            <motion.div
+              key={index}
+              className={`rounded-full transition-all duration-300 ${
+                index === currentStep ? `w-6 h-2 ${stepColors.bg}` : 'w-2 h-2 bg-gray-300'
+              }`}
+            />
+          );
+        })}
+      </div>
+
+      {/* Bottom Step Flow */}
+      <div className="flex items-center gap-1 mt-6">
+        {steps.map((s, index) => {
+          const StepIcon = s.icon;
+          const isActive = index === currentStep;
+          const isPast = index < currentStep;
+          const stepColors = colorConfig[s.color as keyof typeof colorConfig];
+          
+          return (
+            <div key={index} className="flex items-center">
+              <motion.div
+                className={`w-8 h-8 rounded-lg flex items-center justify-center transition-all duration-300 ${
+                  isActive ? stepColors.bg : isPast ? stepColors.light : 'bg-gray-100'
+                }`}
+                animate={isActive ? { scale: [1, 1.1, 1] } : {}}
+                transition={{ duration: 1, repeat: Infinity }}
+              >
+                <StepIcon className={`w-4 h-4 ${isActive ? 'text-white' : isPast ? stepColors.text : 'text-gray-400'}`} />
+              </motion.div>
+              {index < steps.length - 1 && (
+                <ArrowRight className={`w-3 h-3 mx-0.5 ${isPast ? stepColors.text : 'text-gray-300'}`} />
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+};
 
 export default function AppTabs() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "0px" });
 
-  const userSteps = [
-    {
-      icon: MapPin,
-      text: "Discover Nearby Venues",
-      description: "Find gyms within 100m radius",
-    },
-    {
-      icon: Activity,
-      text: "Select Activity & Venue",
-      description: "Choose your preferred workout",
-    },
-    {
-      icon: QrCode,
-      text: "Scan QR Code & Check-In",
-      description: "Instant access, no waiting",
-    },
-    {
-      icon: Star,
-      text: "Select Amenities & Start",
-      description: "Customize your experience",
-    },
-    {
-      icon: TrendingUp,
-      text: "Build Streaks & Achievements",
-      description: "Track your fitness journey",
-    },
-    {
-      icon: CreditCard,
-      text: "Flexible Payment & Access",
-      description: "Pay only for days you use",
-    },
-  ];
-
-  const partnerSteps = [
-    {
-      icon: Building2,
-      text: "Onboard Your Venue",
-      description: "Register your fitness business",
-    },
-    {
-      icon: QrCode,
-      text: "Generate QR Codes",
-      description: "Get unique codes for each location",
-    },
-    {
-      icon: CheckCircle,
-      text: "Real-Time Check-Ins",
-      description: "Monitor live customer entries",
-    },
-    {
-      icon: DollarSign,
-      text: "Dual Revenue Streams",
-      description: "Maximize earnings potential",
-    },
-    {
-      icon: BarChart3,
-      text: "Advanced Analytics",
-      description: "Data-driven business insights",
-    },
-    {
-      icon: Settings,
-      text: "Multi-Location Management",
-      description: "Manage all venues from one platform",
-    },
-  ];
-
   const [userStep, setUserStep] = useState(0);
-  const [partnerStep, setPartnerStep] = useState(0);
+  const [businessStep, setBusinessStep] = useState(0);
 
   useEffect(() => {
     if (!isInView) return;
 
     const userInterval = setInterval(() => {
       setUserStep((prev) => (prev + 1) % userSteps.length);
-    }, 3000);
+    }, 3500);
 
-    const partnerInterval = setInterval(() => {
-      setPartnerStep((prev) => (prev + 1) % partnerSteps.length);
-    }, 3200);
+    const businessInterval = setInterval(() => {
+      setBusinessStep((prev) => (prev + 1) % businessSteps.length);
+    }, 3800);
 
     return () => {
       clearInterval(userInterval);
-      clearInterval(partnerInterval);
+      clearInterval(businessInterval);
     };
-  }, [isInView, userSteps.length, partnerSteps.length]);
+  }, [isInView]);
 
   return (
     <section
       id="apps"
       ref={ref}
-      className="py-8 md:py-12 bg-black relative overflow-hidden"
+      className="py-20 md:py-32 relative overflow-hidden bg-white"
     >
-      {/* Enhanced floating background with gradient layers */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(4)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute rounded-full blur-3xl opacity-6 gpu-accelerated"
-            style={{
-              width: `${600 + i * 120}px`,
-              height: `${600 + i * 120}px`,
-              background: i % 2 === 0 ? "#10b981" : "#d4af37",
-              left: `${i * 25}%`,
-              top: `${i * 20}%`,
-              willChange: "transform",
-            }}
-            animate={{
-              x: [0, 80, -40, 0],
-              y: [0, 60, -30, 0],
-              scale: [1, 1.3, 0.95, 1],
-            }}
-            transition={{
-              duration: 20 + i * 4,
-              repeat: Infinity,
-              ease: [0.4, 0, 0.6, 1],
-              delay: i * 1.5,
-            }}
-          />
-        ))}
-      </div>
-      
-      {/* Grid pattern overlay */}
-      <div
-        className="absolute inset-0 opacity-5"
-        style={{
-          backgroundImage:
-            "linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)",
-          backgroundSize: "50px 50px",
-        }}
-      />
-
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={TRANSITION_FADE_IN}
-          className="text-center mb-6 md:mb-8 gpu-accelerated"
-          style={{ willChange: "transform, opacity" }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-12 md:mb-16"
         >
-            <motion.h2 
-            className="text-3xl md:text-5xl lg:text-7xl font-bold text-white mb-3 md:mb-6 gpu-accelerated"
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={isInView ? { opacity: 1, scale: 1 } : {}}
-            transition={{ duration: DURATION.MEDIUM, delay: DELAY.VERY_SHORT, ease: EASE_EXPO }}
-            style={{ willChange: "transform, opacity" }}
-          >
-            Explore Our{" "}
-            <span className="bg-gradient-to-r from-emerald-400 to-amber-400 bg-clip-text text-transparent">
-              Apps
-            </span>
-          </motion.h2>
-          <p className="text-base md:text-xl lg:text-2xl text-gray-200 font-medium">
-            Two powerful platforms. One unified ecosystem.
+          <span className="inline-block text-sm font-medium text-emerald-600 uppercase tracking-wider bg-emerald-50 px-4 py-2 rounded-full mb-4">
+            Our Apps
+          </span>
+          <h2 className="text-3xl md:text-5xl lg:text-6xl font-semibold text-[#1d1d1f] mb-4 tracking-[-0.02em]">
+            Two Apps. One Ecosystem.
+          </h2>
+          <p className="text-lg md:text-xl text-[#86868b] max-w-2xl mx-auto">
+            Designed for fitness enthusiasts and business owners alike.
           </p>
         </motion.div>
 
-        {/* Both Apps Side by Side with Animations */}
-        <div className="grid lg:grid-cols-2 gap-4 md:gap-6 lg:gap-8">
-          {/* User App Animation */}
+        {/* Both Apps Side by Side */}
+        <div className="grid lg:grid-cols-2 gap-6 md:gap-8">
+          {/* User App */}
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
+            initial={{ opacity: 0, x: -30 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: DURATION.MEDIUM, delay: DELAY.SHORT }}
-            className="relative h-full"
+            transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <div className="bg-gradient-to-br from-gray-900/95 via-black/95 to-gray-900/95 rounded-2xl md:rounded-3xl shadow-2xl p-4 md:p-6 lg:p-8 border-2 border-emerald-500/30 backdrop-blur-xl overflow-hidden h-full flex flex-col">
+            <div className="bg-[#f5f5f7] rounded-3xl p-6 md:p-8 lg:p-10 h-full">
               {/* Header */}
-              <div className="flex items-center gap-2 md:gap-3 mb-3 md:mb-6">
-              <Image
-                src="/logos/rivio-user-light.png"
-                alt="RIVIO User App Logo"
-                width={64}
-                height={64}
-                  className="w-12 h-12 md:w-16 md:h-16"
-              />
-              <div>
-                  <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-white">
-                    RIVIO User App
+              <div className="flex items-center gap-3 mb-6">
+                <Image
+                  src="https://rivio-glimps.s3.ap-south-1.amazonaws.com/rivio.png"
+                  alt="RIVIO User App Logo"
+                  width={56}
+                  height={56}
+                  className="w-12 h-12 md:w-14 md:h-14"
+                />
+                <div>
+                  <h3 className="text-xl md:text-2xl font-semibold text-[#1d1d1f]">
+                    RIVIO User
                   </h3>
-                  <p className="text-emerald-400 font-medium text-sm md:text-base">
-                    Your Fitness Journey, Your Way
+                  <p className="text-emerald-500 font-medium text-sm">
+                    For Fitness Enthusiasts
                   </p>
                 </div>
               </div>
 
-              {/* Animated Phone Mockup */}
-              <div className="relative h-[400px] md:h-[480px] flex items-center justify-center">
-                <motion.div
-                  className="relative w-56 h-[380px] md:w-64 md:h-[460px] bg-gray-900 rounded-[2rem] md:rounded-[3rem] p-3 md:p-4 shadow-2xl border-2 md:border-4 border-emerald-500/50"
-                  animate={{
-                    y: [0, -10, 0],
-                  }}
-                  transition={{
-                    duration: DURATION.LOOP_SLOW,
-                    repeat: Infinity,
-                    ease: EASE_IN_OUT,
-                  }}
-                  style={{
-                    boxShadow:
-                      "0 20px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(16, 185, 129, 0.4)",
-                  }}
-                >
-                  {/* Phone Screen */}
-                  <div className="w-full h-full bg-black rounded-[2rem] overflow-hidden relative">
-                    {/* Status Bar */}
-                    <div className="absolute top-0 left-0 right-0 h-12 bg-gray-900 flex items-center justify-between px-6 z-10">
-                      <div className="text-white text-xs font-semibold">
-                        9:41
-                      </div>
-                      <div className="flex gap-1">
-                        <div className="w-1 h-1 bg-white rounded-full" />
-                        <div className="w-1 h-1 bg-white rounded-full" />
-                        <div className="w-1 h-1 bg-white rounded-full" />
-                      </div>
-                    </div>
-
-                    {/* App Content */}
-                    <div className="pt-12 h-full flex flex-col items-center justify-center gap-4 px-6">
-                      <AnimatePresence mode="wait">
-                        <motion.div
-                          key={userStep}
-                          initial={{ opacity: 0, scale: 0.8, y: 50 }}
-                          animate={{ opacity: 1, scale: 1, y: 0 }}
-                          exit={{ opacity: 0, scale: 0.8, y: -50 }}
-                          transition={{ duration: DURATION.MEDIUM, ease: EASE_IN_OUT }}
-                          className="flex flex-col items-center gap-4 w-full"
-                        >
-                          {/* Icon */}
-                          <motion.div
-                            className="w-32 h-32 md:w-40 md:h-40 rounded-3xl flex items-center justify-center bg-emerald-500/30 border-4 border-emerald-400/60 shadow-2xl"
-                            animate={{
-                              scale: [1, 1.1, 1],
-                              rotate: [0, 5, -5, 0],
-                            }}
-                            transition={{
-                              duration: DURATION.LOOP_FAST,
-                              repeat: Infinity,
-                              ease: EASE_IN_OUT,
-                            }}
-                            style={{
-                              boxShadow:
-                                "0 0 40px rgba(16, 185, 129, 0.6), 0 0 80px rgba(16, 185, 129, 0.3)",
-                            }}
-                          >
-                            <motion.div
-                              animate={{ rotate: [0, 360] }}
-                              transition={{
-                                duration: DURATION.LOOP_SLOW,
-                                repeat: Infinity,
-                                ease: EASE_LINEAR,
-                              }}
-                            >
-                              {(() => {
-                                const IconComponent = userSteps[userStep].icon;
-                                return (
-                                  <IconComponent
-                                    className="w-16 h-16 md:w-20 md:h-20 text-emerald-300"
-                                    style={{
-                                      filter:
-                                        "drop-shadow(0 0 10px currentColor)",
-                                    }}
-                                  />
-                                );
-                              })()}
-                            </motion.div>
-                          </motion.div>
-
-                          {/* Text */}
-                          <div className="text-center">
-                            <h3
-                              className="text-2xl md:text-3xl font-bold mb-2 text-emerald-300"
-                              style={{
-                                textShadow:
-                                  "0 0 20px currentColor, 0 0 40px currentColor",
-                              }}
-                            >
-                              {userSteps[userStep].text}
-                            </h3>
-                            <p className="text-gray-300 text-sm md:text-base font-medium">
-                              {userSteps[userStep].description}
-                            </p>
-                          </div>
-
-                          {/* Progress Indicators */}
-                          <div className="flex gap-2 mt-4">
-                            {userSteps.map((_, index) => {
-                              const isActive = index === userStep;
-                              return (
-                                <motion.div
-                                  key={index}
-                                  className={`h-2 rounded-full ${
-                                    isActive ? "bg-emerald-400" : "bg-gray-700"
-                                  }`}
-                                  animate={{
-                                    width: isActive ? 32 : 8,
-                                  }}
-                                  transition={{ duration: DURATION.FAST }}
-                                />
-                              );
-                            })}
-                          </div>
-                        </motion.div>
-                      </AnimatePresence>
-                    </div>
-                  </div>
-                </motion.div>
-            </div>
+              {/* Animated Journey */}
+              <JourneyDisplay 
+                steps={userSteps} 
+                currentStep={userStep}
+                accentColor="emerald"
+              />
 
               {/* Download Buttons */}
-              <div className="flex flex-col sm:flex-row gap-3 md:gap-4 mt-3 md:mt-6">
-              <motion.a
-                href="#"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                  className="flex items-center justify-center gap-2 px-4 md:px-6 py-2 md:py-3 bg-emerald-500 text-white rounded-full font-semibold hover:bg-emerald-600 transition-colors text-sm md:text-base"
-              >
-                  <Download className="w-4 h-4 md:w-5 md:h-5" />
-                Download for iOS
-              </motion.a>
-              <motion.a
-                href="#"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                  className="flex items-center justify-center gap-2 px-4 md:px-6 py-2 md:py-3 bg-black text-white rounded-full font-semibold hover:bg-gray-800 transition-colors border border-gray-700 text-sm md:text-base"
-              >
-                  <Download className="w-4 h-4 md:w-5 md:h-5" />
-                Download for Android
-              </motion.a>
+              <div className="flex flex-col sm:flex-row gap-3 mt-6">
+                <motion.a
+                  href="#"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="flex items-center justify-center gap-2 px-6 py-3 bg-[#1d1d1f] text-white rounded-full font-medium text-sm hover:bg-black transition-all"
+                >
+                  <Download className="w-4 h-4" />
+                  App Store
+                </motion.a>
+                <motion.a
+                  href="#"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="flex items-center justify-center gap-2 px-6 py-3 bg-white text-[#1d1d1f] rounded-full font-medium text-sm hover:bg-gray-50 transition-all border border-gray-200"
+                >
+                  <Download className="w-4 h-4" />
+                  Google Play
+                </motion.a>
               </div>
             </div>
           </motion.div>
 
-          {/* Partner App Animation */}
+          {/* Business App */}
           <motion.div
-            initial={{ opacity: 0, x: 20 }}
+            initial={{ opacity: 0, x: 30 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: DURATION.MEDIUM, delay: DELAY.MEDIUM_SHORT }}
-            className="relative h-full"
+            transition={{ duration: 0.6, delay: 0.3 }}
           >
-            <div className="bg-gradient-to-br from-gray-900/95 via-black/95 to-gray-900/95 rounded-2xl md:rounded-3xl shadow-2xl p-4 md:p-6 lg:p-8 border-2 border-amber-500/30 backdrop-blur-xl overflow-hidden h-full flex flex-col">
+            <div className="bg-[#f5f5f7] rounded-3xl p-6 md:p-8 lg:p-10 h-full">
               {/* Header */}
-              <div className="flex items-center gap-2 md:gap-3 mb-3 md:mb-6">
-              <Image
-                src="/logos/rivio-partner-gold-lighttext.png"
-                alt="RIVIO Partners Logo"
-                width={64}
-                height={64}
-                  className="w-12 h-12 md:w-16 md:h-16"
-              />
-              <div>
-                  <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-white">
-                    RIVIO Partners
+              <div className="flex items-center gap-3 mb-6">
+                <Image
+                  src="https://rivio-glimps.s3.ap-south-1.amazonaws.com/rivio_business.png"
+                  alt="RIVIO Business Logo"
+                  width={56}
+                  height={56}
+                  className="w-12 h-12 md:w-14 md:h-14"
+                />
+                <div>
+                  <h3 className="text-xl md:text-2xl font-semibold text-[#1d1d1f]">
+                    RIVIO Business
                   </h3>
-                  <p className="text-amber-400 font-medium text-sm md:text-base">
-                    Grow Your Fitness Business
+                  <p className="text-amber-500 font-medium text-sm">
+                    For Fitness Businesses
                   </p>
                 </div>
               </div>
 
-              {/* Animated Phone Mockup */}
-              <div className="relative h-[400px] md:h-[480px] flex items-center justify-center">
-                <motion.div
-                  className="relative w-56 h-[380px] md:w-64 md:h-[460px] bg-gray-900 rounded-[2rem] md:rounded-[3rem] p-3 md:p-4 shadow-2xl border-2 md:border-4 border-amber-500/50"
-                  animate={{
-                    y: [0, -10, 0],
-                  }}
-                  transition={{
-                    duration: DURATION.LOOP_SLOW,
-                    repeat: Infinity,
-                    ease: EASE_IN_OUT,
-                  }}
-                  style={{
-                    boxShadow:
-                      "0 20px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(212, 175, 55, 0.4)",
-                  }}
-                >
-                  {/* Phone Screen */}
-                  <div className="w-full h-full bg-black rounded-[2rem] overflow-hidden relative">
-                    {/* Status Bar */}
-                    <div className="absolute top-0 left-0 right-0 h-12 bg-gray-900 flex items-center justify-between px-6 z-10">
-                      <div className="text-white text-xs font-semibold">
-                        9:41
-                      </div>
-                      <div className="flex gap-1">
-                        <div className="w-1 h-1 bg-white rounded-full" />
-                        <div className="w-1 h-1 bg-white rounded-full" />
-                        <div className="w-1 h-1 bg-white rounded-full" />
-                      </div>
-                    </div>
-
-                    {/* App Content */}
-                    <div className="pt-12 h-full flex flex-col items-center justify-center gap-4 px-6">
-                      <AnimatePresence mode="wait">
-                        <motion.div
-                          key={partnerStep}
-                          initial={{ opacity: 0, scale: 0.8, y: 50 }}
-                          animate={{ opacity: 1, scale: 1, y: 0 }}
-                          exit={{ opacity: 0, scale: 0.8, y: -50 }}
-                          transition={{ duration: DURATION.MEDIUM, ease: EASE_IN_OUT }}
-                          className="flex flex-col items-center gap-4 w-full"
-                        >
-                          {/* Icon */}
-                          <motion.div
-                            className="w-32 h-32 md:w-40 md:h-40 rounded-3xl flex items-center justify-center bg-amber-500/30 border-4 border-amber-400/60 shadow-2xl"
-                            animate={{
-                              scale: [1, 1.1, 1],
-                              rotate: [0, 5, -5, 0],
-                            }}
-                            transition={{
-                              duration: DURATION.LOOP_FAST,
-                              repeat: Infinity,
-                              ease: EASE_IN_OUT,
-                            }}
-                            style={{
-                              boxShadow:
-                                "0 0 40px rgba(212, 175, 55, 0.6), 0 0 80px rgba(212, 175, 55, 0.3)",
-                            }}
-                          >
-                            <motion.div
-                              animate={{ rotate: [0, 360] }}
-                              transition={{
-                                duration: DURATION.LOOP_SLOW,
-                                repeat: Infinity,
-                                ease: EASE_LINEAR,
-                              }}
-                            >
-                              {(() => {
-                                const IconComponent =
-                                  partnerSteps[partnerStep].icon;
-                                return (
-                                  <IconComponent
-                                    className="w-16 h-16 md:w-20 md:h-20 text-amber-300"
-                                    style={{
-                                      filter:
-                                        "drop-shadow(0 0 10px currentColor)",
-                                    }}
-                                  />
-                                );
-                              })()}
-                            </motion.div>
-                          </motion.div>
-
-                          {/* Text */}
-                          <div className="text-center">
-                            <h3
-                              className="text-2xl md:text-3xl font-bold mb-2 text-amber-300"
-                              style={{
-                                textShadow:
-                                  "0 0 20px currentColor, 0 0 40px currentColor",
-                              }}
-                            >
-                              {partnerSteps[partnerStep].text}
-                            </h3>
-                            <p className="text-gray-300 text-sm md:text-base font-medium">
-                              {partnerSteps[partnerStep].description}
-                            </p>
-                          </div>
-
-                          {/* Progress Indicators */}
-                          <div className="flex gap-2 mt-4">
-                            {partnerSteps.map((_, index) => {
-                              const isActive = index === partnerStep;
-                              return (
-                                <motion.div
-                                  key={index}
-                                  className={`h-2 rounded-full ${
-                                    isActive ? "bg-amber-400" : "bg-gray-700"
-                                  }`}
-                                  animate={{
-                                    width: isActive ? 32 : 8,
-                                  }}
-                                  transition={{ duration: DURATION.FAST }}
-                                />
-                              );
-                            })}
-                          </div>
-                        </motion.div>
-                      </AnimatePresence>
-                    </div>
-                  </div>
-                </motion.div>
-            </div>
+              {/* Animated Journey */}
+              <JourneyDisplay 
+                steps={businessSteps} 
+                currentStep={businessStep}
+                accentColor="amber"
+              />
 
               {/* Download Buttons */}
-              <div className="flex flex-col sm:flex-row gap-3 md:gap-4 mt-3 md:mt-6">
-              <motion.a
-                href="#"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                  className="flex items-center justify-center gap-2 px-4 md:px-6 py-2 md:py-3 bg-amber-500 text-white rounded-full font-semibold hover:bg-amber-600 transition-colors text-sm md:text-base"
-              >
-                  <Download className="w-4 h-4 md:w-5 md:h-5" />
-                Download for iOS
-              </motion.a>
-              <motion.a
-                href="#"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                  className="flex items-center justify-center gap-2 px-4 md:px-6 py-2 md:py-3 bg-black text-white rounded-full font-semibold hover:bg-gray-800 transition-colors border border-gray-700 text-sm md:text-base"
-              >
-                  <Download className="w-4 h-4 md:w-5 md:h-5" />
-                Download for Android
-              </motion.a>
+              <div className="flex flex-col sm:flex-row gap-3 mt-6">
+                <motion.a
+                  href="#"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="flex items-center justify-center gap-2 px-6 py-3 bg-[#1d1d1f] text-white rounded-full font-medium text-sm hover:bg-black transition-all"
+                >
+                  <Download className="w-4 h-4" />
+                  App Store
+                </motion.a>
+                <motion.a
+                  href="#"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="flex items-center justify-center gap-2 px-6 py-3 bg-white text-[#1d1d1f] rounded-full font-medium text-sm hover:bg-gray-50 transition-all border border-gray-200"
+                >
+                  <Download className="w-4 h-4" />
+                  Google Play
+                </motion.a>
               </div>
             </div>
           </motion.div>

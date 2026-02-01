@@ -1,91 +1,144 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Lightbulb } from "lucide-react";
+import { 
+  MapPin, 
+  Calendar, 
+  Layers, 
+  Lightbulb,
+  TrendingDown,
+  Building2,
+  Users
+} from "lucide-react";
 import { 
   DURATION, 
-  EASE_EXPO, 
-  EASE_IN_OUT, 
-  EASE_LINEAR,
+  EASE_EXPO,
   PROBLEM_DELAY,
-  TRANSITION_ORB,
-  TRANSITION_ROTATE
 } from "@/animation-timing";
 
 interface ProblemStatementProps {
   isInView: boolean;
 }
 
-const PARTICLES_CONFIG = Array.from({ length: 20 }, (_, i) => ({
-  id: `particle-${i}`,
-  left: `${(i * 5) % 100}%`,
-  top: `${(i * 7) % 100}%`,
-  duration: 4 + i * 0.2,
-  delay: i * 0.15,
-}));
-
-const STATISTICS = [
+const PAIN_POINTS = [
   {
-    value: "67%",
-    description:
-      "of gym memberships go completely unused, representing billions in wasted consumer spending annually",
-    variant: "emerald" as const,
-    delay: PROBLEM_DELAY.STAT_1,
+    icon: MapPin,
+    title: "Moved to a New City?",
+    description: "Your old gym membership is now worthless. Hesitant to commit to another annual fee in a new place? You're not alone.",
+    color: "emerald",
   },
   {
-    value: "$50B+",
-    description:
-      "wasted globally each year on unused fitness memberships and underutilized facilities",
-    variant: "gold" as const,
-    delay: PROBLEM_DELAY.STAT_2,
+    icon: Layers,
+    title: "Want Variety?",
+    description: "Gym today, swimming tomorrow, yoga on weekends, and maybe some zumba? Why buy multiple memberships when you can pay per visit?",
+    color: "blue",
   },
   {
-    value: "45%",
-    description:
-      "average facility utilization rate, leaving massive revenue potential untapped",
-    variant: "emerald" as const,
-    delay: PROBLEM_DELAY.STAT_3,
+    icon: Calendar,
+    title: "Weekend Warrior?",
+    description: "Busy professionals who only work out on weekends still pay full monthly fees. That's 20+ unused days every month.",
+    color: "purple",
   },
 ];
 
-const StatCard = ({
-  stat,
+const STATISTICS = [
+  {
+    icon: TrendingDown,
+    value: "80%",
+    label: "Drop-off Rate",
+    description: "Members quit within 5 months",
+    source: "IHRSA Research",
+  },
+  {
+    icon: Building2,
+    value: "30-40%",
+    label: "Off-Peak Usage",
+    description: "Gym capacity wasted daily",
+    source: "Industry Average",
+  },
+  {
+    icon: Users,
+    value: "0.5%",
+    label: "Gym Penetration",
+    description: "Indians with memberships",
+    source: "vs 20%+ globally",
+  },
+];
+
+const PainPointCard = ({
+  point,
+  index,
   isInView,
-}: Readonly<{
-  stat: (typeof STATISTICS)[0];
+}: {
+  point: typeof PAIN_POINTS[0];
+  index: number;
   isInView: boolean;
-}>) => {
-  const isGold = stat.variant === "gold";
+}) => {
+  const Icon = point.icon;
+  const colorClasses = {
+    emerald: "bg-emerald-50 text-emerald-600 border-emerald-100",
+    blue: "bg-blue-50 text-blue-600 border-blue-100",
+    purple: "bg-purple-50 text-purple-600 border-purple-100",
+  };
+  const iconBgClasses = {
+    emerald: "bg-emerald-500",
+    blue: "bg-blue-500",
+    purple: "bg-purple-500",
+  };
+
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 30 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: DURATION.NORMAL, delay: stat.delay }}
-      whileHover={{ scale: 1.05, y: -5 }}
-      className={`backdrop-blur-xl rounded-xl md:rounded-2xl p-3 md:p-5 lg:p-6 border-2 transition-all shadow-xl relative overflow-hidden group ${
-        isGold
-          ? "bg-gradient-to-br from-gold-600/30 via-gold-700/20 to-gold-800/30 border-gold-400/40 hover:border-gold-300/60 shadow-gold-500/20"
-          : "bg-gradient-to-br from-emerald-600/30 via-emerald-700/20 to-emerald-800/30 border-emerald-400/40 hover:border-emerald-300/60 shadow-emerald-500/20"
-      }`}
+      transition={{ duration: 0.6, delay: 0.2 + index * 0.15 }}
+      whileHover={{ y: -5 }}
+      className={`${colorClasses[point.color as keyof typeof colorClasses]} rounded-2xl p-6 md:p-8 border transition-all duration-300 hover:shadow-lg`}
     >
-      <div
-        className={`absolute inset-0 bg-gradient-to-br to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${
-          isGold ? "from-gold-500/10" : "from-emerald-500/10"
-        }`}
-      />
-      <div className="relative z-10">
-        <div
-          className={`text-2xl md:text-4xl lg:text-6xl font-extrabold bg-clip-text text-transparent mb-2 md:mb-3 ${
-            isGold
-              ? "bg-gradient-to-r from-gold-300 to-gold-100"
-              : "bg-gradient-to-r from-emerald-300 to-emerald-100"
-          }`}
-        >
-          {stat.value}
-        </div>
-        <div className="text-xs md:text-sm lg:text-base text-white/95 leading-relaxed font-medium">
-          {stat.description}
-        </div>
+      <div className={`${iconBgClasses[point.color as keyof typeof iconBgClasses]} w-12 h-12 rounded-xl flex items-center justify-center mb-4`}>
+        <Icon className="w-6 h-6 text-white" />
+      </div>
+      <h4 className="text-lg md:text-xl font-semibold text-[#1d1d1f] mb-2">
+        {point.title}
+      </h4>
+      <p className="text-sm md:text-base text-[#86868b] leading-relaxed">
+        {point.description}
+      </p>
+    </motion.div>
+  );
+};
+
+const StatCard = ({
+  stat,
+  index,
+  isInView,
+}: {
+  stat: typeof STATISTICS[0];
+  index: number;
+  isInView: boolean;
+}) => {
+  const Icon = stat.icon;
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={isInView ? { opacity: 1, scale: 1 } : {}}
+      transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
+      className="text-center"
+    >
+      <div className="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center mx-auto mb-3">
+        <Icon className="w-7 h-7 text-white" />
+      </div>
+      <div className="text-3xl md:text-4xl font-bold text-white mb-1">
+        {stat.value}
+      </div>
+      <div className="text-sm font-medium text-white/90 mb-1">
+        {stat.label}
+      </div>
+      <div className="text-xs text-white/70">
+        {stat.description}
+      </div>
+      <div className="text-[10px] text-white/50 mt-1 uppercase tracking-wider">
+        {stat.source}
       </div>
     </motion.div>
   );
@@ -97,251 +150,228 @@ export const ProblemStatement = ({ isInView }: ProblemStatementProps) => {
       initial={{ opacity: 0, y: 20 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: DURATION.MEDIUM, delay: PROBLEM_DELAY.SECTION_START, ease: EASE_EXPO }}
-      className="mt-10 md:mt-20 relative"
+      className="mt-16 md:mt-24"
     >
-      {/* Enhanced Background with Multiple Gradient Layers */}
-      <div className="absolute inset-0 bg-gradient-to-br from-emerald-600/90 via-emerald-700/90 to-emerald-800/90 rounded-3xl blur-2xl" />
-      <div className="absolute inset-0 bg-gradient-to-tr from-gold-600/20 via-transparent to-emerald-600/20 rounded-3xl blur-xl" />
-      <div className="relative bg-gradient-to-br from-emerald-600/95 via-emerald-700/95 to-emerald-800/95 rounded-2xl md:rounded-3xl p-4 md:p-10 lg:p-16 text-white border-2 border-emerald-400/50 backdrop-blur-xl overflow-hidden gpu-accelerated shadow-2xl shadow-emerald-500/30">
-        {/* Animated background pattern - Enhanced */}
-        <div className="absolute inset-0 opacity-25">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.2),transparent_50%)]" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_80%,rgba(255,255,255,0.15),transparent_50%)]" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.1),transparent_70%)]" />
-        </div>
+      {/* Section Header */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={isInView ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.6, delay: 0.1 }}
+        className="text-center mb-12 md:mb-16"
+      >
+        <span className="inline-block text-sm font-medium text-emerald-600 uppercase tracking-wider bg-emerald-50 px-4 py-2 rounded-full mb-4">
+          The Problem
+        </span>
+        <h3 className="text-3xl md:text-5xl lg:text-6xl font-semibold text-[#1d1d1f] tracking-[-0.02em] mb-4">
+          Sound Familiar?
+        </h3>
+        <p className="text-lg md:text-xl text-[#86868b] max-w-2xl mx-auto">
+          Traditional gym memberships don&apos;t fit modern lifestyles. Here&apos;s why millions feel stuck.
+        </p>
+      </motion.div>
 
-        {/* Animated gradient orbs */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <motion.div
-            className="absolute w-96 h-96 bg-emerald-500/20 rounded-full blur-3xl"
-            style={{ left: "-10%", top: "-10%" }}
-            animate={{
-              scale: [1, 1.2, 1],
-              opacity: [0.3, 0.5, 0.3],
-              x: [0, 50, 0],
-              y: [0, 30, 0],
-            }}
-            transition={TRANSITION_ORB}
+      {/* Pain Point Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-12 md:mb-16">
+        {PAIN_POINTS.map((point, index) => (
+          <PainPointCard 
+            key={point.title} 
+            point={point} 
+            index={index} 
+            isInView={isInView} 
           />
-          <motion.div
-            className="absolute w-96 h-96 bg-gold-500/15 rounded-full blur-3xl"
-            style={{ right: "-10%", bottom: "-10%" }}
-            animate={{
-              scale: [1, 1.3, 1],
-              opacity: [0.2, 0.4, 0.2],
-              x: [0, -40, 0],
-              y: [0, -20, 0],
-            }}
-            transition={{
-              duration: DURATION.LOOP_ORB + 2,
-              repeat: Infinity,
-              ease: EASE_IN_OUT,
-              delay: 1,
-            }}
-          />
-        </div>
+        ))}
+      </div>
 
-        {/* Floating particles - Enhanced */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          {PARTICLES_CONFIG.map((particle) => (
-            <motion.div
-              key={particle.id}
-              className="absolute w-1.5 h-1.5 bg-white/40 rounded-full"
-              style={{
-                left: particle.left,
-                top: particle.top,
-              }}
-              animate={{
-                y: [0, -30, 0],
-                opacity: [0.2, 0.8, 0.2],
-                scale: [1, 2, 1],
-              }}
-              transition={{
-                duration: particle.duration,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: particle.delay,
-              }}
-            />
-          ))}
+      {/* Statistics Banner */}
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={isInView ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.6, delay: 0.5 }}
+        className="relative bg-gradient-to-r from-emerald-500 to-emerald-600 rounded-3xl p-8 md:p-12 overflow-hidden"
+      >
+        {/* Subtle pattern */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.4),transparent_50%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(255,255,255,0.3),transparent_50%)]" />
         </div>
-
-        {/* Grid pattern overlay */}
-        <div
-          className="absolute inset-0 opacity-5"
-          style={{
-            backgroundImage:
-              "linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)",
-            backgroundSize: "50px 50px",
-          }}
-        />
 
         <div className="relative z-10">
-          {/* Main Heading - Enhanced */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={isInView ? { opacity: 1, scale: 1 } : {}}
-            transition={{ duration: DURATION.MEDIUM, delay: PROBLEM_DELAY.HEADING }}
-            className="mb-4 md:mb-6 text-center"
-          >
-            <motion.div
-              initial={{ opacity: 0, y: -20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: DURATION.MEDIUM, delay: PROBLEM_DELAY.BADGE }}
-              className="inline-block mb-4"
-            >
-              <span className="text-sm md:text-base font-semibold text-emerald-300 uppercase tracking-wider bg-emerald-500/20 px-4 py-2 rounded-full border border-emerald-400/30">
-                Industry Analysis
-              </span>
-            </motion.div>
-            <h3 className="text-2xl md:text-5xl lg:text-7xl font-extrabold mb-3 md:mb-6 leading-tight">
-              The{" "}
-              <span className="bg-gradient-to-r from-emerald-300 via-gold-300 to-emerald-300 bg-clip-text text-transparent animate-gradient">
-                $50 Billion
-              </span>{" "}
-              Problem
-              <br />
-              <span className="text-emerald-200">We&apos;re Solving</span>
-            </h3>
-            <motion.div
-              initial={{ width: 0 }}
-              animate={isInView ? { width: "120px" } : {}}
-              transition={{ duration: DURATION.SLOW, delay: PROBLEM_DELAY.DIVIDER }}
-              className="h-1.5 bg-gradient-to-r from-emerald-400 via-gold-400 to-emerald-400 rounded-full mx-auto shadow-lg shadow-emerald-500/50"
-            />
-          </motion.div>
+          <div className="text-center mb-8">
+            <h4 className="text-xl md:text-2xl font-semibold text-white mb-2">
+              The Numbers Don&apos;t Lie
+            </h4>
+            <p className="text-sm md:text-base text-white/80">
+              Industry research reveals a broken system
+            </p>
+          </div>
 
-          {/* Statistics Grid - Enhanced */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-6 md:mb-10">
-            {STATISTICS.map((stat) => (
-              <StatCard key={stat.value} stat={stat} isInView={isInView} />
+          <div className="grid grid-cols-3 gap-6 md:gap-12">
+            {STATISTICS.map((stat, index) => (
+              <StatCard 
+                key={stat.label} 
+                stat={stat} 
+                index={index} 
+                isInView={isInView} 
+              />
             ))}
           </div>
+        </div>
+      </motion.div>
 
-          {/* Problem Description - Enhanced */}
-          <div className="space-y-2 md:space-y-4 mb-3 md:mb-6">
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: DURATION.MEDIUM, delay: PROBLEM_DELAY.PARAGRAPH_1 }}
-              className="text-sm md:text-lg lg:text-xl text-white leading-relaxed font-medium"
-            >
-              After years of research, monitoring industry trends, and analyzing
-              consumer behavior, we&apos;ve identified a fundamental flaw in the
-              fitness ecosystem.{" "}
-              <strong className="text-emerald-300 font-bold bg-emerald-500/20 px-2 py-1 rounded">
-                The traditional subscription model forces people into
-                commitments they can&apos;t keep.
-              </strong>{" "}
-              Life happens—work schedules change, priorities shift, motivation
-              fluctuates. Yet millions are locked into expensive memberships
-              they signed with good intentions but can&apos;t maintain.
-            </motion.p>
+      {/* Detailed Industry Analysis */}
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={isInView ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.6, delay: 0.6 }}
+        className="mt-12 md:mt-16"
+      >
+        <div className="bg-white rounded-3xl p-8 md:p-12 shadow-sm border border-gray-100">
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-8">
+              <span className="inline-block text-sm font-medium text-emerald-600 uppercase tracking-wider bg-emerald-50 px-4 py-2 rounded-full mb-4">
+                Industry Analysis
+              </span>
+              <h4 className="text-2xl md:text-3xl font-semibold text-[#1d1d1f] tracking-[-0.02em]">
+                The Broken Fitness Model
+              </h4>
+            </div>
 
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: DURATION.MEDIUM, delay: PROBLEM_DELAY.PARAGRAPH_2 }}
-              className="text-sm md:text-lg lg:text-xl text-white leading-relaxed font-medium"
-            >
-              Meanwhile, fitness venues face their own crisis. They invest
-              millions in premium equipment, spacious facilities, and expert
-              trainers, only to see 55% of their capacity sit empty. High
-              customer acquisition costs, low retention rates, and unpredictable
-              revenue streams make it nearly impossible to sustain growth.{" "}
-              <strong className="text-gold-300 font-bold bg-gold-500/20 px-2 py-1 rounded">
-                The industry is stuck in a cycle of waste—consumers waste money,
-                venues waste capacity.
-              </strong>
-            </motion.p>
+            <div className="space-y-6 text-[#424245]">
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.5, delay: 0.7 }}
+                className="text-base md:text-lg leading-relaxed"
+              >
+                Research from <strong className="text-[#1d1d1f]">IHRSA (International Health, Racquet & Sportsclub Association)</strong> shows that 
+                the traditional gym membership model has a fundamental flaw. Most people sign up with good intentions but life gets in the way—
+                work schedules change, travel happens, motivation fluctuates. The result? <span className="bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded font-medium">Millions paying for memberships they rarely use.</span>
+              </motion.p>
 
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: DURATION.MEDIUM, delay: PROBLEM_DELAY.PARAGRAPH_3 }}
-              className="text-sm md:text-lg lg:text-xl text-white leading-relaxed font-medium"
-            >
-              We&apos;ve studied every step of this journey. We&apos;ve analyzed
-              why people abandon gyms, why venues struggle to fill slots, and
-              what truly matters to both sides.{" "}
-              <strong className="text-emerald-300 font-bold bg-gradient-to-r from-emerald-500/20 to-gold-500/20 px-2 py-1 rounded">
-                The answer is simple: flexibility, transparency, and mutual
-                value.
-              </strong>{" "}
-              People want to work out on their terms, and venues want to
-              maximize their potential. Our pay-per-day model bridges this gap,
-              creating a sustainable ecosystem where every visit matters, every
-              payment is fair, and every facility reaches its full potential.
-            </motion.p>
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.5, delay: 0.8 }}
+                className="text-base md:text-lg leading-relaxed"
+              >
+                Meanwhile, gym owners face the opposite problem. They invest heavily in equipment and facilities, but during off-peak hours 
+                (mornings, afternoons, weekends), their spaces sit mostly empty. <span className="bg-amber-50 text-amber-700 px-2 py-0.5 rounded font-medium">Users waste money on unused memberships, 
+                while gyms waste capacity during slow hours.</span>
+              </motion.p>
+
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.5, delay: 0.9 }}
+                className="text-base md:text-lg leading-relaxed"
+              >
+                In India, despite a growing health-conscious population, gym penetration remains extremely low at just <strong className="text-[#1d1d1f]">0.5% compared 
+                to 20%+ in developed countries</strong>. The barrier? Expensive annual commitments that don&apos;t fit modern lifestyles. 
+                <span className="bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded font-medium">People want flexibility—the freedom to work out when and where they want, paying only for what they actually use.</span>
+              </motion.p>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.5, delay: 1.0 }}
+                className="bg-[#f5f5f7] rounded-2xl p-6 mt-8"
+              >
+                <p className="text-base md:text-lg leading-relaxed text-[#1d1d1f]">
+                  <strong>The Indian fitness industry is valued at ₹15,000+ Crore</strong>, yet serves less than 1% of the population. 
+                  This isn&apos;t a demand problem—it&apos;s an <span className="text-emerald-600 font-semibold">accessibility problem</span>. 
+                  People want to stay fit, but they don&apos;t want to be locked into expensive, inflexible contracts.
+                </p>
+              </motion.div>
+            </div>
+          </div>
+        </div>
+      </motion.div>
+
+      {/* Solution Section */}
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={isInView ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.6, delay: 1.1 }}
+        className="mt-12 md:mt-16"
+      >
+        <div className="bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-3xl p-8 md:p-12 lg:p-16 text-white overflow-hidden relative">
+          {/* Subtle pattern */}
+          <div className="absolute inset-0 opacity-10">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,rgba(255,255,255,0.4),transparent_50%)]" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_70%,rgba(255,255,255,0.3),transparent_50%)]" />
           </div>
 
-          {/* Solution Highlight - Enhanced */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={isInView ? { opacity: 1, scale: 1 } : {}}
-            transition={{ duration: DURATION.MEDIUM, delay: PROBLEM_DELAY.SOLUTION }}
-            className="relative bg-gradient-to-r from-emerald-500/40 via-gold-500/30 to-emerald-500/40 rounded-2xl md:rounded-3xl p-4 md:p-8 lg:p-10 border-2 border-emerald-300/50 backdrop-blur-xl shadow-2xl shadow-emerald-500/30 overflow-hidden"
-          >
-            {/* Animated background */}
-            <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/20 to-gold-500/20 opacity-50" />
-            <motion.div
-              className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent"
-              animate={{
-                x: ["-100%", "200%"],
-              }}
-              transition={TRANSITION_ROTATE}
-            />
-
-            <div className="relative z-10">
-              <motion.h4
-                initial={{ opacity: 0, x: -20 }}
-                animate={isInView ? { opacity: 1, x: 0 } : {}}
-                transition={{ duration: DURATION.MEDIUM, delay: PROBLEM_DELAY.SOLUTION_TITLE }}
-                className="text-xl md:text-3xl lg:text-4xl font-extrabold text-white mb-3 md:mb-6 flex items-center gap-2 md:gap-4"
-              >
-                <div className="w-10 h-10 md:w-14 md:h-14 bg-white/20 rounded-xl md:rounded-2xl flex items-center justify-center border-2 border-white/30 backdrop-blur-sm flex-shrink-0">
-                  <Lightbulb className="w-5 h-5 md:w-8 md:h-8 text-emerald-200" />
+          <div className="relative z-10">
+            <div className="max-w-4xl mx-auto">
+              <div className="text-center mb-8">
+                <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                  <Lightbulb className="w-8 h-8 text-white" />
                 </div>
-                <span>Our Solution: A Win-Win Revolution</span>
-              </motion.h4>
-              <div className="space-y-2 md:space-y-4">
+                
+                <h4 className="text-2xl md:text-4xl font-semibold mb-4 tracking-[-0.02em]">
+                  Our Solution: Pay-Per-Day Access
+                </h4>
+                
+                <p className="text-base md:text-lg text-white/90 mb-6 leading-relaxed max-w-2xl mx-auto">
+                  What if you could access any gym, pool, yoga studio, or fitness center—
+                  and only pay for the days you actually go?
+                </p>
+              </div>
+
+              <div className="flex flex-wrap justify-center gap-3 mb-10">
+                {["Gym", "Swimming", "Yoga", "Zumba", "CrossFit", "Sports", "Pilates", "Boxing"].map((activity, index) => (
+                  <motion.span
+                    key={activity}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={isInView ? { opacity: 1, scale: 1 } : {}}
+                    transition={{ duration: 0.4, delay: 1.2 + index * 0.08 }}
+                    className="px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full text-sm font-medium text-white border border-white/30"
+                  >
+                    {activity}
+                  </motion.span>
+                ))}
+              </div>
+
+              <div className="space-y-4 text-white/90">
                 <motion.p
-                  initial={{ opacity: 0, y: 10 }}
+                  initial={{ opacity: 0, y: 20 }}
                   animate={isInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: DURATION.MEDIUM, delay: PROBLEM_DELAY.SOLUTION_TEXT_1 }}
-                  className="text-sm md:text-lg lg:text-xl text-white/95 leading-relaxed font-medium"
+                  transition={{ duration: 0.5, delay: 1.4 }}
+                  className="text-base md:text-lg leading-relaxed"
                 >
-                  <strong className="text-emerald-200 font-bold">
-                    RIVIO disrupts this broken model entirely.
-                  </strong>{" "}
-                  Our world&apos;s first pay-per-day platform eliminates waste
-                  for users while maximizing revenue for partners. Users access
-                  premium facilities only when needed—no guilt, no waste, no
-                  commitments. Partners fill capacity that would otherwise sit
-                  empty, turning idle time into revenue.
+                  <strong className="text-white">RIVIO introduces a simple but powerful concept:</strong> pay only for the days you actually work out. 
+                  Users get flexibility without commitment. Gyms fill their empty slots during off-peak hours. Everyone wins.
                 </motion.p>
+
                 <motion.p
-                  initial={{ opacity: 0, y: 10 }}
+                  initial={{ opacity: 0, y: 20 }}
                   animate={isInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: DURATION.MEDIUM, delay: PROBLEM_DELAY.SOLUTION_TEXT_2 }}
-                  className="text-sm md:text-lg lg:text-xl text-white/95 leading-relaxed font-medium"
+                  transition={{ duration: 0.5, delay: 1.5 }}
+                  className="text-base md:text-lg leading-relaxed"
                 >
-                  We&apos;re not just another fitness app.{" "}
-                  <strong className="text-emerald-200 font-bold">
-                    We&apos;re redefining an industry.
-                  </strong>{" "}
-                  With our proven model, comprehensive research, and deep
-                  understanding of both user and partner needs, we&apos;re
-                  positioned to transform how India—and eventually the
-                  world—accesses fitness. This is more than a platform;
-                  it&apos;s a movement toward sustainable, accessible, and
-                  mutually beneficial fitness for everyone.
+                  Walk into any partner gym, scan a QR code, work out, and pay a fair daily rate. 
+                  <strong className="text-white"> No contracts, no wasted memberships, no guilt.</strong> Whether you&apos;re traveling, 
+                  trying a new activity, or just working out on weekends—RIVIO adapts to your life.
                 </motion.p>
               </div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.5, delay: 1.6 }}
+                className="mt-10 text-center"
+              >
+                <p className="text-xl md:text-2xl font-semibold text-white">
+                  One app. Any activity. Pay only when you play.
+                </p>
+                <p className="text-sm md:text-base text-white/70 mt-2">
+                  Fitness that fits your life.
+                </p>
+              </motion.div>
             </div>
-          </motion.div>
+          </div>
         </div>
-      </div>
+      </motion.div>
     </motion.div>
   );
 };

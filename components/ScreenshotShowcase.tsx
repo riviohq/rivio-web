@@ -223,19 +223,19 @@ function FloatingClouds() {
       {FLOATING_CLOUDS.map(({ id, index: i }) => (
         <motion.div
           key={id}
-          className="absolute rounded-full blur-3xl opacity-[0.04] gpu-accelerated"
+          className="absolute rounded-full blur-3xl opacity-[0.15] gpu-accelerated"
           style={{
-            width: `${500 + i * 100}px`,
-            height: `${500 + i * 100}px`,
-            background: i % 2 === 0 ? "#10b981" : "#d4af37",
+            width: `${400 + i * 80}px`,
+            height: `${400 + i * 80}px`,
+            background: i % 2 === 0 ? "#10b981" : "#f59e0b",
             left: `${15 + i * 25}%`,
             top: `${10 + i * 20}%`,
             willChange: "transform",
           }}
           animate={{
-            x: [0, 80, -40, 0],
-            y: [0, 60, -30, 0],
-            scale: [1, 1.3, 0.9, 1],
+            x: [0, 50, -25, 0],
+            y: [0, 40, -20, 0],
+            scale: [1, 1.2, 0.95, 1],
           }}
           transition={{
             duration: 30 + i * 5,
@@ -1801,17 +1801,17 @@ function ScreenCard({ screen, index, isInView, delay }: any) {
       style={{ willChange: "transform, opacity" }}
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
-      className="bg-gradient-to-br from-gray-900/95 via-gray-800/60 to-black/95 p-4 md:p-10 rounded-3xl shadow-2xl border border-emerald-500/30 backdrop-blur-xl relative overflow-hidden group gpu-accelerated"
+      className="bg-white p-4 md:p-10 rounded-3xl shadow-lg border border-gray-200 relative overflow-hidden group gpu-accelerated hover:shadow-xl transition-shadow duration-300"
     >
       {/* Enhanced animated background glow */}
       <motion.div
         className={`absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${
-          screen.color === "emerald" ? "bg-emerald-500/15" : "bg-gold-500/15"
+          screen.color === "emerald" ? "bg-emerald-50" : "bg-amber-50"
         }`}
         animate={
           isHovered
             ? {
-                scale: [1, 1.3, 1],
+                scale: [1, 1.02, 1],
               }
             : {}
         }
@@ -1820,7 +1820,7 @@ function ScreenCard({ screen, index, isInView, delay }: any) {
 
       {/* Shimmer effect on hover */}
       <motion.div
-        className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent opacity-0 group-hover:opacity-100"
+        className="absolute inset-0 bg-gradient-to-r from-transparent via-white/50 to-transparent opacity-0 group-hover:opacity-100"
         animate={isHovered ? { x: ["-100%", "200%"] } : {}}
         transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
       />
@@ -1828,59 +1828,30 @@ function ScreenCard({ screen, index, isInView, delay }: any) {
       {/* Corner accent */}
       <div
         className={`absolute top-0 right-0 w-32 h-32 ${
-          screen.color === "emerald" ? "bg-emerald-500/10" : "bg-gold-500/10"
-        } rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500`}
+          screen.color === "emerald" ? "bg-emerald-100" : "bg-amber-100"
+        } rounded-full blur-3xl opacity-0 group-hover:opacity-50 transition-opacity duration-500`}
       />
 
       {/* Enhanced Icon with premium animation */}
       <motion.div
-        className={`w-16 h-16 md:w-28 md:h-28 ${
+        className={`w-16 h-16 md:w-20 md:h-20 ${
           screen.color === "emerald"
-            ? "bg-gradient-to-br from-emerald-500/30 to-emerald-600/20"
-            : "bg-gradient-to-br from-gold-500/30 to-gold-600/20"
-        } rounded-2xl md:rounded-3xl flex items-center justify-center mb-4 md:mb-8 relative mx-auto border ${
-          screen.color === "emerald"
-            ? "border-emerald-500/30"
-            : "border-gold-500/30"
-        } group-hover:scale-110 transition-transform duration-300`}
-        whileHover={{ rotate: [0, 360], scale: 1.25 }}
+            ? "bg-emerald-500"
+            : "bg-amber-500"
+        } rounded-2xl flex items-center justify-center mb-4 md:mb-6 relative mx-auto group-hover:scale-110 transition-transform duration-300`}
+        whileHover={{ rotate: [0, 5, -5, 0], scale: 1.1 }}
         transition={{ duration: DURATION.SLOW, ease: EASE_IN_OUT }}
       >
-        <motion.div
-          className={`absolute inset-0 ${
-            screen.color === "emerald" ? "bg-emerald-500/50" : "bg-gold-500/50"
-          } rounded-3xl blur-2xl`}
-          animate={{
-            scale: [1, 1.4, 1],
-            opacity: [0.4, 0.8, 0.4],
-          }}
-          transition={{ duration: DURATION.LOOP_MEDIUM, repeat: Infinity, ease: EASE_IN_OUT }}
-        />
-        <motion.div
-          className={`absolute inset-0 ${
-            screen.color === "emerald" ? "bg-emerald-400/20" : "bg-gold-400/20"
-          } rounded-3xl blur-xl`}
-          animate={{
-            rotate: [0, 360],
-          }}
-          transition={{
-            duration: 20,
-            repeat: Infinity,
-            ease: "linear",
-          }}
-        />
         <screen.icon
-          className={`w-8 h-8 md:w-14 md:h-14 ${
-            screen.color === "emerald" ? "text-emerald-300" : "text-gold-300"
-          } relative z-10 drop-shadow-2xl filter brightness-110`}
+          className="w-8 h-8 md:w-10 md:h-10 text-white relative z-10"
         />
       </motion.div>
 
       <motion.h4
-        className={`text-lg md:text-2xl font-extrabold mb-2 md:mb-4 text-center relative z-10 group-hover:scale-105 transition-transform ${
+        className={`text-lg md:text-2xl font-semibold mb-2 md:mb-4 text-center relative z-10 group-hover:scale-105 transition-transform ${
           screen.color === "emerald"
-            ? "text-white group-hover:text-emerald-300"
-            : "text-white group-hover:text-gold-300"
+            ? "text-[#1d1d1f] group-hover:text-emerald-600"
+            : "text-[#1d1d1f] group-hover:text-amber-600"
         }`}
         initial={{ opacity: 0 }}
         animate={cardInView ? { opacity: 1 } : {}}
@@ -1889,7 +1860,7 @@ function ScreenCard({ screen, index, isInView, delay }: any) {
         {screen.title}
       </motion.h4>
       <motion.p
-        className="text-gray-300 mb-4 md:mb-8 leading-relaxed text-center relative z-10 text-sm md:text-base md:min-h-[72px]"
+        className="text-[#86868b] mb-4 md:mb-8 leading-relaxed text-center relative z-10 text-sm md:text-base md:min-h-[72px]"
         initial={{ opacity: 0 }}
         animate={cardInView ? { opacity: 1 } : {}}
         transition={{ delay: delay + 0.15 }}
@@ -2076,7 +2047,7 @@ export default function ScreenshotShowcase({
     <section
       id="features"
       ref={ref}
-      className="py-16 md:py-24 bg-black relative overflow-hidden"
+      className="py-16 md:py-24 bg-[#f5f5f7] relative overflow-hidden"
     >
       {/* Optimized floating cloud background */}
       <FloatingClouds />
@@ -2093,7 +2064,7 @@ export default function ScreenshotShowcase({
           style={{ willChange: "transform, opacity" }}
         >
           <motion.h2
-            className="text-5xl md:text-6xl lg:text-8xl font-bold text-white mb-8 gpu-accelerated"
+            className="text-4xl md:text-5xl lg:text-6xl font-semibold text-[#1d1d1f] mb-6 tracking-[-0.02em] gpu-accelerated"
             initial={{ opacity: 0, scale: 0.95 }}
             animate={isInView ? { opacity: 1, scale: 1 } : {}}
             transition={{
@@ -2104,12 +2075,12 @@ export default function ScreenshotShowcase({
             style={{ willChange: "transform, opacity" }}
           >
             Explore Our{" "}
-            <span className="bg-gradient-to-r from-emerald-400 via-gold-400 to-emerald-400 bg-clip-text text-transparent bg-[length:200%_auto] animate-[gradient_3s_ease_infinite]">
+            <span className="text-emerald-500">
               Apps
             </span>
           </motion.h2>
           <motion.p
-            className="text-xl md:text-2xl text-gray-200 font-medium"
+            className="text-xl md:text-2xl text-[#86868b] font-medium"
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: DURATION.MEDIUM, delay: DELAY.SHORT }}
@@ -2128,12 +2099,12 @@ export default function ScreenshotShowcase({
             className="mb-16"
           >
             <motion.h3
-              className="text-3xl md:text-4xl font-bold text-white mb-12 text-center"
+              className="text-2xl md:text-3xl font-semibold text-[#1d1d1f] mb-12 text-center tracking-[-0.01em]"
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: DURATION.NORMAL, delay: DELAY.SHORT }}
             >
-              Member App Features
+              For <span className="text-emerald-500">Fitness Enthusiasts</span>
             </motion.h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {userScreens.map((screen, index) => (
@@ -2157,12 +2128,12 @@ export default function ScreenshotShowcase({
             transition={{ duration: DURATION.NORMAL, delay: DELAY.LONG }}
           >
             <motion.h3
-              className="text-3xl md:text-4xl font-bold text-white mb-12 text-center"
+              className="text-2xl md:text-3xl font-semibold text-[#1d1d1f] mb-12 text-center tracking-[-0.01em]"
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: DURATION.NORMAL, delay: DELAY.VERY_LONG }}
             >
-              Business App Features
+              For <span className="text-amber-500">Fitness Businesses</span>
             </motion.h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {partnerScreens.map((screen, index) => (

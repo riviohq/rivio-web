@@ -7,21 +7,83 @@ import {
   DURATION, 
   DELAY, 
   EASE_EXPO, 
-  EASE_SMOOTH, 
-  EASE_LINEAR,
-  TRANSITION_REVEAL,
-  TRANSITION_ROTATE
 } from "@/animation-timing";
 import {
   Mail,
-  MessageSquare,
   Send,
-  Sparkles,
   Building2,
   TrendingUp,
   Users,
-  ExternalLink,
+  ArrowRight,
+  Zap,
+  BarChart3,
+  Shield,
 } from "lucide-react";
+
+const PARTNER_BENEFITS = [
+  {
+    icon: TrendingUp,
+    title: "Increase Revenue",
+    description: "Fill empty slots during off-peak hours and boost utilization by up to 45%",
+    color: "emerald",
+  },
+  {
+    icon: Users,
+    title: "New Customers",
+    description: "Reach thousands of fitness enthusiasts looking for flexible access",
+    color: "blue",
+  },
+  {
+    icon: BarChart3,
+    title: "Smart Analytics",
+    description: "Track visits, revenue, and customer insights with our dashboard",
+    color: "purple",
+  },
+  {
+    icon: Shield,
+    title: "Secure Payments",
+    description: "Guaranteed payouts with transparent commission structure",
+    color: "amber",
+  },
+];
+
+const BenefitCard = ({
+  benefit,
+  index,
+  isInView,
+}: {
+  benefit: typeof PARTNER_BENEFITS[0];
+  index: number;
+  isInView: boolean;
+}) => {
+  const Icon = benefit.icon;
+  const colorClasses = {
+    emerald: { bg: "bg-emerald-50", icon: "bg-emerald-500", text: "text-emerald-600" },
+    blue: { bg: "bg-blue-50", icon: "bg-blue-500", text: "text-blue-600" },
+    purple: { bg: "bg-purple-50", icon: "bg-purple-500", text: "text-purple-600" },
+    amber: { bg: "bg-amber-50", icon: "bg-amber-500", text: "text-amber-600" },
+  };
+  const colors = colorClasses[benefit.color as keyof typeof colorClasses];
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.5, delay: 0.3 + index * 0.1 }}
+      className={`${colors.bg} rounded-2xl p-5 border border-gray-100`}
+    >
+      <div className={`${colors.icon} w-10 h-10 rounded-xl flex items-center justify-center mb-3`}>
+        <Icon className="w-5 h-5 text-white" />
+      </div>
+      <h4 className="text-base font-semibold text-[#1d1d1f] mb-1">
+        {benefit.title}
+      </h4>
+      <p className="text-sm text-[#86868b] leading-relaxed">
+        {benefit.description}
+      </p>
+    </motion.div>
+  );
+};
 
 export default function ContactUs() {
   const ref = useRef(null);
@@ -31,261 +93,174 @@ export default function ContactUs() {
     <section
       id="contact"
       ref={ref}
-      className="py-8 md:py-12 bg-black relative overflow-hidden"
+      className="py-20 md:py-32 relative overflow-hidden bg-[#f5f5f7]"
     >
-      {/* Enhanced floating background elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(4)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute rounded-full blur-3xl opacity-6 gpu-accelerated"
-            style={{
-              width: `${500 + i * 120}px`,
-              height: `${500 + i * 120}px`,
-              background: i % 2 === 0 ? "#10b981" : "#d4af37",
-              left: `${i * 25}%`,
-              top: `${i * 20}%`,
-              willChange: "transform",
-            }}
-            animate={{
-              x: [0, 60, -30, 0],
-              y: [0, 50, -25, 0],
-              scale: [1, 1.3, 0.95, 1],
-            }}
-            transition={{
-              duration: 25 + i * 5,
-              repeat: Infinity,
-              ease: [0.4, 0, 0.6, 1],
-              delay: i * 2,
-            }}
-          />
-        ))}
-      </div>
-
-      {/* Grid pattern overlay */}
-      <div
-        className="absolute inset-0 opacity-5"
-        style={{
-          backgroundImage:
-            "linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)",
-          backgroundSize: "50px 50px",
-        }}
-      />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={TRANSITION_REVEAL}
-          className="text-center mb-4 md:mb-6"
+          transition={{ duration: 0.6 }}
+          className="text-center mb-12 md:mb-16"
         >
-          <motion.h2
-            className="text-3xl md:text-5xl lg:text-7xl font-bold text-white mb-3 md:mb-6"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={isInView ? { opacity: 1, scale: 1 } : {}}
-            transition={{ duration: DURATION.SLOW, delay: DELAY.SHORT, ease: EASE_EXPO }}
-          >
-            Partner With{" "}
-            <span className="bg-gradient-to-r from-emerald-400 to-gold-400 bg-clip-text text-transparent">
-              Us
-            </span>
-          </motion.h2>
-          <p className="text-base md:text-xl lg:text-2xl text-gray-200 font-medium">
-            Join us in transforming India's fitness landscape. Investors,
-            partners, and venues—let's build the future together
+          <span className="inline-block text-sm font-medium text-emerald-600 uppercase tracking-wider bg-emerald-50 px-4 py-2 rounded-full mb-4">
+            Partner With Us
+          </span>
+          <h2 className="text-3xl md:text-5xl lg:text-6xl font-semibold text-[#1d1d1f] mb-4 tracking-[-0.02em]">
+            Let&apos;s Build Together
+          </h2>
+          <p className="text-lg md:text-xl text-[#86868b] max-w-2xl mx-auto">
+            Join the fitness revolution. Partner with RIVIO and transform how India works out.
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-3 gap-3 md:gap-6">
-          {/* Google Form Embedded - Most Reliable Method */}
+        {/* Main Content Grid */}
+        <div className="grid lg:grid-cols-2 gap-8 md:gap-12">
+          {/* Left Side - Partner Benefits */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: DURATION.SLOW, delay: DELAY.SHORT, ease: EASE_EXPO }}
-            className="relative"
+            initial={{ opacity: 0, x: -30 }}
+            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <div className="bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-black/95 rounded-2xl md:rounded-3xl p-4 md:p-5 lg:p-6 border-2 border-emerald-500/30 backdrop-blur-xl shadow-2xl relative overflow-hidden h-full">
-              {/* Animated background */}
-              <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/5 to-gold-500/5 opacity-50" />
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent"
-                animate={{
-                  x: ["-100%", "200%"],
-                }}
-                transition={TRANSITION_ROTATE}
-              />
-
-              <div className="relative z-10">
-                <div className="flex items-center gap-2 md:gap-3 mb-3 md:mb-5">
-                  <div className="w-9 h-9 md:w-11 md:h-11 bg-emerald-500/20 rounded-lg md:rounded-xl flex items-center justify-center border-2 border-emerald-400/40">
-                    <Sparkles className="w-4 h-4 md:w-5 md:h-5 text-emerald-300" />
-                  </div>
-                  <h3 className="text-xl md:text-2xl font-bold text-white">
-                    Get In Touch
-                  </h3>
-                </div>
-                <p className="text-gray-300 mb-3 md:mb-5 font-medium text-xs md:text-sm">
-                  Fill out the form and we'll get back to you soon. Join us in
-                  transforming India's fitness landscape.
-                </p>
-
-                <div className="space-y-3 md:space-y-4">
-                  <div className="bg-gradient-to-r from-emerald-500/10 to-gold-500/10 rounded-lg md:rounded-xl p-4 md:p-5 border-2 border-emerald-500/30">
-                    <div className="flex items-center gap-2 md:gap-3 mb-3 md:mb-4">
-                      <div className="w-9 h-9 md:w-11 md:h-11 bg-emerald-500/20 rounded-lg md:rounded-xl flex items-center justify-center border-2 border-emerald-400/40">
-                        <Send className="w-4 h-4 md:w-5 md:h-5 text-emerald-300" />
-                      </div>
-                      <div>
-                        <h4 className="text-base md:text-lg font-bold text-white">
-                          Ready to Partner?
-                        </h4>
-                        <p className="text-gray-300 font-medium text-xs">
-                          Click below to fill out our form
-                        </p>
-                      </div>
-                    </div>
-
-                    <motion.a
-                      href="https://docs.google.com/forms/d/e/1FAIpQLSeRYNKypv9jMJaT3Ws-0OesfYEaBnM_5oP5a3z27LlRw1ps2Q/viewform"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      whileHover={{ scale: 1.02, y: -2 }}
-                      whileTap={{ scale: 0.98 }}
-                      className="w-full px-4 md:px-6 py-2 md:py-3 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white rounded-lg md:rounded-xl font-bold hover:from-emerald-600 hover:to-emerald-700 transition-all flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/30 text-sm md:text-base"
-                    >
-                      <Send className="w-4 h-4" />
-                      <span>Partnership Form</span>
-                      <ExternalLink className="w-4 h-4" />
-                    </motion.a>
-
-                    <p className="text-xs text-gray-400 mt-3 text-center font-medium">
-                      ✓ Opens in a new tab
-                    </p>
-                  </div>
-
-                  <div className="bg-white/5 rounded-xl p-3 border border-emerald-500/20">
-                    <p className="text-sm text-gray-300 font-medium text-center">
-                      Or email{" "}
-                      <a
-                        href="mailto:partnerships@rivio.com"
-                        className="text-emerald-400 hover:text-emerald-300 font-semibold"
-                      >
-                        partnerships@rivio.com
-                      </a>
-                    </p>
-                  </div>
-                </div>
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-12 h-12 bg-[#1d1d1f] rounded-xl flex items-center justify-center">
+                <Building2 className="w-6 h-6 text-white" />
               </div>
-            </div>
-          </motion.div>
-
-          {/* Why Partner With Us? */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: DURATION.SLOW, delay: DELAY.MEDIUM_SHORT, ease: EASE_EXPO }}
-          >
-            <div className="bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-black/95 p-4 md:p-6 lg:p-8 rounded-2xl md:rounded-3xl border-2 border-emerald-500/30 backdrop-blur-xl shadow-2xl relative overflow-hidden h-full">
-              <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/5 to-gold-500/5" />
-              <div className="relative z-10">
-                <h3 className="text-xl md:text-2xl font-bold text-white mb-3 md:mb-4 flex items-center gap-2 md:gap-3">
-                  <Building2 className="w-5 h-5 md:w-7 md:h-7 text-emerald-400" />
+              <div>
+                <h3 className="text-xl md:text-2xl font-semibold text-[#1d1d1f]">
                   Why Partner With Us?
                 </h3>
-                <div className="space-y-2 md:space-y-3">
-                  <div className="flex items-start gap-2 md:gap-3">
-                    <div className="w-9 h-9 md:w-11 md:h-11 bg-emerald-500/20 rounded-lg md:rounded-xl flex items-center justify-center flex-shrink-0 border border-emerald-500/30">
-                      <TrendingUp className="w-4 h-4 md:w-5 md:h-5 text-emerald-300" />
-                    </div>
-                    <div>
-                      <h4 className="font-bold text-white mb-0.5 md:mb-1 text-sm md:text-base">
-                        Maximize Revenue
-                      </h4>
-                      <p className="text-gray-300 font-medium text-xs md:text-sm leading-relaxed">
-                        Fill unused capacity with pay-per-day users and increase
-                        utilization by up to 45%
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-2 md:gap-3">
-                    <div className="w-9 h-9 md:w-11 md:h-11 bg-gold-500/20 rounded-lg md:rounded-xl flex items-center justify-center flex-shrink-0 border border-gold-500/30">
-                      <Users className="w-4 h-4 md:w-5 md:h-5 text-gold-300" />
-                    </div>
-                    <div>
-                      <h4 className="font-bold text-white mb-0.5 md:mb-1 text-sm md:text-base">
-                        Access New Customers
-                      </h4>
-                      <p className="text-gray-300 font-medium text-xs md:text-sm leading-relaxed">
-                        Reach thousands of fitness enthusiasts seeking flexible
-                        access
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-2 md:gap-3">
-                    <div className="w-9 h-9 md:w-11 md:h-11 bg-emerald-500/20 rounded-lg md:rounded-xl flex items-center justify-center flex-shrink-0 border border-emerald-500/30">
-                      <Sparkles className="w-4 h-4 md:w-5 md:h-5 text-emerald-300" />
-                    </div>
-                    <div>
-                      <h4 className="font-bold text-white mb-0.5 md:mb-1 text-sm md:text-base">
-                        Complete Business Tools
-                      </h4>
-                      <p className="text-gray-300 font-medium text-xs md:text-sm leading-relaxed">
-                        Manage operations, track analytics, and scale your
-                        business
-                      </p>
-                    </div>
-                  </div>
-                </div>
+                <p className="text-sm text-[#86868b]">Benefits for your business</p>
               </div>
             </div>
-          </motion.div>
 
-          {/* Contact Information */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: DURATION.SLOW, delay: DELAY.MEDIUM, ease: EASE_EXPO }}
-          >
-            <div className="bg-gradient-to-br from-gray-900/95 to-black/95 p-4 md:p-5 lg:p-6 rounded-2xl md:rounded-3xl border-2 border-emerald-500/30 backdrop-blur-xl shadow-2xl h-full">
-              <h3 className="text-xl md:text-2xl font-bold text-white mb-4 md:mb-6 flex items-center gap-2 md:gap-3">
-                <Mail className="w-5 h-5 md:w-6 md:h-6 text-emerald-400" />
-                Contact Information
-              </h3>
-              <div className="space-y-3 md:space-y-5">
-                <div className="flex items-start gap-2 md:gap-3">
-                  <div className="w-9 h-9 md:w-11 md:h-11 bg-emerald-500/20 rounded-lg md:rounded-xl flex items-center justify-center flex-shrink-0 border border-emerald-500/30">
-                    <Mail className="w-4 h-4 md:w-5 md:h-5 text-emerald-400" />
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-white mb-0.5 md:mb-1 text-sm md:text-base">Email</h4>
-                    <a
-                      href="mailto:support@rivio.com"
-                      className="text-emerald-400 hover:text-emerald-300 font-medium block text-sm transition-colors"
-                    >
-                      support@rivio.com
-                    </a>
-                    <a
-                      href="mailto:partnerships@rivio.com"
-                      className="text-emerald-400 hover:text-emerald-300 font-medium text-sm transition-colors"
-                    >
-                      partnerships@rivio.com
-                    </a>
-                  </div>
+            <div className="grid grid-cols-2 gap-4">
+              {PARTNER_BENEFITS.map((benefit, index) => (
+                <BenefitCard
+                  key={benefit.title}
+                  benefit={benefit}
+                  index={index}
+                  isInView={isInView}
+                />
+              ))}
+            </div>
+
+            {/* Stats Row */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.5, delay: 0.7 }}
+              className="mt-6 bg-white rounded-2xl p-6 border border-gray-100"
+            >
+              <div className="grid grid-cols-3 gap-4 text-center">
+                <div>
+                  <p className="text-2xl md:text-3xl font-bold text-emerald-500">500+</p>
+                  <p className="text-xs text-[#86868b]">Partner Venues</p>
                 </div>
-                <div className="flex items-start gap-2 md:gap-3">
-                  <div className="w-9 h-9 md:w-11 md:h-11 bg-emerald-500/20 rounded-lg md:rounded-xl flex items-center justify-center flex-shrink-0 border border-emerald-500/30">
-                    <MessageSquare className="w-4 h-4 md:w-5 md:h-5 text-emerald-400" />
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-white mb-0.5 md:mb-1 text-sm md:text-base">
-                      Business Inquiries
-                    </h4>
-                    <p className="text-gray-300 font-medium text-xs md:text-sm leading-relaxed">
-                      Interested in partnering with RIVIO? Fill out the form or
-                      contact us directly for opportunities.
-                    </p>
-                  </div>
+                <div>
+                  <p className="text-2xl md:text-3xl font-bold text-[#1d1d1f]">45%</p>
+                  <p className="text-xs text-[#86868b]">Avg. Utilization Boost</p>
+                </div>
+                <div>
+                  <p className="text-2xl md:text-3xl font-bold text-blue-500">10+</p>
+                  <p className="text-xs text-[#86868b]">Cities</p>
                 </div>
               </div>
+            </motion.div>
+          </motion.div>
+
+          {/* Right Side - Contact Card */}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.3 }}
+          >
+            <div className="bg-white rounded-3xl p-8 md:p-10 shadow-sm border border-gray-100 h-full">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-12 h-12 bg-emerald-500 rounded-xl flex items-center justify-center">
+                  <Zap className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <h3 className="text-xl md:text-2xl font-semibold text-[#1d1d1f]">
+                    Get Started Today
+                  </h3>
+                  <p className="text-sm text-[#86868b]">Quick and easy onboarding</p>
+                </div>
+              </div>
+
+              <p className="text-[#86868b] mb-8 leading-relaxed">
+                Ready to increase your revenue and reach more customers? Fill out our partnership form 
+                and our team will get back to you within 24 hours.
+              </p>
+
+              {/* CTA Button */}
+              <motion.a
+                href="https://docs.google.com/forms/d/e/1FAIpQLSeRYNKypv9jMJaT3Ws-0OesfYEaBnM_5oP5a3z27LlRw1ps2Q/viewform"
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="w-full px-6 py-4 bg-[#1d1d1f] text-white rounded-xl font-medium hover:bg-black transition-all flex items-center justify-center gap-3 text-base mb-6"
+              >
+                <Send className="w-5 h-5" />
+                <span>Fill Partnership Form</span>
+                <ArrowRight className="w-5 h-5" />
+              </motion.a>
+
+              {/* Divider */}
+              <div className="flex items-center gap-4 mb-6">
+                <div className="flex-1 h-px bg-gray-200"></div>
+                <span className="text-sm text-[#86868b]">or contact directly</span>
+                <div className="flex-1 h-px bg-gray-200"></div>
+              </div>
+
+              {/* Contact Options */}
+              <div className="space-y-4">
+                <a
+                  href="mailto:partnerships@rivioapp.com"
+                  className="flex items-center gap-4 p-4 bg-[#f5f5f7] rounded-xl hover:bg-gray-100 transition-colors group"
+                >
+                  <div className="w-10 h-10 bg-emerald-100 rounded-lg flex items-center justify-center">
+                    <Mail className="w-5 h-5 text-emerald-600" />
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-sm text-[#86868b]">For partnerships</p>
+                    <p className="text-[#1d1d1f] font-medium group-hover:text-emerald-600 transition-colors">
+                      partnerships@rivioapp.com
+                    </p>
+                  </div>
+                  <ArrowRight className="w-5 h-5 text-[#86868b] group-hover:text-emerald-600 transition-colors" />
+                </a>
+
+                <a
+                  href="mailto:support@rivioapp.com"
+                  className="flex items-center gap-4 p-4 bg-[#f5f5f7] rounded-xl hover:bg-gray-100 transition-colors group"
+                >
+                  <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                    <Mail className="w-5 h-5 text-blue-600" />
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-sm text-[#86868b]">For support</p>
+                    <p className="text-[#1d1d1f] font-medium group-hover:text-blue-600 transition-colors">
+                      support@rivioapp.com
+                    </p>
+                  </div>
+                  <ArrowRight className="w-5 h-5 text-[#86868b] group-hover:text-blue-600 transition-colors" />
+                </a>
+              </div>
+
+              {/* Trust Badge */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={isInView ? { opacity: 1 } : {}}
+                transition={{ duration: 0.5, delay: 0.8 }}
+                className="mt-8 pt-6 border-t border-gray-100"
+              >
+                <div className="flex items-center justify-center gap-2 text-sm text-[#86868b]">
+                  <Shield className="w-4 h-4 text-emerald-500" />
+                  <span>Secure & trusted by 500+ fitness businesses</span>
+                </div>
+              </motion.div>
             </div>
           </motion.div>
         </div>

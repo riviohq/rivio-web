@@ -2,560 +2,623 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  Activity,
-  QrCode,
-  Smartphone,
-  CheckCircle,
-  Zap,
-  CreditCard,
   MapPin,
-  TrendingUp,
-  Star,
+  QrCode,
+  CreditCard,
+  Zap,
+  Activity,
   Waves,
-  Target,
   Leaf,
+  Target,
+  CheckCircle2,
+  ArrowRight,
 } from "lucide-react";
 import { memo, useEffect, useState } from "react";
-import {
-  DURATION,
-  DELAY,
-  EASE_IN_OUT,
-  EASE_LINEAR,
-  SPRING_BOUNCY,
-  TRANSITION_PULSE,
-  TRANSITION_ROTATE,
-  TRANSITION_ORB,
-  getStaggerDelay,
-} from "@/animation-timing";
 
 // ============================================================================
-// Scene Data
+// Journey Steps
 // ============================================================================
-const scenes = [
+const journeySteps = [
   {
-    icon: Smartphone,
-    text: "Open RIVIO App",
-    color: "emerald",
-    description: "Launch the app on your phone",
-  },
-  {
+    id: 1,
+    title: "Find",
+    subtitle: "Discover venues near you",
+    description: "500+ gyms, studios, and pools",
     icon: MapPin,
-    text: "Find Nearby Venues",
     color: "emerald",
-    description: "Search gyms within 100m radius",
   },
   {
+    id: 2,
+    title: "Choose",
+    subtitle: "Pick your activity",
+    description: "Gym, Yoga, Swimming, Sports",
     icon: Activity,
-    text: "Select Activity",
-    color: "emerald",
-    description: "Choose Gym, Yoga, Sports, or Swim",
+    color: "blue",
   },
   {
-    icon: QrCode,
-    text: "Scan QR Code",
-    color: "emerald",
-    description: "Point camera at venue QR code",
-  },
-  {
-    icon: Star,
-    text: "Select Amenities",
-    color: "gold",
-    description: "Mark preferred amenities",
-  },
-  {
-    icon: CheckCircle,
-    text: "Check-in Success",
-    color: "emerald",
-    description: "You're checked in!",
-  },
-  {
-    icon: CreditCard,
-    text: "Pay Per Day",
-    color: "gold",
-    description: "Pay only ₹99 for today",
-  },
-  {
-    icon: TrendingUp,
-    text: "Increase Streak",
-    color: "emerald",
-    description: "Build your workout streak",
-  },
-  {
-    icon: Activity,
-    text: "Start Workout",
-    color: "emerald",
-    description: "Time to work out!",
-  },
-  {
+    id: 3,
+    title: "Compare",
+    subtitle: "Check amenities & prices",
+    description: "AC, WiFi, Parking, Showers",
     icon: Zap,
-    text: "Access Any Venue",
-    color: "gold",
-    description: "Gym, Yoga, Sports, Swim - All!",
+    color: "amber",
   },
-] as const;
+  {
+    id: 4,
+    title: "Scan",
+    subtitle: "Walk in & check-in",
+    description: "Quick QR code entry",
+    icon: QrCode,
+    color: "purple",
+  },
+  {
+    id: 5,
+    title: "Pay",
+    subtitle: "Only for today",
+    description: "No contracts, ever",
+    icon: CreditCard,
+    color: "emerald",
+  },
+  {
+    id: 6,
+    title: "Train",
+    subtitle: "Start your workout",
+    description: "You're all set!",
+    icon: Target,
+    color: "blue",
+  },
+];
 
-type SceneType = (typeof scenes)[number];
+const activities = [
+  { icon: Activity, label: "Gym", color: "emerald" },
+  { icon: Waves, label: "Swim", color: "blue" },
+  { icon: Leaf, label: "Yoga", color: "purple" },
+  { icon: Target, label: "Sports", color: "amber" },
+];
 
 // ============================================================================
-// Background Components
+// Background Elements
 // ============================================================================
-const AnimatedGradientBackground = memo(() => (
-  <motion.div
-    className="absolute inset-0"
-    animate={{
-      background: [
-        "radial-gradient(circle at 20% 50%, rgba(16, 185, 129, 0.4) 0%, transparent 60%), radial-gradient(circle at 80% 50%, rgba(212, 175, 55, 0.3) 0%, transparent 60%), #000000",
-        "radial-gradient(circle at 80% 50%, rgba(16, 185, 129, 0.4) 0%, transparent 60%), radial-gradient(circle at 20% 50%, rgba(212, 175, 55, 0.3) 0%, transparent 60%), #000000",
-        "radial-gradient(circle at 20% 50%, rgba(16, 185, 129, 0.4) 0%, transparent 60%), radial-gradient(circle at 80% 50%, rgba(212, 175, 55, 0.3) 0%, transparent 60%), #000000",
-      ],
-    }}
-    transition={TRANSITION_ORB}
-  />
-));
-AnimatedGradientBackground.displayName = "AnimatedGradientBackground";
-
-const GridPattern = memo(() => (
-  <div className="absolute inset-0 opacity-15">
-    <div
-      className="absolute inset-0"
+const FloatingOrbs = memo(() => (
+  <div className="absolute inset-0 overflow-hidden pointer-events-none">
+    {/* Large ambient orbs */}
+    <motion.div
+      className="absolute w-[600px] h-[600px] rounded-full"
       style={{
-        backgroundImage: `
-          linear-gradient(rgba(16, 185, 129, 0.15) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(16, 185, 129, 0.15) 1px, transparent 1px)
-        `,
-        backgroundSize: "50px 50px",
+        background: "radial-gradient(circle, rgba(16, 185, 129, 0.08) 0%, transparent 70%)",
+        top: "-20%",
+        right: "-10%",
       }}
+      animate={{
+        scale: [1, 1.2, 1],
+        x: [0, 30, 0],
+        y: [0, -20, 0],
+      }}
+      transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+    />
+    <motion.div
+      className="absolute w-[500px] h-[500px] rounded-full"
+      style={{
+        background: "radial-gradient(circle, rgba(59, 130, 246, 0.06) 0%, transparent 70%)",
+        bottom: "-15%",
+        left: "-5%",
+      }}
+      animate={{
+        scale: [1, 1.15, 1],
+        x: [0, -20, 0],
+        y: [0, 30, 0],
+      }}
+      transition={{ duration: 18, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+    />
+    <motion.div
+      className="absolute w-[400px] h-[400px] rounded-full"
+      style={{
+        background: "radial-gradient(circle, rgba(147, 51, 234, 0.05) 0%, transparent 70%)",
+        top: "40%",
+        left: "30%",
+      }}
+      animate={{
+        scale: [1, 1.1, 1],
+        opacity: [0.5, 0.8, 0.5],
+      }}
+      transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 1 }}
     />
   </div>
 ));
-GridPattern.displayName = "GridPattern";
+FloatingOrbs.displayName = "FloatingOrbs";
 
 // ============================================================================
-// Phone Mockup Components
+// Main Journey Card
 // ============================================================================
-const StatusBar = memo(() => (
-  <div className="absolute top-0 left-0 right-0 h-8 sm:h-10 md:h-12 bg-gray-900 flex items-center justify-between px-4 sm:px-6 z-10">
-    <div className="text-white text-[10px] sm:text-xs font-semibold">9:41</div>
-    <div className="flex gap-1">
-      <div className="w-1 h-1 bg-white rounded-full" />
-      <div className="w-1 h-1 bg-white rounded-full" />
-      <div className="w-1 h-1 bg-white rounded-full" />
-    </div>
-  </div>
-));
-StatusBar.displayName = "StatusBar";
-
-const SceneIcon = memo(({ scene }: { scene: SceneType }) => {
-  const IconComponent = scene.icon;
-  const isEmerald = scene.color === "emerald";
+const JourneyCard = memo(({ step, isActive }: { step: typeof journeySteps[0]; isActive: boolean }) => {
+  const Icon = step.icon;
+  const colorClasses = {
+    emerald: {
+      bg: "bg-emerald-500",
+      light: "bg-emerald-50",
+      text: "text-emerald-600",
+      border: "border-emerald-200",
+    },
+    blue: {
+      bg: "bg-blue-500",
+      light: "bg-blue-50",
+      text: "text-blue-600",
+      border: "border-blue-200",
+    },
+    purple: {
+      bg: "bg-purple-500",
+      light: "bg-purple-50",
+      text: "text-purple-600",
+      border: "border-purple-200",
+    },
+  };
+  const colors = colorClasses[step.color as keyof typeof colorClasses];
 
   return (
     <motion.div
-      className={`w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-32 lg:h-32 rounded-xl sm:rounded-2xl flex items-center justify-center ${
-        isEmerald
-          ? "bg-emerald-500/30 border-2 border-emerald-400/60"
-          : "bg-gold-500/30 border-2 border-gold-400/60"
-      }`}
-      animate={{ scale: [1, 1.1, 1], rotate: [0, 3, -3, 0] }}
-      transition={TRANSITION_PULSE}
-      style={{
-        boxShadow: isEmerald
-          ? "0 0 30px rgba(16, 185, 129, 0.5), 0 0 60px rgba(16, 185, 129, 0.2)"
-          : "0 0 30px rgba(212, 175, 55, 0.5), 0 0 60px rgba(212, 175, 55, 0.2)",
+      initial={{ opacity: 0, y: 30, scale: 0.9 }}
+      animate={{ 
+        opacity: isActive ? 1 : 0.4, 
+        y: 0, 
+        scale: isActive ? 1 : 0.95,
       }}
+      transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+      className={`relative ${isActive ? 'z-10' : 'z-0'}`}
     >
       <motion.div
-        animate={{ rotate: [0, 360] }}
-        transition={TRANSITION_ROTATE}
+        className={`bg-white rounded-2xl p-5 shadow-sm border transition-all duration-500 ${
+          isActive ? 'shadow-xl border-gray-200' : 'border-gray-100'
+        }`}
+        style={{
+          boxShadow: isActive ? '0 20px 50px rgba(0,0,0,0.1)' : '0 4px 15px rgba(0,0,0,0.05)',
+        }}
+        whileHover={{ y: -5 }}
       >
-        <IconComponent
-          className={`w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 ${
-            isEmerald ? "text-emerald-300" : "text-gold-300"
-          }`}
-          style={{ filter: "drop-shadow(0 0 8px currentColor)" }}
-        />
+        <div className={`${colors.bg} w-12 h-12 rounded-xl flex items-center justify-center mb-4`}>
+          <Icon className="w-6 h-6 text-white" />
+        </div>
+        <h3 className="text-xl font-bold text-[#1d1d1f] mb-1">{step.title}</h3>
+        <p className={`text-sm font-medium ${colors.text} mb-2`}>{step.subtitle}</p>
+        <p className="text-xs text-[#86868b]">{step.description}</p>
+        
+        {isActive && (
+          <motion.div
+            initial={{ width: 0 }}
+            animate={{ width: '100%' }}
+            transition={{ duration: 3, ease: 'linear' }}
+            className={`absolute bottom-0 left-0 h-1 ${colors.bg} rounded-b-2xl`}
+          />
+        )}
       </motion.div>
     </motion.div>
   );
 });
-SceneIcon.displayName = "SceneIcon";
+JourneyCard.displayName = "JourneyCard";
 
-const SceneText = memo(({ scene }: { scene: SceneType }) => {
-  const isEmerald = scene.color === "emerald";
+// ============================================================================
+// Center Feature Display
+// ============================================================================
+const CenterDisplay = memo(({ currentStep }: { currentStep: number }) => {
+  const step = journeySteps[currentStep];
+  const Icon = step.icon;
+  
+  const colorClasses = {
+    emerald: { bg: "bg-emerald-500", glow: "rgba(16, 185, 129, 0.3)" },
+    blue: { bg: "bg-blue-500", glow: "rgba(59, 130, 246, 0.3)" },
+    purple: { bg: "bg-purple-500", glow: "rgba(147, 51, 234, 0.3)" },
+    amber: { bg: "bg-amber-500", glow: "rgba(245, 158, 11, 0.3)" },
+  };
+  const colors = colorClasses[step.color as keyof typeof colorClasses];
 
   return (
+    <div className="flex flex-col items-center">
+      {/* Main Icon */}
+      <motion.div
+        key={currentStep}
+        initial={{ scale: 0, rotate: -180 }}
+        animate={{ scale: 1, rotate: 0 }}
+        exit={{ scale: 0, rotate: 180 }}
+        transition={{ duration: 0.6, ease: [0.34, 1.56, 0.64, 1] }}
+        className={`${colors.bg} w-24 h-24 md:w-32 md:h-32 rounded-3xl flex items-center justify-center mb-8`}
+        style={{
+          boxShadow: `0 20px 60px ${colors.glow}, 0 10px 30px ${colors.glow}`,
+        }}
+      >
+        <motion.div
+          animate={{ y: [0, -5, 0] }}
+          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+        >
+          <Icon className="w-12 h-12 md:w-16 md:h-16 text-white" />
+        </motion.div>
+      </motion.div>
+
+      {/* Text Content */}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={currentStep}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+          transition={{ duration: 0.4 }}
+          className="text-center"
+        >
+          <h2 className="text-4xl md:text-6xl font-bold text-[#1d1d1f] mb-3 tracking-[-0.02em]">
+            {step.title}
+          </h2>
+          <p className="text-lg md:text-xl text-[#86868b] mb-2">
+            {step.subtitle}
+          </p>
+          <p className="text-sm text-[#86868b]">
+            {step.description}
+          </p>
+        </motion.div>
+      </AnimatePresence>
+
+      {/* Step Indicators */}
+      <div className="flex items-center gap-3 mt-10">
+        {journeySteps.map((s, index) => (
+          <motion.div
+            key={s.id}
+            className={`rounded-full transition-all duration-300 ${
+              index === currentStep 
+                ? `w-8 h-2 ${colorClasses[s.color as keyof typeof colorClasses].bg}` 
+                : 'w-2 h-2 bg-gray-300'
+            }`}
+            whileHover={{ scale: 1.2 }}
+          />
+        ))}
+      </div>
+    </div>
+  );
+});
+CenterDisplay.displayName = "CenterDisplay";
+
+// ============================================================================
+// Floating Activity Pills
+// ============================================================================
+const FloatingActivities = memo(({ currentStep }: { currentStep: number }) => {
+  if (currentStep !== 1) return null;
+  
+  return (
     <motion.div
-      className="text-center px-2"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ delay: DELAY.MEDIUM_SHORT }}
+      exit={{ opacity: 0 }}
+      className="absolute inset-0 pointer-events-none"
     >
-      <h3
-        className={`text-base sm:text-lg md:text-xl lg:text-2xl font-bold mb-1 sm:mb-2 ${
-          isEmerald ? "text-emerald-300" : "text-gold-300"
-        }`}
-        style={{ textShadow: "0 0 15px currentColor, 0 0 30px currentColor" }}
-      >
-        {scene.text}
-      </h3>
-      <p className="text-gray-300 text-[10px] sm:text-xs md:text-sm font-medium">
-        {scene.description}
-      </p>
+      {activities.map((activity, index) => {
+        const positions = [
+          { top: '15%', left: '10%' },
+          { top: '20%', right: '15%' },
+          { bottom: '25%', left: '15%' },
+          { bottom: '20%', right: '10%' },
+        ];
+        const colorClasses = {
+          emerald: "bg-emerald-50 text-emerald-600 border-emerald-200",
+          blue: "bg-blue-50 text-blue-600 border-blue-200",
+          purple: "bg-purple-50 text-purple-600 border-purple-200",
+          amber: "bg-amber-50 text-amber-600 border-amber-200",
+        };
+        
+        return (
+          <motion.div
+            key={activity.label}
+            className={`absolute flex items-center gap-2 px-4 py-2 rounded-full border shadow-lg ${colorClasses[activity.color as keyof typeof colorClasses]}`}
+            style={positions[index]}
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ 
+              opacity: 1, 
+              scale: 1,
+              y: [0, -10, 0],
+            }}
+            transition={{ 
+              delay: 0.2 + index * 0.15,
+              y: { duration: 3 + index * 0.5, repeat: Infinity, ease: "easeInOut" }
+            }}
+          >
+            <activity.icon className="w-4 h-4" />
+            <span className="text-sm font-semibold">{activity.label}</span>
+          </motion.div>
+        );
+      })}
     </motion.div>
   );
 });
-SceneText.displayName = "SceneText";
-
-const ProgressIndicators = memo(({ currentScene }: { currentScene: number }) => (
-  <div className="flex gap-1.5 sm:gap-2 mt-3 sm:mt-4 flex-wrap justify-center max-w-[200px]">
-    {scenes.map((scene, index) => {
-      const isActive = index === currentScene;
-      return (
-        <motion.div
-          key={index}
-          className={`h-1.5 sm:h-2 rounded-full ${
-            isActive
-              ? scene.color === "emerald"
-                ? "bg-emerald-400"
-                : "bg-gold-400"
-              : "bg-gray-700"
-          }`}
-          animate={{ width: isActive ? 24 : 6 }}
-          transition={{ duration: DURATION.FAST }}
-        />
-      );
-    })}
-  </div>
-));
-ProgressIndicators.displayName = "ProgressIndicators";
-
-const PhoneMockup = memo(({ currentScene }: { currentScene: number }) => (
-  <motion.div
-    className="relative w-44 h-[300px] sm:w-52 sm:h-[360px] md:w-60 md:h-[420px] lg:w-72 lg:h-[500px] bg-gray-900 rounded-[1.5rem] sm:rounded-[2rem] md:rounded-[2.5rem] p-1.5 sm:p-2 md:p-3 shadow-2xl border-2 sm:border-3 md:border-4 border-gray-700 flex-shrink-0"
-    animate={{ y: [0, -8, 0] }}
-    transition={{ duration: DURATION.LOOP_SLOW, repeat: Infinity, ease: EASE_IN_OUT }}
-    style={{
-      boxShadow:
-        "0 15px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(16, 185, 129, 0.25)",
-    }}
-  >
-    <div className="w-full h-full bg-black rounded-[1.25rem] sm:rounded-[1.5rem] md:rounded-[2rem] overflow-hidden relative">
-      <StatusBar />
-      <div className="pt-8 sm:pt-10 md:pt-12 h-full flex flex-col items-center justify-center gap-3 sm:gap-4 md:gap-5 px-3 sm:px-4 md:px-5 pb-4">
-        <SceneIcon scene={scenes[currentScene]} />
-        <SceneText scene={scenes[currentScene]} />
-        <ProgressIndicators currentScene={currentScene} />
-      </div>
-    </div>
-  </motion.div>
-));
-PhoneMockup.displayName = "PhoneMockup";
+FloatingActivities.displayName = "FloatingActivities";
 
 // ============================================================================
-// Overlay Animations
+// Floating Amenities
 // ============================================================================
-const VenueSearchOverlay = memo(() => (
-  <motion.div
-    className="absolute inset-0 pointer-events-none flex items-center justify-center p-4"
-    initial={{ opacity: 0 }}
-    animate={{ opacity: 1 }}
-    exit={{ opacity: 0 }}
-  >
+const FloatingAmenities = memo(({ currentStep }: { currentStep: number }) => {
+  if (currentStep !== 2) return null;
+  
+  const amenities = [
+    { name: "AC", color: "blue" },
+    { name: "WiFi", color: "purple" },
+    { name: "Parking", color: "emerald" },
+    { name: "Showers", color: "blue" },
+    { name: "Lockers", color: "amber" },
+    { name: "Trainer", color: "emerald" },
+  ];
+  
+  return (
     <motion.div
-      className="bg-black/80 rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-5 backdrop-blur-xl border-2 border-emerald-400/40 w-full max-w-xs sm:max-w-sm"
-      initial={{ scale: 0.9, y: 20 }}
-      animate={{ scale: 1, y: 0 }}
-      transition={{ duration: DURATION.NORMAL }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="absolute inset-0 pointer-events-none flex items-center justify-center"
     >
-      <div className="flex items-center gap-2 mb-2 sm:mb-3">
-        <MapPin className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-400" />
-        <h4 className="text-sm sm:text-base md:text-lg font-bold text-emerald-300">
-          Search Nearby Venues
-        </h4>
+      <div className="absolute flex flex-wrap gap-3 max-w-[400px] justify-center" style={{ top: '20%' }}>
+        {amenities.slice(0, 3).map((amenity, index) => {
+          const colorClasses = {
+            emerald: "bg-emerald-50 text-emerald-600 border-emerald-200",
+            blue: "bg-blue-50 text-blue-600 border-blue-200",
+            purple: "bg-purple-50 text-purple-600 border-purple-200",
+            amber: "bg-amber-50 text-amber-600 border-amber-200",
+          };
+          return (
+            <motion.div
+              key={amenity.name}
+              className={`px-4 py-2 rounded-full border shadow-lg font-semibold text-sm ${colorClasses[amenity.color as keyof typeof colorClasses]}`}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 + index * 0.1 }}
+            >
+              ✓ {amenity.name}
+            </motion.div>
+          );
+        })}
       </div>
+      <div className="absolute flex flex-wrap gap-3 max-w-[400px] justify-center" style={{ bottom: '20%' }}>
+        {amenities.slice(3).map((amenity, index) => {
+          const colorClasses = {
+            emerald: "bg-emerald-50 text-emerald-600 border-emerald-200",
+            blue: "bg-blue-50 text-blue-600 border-blue-200",
+            purple: "bg-purple-50 text-purple-600 border-purple-200",
+            amber: "bg-amber-50 text-amber-600 border-amber-200",
+          };
+          return (
+            <motion.div
+              key={amenity.name}
+              className={`px-4 py-2 rounded-full border shadow-lg font-semibold text-sm ${colorClasses[amenity.color as keyof typeof colorClasses]}`}
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 + index * 0.1 }}
+            >
+              ✓ {amenity.name}
+            </motion.div>
+          );
+        })}
+      </div>
+    </motion.div>
+  );
+});
+FloatingAmenities.displayName = "FloatingAmenities";
 
+// ============================================================================
+// Floating Price Tag
+// ============================================================================
+const FloatingPrice = memo(({ currentStep }: { currentStep: number }) => {
+  if (currentStep !== 4) return null;
+  
+  return (
+    <motion.div
+      initial={{ opacity: 0, scale: 0 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0 }}
+      transition={{ duration: 0.5, ease: [0.34, 1.56, 0.64, 1] }}
+      className="absolute top-1/2 right-[15%] -translate-y-1/2"
+    >
       <motion.div
-        className="bg-gray-800/50 rounded-lg p-2 mb-2 sm:mb-3 flex items-center gap-2"
-        animate={{
-          borderColor: [
-            "rgba(16, 185, 129, 0.3)",
-            "rgba(16, 185, 129, 0.6)",
-            "rgba(16, 185, 129, 0.3)",
-          ],
-        }}
-        transition={TRANSITION_PULSE}
-        style={{ border: "2px solid" }}
+        className="bg-white rounded-2xl px-6 py-4 shadow-2xl border border-gray-100"
+        animate={{ y: [0, -10, 0] }}
+        transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+        style={{ boxShadow: '0 20px 60px rgba(0,0,0,0.1)' }}
       >
-        <motion.div
-          className="w-3 h-3 border-2 border-emerald-400 border-t-transparent rounded-full"
-          animate={{ rotate: 360 }}
-          transition={{ duration: DURATION.VERY_SLOW, repeat: Infinity, ease: EASE_LINEAR }}
-        />
-        <span className="text-gray-400 text-[10px] sm:text-xs">
-          Searching within 100m...
-        </span>
+        <p className="text-xs text-[#86868b] mb-1">Starting from</p>
+        <p className="text-3xl font-bold text-[#1d1d1f]">₹99<span className="text-sm font-normal text-[#86868b]">/day</span></p>
+        <div className="flex items-center gap-1 mt-2 text-emerald-500">
+          <CheckCircle2 className="w-3 h-3" />
+          <span className="text-xs font-medium">No hidden fees</span>
+        </div>
       </motion.div>
+    </motion.div>
+  );
+});
+FloatingPrice.displayName = "FloatingPrice";
 
-      <div className="space-y-1.5">
-        {[
-          { name: "Elite Fitness", distance: "45m", price: "₹200/day" },
-          { name: "Zen Yoga Studio", distance: "78m", price: "₹150/day" },
-          { name: "Swim Center", distance: "95m", price: "₹250/day" },
-        ].map((venue, index) => (
+// ============================================================================
+// Floating Venues
+// ============================================================================
+const FloatingVenues = memo(({ currentStep }: { currentStep: number }) => {
+  if (currentStep !== 0) return null;
+  
+  const venues = [
+    { name: "Elite Gym", distance: "200m", rating: "4.8" },
+    { name: "Zen Yoga", distance: "350m", rating: "4.9" },
+    { name: "AquaFit", distance: "500m", rating: "4.7" },
+  ];
+  
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="absolute top-1/2 left-[10%] -translate-y-1/2 hidden lg:block"
+    >
+      <div className="space-y-3">
+        {venues.map((venue, index) => (
           <motion.div
             key={venue.name}
-            className="bg-emerald-500/20 rounded-lg p-2 border border-emerald-400/30"
-            initial={{ opacity: 0, x: -20 }}
+            initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: getStaggerDelay(index, DELAY.MEDIUM_SHORT, DELAY.STAGGER_LARGE) }}
+            transition={{ delay: 0.3 + index * 0.15 }}
+            className="bg-white rounded-xl px-4 py-3 shadow-lg border border-gray-100 flex items-center gap-3"
+            style={{ boxShadow: '0 10px 30px rgba(0,0,0,0.08)' }}
           >
-            <div className="flex justify-between items-start">
-              <div>
-                <div className="text-[10px] sm:text-xs font-semibold text-white">
-                  {venue.name}
-                </div>
-                <div className="text-[9px] sm:text-[10px] text-emerald-300 flex items-center gap-1 mt-0.5">
-                  <MapPin className="w-2 h-2 sm:w-2.5 sm:h-2.5" />
-                  {venue.distance} away
-                </div>
-              </div>
-              <motion.span
-                className="text-[9px] sm:text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/30 text-emerald-300"
-                animate={{ opacity: [1, 0.7, 1] }}
-                transition={TRANSITION_PULSE}
-              >
-                Open
-              </motion.span>
+            <div className="w-10 h-10 bg-emerald-50 rounded-lg flex items-center justify-center">
+              <MapPin className="w-5 h-5 text-emerald-500" />
             </div>
-            <div className="text-[9px] sm:text-[10px] text-gray-400 mt-0.5">
-              {venue.price}
+            <div>
+              <p className="text-sm font-semibold text-[#1d1d1f]">{venue.name}</p>
+              <p className="text-xs text-[#86868b]">{venue.distance} • ⭐ {venue.rating}</p>
             </div>
           </motion.div>
         ))}
       </div>
+    </motion.div>
+  );
+});
+FloatingVenues.displayName = "FloatingVenues";
 
+// ============================================================================
+// Floating Success
+// ============================================================================
+const FloatingSuccess = memo(({ currentStep }: { currentStep: number }) => {
+  if (currentStep !== 5) return null;
+  
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="absolute inset-0 pointer-events-none"
+    >
+      {/* Confetti-like elements */}
+      {[...Array(12)].map((_, i) => (
+        <motion.div
+          key={i}
+          className={`absolute w-3 h-3 rounded-full ${
+            i % 4 === 0 ? 'bg-emerald-400' : 
+            i % 4 === 1 ? 'bg-blue-400' : 
+            i % 4 === 2 ? 'bg-purple-400' : 'bg-amber-400'
+          }`}
+          style={{
+            left: `${15 + (i * 6)}%`,
+            top: `${20 + (i % 3) * 20}%`,
+          }}
+          initial={{ opacity: 0, scale: 0, y: 50 }}
+          animate={{ 
+            opacity: [0, 1, 0], 
+            scale: [0, 1.5, 0],
+            y: [50, -30, -100],
+          }}
+          transition={{ 
+            duration: 2,
+            delay: i * 0.1,
+            repeat: Infinity,
+            repeatDelay: 1,
+          }}
+        />
+      ))}
+      
+      {/* Success badges */}
       <motion.div
-        className="mt-2 sm:mt-3 text-center"
-        animate={{ opacity: [0.6, 1, 0.6] }}
-        transition={TRANSITION_PULSE}
+        className="absolute left-[10%] top-1/3 bg-white rounded-xl px-4 py-3 shadow-lg border border-gray-100"
+        initial={{ opacity: 0, x: -30 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ delay: 0.3 }}
       >
-        <span className="text-[9px] sm:text-[10px] text-emerald-400 flex items-center justify-center gap-1">
-          <motion.div
-            className="w-1.5 h-1.5 bg-emerald-400 rounded-full"
-            animate={{ scale: [1, 1.5, 1], opacity: [1, 0.5, 1] }}
-            transition={{ duration: DURATION.EXTRA_SLOW, repeat: Infinity }}
-          />
-          Showing venues within 100m radius
-        </span>
+        <p className="text-sm font-bold text-[#1d1d1f]">🔥 3 Day Streak!</p>
+        <p className="text-xs text-[#86868b]">Keep it going</p>
+      </motion.div>
+      
+      <motion.div
+        className="absolute right-[10%] top-1/4 bg-white rounded-xl px-4 py-3 shadow-lg border border-gray-100"
+        initial={{ opacity: 0, x: 30 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ delay: 0.5 }}
+      >
+        <p className="text-sm font-bold text-emerald-500">+50 Points</p>
+        <p className="text-xs text-[#86868b]">Workout complete</p>
       </motion.div>
     </motion.div>
-  </motion.div>
-));
-VenueSearchOverlay.displayName = "VenueSearchOverlay";
+  );
+});
+FloatingSuccess.displayName = "FloatingSuccess";
 
-const ActivitySelectionOverlay = memo(() => (
-  <motion.div
-    className="absolute inset-0 pointer-events-none flex items-center justify-center p-4"
-    initial={{ opacity: 0 }}
-    animate={{ opacity: 1 }}
-    exit={{ opacity: 0 }}
-  >
-    <div className="grid grid-cols-2 gap-2 sm:gap-3 max-w-[200px] sm:max-w-[280px]">
-      {[
-        { Icon: Activity, label: "Gym", color: "emerald" },
-        { Icon: Leaf, label: "Yoga", color: "emerald" },
-        { Icon: Target, label: "Sports", color: "gold" },
-        { Icon: Waves, label: "Swim", color: "emerald" },
-      ].map(({ Icon, label, color }, index) => (
-        <motion.div
-          key={label}
-          className={`w-16 h-16 sm:w-20 sm:h-20 rounded-xl flex flex-col items-center justify-center gap-1 ${
-            color === "emerald"
-              ? "bg-emerald-500/30 border-2 border-emerald-400/60"
-              : "bg-gold-500/30 border-2 border-gold-400/60"
-          }`}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: getStaggerDelay(index, 0, DELAY.STAGGER_LARGE), ...SPRING_BOUNCY }}
-          style={{
-            boxShadow:
-              color === "emerald"
-                ? "0 0 20px rgba(16, 185, 129, 0.5)"
-                : "0 0 20px rgba(212, 175, 55, 0.5)",
-          }}
-        >
-          <Icon
-            className={`w-6 h-6 sm:w-8 sm:h-8 ${
-              color === "emerald" ? "text-emerald-300" : "text-gold-300"
+// ============================================================================
+// Bottom Journey Flow
+// ============================================================================
+const JourneyFlow = memo(({ currentStep }: { currentStep: number }) => (
+  <div className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden md:flex items-center gap-2">
+    {journeySteps.map((step, index) => {
+      const Icon = step.icon;
+      const isActive = index === currentStep;
+      const isPast = index < currentStep;
+      
+      return (
+        <div key={step.id} className="flex items-center">
+          <motion.div
+            className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 ${
+              isActive 
+                ? 'bg-emerald-500 shadow-lg' 
+                : isPast 
+                  ? 'bg-emerald-100' 
+                  : 'bg-gray-100'
             }`}
-          />
-          <span
-            className={`text-[10px] sm:text-xs font-semibold ${
-              color === "emerald" ? "text-emerald-300" : "text-gold-300"
-            }`}
+            animate={isActive ? { scale: [1, 1.1, 1] } : {}}
+            transition={{ duration: 1, repeat: Infinity }}
           >
-            {label}
-          </span>
-        </motion.div>
-      ))}
-    </div>
-  </motion.div>
+            <Icon className={`w-5 h-5 ${isActive ? 'text-white' : isPast ? 'text-emerald-500' : 'text-gray-400'}`} />
+          </motion.div>
+          {index < journeySteps.length - 1 && (
+            <div className="flex items-center mx-2">
+              <motion.div
+                className={`h-0.5 w-8 transition-all duration-500 ${isPast ? 'bg-emerald-500' : 'bg-gray-200'}`}
+              />
+              <ArrowRight className={`w-4 h-4 ${isPast ? 'text-emerald-500' : 'text-gray-300'}`} />
+            </div>
+          )}
+        </div>
+      );
+    })}
+  </div>
 ));
-ActivitySelectionOverlay.displayName = "ActivitySelectionOverlay";
-
-const QRScanOverlay = memo(() => (
-  <motion.div
-    className="absolute inset-0 pointer-events-none flex items-center justify-center"
-    initial={{ opacity: 0 }}
-    animate={{ opacity: 1 }}
-    exit={{ opacity: 0 }}
-  >
-    <motion.div
-      className="absolute w-40 h-40 sm:w-52 sm:h-52 md:w-64 md:h-64 border-3 sm:border-4 border-emerald-400 rounded-lg"
-      animate={{ scale: [1, 1.2, 1], opacity: [0.6, 1, 0.6] }}
-      transition={TRANSITION_PULSE}
-      style={{
-        boxShadow:
-          "0 0 30px rgba(16, 185, 129, 0.7), 0 0 60px rgba(16, 185, 129, 0.3)",
-      }}
-    />
-    <motion.div
-      className="absolute w-40 sm:w-52 md:w-64 h-1.5 sm:h-2 bg-emerald-400"
-      animate={{ y: [-80, 80, -80] }}
-      transition={{ duration: DURATION.LOOP_FAST, repeat: Infinity, ease: EASE_LINEAR }}
-      style={{ boxShadow: "0 0 15px rgba(16, 185, 129, 1)" }}
-    />
-  </motion.div>
-));
-QRScanOverlay.displayName = "QRScanOverlay";
-
-const AmenitiesOverlay = memo(() => (
-  <motion.div
-    className="absolute inset-0 pointer-events-none flex items-center justify-center p-4"
-    initial={{ opacity: 0 }}
-    animate={{ opacity: 1 }}
-    exit={{ opacity: 0 }}
-  >
-    <div className="flex flex-wrap gap-2 sm:gap-3 justify-center max-w-[280px]">
-      {["AC", "WiFi", "Parking", "Shower"].map((amenity, index) => (
-        <motion.div
-          key={amenity}
-          className="px-3 sm:px-4 py-1.5 sm:py-2 bg-gold-500/30 border-2 border-gold-400/60 rounded-lg text-gold-300 font-bold text-xs sm:text-sm"
-          initial={{ opacity: 0, scale: 0 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: getStaggerDelay(index, 0, DELAY.SHORT), ...SPRING_BOUNCY }}
-          style={{ boxShadow: "0 0 15px rgba(212, 175, 55, 0.5)" }}
-        >
-          {amenity}
-        </motion.div>
-      ))}
-    </div>
-  </motion.div>
-));
-AmenitiesOverlay.displayName = "AmenitiesOverlay";
-
-const PaymentOverlay = memo(() => (
-  <motion.div
-    className="absolute inset-0 pointer-events-none flex items-center justify-center"
-    initial={{ opacity: 0 }}
-    animate={{ opacity: 1 }}
-    exit={{ opacity: 0 }}
-  >
-    <motion.div
-      className="text-4xl sm:text-5xl md:text-6xl font-bold text-gold-300"
-      animate={{ scale: [1, 1.2, 1], opacity: [0.8, 1, 0.8] }}
-      transition={{ duration: DURATION.EXTRA_SLOW, repeat: Infinity, ease: EASE_IN_OUT }}
-      style={{
-        textShadow:
-          "0 0 30px rgba(212, 175, 55, 0.7), 0 0 60px rgba(212, 175, 55, 0.3)",
-      }}
-    >
-      ₹99
-    </motion.div>
-  </motion.div>
-));
-PaymentOverlay.displayName = "PaymentOverlay";
-
-const StreakOverlay = memo(() => (
-  <motion.div
-    className="absolute inset-0 pointer-events-none flex items-center justify-center p-4"
-    initial={{ opacity: 0 }}
-    animate={{ opacity: 1 }}
-    exit={{ opacity: 0 }}
-  >
-    <motion.div
-      className="text-center"
-      animate={{ scale: [1, 1.15, 1] }}
-      transition={{ duration: DURATION.EXTRA_SLOW, repeat: Infinity, ease: EASE_IN_OUT }}
-    >
-      <div
-        className="text-2xl sm:text-3xl md:text-4xl font-bold text-emerald-300 mb-2"
-        style={{ textShadow: "0 0 25px rgba(16, 185, 129, 0.7)" }}
-      >
-        🔥 7 Day Streak
-      </div>
-      <div className="text-sm sm:text-base md:text-lg text-emerald-400 font-semibold">
-        Keep it going!
-      </div>
-    </motion.div>
-  </motion.div>
-));
-StreakOverlay.displayName = "StreakOverlay";
+JourneyFlow.displayName = "JourneyFlow";
 
 // ============================================================================
 // Main Component
 // ============================================================================
 export default function AnimatedVideoBackground() {
-  const [currentScene, setCurrentScene] = useState(0);
+  const [currentStep, setCurrentStep] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentScene((prev) => (prev + 1) % scenes.length);
-    }, 3500);
+      setCurrentStep((prev) => (prev + 1) % journeySteps.length);
+    }, 4000);
 
     return () => clearInterval(interval);
   }, []);
 
   return (
-    <div className="absolute inset-0 w-full h-full overflow-hidden bg-black">
-      <AnimatedGradientBackground />
-      <GridPattern />
-
-      {/* Main Animation Scene - Properly Contained */}
-      <div className="absolute inset-0 flex items-center justify-center p-4 sm:p-6 md:p-8">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={currentScene}
-            initial={{ opacity: 0, scale: 0.8, y: 30 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.8, y: -30 }}
-            transition={{ duration: DURATION.SLOW, ease: EASE_IN_OUT }}
-            className="flex flex-col items-center"
-          >
-            <PhoneMockup currentScene={currentScene} />
-          </motion.div>
-        </AnimatePresence>
+    <div className="absolute inset-0 w-full h-full overflow-hidden bg-[#fafafa]">
+      <FloatingOrbs />
+      
+      {/* Center Content */}
+      <div className="absolute inset-0 flex items-center justify-center">
+        <CenterDisplay currentStep={currentStep} />
       </div>
 
-      {/* Overlay Animations - Contained within bounds */}
+      {/* Contextual Floating Elements */}
       <AnimatePresence>
-        {currentScene === 1 && <VenueSearchOverlay />}
+        <FloatingVenues currentStep={currentStep} />
       </AnimatePresence>
       <AnimatePresence>
-        {currentScene === 2 && <ActivitySelectionOverlay />}
+        <FloatingActivities currentStep={currentStep} />
       </AnimatePresence>
       <AnimatePresence>
-        {currentScene === 3 && <QRScanOverlay />}
+        <FloatingAmenities currentStep={currentStep} />
       </AnimatePresence>
       <AnimatePresence>
-        {currentScene === 4 && <AmenitiesOverlay />}
+        <FloatingPrice currentStep={currentStep} />
       </AnimatePresence>
       <AnimatePresence>
-        {currentScene === 6 && <PaymentOverlay />}
+        <FloatingSuccess currentStep={currentStep} />
       </AnimatePresence>
-      <AnimatePresence>
-        {currentScene === 7 && <StreakOverlay />}
-      </AnimatePresence>
+
+      {/* Bottom Journey Flow */}
+      <JourneyFlow currentStep={currentStep} />
     </div>
   );
 }
