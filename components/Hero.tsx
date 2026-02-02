@@ -52,39 +52,75 @@ const HeroDescription = memo(() => (
 HeroDescription.displayName = "HeroDescription";
 
 const PrimaryButton = memo(
-  ({ href, children }: { href: string; children: React.ReactNode }) => (
-    <motion.a
-      href={href}
-      whileHover={{ scale: 1.02 }}
-      whileTap={{ scale: 0.98 }}
-      className="inline-flex items-center justify-center px-8 py-4 bg-[#1d1d1f] text-white font-medium rounded-full text-lg transition-all duration-200 hover:bg-[#000] min-w-[180px]"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, delay: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
-    >
-      {children}
-    </motion.a>
-  )
+  ({ href, children }: { href: string; children: React.ReactNode }) => {
+    const handleClick = (e: React.MouseEvent) => {
+      e.preventDefault()
+      const sectionId = href.replace('#', '')
+      const element = document.getElementById(sectionId)
+      if (element) {
+        const headerOffset = 60
+        const elementTop = element.offsetTop
+        const scrollPosition = elementTop - headerOffset
+        window.scrollTo({
+          top: scrollPosition,
+          behavior: 'smooth'
+        })
+      }
+    }
+
+    return (
+      <motion.a
+        href={href}
+        onClick={handleClick}
+        whileHover={{ scale: 1.02 }}
+        whileTap={{ scale: 0.98 }}
+        className="inline-flex items-center justify-center px-8 py-4 bg-[#1d1d1f] text-white font-medium rounded-full text-lg transition-all duration-200 hover:bg-[#000] min-w-[180px]"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
+      >
+        {children}
+      </motion.a>
+    )
+  }
 );
 PrimaryButton.displayName = "PrimaryButton";
 
 const SecondaryButton = memo(
-  ({ href, children }: { href: string; children: React.ReactNode }) => (
-    <motion.a
-      href={href}
-      whileHover={{ scale: 1.02 }}
-      whileTap={{ scale: 0.98 }}
-      className="inline-flex items-center justify-center px-8 py-4 bg-transparent text-emerald-600 font-medium rounded-full text-lg transition-all duration-200 hover:bg-emerald-50 min-w-[180px]"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, delay: 0.35, ease: [0.25, 0.1, 0.25, 1] }}
-    >
-      {children}
-      <svg className="ml-2 w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-      </svg>
-    </motion.a>
-  )
+  ({ href, children }: { href: string; children: React.ReactNode }) => {
+    const handleClick = (e: React.MouseEvent) => {
+      e.preventDefault()
+      const sectionId = href.replace('#', '')
+      const element = document.getElementById(sectionId)
+      if (element) {
+        const headerOffset = 60
+        const elementTop = element.offsetTop
+        const scrollPosition = elementTop - headerOffset
+        window.scrollTo({
+          top: scrollPosition,
+          behavior: 'smooth'
+        })
+      }
+    }
+
+    return (
+      <motion.a
+        href={href}
+        onClick={handleClick}
+        whileHover={{ scale: 1.02 }}
+        whileTap={{ scale: 0.98 }}
+        className="inline-flex items-center justify-center px-8 py-4 bg-transparent text-emerald-600 font-medium rounded-full text-lg transition-all duration-200 hover:bg-emerald-50 min-w-[180px]"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 0.35, ease: [0.25, 0.1, 0.25, 1] }}
+      >
+        {children}
+        <svg className="ml-2 w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+        </svg>
+      </motion.a>
+    )
+  }
 );
 SecondaryButton.displayName = "SecondaryButton";
 

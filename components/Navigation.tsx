@@ -36,22 +36,44 @@ export default function Navigation({ isScrolled }: NavigationProps) {
   const navLinks = [
     { name: 'Home', href: '/', sectionId: null },
     { name: 'About', href: '/', sectionId: 'about' },
-    { name: 'Features', href: '/features', sectionId: null },
     { name: 'Apps', href: '/', sectionId: 'apps' },
     { name: 'Network', href: '/', sectionId: 'cities' },
     { name: 'Contact', href: '/', sectionId: 'contact' },
   ]
 
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
   const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId)
-    if (element) {
-      // CSS scroll-margin-top handles the fixed header offset
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' })
-    }
+    // Small delay to ensure any transitions complete
+    setTimeout(() => {
+      const element = document.getElementById(sectionId)
+      if (element) {
+        const headerOffset = 60
+        const elementTop = element.offsetTop
+        const scrollPosition = elementTop - headerOffset
+
+        window.scrollTo({
+          top: scrollPosition,
+          behavior: 'smooth'
+        })
+      }
+    }, 50)
   }
 
   const handleNavClick = (link: typeof navLinks[0]) => {
     setIsMobileMenuOpen(false)
+    
+    // Home button - scroll to top
+    if (link.name === 'Home') {
+      if (isHomePage) {
+        scrollToTop()
+      } else {
+        router.push('/')
+      }
+      return
+    }
     
     if (link.sectionId) {
       // Has a section to scroll to
@@ -80,46 +102,31 @@ export default function Navigation({ isScrolled }: NavigationProps) {
         transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
         className="fixed top-0 left-0 right-0 z-50"
       >
-        {/* Animated Announcement Bar */}
-        <AnimatePresence>
-          {!isScrolled && (
-            <motion.div
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: 'auto', opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              className="bg-[#1d1d1f] text-white overflow-hidden"
-            >
-              <div className="max-w-7xl mx-auto px-4 py-2.5 flex items-center justify-center">
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={announcementIndex}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    transition={{ duration: 0.3 }}
-                    className="flex items-center gap-2 text-sm"
-                  >
-                    <CurrentIcon className="w-4 h-4 text-emerald-400" />
-                    <span className="font-medium">{announcements[announcementIndex].text}</span>
-                  </motion.div>
-                </AnimatePresence>
-              </div>
-              
-              {/* Progress indicators */}
-              <div className="flex justify-center gap-1.5 pb-2">
-                {announcements.map((_, index) => (
-                  <motion.div
-                    key={index}
-                    className={`h-1 rounded-full transition-all duration-300 ${
-                      index === announcementIndex ? 'w-6 bg-emerald-400' : 'w-1.5 bg-white/30'
-                    }`}
-                  />
-                ))}
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+        {/* Announcement Bar - Hidden when scrolled */}
+        <div 
+          className={`bg-[#1d1d1f] text-white overflow-hidden transition-all duration-300 ${
+            isScrolled ? 'h-0 opacity-0' : 'h-auto opacity-100'
+          }`}
+        >
+          <div className="max-w-7xl mx-auto px-4 py-2.5 flex items-center justify-center">
+            <div className="flex items-center gap-2 text-sm">
+              <CurrentIcon className="w-4 h-4 text-emerald-400" />
+              <span className="font-medium">{announcements[announcementIndex].text}</span>
+            </div>
+          </div>
+          
+          {/* Progress indicators */}
+          <div className="flex justify-center gap-1.5 pb-2">
+            {announcements.map((_, index) => (
+              <div
+                key={index}
+                className={`h-1 rounded-full transition-all duration-300 ${
+                  index === announcementIndex ? 'w-6 bg-emerald-400' : 'w-1.5 bg-white/30'
+                }`}
+              />
+            ))}
+          </div>
+        </div>
 
         {/* Main Navigation */}
         <div className={`transition-all duration-500 ${
