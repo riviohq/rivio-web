@@ -78,25 +78,33 @@ export default function Navigation({ isScrolled }: NavigationProps) {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [isHomePage])
 
+  // Simple crossfade - no black screen
+  const crossfadeTransition = (scrollTo: number) => {
+    const main = document.querySelector('main')
+    if (main) {
+      main.style.transition = 'opacity 0.25s ease'
+      main.style.opacity = '0.3'
+      window.scrollTo({ top: scrollTo, behavior: 'instant' as ScrollBehavior })
+      
+      requestAnimationFrame(() => {
+        main.style.opacity = '1'
+      })
+    } else {
+      window.scrollTo({ top: scrollTo, behavior: 'instant' as ScrollBehavior })
+    }
+  }
+
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
+    crossfadeTransition(0)
   }
 
   const scrollToSection = (sectionId: string) => {
-    // Small delay to ensure any transitions complete
-    setTimeout(() => {
-      const element = document.getElementById(sectionId)
-      if (element) {
-        const headerOffset = 60
-        const elementTop = element.offsetTop
-        const scrollPosition = elementTop - headerOffset
-
-        window.scrollTo({
-          top: scrollPosition,
-          behavior: 'smooth'
-        })
-      }
-    }, 50)
+    const element = document.getElementById(sectionId)
+    if (element) {
+      const headerOffset = 60
+      const scrollPosition = element.offsetTop - headerOffset
+      crossfadeTransition(scrollPosition)
+    }
   }
 
   const handleNavClick = (link: typeof navLinks[0]) => {
