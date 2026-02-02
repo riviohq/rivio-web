@@ -15,6 +15,7 @@ interface NavigationProps {
 export default function Navigation({ isScrolled }: NavigationProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [announcementIndex, setAnnouncementIndex] = useState(0)
+  const [activeSection, setActiveSection] = useState<string | null>(null)
   const pathname = usePathname()
   const router = useRouter()
   const isHomePage = pathname === '/'
@@ -25,13 +26,6 @@ export default function Navigation({ isScrolled }: NavigationProps) {
     { icon: Zap, text: "Pay per day • No contracts • No commitments" },
   ]
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setAnnouncementIndex((prev) => (prev + 1) % announcements.length)
-    }, 4000)
-    return () => clearInterval(interval)
-  }, [announcements.length])
-
   // Navigation links in order of page content flow
   const navLinks = [
     { name: 'Home', href: '/', sectionId: null },
@@ -40,6 +34,49 @@ export default function Navigation({ isScrolled }: NavigationProps) {
     { name: 'Network', href: '/', sectionId: 'cities' },
     { name: 'Contact', href: '/', sectionId: 'contact' },
   ]
+
+  // Announcement rotation
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setAnnouncementIndex((prev) => (prev + 1) % announcements.length)
+    }, 4000)
+    return () => clearInterval(interval)
+  }, [announcements.length])
+
+  // Scroll spy - track which section is in view
+  useEffect(() => {
+    if (!isHomePage) return
+
+    const sectionIds = ['about', 'apps', 'cities', 'contact']
+    
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY + 150 // Offset for header
+
+      // Check if at top of page
+      if (scrollPosition < 300) {
+        setActiveSection(null) // Home
+        return
+      }
+
+      // Find which section is currently in view
+      for (let i = sectionIds.length - 1; i >= 0; i--) {
+        const element = document.getElementById(sectionIds[i])
+        if (element) {
+          const offsetTop = element.offsetTop
+          if (scrollPosition >= offsetTop) {
+            setActiveSection(sectionIds[i])
+            return
+          }
+        }
+      }
+    }
+
+    // Initial check
+    handleScroll()
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [isHomePage])
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -169,25 +206,33 @@ export default function Navigation({ isScrolled }: NavigationProps) {
               {/* Desktop Navigation - Center */}
               <div className="hidden lg:flex items-center absolute left-1/2 -translate-x-1/2">
                 <div className="flex items-center gap-1 px-1.5 py-1.5 rounded-full bg-gray-100/80 backdrop-blur-sm">
-                  {navLinks.map((link, index) => (
-                    <motion.button
-                      key={link.name}
-                      type="button"
-                      initial={{ opacity: 0, y: -10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: getStaggerDelay(index, 0.1, 0.05) }}
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                      onClick={() => handleNavClick(link)}
-                      className={`px-4 py-2 text-sm font-medium rounded-full transition-all duration-200 ${
-                        pathname === link.href && !link.sectionId
-                          ? 'bg-[#1d1d1f] text-white shadow-md'
-                          : 'text-[#1d1d1f] hover:bg-white hover:shadow-sm'
-                      }`}
-                    >
-                      {link.name}
-                    </motion.button>
-                  ))}
+                  {navLinks.map((link, index) => {
+                    // Determine if this nav item is active
+                    const isActive = isHomePage && (
+                      (link.name === 'Home' && activeSection === null) ||
+                      (link.sectionId && activeSection === link.sectionId)
+                    )
+                    
+                    return (
+                      <motion.button
+                        key={link.name}
+                        type="button"
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: getStaggerDelay(index, 0.1, 0.05) }}
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        onClick={() => handleNavClick(link)}
+                        className={`px-4 py-2 text-sm font-medium rounded-full transition-all duration-300 ${
+                          isActive
+                            ? 'bg-[#1d1d1f] text-white shadow-md'
+                            : 'text-[#1d1d1f] hover:bg-white hover:shadow-sm'
+                        }`}
+                      >
+                        {link.name}
+                      </motion.button>
+                    )
+                  })}
                 </div>
               </div>
 
@@ -326,24 +371,43 @@ export default function Navigation({ isScrolled }: NavigationProps) {
               {/* Mobile Menu Links */}
               <div className="flex-1 overflow-y-auto p-5">
                 <div className="space-y-1">
-                  {navLinks.map((link, index) => (
-                    <motion.button
-                      key={link.name}
-                      type="button"
-                      initial={{ opacity: 0, x: 20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.1 + index * 0.05 }}
-                      onClick={() => handleNavClick(link)}
-                      className="flex items-center justify-between w-full px-4 py-4 text-[#1d1d1f] hover:bg-emerald-50 rounded-xl transition-all duration-200 text-left group"
-                    >
-                      <span className="font-medium text-base">{link.name}</span>
-                      <div className="w-8 h-8 rounded-full bg-gray-100 group-hover:bg-emerald-100 flex items-center justify-center transition-colors">
-                        <motion.div
-                          className="w-1.5 h-1.5 rounded-full bg-gray-400 group-hover:bg-emerald-500 transition-colors"
-                        />
-                      </div>
-                    </motion.button>
-                  ))}
+                  {navLinks.map((link, index) => {
+                    const isActive = isHomePage && (
+                      (link.name === 'Home' && activeSection === null) ||
+                      (link.sectionId && activeSection === link.sectionId)
+                    )
+                    
+                    return (
+                      <motion.button
+                        key={link.name}
+                        type="button"
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.1 + index * 0.05 }}
+                        onClick={() => handleNavClick(link)}
+                        className={`flex items-center justify-between w-full px-4 py-4 rounded-xl transition-all duration-200 text-left group ${
+                          isActive 
+                            ? 'bg-emerald-50 text-emerald-600' 
+                            : 'text-[#1d1d1f] hover:bg-gray-50'
+                        }`}
+                      >
+                        <span className="font-medium text-base">{link.name}</span>
+                        <div className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors ${
+                          isActive 
+                            ? 'bg-emerald-500' 
+                            : 'bg-gray-100 group-hover:bg-emerald-100'
+                        }`}>
+                          <div
+                            className={`w-1.5 h-1.5 rounded-full transition-colors ${
+                              isActive 
+                                ? 'bg-white' 
+                                : 'bg-gray-400 group-hover:bg-emerald-500'
+                            }`}
+                          />
+                        </div>
+                      </motion.button>
+                    )
+                  })}
                 </div>
 
                 {/* Features highlight */}
