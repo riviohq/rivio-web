@@ -51,17 +51,24 @@ const HeroDescription = memo(() => (
 ));
 HeroDescription.displayName = "HeroDescription";
 
-// Simple crossfade - no black screen
-const crossfadeTransition = (scrollTo: number) => {
+// Ultra smooth transition - very gentle fade
+const smoothTransition = (scrollTo: number) => {
   const main = document.querySelector('main')
   if (main) {
-    main.style.transition = 'opacity 0.25s ease'
-    main.style.opacity = '0.3'
-    window.scrollTo({ top: scrollTo, behavior: 'instant' as ScrollBehavior })
+    // Gentle fade out
+    main.style.transition = 'opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1)'
+    main.style.opacity = '0.7'
     
-    requestAnimationFrame(() => {
-      main.style.opacity = '1'
-    })
+    // Wait for fade, then jump and fade back
+    setTimeout(() => {
+      window.scrollTo({ top: scrollTo, behavior: 'instant' as ScrollBehavior })
+      
+      // Smooth fade back in
+      setTimeout(() => {
+        main.style.transition = 'opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1)'
+        main.style.opacity = '1'
+      }, 50)
+    }, 200)
   } else {
     window.scrollTo({ top: scrollTo, behavior: 'instant' as ScrollBehavior })
   }
@@ -72,7 +79,7 @@ const scrollToElement = (sectionId: string) => {
   if (element) {
     const headerOffset = 60
     const scrollPosition = element.offsetTop - headerOffset
-    crossfadeTransition(scrollPosition)
+    smoothTransition(scrollPosition)
   }
 }
 
