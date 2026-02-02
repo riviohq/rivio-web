@@ -78,24 +78,31 @@ export default function Navigation({ isScrolled }: NavigationProps) {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [isHomePage])
 
-  // Simple crossfade - no black screen
-  const crossfadeTransition = (scrollTo: number) => {
+  // Ultra smooth transition - very gentle fade
+  const smoothTransition = (scrollTo: number) => {
     const main = document.querySelector('main')
     if (main) {
-      main.style.transition = 'opacity 0.25s ease'
-      main.style.opacity = '0.3'
-      window.scrollTo({ top: scrollTo, behavior: 'instant' as ScrollBehavior })
+      // Gentle fade out
+      main.style.transition = 'opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1)'
+      main.style.opacity = '0.7'
       
-      requestAnimationFrame(() => {
-        main.style.opacity = '1'
-      })
+      // Wait for fade, then jump and fade back
+      setTimeout(() => {
+        window.scrollTo({ top: scrollTo, behavior: 'instant' as ScrollBehavior })
+        
+        // Smooth fade back in
+        setTimeout(() => {
+          main.style.transition = 'opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1)'
+          main.style.opacity = '1'
+        }, 50)
+      }, 200)
     } else {
       window.scrollTo({ top: scrollTo, behavior: 'instant' as ScrollBehavior })
     }
   }
 
   const scrollToTop = () => {
-    crossfadeTransition(0)
+    smoothTransition(0)
   }
 
   const scrollToSection = (sectionId: string) => {
@@ -103,38 +110,48 @@ export default function Navigation({ isScrolled }: NavigationProps) {
     if (element) {
       const headerOffset = 60
       const scrollPosition = element.offsetTop - headerOffset
-      crossfadeTransition(scrollPosition)
+      smoothTransition(scrollPosition)
     }
   }
 
   const handleNavClick = (link: typeof navLinks[0]) => {
-    setIsMobileMenuOpen(false)
+    const isMobile = isMobileMenuOpen
     
-    // Home button - scroll to top
-    if (link.name === 'Home') {
-      if (isHomePage) {
-        scrollToTop()
-      } else {
-        router.push('/')
-      }
-      return
+    // Close mobile menu first with smooth animation
+    if (isMobile) {
+      setIsMobileMenuOpen(false)
     }
     
-    if (link.sectionId) {
-      // Has a section to scroll to
-      if (isHomePage) {
-        scrollToSection(link.sectionId)
-      } else {
-        // Navigate to home first, then scroll
-        router.push('/')
-        setTimeout(() => {
-          scrollToSection(link.sectionId!)
-        }, 600)
+    // Delay navigation to let menu close smoothly
+    const delay = isMobile ? 300 : 0
+    
+    setTimeout(() => {
+      // Home button - scroll to top
+      if (link.name === 'Home') {
+        if (isHomePage) {
+          scrollToTop()
+        } else {
+          router.push('/')
+        }
+        return
       }
-    } else {
-      // Regular page navigation
-      router.push(link.href)
-    }
+      
+      if (link.sectionId) {
+        // Has a section to scroll to
+        if (isHomePage) {
+          scrollToSection(link.sectionId)
+        } else {
+          // Navigate to home first, then scroll
+          router.push('/')
+          setTimeout(() => {
+            scrollToSection(link.sectionId!)
+          }, 600)
+        }
+      } else {
+        // Regular page navigation
+        router.push(link.href)
+      }
+    }, delay)
   }
 
   const CurrentIcon = announcements[announcementIndex].icon
