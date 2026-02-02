@@ -51,21 +51,37 @@ const HeroDescription = memo(() => (
 ));
 HeroDescription.displayName = "HeroDescription";
 
+// Simple crossfade - no black screen
+const crossfadeTransition = (scrollTo: number) => {
+  const main = document.querySelector('main')
+  if (main) {
+    main.style.transition = 'opacity 0.25s ease'
+    main.style.opacity = '0.3'
+    window.scrollTo({ top: scrollTo, behavior: 'instant' as ScrollBehavior })
+    
+    requestAnimationFrame(() => {
+      main.style.opacity = '1'
+    })
+  } else {
+    window.scrollTo({ top: scrollTo, behavior: 'instant' as ScrollBehavior })
+  }
+}
+
+const scrollToElement = (sectionId: string) => {
+  const element = document.getElementById(sectionId)
+  if (element) {
+    const headerOffset = 60
+    const scrollPosition = element.offsetTop - headerOffset
+    crossfadeTransition(scrollPosition)
+  }
+}
+
 const PrimaryButton = memo(
   ({ href, children }: { href: string; children: React.ReactNode }) => {
     const handleClick = (e: React.MouseEvent) => {
       e.preventDefault()
       const sectionId = href.replace('#', '')
-      const element = document.getElementById(sectionId)
-      if (element) {
-        const headerOffset = 60
-        const elementTop = element.offsetTop
-        const scrollPosition = elementTop - headerOffset
-        window.scrollTo({
-          top: scrollPosition,
-          behavior: 'smooth'
-        })
-      }
+      scrollToElement(sectionId)
     }
 
     return (
@@ -91,16 +107,7 @@ const SecondaryButton = memo(
     const handleClick = (e: React.MouseEvent) => {
       e.preventDefault()
       const sectionId = href.replace('#', '')
-      const element = document.getElementById(sectionId)
-      if (element) {
-        const headerOffset = 60
-        const elementTop = element.offsetTop
-        const scrollPosition = elementTop - headerOffset
-        window.scrollTo({
-          top: scrollPosition,
-          behavior: 'smooth'
-        })
-      }
+      scrollToElement(sectionId)
     }
 
     return (
