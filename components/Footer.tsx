@@ -33,19 +33,25 @@ export default function Footer() {
   ]
 
   return (
-    <footer className="bg-black text-white border-t border-gray-800">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+    <footer className="relative text-white border-t border-emerald-900/50 overflow-hidden">
+      {/* Dark gradient background */}
+      <div className="absolute inset-0 bg-gradient-to-b from-gray-900 to-black" />
+      
+      {/* Subtle emerald glow */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-emerald-500/10 rounded-full blur-[100px]" />
+      
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
           {/* Brand */}
           <div>
-            <h3 className="text-2xl font-bold text-emerald-500 mb-2">RIVIO</h3>
-            <p className="text-sm text-gray-500 mb-3">Gym, Yoga & Sports Activities</p>
-            <p className="text-gray-400 mb-4 text-sm leading-relaxed">
+            <h3 className="text-2xl font-bold text-emerald-400 mb-2">RIVIO</h3>
+            <p className="text-sm text-gray-400 mb-3">Gym, Yoga & Sports Activities</p>
+            <p className="text-gray-300 mb-4 text-sm leading-relaxed">
               Your route to movement. RIVIO is a universal fitness access platform that eliminates the need for multiple subscriptions. Pay-per-day for instant access to any gym, yoga studio, or wellness center. Build streaks, compete on leaderboards, and unlock achievements—fitness made fun and motivating.
             </p>
             <div className="flex items-center gap-2 text-gray-400 text-sm">
               <Mail className="w-4 h-4" />
-              <a href="mailto:support@rivio.com" className="hover:text-emerald-500 transition-colors">
+              <a href="mailto:support@rivio.com" className="hover:text-emerald-400 transition-colors">
                 support@rivio.com
               </a>
             </div>
@@ -59,7 +65,7 @@ export default function Footer() {
                 <li key={link.name}>
                   <Link
                     href={link.href}
-                    className="text-gray-400 hover:text-emerald-500 transition-colors text-sm"
+                    className="text-gray-400 hover:text-emerald-400 transition-colors text-sm"
                   >
                     {link.name}
                   </Link>
@@ -97,7 +103,7 @@ export default function Footer() {
                   rel="noopener noreferrer"
                   whileHover={{ scale: 1.1, y: -2 }}
                   whileTap={{ scale: 0.95 }}
-                  className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-emerald-500 transition-colors"
+                  className="w-10 h-10 bg-gray-800 border border-gray-700 rounded-lg flex items-center justify-center hover:bg-emerald-500/20 hover:border-emerald-500/50 transition-all duration-300 text-gray-300 hover:text-emerald-400"
                   aria-label={social.label}
                 >
                   <social.icon className="w-5 h-5" />
@@ -106,7 +112,7 @@ export default function Footer() {
             </div>
             <div className="text-gray-400 text-sm">
               <p className="mb-2">Need help?</p>
-              <a href="mailto:support@rivio.com" className="text-emerald-500 hover:text-emerald-400">
+              <a href="mailto:support@rivio.com" className="text-emerald-400 hover:text-emerald-300">
                 Contact Support
               </a>
             </div>
@@ -115,17 +121,17 @@ export default function Footer() {
 
         {/* Bottom Bar */}
         <div className="border-t border-gray-800 pt-8 mt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4 md:gap-0 text-sm">
-            <div className="flex flex-col md:flex-row items-center gap-4 text-gray-500">
-              <p className="whitespace-nowrap">© {currentYear} RIVIO APP. All rights reserved.</p>
-              <span className="hidden md:inline text-gray-700 mx-2">•</span>
-              <p className="whitespace-nowrap">RIVIO APP is a registered trademark.</p>
-            </div>
-            <div className="flex flex-wrap items-center justify-center gap-4">
-              <p className="text-gray-500 whitespace-nowrap">Licensed under applicable laws.</p>
-              <span className="text-gray-700 mx-2">•</span>
-              <a href="mailto:legal@rivio.com" className="text-gray-500 hover:text-gray-300 transition-colors whitespace-nowrap">
-                Legal Inquiries
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-500">
+            <p>© {currentYear} RIVIO. All rights reserved.</p>
+            <div className="flex items-center gap-6">
+              <Link href="/members/privacy-policy" className="hover:text-gray-300 transition-colors">
+                Privacy
+              </Link>
+              <Link href="/members/terms-conditions" className="hover:text-gray-300 transition-colors">
+                Terms
+              </Link>
+              <a href="mailto:legal@rivioapp.com" className="hover:text-gray-300 transition-colors">
+                Legal
               </a>
             </div>
           </div>
