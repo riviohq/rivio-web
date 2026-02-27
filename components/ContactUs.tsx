@@ -70,15 +70,15 @@ const BenefitCard = ({
       initial={{ opacity: 0, y: 20 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.5, delay: 0.3 + index * 0.1 }}
-      className={`${colors.bg} rounded-2xl p-5 border border-gray-100`}
+      className={`${colors.bg} rounded-2xl p-5 border border-gray-100 min-w-0`}
     >
-      <div className={`${colors.icon} w-10 h-10 rounded-xl flex items-center justify-center mb-3`}>
+      <div className={`${colors.icon} w-10 h-10 rounded-xl flex items-center justify-center mb-3 flex-shrink-0`}>
         <Icon className="w-5 h-5 text-white" />
       </div>
-      <h4 className="text-base font-semibold text-[#1d1d1f] mb-1">
+      <h4 className="text-base font-semibold text-[#1d1d1f] mb-1 break-words">
         {benefit.title}
       </h4>
-      <p className="text-sm text-[#86868b] leading-relaxed">
+      <p className="text-sm text-[#86868b] leading-relaxed break-words">
         {benefit.description}
       </p>
     </motion.div>
@@ -93,9 +93,9 @@ export default function ContactUs() {
     <section
       id="contact"
       ref={ref}
-      className="py-20 md:py-32 relative overflow-hidden bg-[#f5f5f7]"
+      className="py-20 md:py-32 relative overflow-x-hidden bg-[#f5f5f7]"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 min-w-0">
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -114,68 +114,72 @@ export default function ContactUs() {
           </p>
         </motion.div>
 
-        {/* Main Content Grid */}
-        <div className="grid lg:grid-cols-2 gap-8 md:gap-12">
-          {/* Left Side - Partner Benefits */}
+        {/* Main Content Grid - equal height boxes */}
+        <div className="grid lg:grid-cols-2 gap-8 md:gap-12 min-w-0 lg:items-stretch">
+          {/* Left Side - Partner Benefits (same card style as right) */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
+            className="min-w-0 flex"
           >
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-12 h-12 bg-[#1d1d1f] rounded-xl flex items-center justify-center">
-                <Building2 className="w-6 h-6 text-white" />
+            <div className="bg-white rounded-3xl p-8 md:p-10 shadow-sm border border-gray-100 w-full flex flex-col">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-12 h-12 bg-[#1d1d1f] rounded-xl flex items-center justify-center flex-shrink-0">
+                  <Building2 className="w-6 h-6 text-white" />
+                </div>
+                <div className="min-w-0">
+                  <h3 className="text-xl md:text-2xl font-semibold text-[#1d1d1f]">
+                    Why Partner With Us?
+                  </h3>
+                  <p className="text-sm text-[#86868b]">Benefits for your business</p>
+                </div>
               </div>
-              <div>
-                <h3 className="text-xl md:text-2xl font-semibold text-[#1d1d1f]">
-                  Why Partner With Us?
-                </h3>
-                <p className="text-sm text-[#86868b]">Benefits for your business</p>
-              </div>
-            </div>
 
-            <div className="grid grid-cols-2 gap-4">
-              {PARTNER_BENEFITS.map((benefit, index) => (
-                <BenefitCard
-                  key={benefit.title}
-                  benefit={benefit}
-                  index={index}
-                  isInView={isInView}
-                />
-              ))}
-            </div>
-
-            {/* Stats Row */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.7 }}
-              className="mt-6 bg-white rounded-2xl p-6 border border-gray-100"
-            >
-              <div className="grid grid-cols-3 gap-4 text-center">
-                <div>
-                  <p className="text-2xl md:text-3xl font-bold text-emerald-500">500+</p>
-                  <p className="text-xs text-[#86868b]">Partner Venues</p>
-                </div>
-                <div>
-                  <p className="text-2xl md:text-3xl font-bold text-[#1d1d1f]">45%</p>
-                  <p className="text-xs text-[#86868b]">Avg. Utilization Boost</p>
-                </div>
-                <div>
-                  <p className="text-2xl md:text-3xl font-bold text-blue-500">10+</p>
-                  <p className="text-xs text-[#86868b]">Cities</p>
-                </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 min-w-0 flex-1">
+                {PARTNER_BENEFITS.map((benefit, index) => (
+                  <BenefitCard
+                    key={benefit.title}
+                    benefit={benefit}
+                    index={index}
+                    isInView={isInView}
+                  />
+                ))}
               </div>
-            </motion.div>
+
+              {/* Stats Row - smaller text */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.5, delay: 0.7 }}
+                className="mt-6 bg-[#f5f5f7] rounded-2xl p-4 border border-gray-100"
+              >
+                <div className="grid grid-cols-3 gap-2 sm:gap-4 text-center">
+                  <div>
+                    <p className="text-base md:text-lg font-bold text-emerald-500 whitespace-nowrap">Built for</p>
+                    <p className="text-xs text-[#86868b]">Gyms, studios & clubs</p>
+                  </div>
+                  <div>
+                    <p className="text-base md:text-lg font-bold text-[#1d1d1f] whitespace-nowrap">Designed to</p>
+                    <p className="text-xs text-[#86868b]">Boost utilization & revenue</p>
+                  </div>
+                  <div>
+                    <p className="text-base md:text-lg font-bold text-blue-500 whitespace-nowrap">Launching in</p>
+                    <p className="text-xs text-[#86868b]">Major Indian cities</p>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
           </motion.div>
 
-          {/* Right Side - Contact Card */}
+          {/* Right Side - Contact Card (same card style) */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.3 }}
+            className="min-w-0 flex"
           >
-            <div className="bg-white rounded-3xl p-8 md:p-10 shadow-sm border border-gray-100 h-full">
+            <div className="bg-white rounded-3xl p-8 md:p-10 shadow-sm border border-gray-100 w-full flex flex-col h-full">
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-12 h-12 bg-emerald-500 rounded-xl flex items-center justify-center">
                   <Zap className="w-6 h-6 text-white" />
@@ -217,7 +221,7 @@ export default function ContactUs() {
               {/* Contact Options */}
               <div className="space-y-4">
                 <a
-                  href="mailto:partnerships@rivioapp.com"
+                  href="mailto:partners@rivioapp.com"
                   className="flex items-center gap-4 p-4 bg-[#f5f5f7] rounded-xl hover:bg-gray-100 transition-colors group"
                 >
                   <div className="w-10 h-10 bg-emerald-100 rounded-lg flex items-center justify-center">
@@ -226,7 +230,7 @@ export default function ContactUs() {
                   <div className="flex-1">
                     <p className="text-sm text-[#86868b]">For partnerships</p>
                     <p className="text-[#1d1d1f] font-medium group-hover:text-emerald-600 transition-colors">
-                      partnerships@rivioapp.com
+                      partners@rivioapp.com
                     </p>
                   </div>
                   <ArrowRight className="w-5 h-5 text-[#86868b] group-hover:text-emerald-600 transition-colors" />
@@ -258,7 +262,7 @@ export default function ContactUs() {
               >
                 <div className="flex items-center justify-center gap-2 text-sm text-[#86868b]">
                   <Shield className="w-4 h-4 text-emerald-500" />
-                  <span>Secure & trusted by 500+ fitness businesses</span>
+                  <span>Secure & trusted by our early fitness partners</span>
                 </div>
               </motion.div>
             </div>

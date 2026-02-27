@@ -309,17 +309,16 @@ export const ProblemStatement = ({ isInView }: ProblemStatementProps) => {
                 </div>
                 
                 <h4 className="text-2xl md:text-4xl font-semibold mb-4 tracking-[-0.02em]">
-                  Our Solution: Pay-Per-Day Access
+                  Our Solution: Pay Only When You Use
                 </h4>
                 
                 <p className="text-base md:text-lg text-white/90 mb-6 leading-relaxed max-w-2xl mx-auto">
-                  What if you could access any gym, pool, yoga studio, or fitness center—
-                  and only pay for the days you actually go?
+                  No subscriptions. No annual fees. <strong className="text-white">You pay only for the days you actually show up.</strong> One app, any venue—gym, yoga, dance, swimming, sports—pay per day and move on.
                 </p>
               </div>
 
               <div className="flex flex-wrap justify-center gap-3 mb-10">
-                {["Gym", "Swimming", "Yoga", "Zumba", "CrossFit", "Sports", "Pilates", "Boxing"].map((activity, index) => (
+                {["Gym", "Yoga", "Dance", "Swimming", "Sports", "Zumba", "Pilates", "Boxing"].map((activity, index) => (
                   <motion.span
                     key={activity}
                     initial={{ opacity: 0, scale: 0.8 }}
@@ -332,15 +331,14 @@ export const ProblemStatement = ({ isInView }: ProblemStatementProps) => {
                 ))}
               </div>
 
-              <div className="space-y-4 text-white/90">
+              <div className="space-y-5 text-white/90">
                 <motion.p
                   initial={{ opacity: 0, y: 20 }}
                   animate={isInView ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.5, delay: 1.4 }}
                   className="text-base md:text-lg leading-relaxed"
                 >
-                  <strong className="text-white">RIVIO introduces a simple but powerful concept:</strong> pay only for the days you actually work out. 
-                  Users get flexibility without commitment. Gyms fill their empty slots during off-peak hours. Everyone wins.
+                  <strong className="text-white">Gym on Monday, yoga on Tuesday, dance on Wednesday, swimming on Thursday?</strong> Why buy four different subscriptions? With RIVIO you pay only for the days you use each. Mix it up every week—no commitment to one place or one activity.
                 </motion.p>
 
                 <motion.p
@@ -349,9 +347,16 @@ export const ProblemStatement = ({ isInView }: ProblemStatementProps) => {
                   transition={{ duration: 0.5, delay: 1.5 }}
                   className="text-base md:text-lg leading-relaxed"
                 >
-                  Walk into any partner gym, scan a QR code, work out, and pay a fair daily rate. 
-                  <strong className="text-white"> No contracts, no wasted memberships, no guilt.</strong> Whether you&apos;re traveling, 
-                  trying a new activity, or just working out on weekends—RIVIO adapts to your life.
+                  Not everyone wants to gym daily. Hard exercise every single day isn’t for everyone—and that’s okay. <strong className="text-white">Weekend sports, a swim when you feel like it, or a yoga class now and then?</strong> Pay for that day only. No guilt, no wasted membership, no “I didn’t go enough.”
+                </motion.p>
+
+                <motion.p
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={isInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.5, delay: 1.55 }}
+                  className="text-base md:text-lg leading-relaxed"
+                >
+                  One app. Scan at the venue, pay for that day, and you’re done. <strong className="text-white">No contracts, no lock-in.</strong> Whether you’re a variety seeker, a weekend warrior, or someone who just wants to move when it suits you—RIVIO fits.
                 </motion.p>
               </div>
 
@@ -362,10 +367,10 @@ export const ProblemStatement = ({ isInView }: ProblemStatementProps) => {
                 className="mt-10 text-center"
               >
                 <p className="text-xl md:text-2xl font-semibold text-white">
-                  One app. Any activity. Pay only when you play.
+                  One app. Any activity. Pay only when you use.
                 </p>
                 <p className="text-sm md:text-base text-white/70 mt-2">
-                  Fitness that fits your life.
+                  Your week, your mix—no subscriptions.
                 </p>
               </motion.div>
             </div>

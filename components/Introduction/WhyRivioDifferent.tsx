@@ -34,7 +34,7 @@ const DIFFERENTIATORS = [
       "Instant access—no paperwork or waiting",
       "Perfect for frequent travelers & remote workers",
     ],
-    highlight: "500+ venues across 10+ cities",
+    highlight: "Fast-growing network across major cities",
     color: "emerald",
   },
   {

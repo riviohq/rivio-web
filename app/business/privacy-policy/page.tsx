@@ -252,7 +252,7 @@ export default function PartnerPrivacyPage() {
               </div>
             </div>
             <p className="text-gray-300 mt-6 leading-relaxed">
-              To exercise any of these rights, please contact us at <span className="font-semibold text-amber-400">privacy@rivio.com</span> or through the app's support section.
+              To exercise any of these rights, please contact us at <span className="font-semibold text-amber-400">help-desk@rivioapp.com</span> or through the app's support section.
             </p>
           </div>
         </section>
@@ -354,9 +354,9 @@ export default function PartnerPrivacyPage() {
               If you have any questions, concerns, or requests regarding this Privacy Policy or our data practices, please contact us:
             </p>
             <div className="space-y-3">
-              <p className="text-amber-400 font-semibold">Privacy Inquiries: <a href="mailto:privacy@rivio.com" className="hover:text-amber-300 underline">privacy@rivio.com</a></p>
-              <p className="text-amber-400 font-semibold">General Support: <a href="mailto:support@rivio.com" className="hover:text-amber-300 underline">support@rivio.com</a></p>
-              <p className="text-amber-400 font-semibold">Data Requests: <a href="mailto:data@rivio.com" className="hover:text-amber-300 underline">data@rivio.com</a></p>
+              <p className="text-amber-400 font-semibold">Privacy Inquiries: <a href="mailto:help-desk@rivioapp.com" className="hover:text-amber-300 underline">help-desk@rivioapp.com</a></p>
+              <p className="text-amber-400 font-semibold">General Support: <a href="mailto:support@rivioapp.com" className="hover:text-amber-300 underline">support@rivioapp.com</a></p>
+              <p className="text-amber-400 font-semibold">Data Requests: <a href="mailto:help-desk@rivioapp.com" className="hover:text-amber-300 underline">help-desk@rivioapp.com</a></p>
             </div>
             <p className="text-gray-300 mt-6">
               We aim to respond to all privacy-related inquiries within 30 days. For urgent matters, please use the in-app support feature.

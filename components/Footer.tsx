@@ -14,6 +14,7 @@ export default function Footer() {
       { name: 'Privacy Policy', href: '/members/privacy-policy' },
       { name: 'Terms & Conditions', href: '/members/terms-conditions' },
       { name: 'Help & Support', href: '/members/support' },
+      { name: 'Get the App', href: '/#apps' },
     ],
     partner: [
       { name: 'App Features', href: '/features/business-app' },
@@ -23,6 +24,11 @@ export default function Footer() {
       { name: 'Help & Support', href: '/business/support' },
       { name: 'Partner Program', href: '/business/partner-program' },
     ],
+  }
+
+  const appDescriptions = {
+    user: 'For people who work out. Pay per day at any gym, yoga, or studio—no subscription.',
+    partner: 'For gyms, studios & wellness centers. Offer pay-per-day access and grow revenue.',
   }
 
   const socialLinks = [
@@ -45,21 +51,22 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <h3 className="text-2xl font-bold text-emerald-400 mb-2">RIVIO</h3>
-            <p className="text-sm text-gray-400 mb-3">Gym, Yoga & Sports Activities</p>
-            <p className="text-gray-300 mb-4 text-sm leading-relaxed">
-              Your route to movement. RIVIO is a universal fitness access platform that eliminates the need for multiple subscriptions. Pay-per-day for instant access to any gym, yoga studio, or wellness center. Build streaks, compete on leaderboards, and unlock achievements—fitness made fun and motivating.
+            <p className="text-sm font-medium text-white/90 mb-2">Your route to movement.</p>
+            <p className="text-gray-400 text-sm leading-relaxed mb-4">
+              One app. Any gym, yoga, or studio. Pay only when you go—no subscriptions, no commitments.
             </p>
             <div className="flex items-center gap-2 text-gray-400 text-sm">
-              <Mail className="w-4 h-4" />
-              <a href="mailto:support@rivio.com" className="hover:text-emerald-400 transition-colors">
-                support@rivio.com
+              <Mail className="w-4 h-4 flex-shrink-0" />
+              <a href="mailto:hi@rivioapp.com" className="hover:text-emerald-400 transition-colors truncate">
+                hi@rivioapp.com
               </a>
             </div>
           </div>
 
-          {/* User App Links */}
+          {/* User App */}
           <div>
-            <h4 className="font-semibold text-white mb-4">User App</h4>
+            <h4 className="font-semibold text-white mb-1">User App</h4>
+            <p className="text-gray-400 text-sm mb-4 leading-snug">{appDescriptions.user}</p>
             <ul className="space-y-2">
               {footerLinks.user.map((link) => (
                 <li key={link.name}>
@@ -74,9 +81,10 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Partner App Links */}
+          {/* Partner App */}
           <div>
-            <h4 className="font-semibold text-white mb-4">Partner App</h4>
+            <h4 className="font-semibold text-white mb-1">Partner App</h4>
+            <p className="text-gray-400 text-sm mb-4 leading-snug">{appDescriptions.partner}</p>
             <ul className="space-y-2">
               {footerLinks.partner.map((link) => (
                 <li key={link.name}>
@@ -112,7 +120,7 @@ export default function Footer() {
             </div>
             <div className="text-gray-400 text-sm">
               <p className="mb-2">Need help?</p>
-              <a href="mailto:support@rivio.com" className="text-emerald-400 hover:text-emerald-300">
+              <a href="mailto:support@rivioapp.com" className="text-emerald-400 hover:text-emerald-300">
                 Contact Support
               </a>
             </div>
@@ -130,7 +138,7 @@ export default function Footer() {
               <Link href="/members/terms-conditions" className="hover:text-gray-300 transition-colors">
                 Terms
               </Link>
-              <a href="mailto:legal@rivioapp.com" className="hover:text-gray-300 transition-colors">
+              <a href="mailto:support@rivioapp.com" className="hover:text-gray-300 transition-colors">
                 Legal
               </a>
             </div>

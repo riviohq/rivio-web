@@ -247,8 +247,8 @@ export default function UserPrivacyPage() {
               If you have any questions or concerns about this Privacy Policy or our data practices, please contact us:
             </p>
             <div className="space-y-3">
-              <p className="text-emerald-400 font-semibold">Email: <a href="mailto:privacy@rivio.com" className="hover:text-emerald-300 underline">privacy@rivio.com</a></p>
-              <p className="text-emerald-400 font-semibold">Support: <a href="mailto:support@rivio.com" className="hover:text-emerald-300 underline">support@rivio.com</a></p>
+              <p className="text-emerald-400 font-semibold">Privacy: <a href="mailto:help-desk@rivioapp.com" className="hover:text-emerald-300 underline">help-desk@rivioapp.com</a></p>
+              <p className="text-emerald-400 font-semibold">Support: <a href="mailto:support@rivioapp.com" className="hover:text-emerald-300 underline">support@rivioapp.com</a></p>
             </div>
           </div>
         </section>

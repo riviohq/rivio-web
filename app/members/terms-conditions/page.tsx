@@ -298,8 +298,8 @@ export default function UserTermsPage() {
               For questions, concerns, or legal notices regarding these Terms and Conditions, please contact us:
             </p>
             <div className="space-y-3">
-              <p className="text-emerald-400 font-semibold">Email: <a href="mailto:legal@rivio.com" className="hover:text-emerald-300 underline">legal@rivio.com</a></p>
-              <p className="text-emerald-400 font-semibold">Support: <a href="mailto:support@rivio.com" className="hover:text-emerald-300 underline">support@rivio.com</a></p>
+              <p className="text-emerald-400 font-semibold">Legal: <a href="mailto:support@rivioapp.com" className="hover:text-emerald-300 underline">support@rivioapp.com</a></p>
+              <p className="text-emerald-400 font-semibold">Support: <a href="mailto:support@rivioapp.com" className="hover:text-emerald-300 underline">support@rivioapp.com</a></p>
             </div>
           </div>
         </section>

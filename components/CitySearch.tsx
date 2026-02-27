@@ -266,8 +266,8 @@ export default function CitySearch() {
                   Community Growth
                 </h4>
                 <p className="text-[#86868b] text-xs md:text-sm font-medium leading-relaxed">
-                  Thousands of users joining daily, creating a vibrant fitness
-                  community across India
+                  A growing community of members discovering flexible, commitment-free fitness
+                  across India
                 </p>
               </motion.div>
 

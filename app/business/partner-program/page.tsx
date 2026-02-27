@@ -33,7 +33,7 @@ export default function PartnersPage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
-                href="mailto:partnerships@rivio.com"
+                href="mailto:partners@rivioapp.com"
                 className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-gradient-to-r from-amber-500 to-amber-600 rounded-xl text-white font-semibold hover:from-amber-600 hover:to-amber-700 transition-all shadow-lg shadow-amber-500/20"
               >
                 <Mail className="w-5 h-5" />
@@ -288,14 +288,14 @@ export default function PartnersPage() {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <a
-                  href="mailto:partnerships@rivio.com"
+                  href="mailto:partners@rivioapp.com"
                   className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-gradient-to-r from-amber-500 to-amber-600 rounded-xl text-white font-semibold hover:from-amber-600 hover:to-amber-700 transition-all shadow-lg"
                 >
                   <Mail className="w-5 h-5" />
                   Contact Partnerships Team
                 </a>
                 <a
-                  href="mailto:support@rivio.com"
+                  href="mailto:support@rivioapp.com"
                   className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-gray-800 rounded-xl text-white font-semibold hover:bg-gray-700 transition-all border border-gray-700"
                 >
                   <Mail className="w-5 h-5" />
@@ -303,7 +303,7 @@ export default function PartnersPage() {
                 </a>
               </div>
               <p className="text-gray-400 mt-8 text-sm">
-                Questions? Email us at <a href="mailto:partnerships@rivio.com" className="text-amber-400 hover:text-amber-300 underline">partnerships@rivio.com</a> or call our partner support line.
+                Questions? Email us at <a href="mailto:partners@rivioapp.com" className="text-amber-400 hover:text-amber-300 underline">partners@rivioapp.com</a> or call our partner support line.
               </p>
             </div>
           </div>

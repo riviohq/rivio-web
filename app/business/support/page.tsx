@@ -47,7 +47,7 @@ export default function PartnerHelpPage() {
         },
         {
           question: "What is the commission structure?",
-          answer: "RIVIO charges a commission on transactions to maintain and improve the platform:\n\nCommission Details:\n• Commission rate is agreed upon during onboarding\n• Applied to both per-visit payments and pass purchases\n• Transparent pricing - you see net earnings after commission\n• Commission covers:\n  - Platform maintenance and updates\n  - Payment processing\n  - Customer support\n  - Marketing and user acquisition\n  - Technology infrastructure\n\nEarnings Display:\n• Your wallet shows net earnings (after commission)\n• Detailed breakdown available in statements\n• Monthly statements show all transactions and commissions\n\nFor specific commission rates, please contact our partnership team during onboarding or reach out to support@rivio.com"
+          answer: "RIVIO charges a commission on transactions to maintain and improve the platform:\n\nCommission Details:\n• Commission rate is agreed upon during onboarding\n• Applied to both per-visit payments and pass purchases\n• Transparent pricing - you see net earnings after commission\n• Commission covers:\n  - Platform maintenance and updates\n  - Payment processing\n  - Customer support\n  - Marketing and user acquisition\n  - Technology infrastructure\n\nEarnings Display:\n• Your wallet shows net earnings (after commission)\n• Detailed breakdown available in statements\n• Monthly statements show all transactions and commissions\n\nFor specific commission rates, please contact our partnership team during onboarding or reach out to help-desk@rivioapp.com"
         }
       ]
     },
@@ -133,7 +133,7 @@ export default function PartnerHelpPage() {
               </div>
             </div>
             <a
-              href="mailto:support@rivio.com"
+              href="mailto:help-desk@rivioapp.com"
               className="hidden md:flex items-center gap-2 px-6 py-3 bg-amber-500/20 rounded-lg text-amber-300 font-medium hover:bg-amber-500/30 transition-all border border-amber-500/20"
             >
               <Mail className="w-4 h-4" />
@@ -160,7 +160,7 @@ export default function PartnerHelpPage() {
         {/* Contact Support Card - Mobile */}
         <div className="md:hidden mb-8">
           <a
-            href="mailto:support@rivio.com"
+            href="mailto:help-desk@rivioapp.com"
             className="flex items-center justify-center gap-3 px-6 py-4 bg-amber-500/20 rounded-xl text-amber-300 font-medium hover:bg-amber-500/30 transition-all border border-amber-500/20"
           >
             <Mail className="w-5 h-5" />
@@ -234,7 +234,7 @@ export default function PartnerHelpPage() {
               Can't find the answer you're looking for? Our support team is here to help your business succeed.
             </p>
             <a
-              href="mailto:support@rivio.com"
+              href="mailto:help-desk@rivioapp.com"
               className="inline-flex items-center gap-2 px-8 py-4 bg-amber-500/20 rounded-xl text-amber-300 font-medium hover:bg-amber-500/30 transition-all border border-amber-500/20"
             >
               <Mail className="w-5 h-5" />
