@@ -23,7 +23,7 @@ const journeySteps = [
     id: 1,
     title: "Find",
     subtitle: "Discover venues near you",
-    description: "500+ gyms, studios, and pools",
+    description: "Gyms, studios, and pools near you",
     icon: MapPin,
     color: "emerald",
   },

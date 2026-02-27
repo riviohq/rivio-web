@@ -21,9 +21,12 @@ export default function Navigation({ isScrolled }: NavigationProps) {
   const isHomePage = pathname === '/'
 
   const announcements = [
-    { icon: MapPin, text: "Now live in 10+ cities across India" },
-    { icon: Star, text: "Rated 4.8★ by 10,000+ users" },
-    { icon: Zap, text: "Pay per day • No contracts • No commitments" },
+    { icon: Zap, text: "We are live!!!" },
+    { icon: Star, text: "No commitments. Ever." },
+    { icon: MapPin, text: "Pay per day is live near you" },
+    { icon: Sparkles, text: "Highly rated startup — partners onboarding soon, stay tuned" },
+    { icon: Zap, text: "One app. Any gym. Pay only when you go." },
+    { icon: Star, text: "Fitness without the fine print" },
   ]
 
   // Navigation links in order of page content flow
@@ -441,7 +444,7 @@ export default function Navigation({ isScrolled }: NavigationProps) {
                   <div className="space-y-2">
                     {[
                       { icon: Zap, text: "Pay per day" },
-                      { icon: MapPin, text: "500+ venues" },
+                      { icon: MapPin, text: "Growing network of venues" },
                       { icon: Star, text: "No contracts" },
                     ].map((item, index) => (
                       <div key={index} className="flex items-center gap-2 text-sm text-[#86868b]">

@@ -378,9 +378,9 @@ export default function PartnerTermsPage() {
               For questions, concerns, or legal notices regarding these Terms and Conditions, please contact us:
             </p>
             <div className="space-y-3">
-              <p className="text-amber-400 font-semibold">Legal Inquiries: <a href="mailto:legal@rivio.com" className="hover:text-amber-300 underline">legal@rivio.com</a></p>
-              <p className="text-amber-400 font-semibold">General Support: <a href="mailto:support@rivio.com" className="hover:text-amber-300 underline">support@rivio.com</a></p>
-              <p className="text-amber-400 font-semibold">Account Issues: <a href="mailto:accounts@rivio.com" className="hover:text-amber-300 underline">accounts@rivio.com</a></p>
+              <p className="text-amber-400 font-semibold">Legal Inquiries: <a href="mailto:support@rivioapp.com" className="hover:text-amber-300 underline">support@rivioapp.com</a></p>
+              <p className="text-amber-400 font-semibold">General Support: <a href="mailto:support@rivioapp.com" className="hover:text-amber-300 underline">support@rivioapp.com</a></p>
+              <p className="text-amber-400 font-semibold">Account Issues: <a href="mailto:support@rivioapp.com" className="hover:text-amber-300 underline">support@rivioapp.com</a></p>
             </div>
             <p className="text-gray-300 mt-6">
               We aim to respond to all inquiries within 5-7 business days. For urgent matters, please use the in-app support feature.

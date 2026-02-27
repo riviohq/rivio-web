@@ -350,18 +350,18 @@ export default function UserAboutPage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-3 md:gap-4">
               <a
-                href="mailto:support@rivio.com"
+                href="mailto:support@rivioapp.com"
                 className="flex items-center justify-center gap-2 md:gap-3 px-4 md:px-8 py-3 md:py-4 bg-gradient-to-r from-emerald-500 to-emerald-600 rounded-xl text-white font-semibold hover:from-emerald-600 hover:to-emerald-700 transition-all shadow-lg shadow-emerald-500/20 text-sm md:text-base"
               >
                 <Mail className="w-4 h-4 md:w-5 md:h-5" />
-                support@rivio.com
+                support@rivioapp.com
               </a>
               <a
-                href="mailto:partnerships@rivio.com"
+                href="mailto:partners@rivioapp.com"
                 className="flex items-center justify-center gap-2 md:gap-3 px-4 md:px-8 py-3 md:py-4 bg-gray-800 rounded-xl text-white font-semibold hover:bg-gray-700 transition-all border border-gray-700 text-sm md:text-base"
               >
                 <Users className="w-4 h-4 md:w-5 md:h-5" />
-                partnerships@rivio.com
+                partners@rivioapp.com
               </a>
             </div>
           </div>

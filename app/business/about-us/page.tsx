@@ -165,11 +165,11 @@ export default function PartnerAboutPage() {
               Questions? Feedback? We're here for you!
             </p>
             <a
-              href="mailto:support@rivio.com"
+              href="mailto:support@rivioapp.com"
               className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-amber-500 to-amber-600 rounded-xl text-white font-semibold hover:from-amber-600 hover:to-amber-700 transition-all shadow-lg shadow-amber-500/20"
             >
               <Mail className="w-5 h-5" />
-              support@rivio.com
+              support@rivioapp.com
             </a>
           </div>
         </section>

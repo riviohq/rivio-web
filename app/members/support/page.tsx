@@ -121,7 +121,7 @@ export default function UserHelpPage() {
               </div>
             </div>
             <a
-              href="mailto:support@rivio.com"
+              href="mailto:help-desk@rivioapp.com"
               className="hidden md:flex items-center gap-2 px-6 py-3 bg-emerald-500/20 rounded-lg text-emerald-300 font-medium hover:bg-emerald-500/30 transition-all border border-emerald-500/20"
             >
               <Mail className="w-4 h-4" />
@@ -148,7 +148,7 @@ export default function UserHelpPage() {
         {/* Contact Support Card - Mobile */}
         <div className="md:hidden mb-8">
           <a
-            href="mailto:support@rivio.com"
+            href="mailto:help-desk@rivioapp.com"
             className="flex items-center justify-center gap-3 px-6 py-4 bg-emerald-500/20 rounded-xl text-emerald-300 font-medium hover:bg-emerald-500/30 transition-all border border-emerald-500/20"
           >
             <Mail className="w-5 h-5" />
@@ -222,7 +222,7 @@ export default function UserHelpPage() {
               Can't find the answer you're looking for? Our support team is here to help.
             </p>
             <a
-              href="mailto:support@rivio.com"
+              href="mailto:help-desk@rivioapp.com"
               className="inline-flex items-center gap-2 px-8 py-4 bg-emerald-500/20 rounded-xl text-emerald-300 font-medium hover:bg-emerald-500/30 transition-all border border-emerald-500/20"
             >
               <Mail className="w-5 h-5" />

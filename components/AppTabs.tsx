@@ -28,7 +28,7 @@ const userSteps = [
     icon: MapPin,
     title: "Find",
     subtitle: "Discover nearby venues",
-    description: "500+ gyms, studios, pools",
+    description: "Gyms, studios, and pools near you",
     color: "emerald",
   },
   {
