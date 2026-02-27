@@ -173,7 +173,7 @@ export default function UserTermsPage() {
             </div>
             <div className="space-y-4 text-gray-300 leading-relaxed">
               <p>
-                The RIVIO application, including its design, code, logos, trademarks, and content, is the exclusive property of RIVIO and is protected by copyright, trademark, and other intellectual property laws.
+                The RIVIO application, including its design, code, logos, trademarks, and content, is the exclusive property of RIVIO and is protected by copyright, trademark, and other intellectual property laws. Copyright registered © 2026 RIVIO.
               </p>
               <p>
                 You may not copy, modify, distribute, sell, or lease any part of the application without explicit written permission. Unauthorized use of our intellectual property will result in legal action.

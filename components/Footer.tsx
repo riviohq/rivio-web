@@ -5,7 +5,6 @@ import Link from 'next/link'
 import { Facebook, X, Instagram, Linkedin, Mail } from 'lucide-react'
 
 export default function Footer() {
-  const currentYear = new Date().getFullYear()
 
   const footerLinks = {
     user: [
@@ -130,7 +129,7 @@ export default function Footer() {
         {/* Bottom Bar */}
         <div className="border-t border-gray-800 pt-8 mt-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-500">
-            <p>© {currentYear} RIVIO. All rights reserved.</p>
+            <p>© 2026 RIVIO. All rights reserved.</p>
             <div className="flex items-center gap-6">
               <Link href="/members/privacy-policy" className="hover:text-gray-300 transition-colors">
                 Privacy
