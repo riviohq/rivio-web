@@ -147,25 +147,25 @@ export default function ContactUs() {
                 ))}
               </div>
 
-              {/* Stats Row - smaller text */}
+              {/* Stats Row - single column on mobile to prevent overlap */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.5, delay: 0.7 }}
                 className="mt-6 bg-[#f5f5f7] rounded-2xl p-4 border border-gray-100"
               >
-                <div className="grid grid-cols-3 gap-2 sm:gap-4 text-center">
-                  <div>
-                    <p className="text-base md:text-lg font-bold text-emerald-500 whitespace-nowrap">Built for</p>
-                    <p className="text-xs text-[#86868b]">Gyms, studios & clubs</p>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
+                  <div className="min-w-0">
+                    <p className="text-base md:text-lg font-bold text-emerald-500">Built for</p>
+                    <p className="text-xs text-[#86868b] mt-0.5">Gyms, studios & clubs</p>
                   </div>
-                  <div>
-                    <p className="text-base md:text-lg font-bold text-[#1d1d1f] whitespace-nowrap">Designed to</p>
-                    <p className="text-xs text-[#86868b]">Boost utilization & revenue</p>
+                  <div className="min-w-0">
+                    <p className="text-base md:text-lg font-bold text-[#1d1d1f]">Designed to</p>
+                    <p className="text-xs text-[#86868b] mt-0.5">Boost utilization & revenue</p>
                   </div>
-                  <div>
-                    <p className="text-base md:text-lg font-bold text-blue-500 whitespace-nowrap">Launching in</p>
-                    <p className="text-xs text-[#86868b]">Major Indian cities</p>
+                  <div className="min-w-0">
+                    <p className="text-base md:text-lg font-bold text-blue-500">Launching in</p>
+                    <p className="text-xs text-[#86868b] mt-0.5">Major Indian cities</p>
                   </div>
                 </div>
               </motion.div>
