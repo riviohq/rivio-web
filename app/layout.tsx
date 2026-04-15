@@ -2,8 +2,10 @@ import type { Metadata } from "next";
 import "./globals.css";
 import NavigationWrapper from "@/components/NavigationWrapper";
 import Footer from "@/components/Footer";
-
-const SITE_URL = "https://rivioapp.com";
+import MarketingJsonLd from "@/components/MarketingJsonLd";
+import { FOUNDER_LINKEDIN, FOUNDER_NAME } from "@/lib/brandLinks";
+import { SITE_SEO_KEYWORDS } from "@/lib/seoKeywords";
+import { SITE_URL } from "@/lib/siteContent";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -12,18 +14,12 @@ export const metadata: Metadata = {
     template: "%s | RIVIO",
   },
   description:
-    "Pay per day at any gym, yoga studio, or wellness center. No subscription, no commitment. One app for fitness your way – India's flexible fitness access.",
-  keywords: [
-    "pay per day gym",
-    "gym without subscription",
-    "yoga pay per day",
-    "fitness app India",
-    "RIVIO",
-    "flexible fitness",
-    "gym membership alternative",
-    "wellness center access",
+    "Pay per day at any gym, yoga studio, or wellness center. No subscription, no commitment. Download Rivio on the App Store — India's flexible fitness access.",
+  keywords: SITE_SEO_KEYWORDS,
+  authors: [
+    { name: "RIVIO", url: SITE_URL },
+    { name: FOUNDER_NAME, url: FOUNDER_LINKEDIN },
   ],
-  authors: [{ name: "RIVIO", url: SITE_URL }],
   creator: "RIVIO",
   icons: {
     icon: "/favicon.png",
@@ -31,7 +27,8 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "RIVIO | Pay Per Day Gym, Yoga & Fitness – No Subscription",
-    description: "Pay per day at any gym, yoga, or studio. No subscription. One app.",
+    description:
+      "Pay per day at any gym, yoga, or studio. No subscription. Download on the App Store.",
     type: "website",
     url: SITE_URL,
     siteName: "RIVIO",
@@ -62,6 +59,7 @@ export default function RootLayout({
         />
       </head>
       <body className="antialiased bg-black text-white">
+        <MarketingJsonLd />
         <NavigationWrapper />
         <main className="min-h-screen pt-20">{children}</main>
         <Footer />

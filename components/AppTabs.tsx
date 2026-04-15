@@ -21,6 +21,15 @@ import {
   ArrowRight,
 } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
+import {
+  APP_STORE_URL_BUSINESS,
+  APP_STORE_URL_USER,
+  GOOGLE_PLAY_URL_BUSINESS,
+  GOOGLE_PLAY_URL_USER,
+  hasGooglePlayBusiness,
+  hasGooglePlayUser,
+} from "@/lib/storeUrls";
 
 // User App Steps
 const userSteps = [
@@ -295,7 +304,13 @@ export default function AppTabs() {
             Two Apps. One Ecosystem.
           </h2>
           <p className="text-lg md:text-xl text-[#86868b] max-w-2xl mx-auto">
-            Designed for fitness enthusiasts and business owners alike.
+            Designed for fitness enthusiasts and business owners alike — now on the App Store.{" "}
+            <Link
+              href="/download/"
+              className="text-emerald-600 font-medium hover:text-emerald-700 underline-offset-2 hover:underline"
+            >
+              All download links
+            </Link>
           </p>
         </motion.div>
 
@@ -337,7 +352,9 @@ export default function AppTabs() {
               {/* Download Buttons */}
               <div className="flex flex-col sm:flex-row gap-3 mt-6">
                 <motion.a
-                  href="#"
+                  href={APP_STORE_URL_USER}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   className="flex items-center justify-center gap-2 px-6 py-3 bg-[#1d1d1f] text-white rounded-full font-medium text-sm hover:bg-black transition-all"
@@ -345,15 +362,19 @@ export default function AppTabs() {
                   <Download className="w-4 h-4" />
                   App Store
                 </motion.a>
-                <motion.a
-                  href="#"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="flex items-center justify-center gap-2 px-6 py-3 bg-white text-[#1d1d1f] rounded-full font-medium text-sm hover:bg-gray-50 transition-all border border-gray-200"
-                >
-                  <Download className="w-4 h-4" />
-                  Google Play
-                </motion.a>
+                {hasGooglePlayUser ? (
+                  <motion.a
+                    href={GOOGLE_PLAY_URL_USER}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="flex items-center justify-center gap-2 px-6 py-3 bg-white text-[#1d1d1f] rounded-full font-medium text-sm hover:bg-gray-50 transition-all border border-gray-200"
+                  >
+                    <Download className="w-4 h-4" />
+                    Google Play
+                  </motion.a>
+                ) : null}
               </div>
             </div>
           </motion.div>
@@ -394,7 +415,9 @@ export default function AppTabs() {
               {/* Download Buttons */}
               <div className="flex flex-col sm:flex-row gap-3 mt-6">
                 <motion.a
-                  href="#"
+                  href={APP_STORE_URL_BUSINESS}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   className="flex items-center justify-center gap-2 px-6 py-3 bg-[#1d1d1f] text-white rounded-full font-medium text-sm hover:bg-black transition-all"
@@ -402,15 +425,19 @@ export default function AppTabs() {
                   <Download className="w-4 h-4" />
                   App Store
                 </motion.a>
-                <motion.a
-                  href="#"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="flex items-center justify-center gap-2 px-6 py-3 bg-white text-[#1d1d1f] rounded-full font-medium text-sm hover:bg-gray-50 transition-all border border-gray-200"
-                >
-                  <Download className="w-4 h-4" />
-                  Google Play
-                </motion.a>
+                {hasGooglePlayBusiness ? (
+                  <motion.a
+                    href={GOOGLE_PLAY_URL_BUSINESS}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="flex items-center justify-center gap-2 px-6 py-3 bg-white text-[#1d1d1f] rounded-full font-medium text-sm hover:bg-gray-50 transition-all border border-gray-200"
+                  >
+                    <Download className="w-4 h-4" />
+                    Google Play
+                  </motion.a>
+                ) : null}
               </div>
             </div>
           </motion.div>
