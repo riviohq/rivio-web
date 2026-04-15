@@ -21,8 +21,8 @@ import { SITE_CONTENT_UPDATED_DATE, SITE_URL } from "@/lib/siteContent";
 const pageUrl = `${SITE_URL}/founder/`;
 
 export const metadata: Metadata = {
-  title: `${FOUNDER_NAME} — Founder`,
-  description: `${FOUNDER_NAME} is Founder of RIVIO, the pay-per-day gym, yoga, and sports app for India. Official profiles, App Store developer page, and RIVIO company links.`,
+  title: `The Founder — Vision | ${FOUNDER_NAME}`,
+  description: `The Founder’s vision behind RIVIO — pay-per-day gym, yoga, and sports access in India. Founder links, App Store developer page, and RIVIO company links for ${FOUNDER_NAME}.`,
   keywords: [
     FOUNDER_NAME,
     "Amandeep Bishnoi Rivio",
@@ -37,17 +37,17 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: pageUrl },
   openGraph: {
-    title: `${FOUNDER_NAME} — Founder | RIVIO`,
+    title: `The Founder — Vision | RIVIO`,
     description:
-      "Founder of RIVIO. Official social profiles and App Store developer listing.",
+      "The Founder’s vision behind RIVIO. Founder links and App Store developer listing.",
     type: "profile",
     url: pageUrl,
     siteName: "RIVIO",
   },
   twitter: {
     card: "summary",
-    title: `${FOUNDER_NAME} | RIVIO`,
-    description: "Founder — RIVIO pay-per-day fitness for India.",
+    title: `The Founder — Vision | RIVIO`,
+    description: "The Founder’s vision behind RIVIO — pay-per-day fitness for India.",
   },
 };
 
@@ -64,7 +64,7 @@ function FounderPageJsonLd() {
         isPartOf: { "@id": `${SITE_URL}/#website` },
         about: { "@id": `${SITE_URL}/#founder` },
         description:
-          "Official founder page for Amandeep Bishnoi, Founder of RIVIO, with verified profile links.",
+          "Founder page for Amandeep Bishnoi, Founder of RIVIO, with profile and app links.",
       },
     ],
   };
@@ -82,43 +82,75 @@ export default function FounderPage() {
       <FounderPageJsonLd />
       <article className="min-h-screen bg-[#f5f5f7] text-[#1d1d1f] pt-24 pb-20 px-4">
         <div className="max-w-3xl mx-auto">
-          <p className="text-sm text-[#86868b] mb-3">
-            Last updated:{" "}
-            {new Intl.DateTimeFormat("en-IN", {
-              dateStyle: "long",
-              timeZone: "Asia/Kolkata",
-            }).format(new Date(`${SITE_CONTENT_UPDATED_DATE}T12:00:00+05:30`))}
-          </p>
-
-          <h1 className="text-3xl md:text-4xl font-semibold tracking-[-0.02em] mb-4">
-            {FOUNDER_NAME}
+          <h1 className="text-3xl md:text-4xl font-semibold tracking-[-0.02em] mb-2">
+            The Founder — Vision
           </h1>
-          <p className="text-lg text-emerald-700 font-medium mb-8">
-            Founder, RIVIO
+          <p className="text-lg text-[#1d1d1f] font-semibold mb-8">
+            {FOUNDER_NAME} · Founder, RIVIO
           </p>
 
           <section className="prose prose-neutral max-w-none mb-10" aria-labelledby="about-founder">
             <h2 id="about-founder" className="text-xl font-semibold text-[#1d1d1f] mb-3">
-              About
+              From the Founder Team
             </h2>
             <p className="text-[#424245] leading-relaxed mb-4">
-              <strong>{FOUNDER_NAME}</strong> founded <strong>RIVIO</strong> — a fitness platform built
-              around <strong>flexibility over long-term lock-in</strong>: pay for the days you
-              actually train, discover gyms and studios, and use one member experience for{" "}
-              <strong>gym, yoga, sports, and wellness</strong> across India. RIVIO also offers a
-              dedicated <strong>partner (business) app</strong> for venues: QR check-in, earnings,
-              and operations.
+              Imagine a world where fitness is not locked behind expensive memberships or complicated
+              contracts. Where you can walk into any gym, yoga studio, or fitness center—anywhere,
+              anytime—and simply start your workout. No commitments. No restrictions. No barriers.
+              That is the world we are building at <strong>RIVIO</strong>.
             </p>
             <p className="text-[#424245] leading-relaxed mb-4">
-              This page lists only <strong>verified official links</strong> for {FOUNDER_NAME} and
-              for the RIVIO brand — useful for press, partners, investors, and search engines mapping
-              the company to its leadership and products.
+              We saw frustration when people could not access fitness because of long-term contracts
+              they could not justify, or because they were tied to a single location. We watched
+              motivated people pause their goals, not due to lack of intent, but because the system
+              was not designed for real life. That did not sit right with us.
+            </p>
+            <p className="text-[#424245] leading-relaxed mb-4">
+              So we built something different. RIVIO is your passport to fitness freedom: pay for
+              what you use, or choose a pass that fits your schedule. Build streaks, compete on
+              leaderboards, and turn your fitness journey into an adventure. Every visit counts.
+              Every milestone matters.
+            </p>
+            <p className="text-[#424245] leading-relaxed mb-4">
+              Our vision is simple: make fitness accessible to everyone, everywhere. Whether you
+              work out daily or occasionally, whether you are experienced or just getting started,
+              RIVIO adapts to you—not the other way around. We are not only building a platform; we
+              are building a movement that empowers people to take control of their health and
+              wellness on their own terms.
+            </p>
+
+            <hr className="my-8 border-black/10" />
+
+            <h3 className="text-lg font-semibold text-[#1d1d1f] mb-3">
+              For fitness businesses — the RIVIO Partner vision
+            </h3>
+            <p className="text-[#424245] leading-relaxed mb-4">
+              The fitness and wellness industry is powered by passion, dedication, and the
+              transformative impact of community. Yet we observed that business owners—the people
+              creating these life-changing experiences—were being held back by technology that was
+              supposed to help them.
+            </p>
+            <p className="text-[#424245] leading-relaxed mb-4">
+              Complex systems, fragmented tools, and outdated processes were consuming time that
+              should be spent serving members, building communities, and growing businesses. This
+              disconnect inspired us to create <strong>RIVIO Partner</strong>.
+            </p>
+            <p className="text-[#424245] leading-relaxed mb-4">
+              RIVIO Partner represents a new approach to business management—one where technology
+              truly serves the business owner. Features like real-time earnings visibility, QR
+              check-ins, flexible pass management, and smoother settlements are designed with a
+              single purpose: to give you back your time and amplify your success.
+            </p>
+            <p className="text-[#424245] leading-relaxed">
+              Our commitment goes beyond software. We measure our success through your growth, your
+              profitability, and your ability to focus on what you do best. When you thrive, we have
+              achieved our goal.
             </p>
           </section>
 
           <section className="mb-10" aria-labelledby="founder-profiles">
             <h2 id="founder-profiles" className="text-xl font-semibold mb-4">
-              {FOUNDER_NAME} — official profiles
+              Connect with {FOUNDER_NAME}
             </h2>
             <ul className="space-y-3 text-emerald-700">
               <li>
@@ -166,7 +198,7 @@ export default function FounderPage() {
 
           <section className="mb-10" aria-labelledby="rivio-brand">
             <h2 id="rivio-brand" className="text-xl font-semibold mb-4">
-              RIVIO — official company profiles
+              RIVIO online
             </h2>
             <ul className="space-y-3 text-emerald-700">
               <li>
@@ -217,8 +249,8 @@ export default function FounderPage() {
               Apps &amp; App Store developer
             </h2>
             <p className="text-[#424245] leading-relaxed mb-4">
-              Both RIVIO consumer and RIVIO Partner apps are published under the same official Apple
-              developer account. Google Play listings are <strong>pending</strong> — this site
+              Both RIVIO consumer and RIVIO Partner apps are published under the same Apple developer
+              account. Google Play listings are <strong>pending</strong> — this site
               will add Play links when they are public.
             </p>
             <ul className="space-y-3 text-emerald-700">
@@ -265,8 +297,7 @@ export default function FounderPage() {
               <strong>fitness app India</strong>, <strong>studio day pass</strong>,{" "}
               <strong>flexible fitness</strong>, <strong>wellness on demand</strong>, and{" "}
               <strong>partner tools for gyms and studios</strong>. The homepage and download hub
-              explain the product; this page connects the company and founder to those official
-              endpoints.
+              explain the product; this page connects the company and founder to the right places.
             </p>
           </section>
 
