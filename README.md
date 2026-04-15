@@ -16,7 +16,7 @@ RIVIO is a pay-per-day fitness access platform. Users can use one app to access 
 
 - **rivio-web**: The public-facing website for rivioapp.com (landing, features, partner program, about, legal pages).
 - **Tech:** Next.js (static export), TypeScript, Tailwind CSS, Framer Motion.
-- **SEO:** Sitemap (`/sitemap.xml`), `robots.txt`, and meta tags are generated for the production domain. See `SEO-GUIDE.md` for ongoing SEO steps.
+- **SEO (for everyone, non-technical):** See **`docs/RIVIO_WEB_AND_GOOGLE_SEO_SIMPLE_GUIDE.md`** in the repo root (step-by-step Google + social). Sitemap (`/sitemap.xml`), `robots.txt`, and meta tags are generated for the production domain.
 
 ---
 

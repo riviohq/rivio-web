@@ -13,7 +13,7 @@ export default function Footer() {
       { name: 'Privacy Policy', href: '/members/privacy-policy' },
       { name: 'Terms & Conditions', href: '/members/terms-conditions' },
       { name: 'Help & Support', href: '/members/support' },
-      { name: 'Get the App', href: '/#apps' },
+      { name: 'Get the App', href: '/download/' },
     ],
     partner: [
       { name: 'App Features', href: '/features/business-app' },
@@ -22,6 +22,7 @@ export default function Footer() {
       { name: 'Terms & Conditions', href: '/business/terms-conditions' },
       { name: 'Help & Support', href: '/business/support' },
       { name: 'Partner Program', href: '/business/partner-program' },
+      { name: 'Get the App', href: '/download/' },
     ],
   }
 
@@ -60,6 +61,12 @@ export default function Footer() {
                 hi@rivioapp.com
               </a>
             </div>
+            <Link
+              href="/founder/"
+              className="inline-block mt-3 text-sm text-emerald-400/90 hover:text-emerald-400 font-medium"
+            >
+              Founder
+            </Link>
           </div>
 
           {/* User App */}

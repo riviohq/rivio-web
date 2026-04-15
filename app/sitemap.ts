@@ -1,33 +1,53 @@
-import { MetadataRoute } from 'next'
+import { MetadataRoute } from "next";
+import { SITE_CONTENT_UPDATED_DATE } from "@/lib/siteContent";
 
-const BASE_URL = 'https://rivioapp.com'
+const BASE_URL = "https://rivioapp.com";
 
-// Last-modified date for sitemap: used by Google in search results.
-// With static export this is set when the build runs. To use the deploy date instead,
-// set BUILD_DATE in your deploy step (e.g. BUILD_DATE=$(date -u +%Y-%m-%dT%H:%M:%SZ)).
 const lastModified = (() => {
-  const envDate = process.env.BUILD_DATE || process.env.SITEMAP_LAST_MODIFIED
+  const envDate = process.env.BUILD_DATE || process.env.SITEMAP_LAST_MODIFIED;
   if (envDate) {
-    const d = new Date(envDate)
-    if (!Number.isNaN(d.getTime())) return d
+    const d = new Date(envDate);
+    if (!Number.isNaN(d.getTime())) return d;
   }
-  return new Date()
-})()
+  return new Date(`${SITE_CONTENT_UPDATED_DATE}T12:00:00.000Z`);
+})();
+
+type Change = MetadataRoute.Sitemap[number]["changeFrequency"];
+
+const ROUTES: { path: string; priority: number; changeFrequency: Change }[] = [
+  { path: "/", priority: 1, changeFrequency: "weekly" },
+  { path: "/download/", priority: 0.95, changeFrequency: "weekly" },
+  { path: "/founder/", priority: 0.92, changeFrequency: "monthly" },
+  { path: "/partners/", priority: 0.9, changeFrequency: "monthly" },
+  { path: "/features/", priority: 0.85, changeFrequency: "monthly" },
+  { path: "/features/member-app/", priority: 0.88, changeFrequency: "monthly" },
+  { path: "/features/business-app/", priority: 0.88, changeFrequency: "monthly" },
+  { path: "/features/partner/", priority: 0.82, changeFrequency: "monthly" },
+  { path: "/features/user/", priority: 0.82, changeFrequency: "monthly" },
+  { path: "/business/partner-program/", priority: 0.9, changeFrequency: "monthly" },
+  { path: "/business/about-us/", priority: 0.72, changeFrequency: "monthly" },
+  { path: "/business/support/", priority: 0.62, changeFrequency: "monthly" },
+  { path: "/business/privacy-policy/", priority: 0.48, changeFrequency: "yearly" },
+  { path: "/business/terms-conditions/", priority: 0.48, changeFrequency: "yearly" },
+  { path: "/members/about-us/", priority: 0.72, changeFrequency: "monthly" },
+  { path: "/members/support/", priority: 0.62, changeFrequency: "monthly" },
+  { path: "/members/privacy-policy/", priority: 0.48, changeFrequency: "yearly" },
+  { path: "/members/terms-conditions/", priority: 0.48, changeFrequency: "yearly" },
+  { path: "/partner/about/", priority: 0.7, changeFrequency: "monthly" },
+  { path: "/partner/help/", priority: 0.6, changeFrequency: "monthly" },
+  { path: "/partner/privacy/", priority: 0.48, changeFrequency: "yearly" },
+  { path: "/partner/terms/", priority: 0.48, changeFrequency: "yearly" },
+  { path: "/user/about/", priority: 0.7, changeFrequency: "monthly" },
+  { path: "/user/help/", priority: 0.6, changeFrequency: "monthly" },
+  { path: "/user/privacy/", priority: 0.48, changeFrequency: "yearly" },
+  { path: "/user/terms/", priority: 0.48, changeFrequency: "yearly" },
+];
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  return [
-    { url: BASE_URL, lastModified, changeFrequency: 'weekly', priority: 1 },
-    { url: `${BASE_URL}/features/member-app/`, lastModified, changeFrequency: 'monthly', priority: 0.9 },
-    { url: `${BASE_URL}/features/business-app/`, lastModified, changeFrequency: 'monthly', priority: 0.9 },
-    { url: `${BASE_URL}/partners/`, lastModified, changeFrequency: 'monthly', priority: 0.9 },
-    { url: `${BASE_URL}/members/about-us/`, lastModified, changeFrequency: 'monthly', priority: 0.7 },
-    { url: `${BASE_URL}/members/privacy-policy/`, lastModified, changeFrequency: 'yearly', priority: 0.5 },
-    { url: `${BASE_URL}/members/terms-conditions/`, lastModified, changeFrequency: 'yearly', priority: 0.5 },
-    { url: `${BASE_URL}/members/support/`, lastModified, changeFrequency: 'monthly', priority: 0.6 },
-    { url: `${BASE_URL}/business/about-us/`, lastModified, changeFrequency: 'monthly', priority: 0.7 },
-    { url: `${BASE_URL}/business/partner-program/`, lastModified, changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${BASE_URL}/business/privacy-policy/`, lastModified, changeFrequency: 'yearly', priority: 0.5 },
-    { url: `${BASE_URL}/business/terms-conditions/`, lastModified, changeFrequency: 'yearly', priority: 0.5 },
-    { url: `${BASE_URL}/business/support/`, lastModified, changeFrequency: 'monthly', priority: 0.6 },
-  ]
+  return ROUTES.map(({ path, priority, changeFrequency }) => ({
+    url: path === "/" ? BASE_URL : `${BASE_URL}${path}`,
+    lastModified,
+    changeFrequency,
+    priority,
+  }));
 }

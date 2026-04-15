@@ -7,6 +7,7 @@ import Image from 'next/image'
 import { usePathname, useRouter } from 'next/navigation'
 import { getStaggerDelay } from '@/animation-timing'
 import { Menu, X, Sparkles, MapPin, Download, Star, Zap } from 'lucide-react'
+import { hasGooglePlayBusiness, hasGooglePlayUser } from '@/lib/storeUrls'
 
 interface NavigationProps {
   isScrolled: boolean
@@ -288,24 +289,19 @@ export default function Navigation({ isScrolled }: NavigationProps) {
                 >
                   Partner with us
                 </motion.a>
-                <motion.a
-                  href="#apps"
-                  onClick={(e) => {
-                    e.preventDefault()
-                    if (isHomePage) {
-                      scrollToSection('apps')
-                    } else {
-                      router.push('/')
-                      setTimeout(() => scrollToSection('apps'), 500)
-                    }
-                  }}
+                <motion.div
                   whileHover={{ scale: 1.05, boxShadow: '0 10px 40px rgba(16, 185, 129, 0.3)' }}
                   whileTap={{ scale: 0.95 }}
-                  className="group flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white text-sm font-medium rounded-full transition-all duration-300 shadow-lg shadow-emerald-500/25"
+                  className="inline-flex rounded-full shadow-lg shadow-emerald-500/25"
                 >
-                  <Download className="w-4 h-4 group-hover:animate-bounce" />
-                  Get the App
-                </motion.a>
+                  <Link
+                    href="/download/"
+                    className="group flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white text-sm font-medium rounded-full transition-all duration-300"
+                  >
+                    <Download className="w-4 h-4 group-hover:animate-bounce" />
+                    Get the App
+                  </Link>
+                </motion.div>
               </motion.div>
 
               {/* Mobile Menu Button */}
@@ -458,24 +454,16 @@ export default function Navigation({ isScrolled }: NavigationProps) {
 
               {/* Mobile CTA */}
               <div className="p-5 border-t border-gray-100 bg-gray-50/80 space-y-3">
-                <motion.a
-                  href="#apps"
-                  onClick={(e) => {
-                    e.preventDefault()
-                    setIsMobileMenuOpen(false)
-                    if (isHomePage) {
-                      setTimeout(() => scrollToSection('apps'), 300)
-                    } else {
-                      router.push('/')
-                      setTimeout(() => scrollToSection('apps'), 600)
-                    }
-                  }}
-                  whileTap={{ scale: 0.98 }}
-                  className="flex items-center justify-center gap-2 w-full px-6 py-4 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-emerald-500/25"
-                >
-                  <Sparkles className="w-5 h-5" />
-                  Download Free
-                </motion.a>
+                <motion.div whileTap={{ scale: 0.98 }} className="w-full">
+                  <Link
+                    href="/download/"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="flex items-center justify-center gap-2 w-full px-6 py-4 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-emerald-500/25"
+                  >
+                    <Sparkles className="w-5 h-5" />
+                    Get the App
+                  </Link>
+                </motion.div>
                 <motion.a
                   href="#contact"
                   onClick={(e) => {
@@ -494,7 +482,9 @@ export default function Navigation({ isScrolled }: NavigationProps) {
                   Partner with us
                 </motion.a>
                 <p className="text-center text-xs text-[#86868b]">
-                  Available on iOS & Android
+                  {hasGooglePlayUser || hasGooglePlayBusiness
+                    ? 'Available on the App Store and Google Play'
+                    : 'Live on the App Store'}
                 </p>
               </div>
             </motion.div>
