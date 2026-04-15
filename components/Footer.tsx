@@ -52,6 +52,12 @@ export default function Footer() {
           <div>
             <h3 className="text-2xl font-bold text-emerald-400 mb-2">RIVIO</h3>
             <p className="text-sm font-medium text-white/90 mb-2">Your route to movement.</p>
+            <a
+              href="/founder/"
+              className="inline-block mb-4 text-sm text-emerald-400/90 hover:text-emerald-400 font-medium"
+            >
+              Founder — Team &amp; Vision
+            </a>
             <p className="text-gray-400 text-sm leading-relaxed mb-4">
               One app. Any gym, yoga, or studio. Pay only when you go—no subscriptions, no commitments.
             </p>
@@ -61,12 +67,6 @@ export default function Footer() {
                 hi@rivioapp.com
               </a>
             </div>
-            <Link
-              href="/founder/"
-              className="inline-block mt-3 text-sm text-emerald-400/90 hover:text-emerald-400 font-medium"
-            >
-              Founder
-            </Link>
           </div>
 
           {/* User App */}

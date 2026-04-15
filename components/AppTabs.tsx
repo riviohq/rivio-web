@@ -374,7 +374,16 @@ export default function AppTabs() {
                     <Download className="w-4 h-4" />
                     Google Play
                   </motion.a>
-                ) : null}
+                ) : (
+                  <div
+                    aria-disabled="true"
+                    className="flex items-center justify-center gap-2 px-6 py-3 bg-white/70 text-[#1d1d1f]/50 rounded-full font-medium text-sm border border-gray-200 cursor-not-allowed select-none"
+                    title="Google Play link is coming soon"
+                  >
+                    <Download className="w-4 h-4" />
+                    Google Play (coming soon)
+                  </div>
+                )}
               </div>
             </div>
           </motion.div>
@@ -437,7 +446,16 @@ export default function AppTabs() {
                     <Download className="w-4 h-4" />
                     Google Play
                   </motion.a>
-                ) : null}
+                ) : (
+                  <div
+                    aria-disabled="true"
+                    className="flex items-center justify-center gap-2 px-6 py-3 bg-white/70 text-[#1d1d1f]/50 rounded-full font-medium text-sm border border-gray-200 cursor-not-allowed select-none"
+                    title="Google Play link is coming soon"
+                  >
+                    <Download className="w-4 h-4" />
+                    Google Play (coming soon)
+                  </div>
+                )}
               </div>
             </div>
           </motion.div>

@@ -57,17 +57,11 @@ function DownloadPageJsonLd() {
 }
 
 export default function DownloadPage() {
-  const formattedDate = new Intl.DateTimeFormat("en-IN", {
-    dateStyle: "long",
-    timeZone: "Asia/Kolkata",
-  }).format(new Date(`${SITE_CONTENT_UPDATED_DATE}T12:00:00+05:30`));
-
   return (
     <>
       <DownloadPageJsonLd />
       <div className="min-h-screen bg-[#f5f5f7] text-[#1d1d1f] pt-24 pb-16 px-4">
         <div className="max-w-2xl mx-auto">
-          <p className="text-sm text-[#86868b] mb-2">Last updated: {formattedDate}</p>
           <h1 className="text-3xl md:text-4xl font-semibold tracking-[-0.02em] mb-3">
             Get the RIVIO apps
           </h1>
@@ -100,7 +94,15 @@ export default function DownloadPage() {
                   >
                     Get it on Google Play
                   </a>
-                ) : null}
+                ) : (
+                  <span
+                    aria-disabled="true"
+                    className="inline-flex items-center justify-center px-6 py-3 rounded-full bg-white/70 text-[#1d1d1f]/50 text-sm font-medium border border-gray-200 cursor-not-allowed select-none"
+                    title="Google Play link is coming soon"
+                  >
+                    Google Play (coming soon)
+                  </span>
+                )}
               </div>
               <p className="mt-4 text-xs text-[#86868b] break-all">{APP_STORE_URL_USER}</p>
             </div>
@@ -126,7 +128,15 @@ export default function DownloadPage() {
                   >
                     Get it on Google Play
                   </a>
-                ) : null}
+                ) : (
+                  <span
+                    aria-disabled="true"
+                    className="inline-flex items-center justify-center px-6 py-3 rounded-full bg-white/70 text-[#1d1d1f]/50 text-sm font-medium border border-gray-200 cursor-not-allowed select-none"
+                    title="Google Play link is coming soon"
+                  >
+                    Google Play (coming soon)
+                  </span>
+                )}
               </div>
               <p className="mt-4 text-xs text-[#86868b] break-all">{APP_STORE_URL_BUSINESS}</p>
             </div>
@@ -135,9 +145,6 @@ export default function DownloadPage() {
           <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm">
             <Link href="/" className="text-emerald-600 font-medium hover:text-emerald-700">
               ← Back to home
-            </Link>
-            <Link href="/founder/" className="text-emerald-600 font-medium hover:text-emerald-700">
-              Founder
             </Link>
           </div>
         </div>
