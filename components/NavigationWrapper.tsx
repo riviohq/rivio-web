@@ -1,18 +1,32 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { usePathname } from 'next/navigation'
 import Navigation from './Navigation'
 
+function isMarketingHome(pathname: string | null) {
+  if (!pathname) return false
+  const p = pathname.replace(/\/$/, '') || '/'
+  return p === '/'
+}
+
 export default function NavigationWrapper() {
-  const [isScrolled, setIsScrolled] = useState(false)
+  const [scrollPastHero, setScrollPastHero] = useState(false)
+  const pathname = usePathname()
+  const onHome = isMarketingHome(pathname)
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50)
+      setScrollPastHero(window.scrollY > 50)
     }
-    window.addEventListener('scroll', handleScroll)
+    handleScroll()
+    window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+  }, [pathname])
+
+  // Announcement bar + “solid” nav: on home only until user scrolls; on every other route
+  // always treat as scrolled (scroll resets to 0 after navigation, which left the bar visible).
+  const isScrolled = !onHome || scrollPastHero
 
   return <Navigation isScrolled={isScrolled} />
 }

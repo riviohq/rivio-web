@@ -1,10 +1,13 @@
-import { MetadataRoute } from 'next'
-
-const BASE_URL = 'https://rivioapp.com'
+import type { MetadataRoute } from "next";
+import { SITE_URL } from "@/lib/siteContent";
 
 export default function robots(): MetadataRoute.Robots {
   return {
-    rules: { userAgent: '*', allow: '/' },
-    sitemap: `${BASE_URL}/sitemap.xml`,
-  }
+    rules: {
+      userAgent: "*",
+      allow: "/",
+    },
+    host: SITE_URL,
+    sitemap: `${SITE_URL}/sitemap.xml`,
+  };
 }

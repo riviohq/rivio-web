@@ -57,10 +57,16 @@ function checkRateLimit(request: NextRequest, isApiRoute: boolean): boolean {
   return true
 }
 
+function isLocalHost(request: NextRequest) {
+  const h = request.nextUrl.hostname
+  return h === 'localhost' || h === '127.0.0.1' || h === '[::1]' || h.endsWith('.local')
+}
+
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
   const isApiRoute = pathname.startsWith('/api')
-  
+  const local = isLocalHost(request)
+
   // Rate limiting
   if (!checkRateLimit(request, isApiRoute)) {
     return new NextResponse(
@@ -83,34 +89,44 @@ export function middleware(request: NextRequest) {
 
   // Enhanced security headers
   response.headers.set('X-DNS-Prefetch-Control', 'on')
-  response.headers.set('Strict-Transport-Security', 'max-age=63072000; includeSubDomains; preload')
+  // HSTS breaks or confuses plain-HTTP local dev; only send on real HTTPS hosts.
+  if (!local && request.nextUrl.protocol === 'https:') {
+    response.headers.set(
+      'Strict-Transport-Security',
+      'max-age=63072000; includeSubDomains; preload'
+    )
+  }
   response.headers.set('X-Frame-Options', 'SAMEORIGIN')
   response.headers.set('X-Content-Type-Options', 'nosniff')
   response.headers.set('X-XSS-Protection', '1; mode=block')
   response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin')
   response.headers.set('Permissions-Policy', 'camera=(), microphone=(), geolocation=(), payment=()')
-  
+
   // Content Security Policy
-  const csp = [
+  // `upgrade-insecure-requests` forces https: for all assets — on http://localhost that
+  // upgrades /_next/... to https://localhost which has no cert → CSS/JS fail (looks "unstyled").
+  const connectExtra = local ? " ws: wss:" : '' // Next.js dev HMR
+  const cspParts = [
     "default-src 'self'",
-    "script-src 'self' 'unsafe-inline' 'unsafe-eval'", // unsafe-eval needed for Next.js
+    "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
     "font-src 'self' https://fonts.gstatic.com data:",
     "img-src 'self' data: https: blob:",
-    "connect-src 'self' https://fonts.googleapis.com",
+    `connect-src 'self' https://fonts.googleapis.com${connectExtra}`,
     "frame-ancestors 'self'",
     "base-uri 'self'",
     "form-action 'self'",
     "object-src 'none'",
-    "upgrade-insecure-requests",
-  ].join('; ')
-  response.headers.set('Content-Security-Policy', csp)
+  ]
+  if (!local) {
+    cspParts.push('upgrade-insecure-requests')
+  }
+  response.headers.set('Content-Security-Policy', cspParts.join('; '))
 
   // Additional security headers
   response.headers.set('X-Permitted-Cross-Domain-Policies', 'none')
-  response.headers.set('Cross-Origin-Embedder-Policy', 'require-corp')
-  response.headers.set('Cross-Origin-Opener-Policy', 'same-origin')
-  response.headers.set('Cross-Origin-Resource-Policy', 'same-origin')
+  // Avoid COEP/CORP/strict COOP here — they can block or interfere with Next.js
+  // dev/prod loading of _next assets and fonts on some browsers.
 
   // Remove server information
   response.headers.delete('X-Powered-By')
