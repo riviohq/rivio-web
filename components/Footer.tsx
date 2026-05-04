@@ -8,6 +8,7 @@ export default function Footer() {
 
   const footerLinks = {
     user: [
+      { name: 'Latest & releases', href: '/latest/' },
       { name: 'App Features', href: '/features/member-app' },
       { name: 'About Us', href: '/members/about-us' },
       { name: 'Privacy Policy', href: '/members/privacy-policy' },
@@ -16,6 +17,7 @@ export default function Footer() {
       { name: 'Get the App', href: '/download/' },
     ],
     partner: [
+      { name: 'Latest & releases', href: '/latest/' },
       { name: 'App Features', href: '/features/business-app' },
       { name: 'About Us', href: '/business/about-us' },
       { name: 'Privacy Policy', href: '/business/privacy-policy' },

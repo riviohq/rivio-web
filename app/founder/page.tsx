@@ -15,6 +15,8 @@ import {
 import {
   APP_STORE_URL_BUSINESS,
   APP_STORE_URL_USER,
+  GOOGLE_PLAY_URL_BUSINESS,
+  GOOGLE_PLAY_URL_USER,
 } from "@/lib/storeUrls";
 import { SITE_CONTENT_UPDATED_DATE, SITE_URL } from "@/lib/siteContent";
 
@@ -246,12 +248,12 @@ export default function FounderPage() {
 
           <section className="mb-10" aria-labelledby="apps-dev">
             <h2 id="apps-dev" className="text-xl font-semibold mb-4">
-              Apps &amp; App Store developer
+              Apps — App Store &amp; Google Play
             </h2>
             <p className="text-[#424245] leading-relaxed mb-4">
               Both RIVIO consumer and RIVIO Partner apps are published under the same Apple developer
-              account. Google Play listings are <strong>pending</strong> — this site
-              will add Play links when they are public.
+              account and are available on Google Play for Android. Use the links below for installs
+              and support.
             </p>
             <ul className="space-y-3 text-emerald-700">
               <li>
@@ -271,7 +273,17 @@ export default function FounderPage() {
                   rel="noopener noreferrer"
                   className="hover:underline break-all font-medium"
                 >
-                  Rivio — Gym, Yoga &amp; Sports (member app)
+                  Rivio — Gym, Yoga &amp; Sports (member app, App Store)
+                </a>
+              </li>
+              <li>
+                <a
+                  href={GOOGLE_PLAY_URL_USER}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:underline break-all font-medium"
+                >
+                  Rivio — Gym, Yoga &amp; Sports (member app, Google Play)
                 </a>
               </li>
               <li>
@@ -281,7 +293,17 @@ export default function FounderPage() {
                   rel="noopener noreferrer"
                   className="hover:underline break-all font-medium"
                 >
-                  Rivio Partner — Business app
+                  Rivio Partner — Business app (App Store)
+                </a>
+              </li>
+              <li>
+                <a
+                  href={GOOGLE_PLAY_URL_BUSINESS}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:underline break-all font-medium"
+                >
+                  Rivio Partner — Business app (Google Play)
                 </a>
               </li>
             </ul>
@@ -302,6 +324,9 @@ export default function FounderPage() {
           </section>
 
           <div className="flex flex-wrap gap-4 text-sm">
+            <Link href="/latest/" className="text-emerald-700 font-medium hover:underline">
+              Latest &amp; releases →
+            </Link>
             <Link href="/download/" className="text-emerald-700 font-medium hover:underline">
               Download apps →
             </Link>

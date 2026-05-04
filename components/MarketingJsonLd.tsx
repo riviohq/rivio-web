@@ -55,9 +55,10 @@ export default function MarketingJsonLd() {
     "@type": "MobileApplication",
     "@id": `${SITE_URL}/#rivio-user-app`,
     name: "Rivio — Gym, Yoga & Sports",
-    operatingSystem: "iOS",
+    operatingSystem: "iOS, Android",
     applicationCategory: "HealthApplication",
     downloadUrl: APP_STORE_URL_USER,
+    installUrl: GOOGLE_PLAY_URL_USER,
     offers: {
       "@type": "Offer",
       price: "0",
@@ -65,15 +66,15 @@ export default function MarketingJsonLd() {
     },
     publisher: { "@id": ORG_ID },
   };
-  if (GOOGLE_PLAY_URL_USER) userApp.installUrl = GOOGLE_PLAY_URL_USER;
 
   const partnerApp: Record<string, unknown> = {
     "@type": "MobileApplication",
     "@id": `${SITE_URL}/#rivio-partner-app`,
     name: "Rivio Partner — Business App",
-    operatingSystem: "iOS",
+    operatingSystem: "iOS, Android",
     applicationCategory: "BusinessApplication",
     downloadUrl: APP_STORE_URL_BUSINESS,
+    installUrl: GOOGLE_PLAY_URL_BUSINESS,
     offers: {
       "@type": "Offer",
       price: "0",
@@ -81,7 +82,6 @@ export default function MarketingJsonLd() {
     },
     publisher: { "@id": ORG_ID },
   };
-  if (GOOGLE_PLAY_URL_BUSINESS) partnerApp.installUrl = GOOGLE_PLAY_URL_BUSINESS;
 
   const website: Record<string, unknown> = {
     "@type": "WebSite",
