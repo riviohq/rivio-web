@@ -1,3 +1,5 @@
+# Single canonical Pages deploy for this repo (static `out/` via `next build`).
+# Do not add GitHub’s “Deploy Next.js site to Pages” starter again — it duplicates this run.
 name: Deploy to GitHub Pages
 
 on:
