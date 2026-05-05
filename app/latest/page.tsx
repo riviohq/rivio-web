@@ -47,7 +47,7 @@ const RELEASES: ReleasePost[] = [
     iso: "2026-05-04",
     label: "May 4, 2026",
     kind: "release",
-    title: "Google Play production — both apps stable on iOS & Android",
+    title: "App Store & Google Play — both apps stable on iOS & Android",
     summary:
       "RIVIO: Gym, Yoga & Sports and RIVIO: Partner & Business App are now listed on Google Play in production, alongside their App Store releases. Members get the same pay-per-day discovery, wallet, and QR check-in; partners get the same live visits, earnings, and venue tools — whether they join from an iPhone or an Android device.",
     detail:
