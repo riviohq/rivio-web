@@ -1,6 +1,7 @@
 'use client'
 
 import { Shield, FileText, AlertTriangle, Mail, Scale, Building2 } from 'lucide-react'
+import LegalEntityNotice from '@/components/LegalEntityNotice'
 
 export default function PartnerTermsPage() {
   return (
@@ -29,6 +30,10 @@ export default function PartnerTermsPage() {
             By using RIVIO Partner App, you agree to these Terms and Conditions. These terms are legally binding and cannot be neglected. Please read them carefully.
           </p>
         </div>
+
+        <section className="mb-12">
+          <LegalEntityNotice variant="section" accent="amber" />
+        </section>
 
         {/* Section 1 */}
         <section className="mb-12">

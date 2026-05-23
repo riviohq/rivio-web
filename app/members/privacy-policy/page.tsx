@@ -1,6 +1,7 @@
 'use client'
 
 import { Shield, Lock, Eye, Mail, FileText } from 'lucide-react'
+import LegalEntityNotice from '@/components/LegalEntityNotice'
 
 export default function UserPrivacyPage() {
   return (
@@ -27,6 +28,10 @@ export default function UserPrivacyPage() {
             At RIVIO, we are committed to protecting your privacy and ensuring the security of your personal information. This Privacy Policy explains what information we collect, why we collect it, how we use it, and how we keep it safe.
           </p>
         </div>
+
+        <section className="mb-12">
+          <LegalEntityNotice variant="section" accent="emerald" />
+        </section>
 
         {/* Section 1 */}
         <section className="mb-12">
