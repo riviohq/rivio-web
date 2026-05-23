@@ -14,7 +14,7 @@ export default function LegalEntityNotice({
 
   if (variant === 'footer') {
     return (
-      <div className="mt-4 pt-4 border-t border-gray-800 text-xs text-gray-400 leading-relaxed max-w-2xl">
+      <div className="text-xs text-gray-400 leading-relaxed max-w-2xl">
         <p className="text-gray-300 font-medium mb-1">Legal entity (operator)</p>
         <p>{LEGAL_ENTITY_FOOTER_LINE}</p>
         <p className="mt-1">
