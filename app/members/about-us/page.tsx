@@ -2,6 +2,7 @@
 
 import { Eye, Target, QrCode, Trophy, Users, Mail } from "lucide-react";
 import Image from "next/image";
+import LegalEntityNotice from "@/components/LegalEntityNotice";
 
 export default function UserAboutPage() {
   return (
@@ -331,6 +332,11 @@ export default function UserAboutPage() {
               </p>
             </div>
           </div>
+        </section>
+
+        {/* Legal entity — visible for DLT / regulatory verification */}
+        <section className="mb-6 md:mb-20">
+          <LegalEntityNotice variant="section" accent="emerald" />
         </section>
 
         {/* Contact */}

@@ -2,6 +2,7 @@
 
 import { Eye, Target, QrCode, TrendingUp, Users, Mail, Building2 } from 'lucide-react'
 import Image from 'next/image'
+import LegalEntityNotice from '@/components/LegalEntityNotice'
 
 export default function PartnerAboutPage() {
   return (
@@ -150,6 +151,11 @@ export default function PartnerAboutPage() {
               <p className="font-semibold text-amber-400 italic text-xl">Welcome to RIVIO—where your success is our mission, and your growth is our greatest achievement.</p>
             </div>
           </div>
+        </section>
+
+        {/* Legal entity — visible for DLT / regulatory verification */}
+        <section className="mb-20">
+          <LegalEntityNotice variant="section" accent="amber" />
         </section>
 
         {/* Contact */}
