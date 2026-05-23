@@ -25,6 +25,10 @@ export default function LegalEntityNotice({
         </p>
         <p className="mt-1">
           Contact:{' '}
+          <a href={`mailto:${LEGAL_ENTITY.entityEmail}`} className="hover:text-gray-300">
+            {LEGAL_ENTITY.entityEmail}
+          </a>
+          {' · '}
           <a href={`mailto:${LEGAL_ENTITY.hiEmail}`} className="hover:text-gray-300">
             {LEGAL_ENTITY.hiEmail}
           </a>
@@ -66,6 +70,12 @@ export default function LegalEntityNotice({
           <li>
             <span className="text-white font-medium">Registered office:</span>{' '}
             {LEGAL_ENTITY.registeredOffice}
+          </li>
+          <li>
+            <span className="text-white font-medium">Entity contact:</span>{' '}
+            <a href={`mailto:${LEGAL_ENTITY.entityEmail}`} className={`${title} hover:underline`}>
+              {LEGAL_ENTITY.entityEmail}
+            </a>
           </li>
         </ul>
         <p className="text-gray-400 text-sm">

@@ -4,7 +4,6 @@ import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { Facebook, X, Instagram, Linkedin, Mail } from 'lucide-react'
 import LegalEntityNotice from '@/components/LegalEntityNotice'
-import { LEGAL_ENTITY_FOOTER_LINE } from '@/lib/legalEntity'
 
 export default function Footer() {
 
@@ -141,7 +140,7 @@ export default function Footer() {
         <div className="border-t border-gray-800 pt-8 mt-8">
           <LegalEntityNotice variant="footer" />
           <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-500 mt-6">
-            <p>© 2026 RIVIO. {LEGAL_ENTITY_FOOTER_LINE}</p>
+            <p>© 2026 RIVIO. All rights reserved.</p>
             <div className="flex items-center gap-6">
               <Link href="/members/privacy-policy" className="hover:text-gray-300 transition-colors">
                 Privacy
