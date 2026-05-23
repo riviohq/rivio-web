@@ -8,6 +8,8 @@ export const LEGAL_ENTITY = {
   registeredOffice: 'Haryana, India',
   supportEmail: 'support@rivioapp.com',
   hiEmail: 'hi@rivioapp.com',
+  /** Entity / DLT / legal inquiries */
+  entityEmail: 'hi@godaraxpress.com',
 } as const
 
 export const LEGAL_ENTITY_FOOTER_LINE = `${LEGAL_ENTITY.brandName} is operated by ${LEGAL_ENTITY.legalName} (GSTIN: ${LEGAL_ENTITY.gstin}).`
