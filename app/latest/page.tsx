@@ -31,6 +31,9 @@ type CoverVariant =
 
 const LATEST_MILESTONE_COVER = "/latest/2026-05-26-partners-milestone.png";
 
+/** Shared cover height — matches dual-apps and other Latest cards. */
+const POST_COVER_HEIGHT = "h-48 md:h-52";
+
 type ReleasePost = {
   iso: string;
   label: string;
@@ -64,7 +67,12 @@ const RELEASES: ReleasePost[] = [
     ],
     lookingAhead:
       "We will keep onboarding more partners city by city, publish partner spotlights here, and share onboarding walkthroughs as we grow the network. If you run a gym or studio in India and want to join, reach us at partners@rivioapp.com.",
-    cover: { variant: "partner-milestone" },
+    cover: {
+      variant: "photo",
+      imageSrc: LATEST_MILESTONE_COVER,
+      imageAlt:
+        "RIVIO milestone — 10 partner venues live in India, stable production on App Store and Google Play",
+    },
     showStoreLinks: true,
   },
   {
@@ -186,23 +194,26 @@ const kindLabel: Record<ReleaseKind, string> = {
 function PostCover({ cover }: { cover: CoverVariant }) {
   if (cover.variant === "photo") {
     return (
-      <div className="relative h-48 w-full overflow-hidden md:h-56">
+      <div
+        className={`relative w-full overflow-hidden bg-gradient-to-br from-white via-[#f5f5f7] to-[#fbfbfd] ${POST_COVER_HEIGHT}`}
+      >
         <Image
           src={cover.imageSrc}
           alt={cover.imageAlt}
           fill
-          className="object-cover object-center"
+          className="object-contain object-center p-2 md:p-3"
           sizes="(max-width: 768px) 100vw, 720px"
           priority
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent" />
       </div>
     );
   }
 
   if (cover.variant === "partner-milestone") {
     return (
-      <div className="relative flex h-52 w-full flex-col justify-between overflow-hidden bg-gradient-to-br from-white via-[#f5f5f7] to-[#fbfbfd] md:h-56">
+      <div
+        className={`relative flex w-full flex-col justify-between overflow-hidden bg-gradient-to-br from-white via-[#f5f5f7] to-[#fbfbfd] ${POST_COVER_HEIGHT}`}
+      >
         <div className="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full bg-emerald-400/[0.14] blur-3xl" />
         <div className="pointer-events-none absolute -bottom-20 -left-10 h-48 w-48 rounded-full bg-emerald-500/[0.08] blur-3xl" />
         <div className="relative z-10 flex items-start justify-between gap-4 px-6 pt-6 md:px-8 md:pt-7">
@@ -235,7 +246,7 @@ function PostCover({ cover }: { cover: CoverVariant }) {
 
   if (cover.variant === "dual-apps") {
     return (
-      <div className="relative flex h-48 w-full overflow-hidden md:h-52">
+      <div className={`relative flex w-full overflow-hidden ${POST_COVER_HEIGHT}`}>
         <div className="flex flex-1 flex-col items-center justify-center bg-gradient-to-br from-emerald-100/90 via-emerald-50 to-white">
           <Image
             src={MEMBER_ICON}
