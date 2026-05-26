@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { AppleMark, PlayMark } from "@/components/StoreMarks";
+import LatestMilestonePoster from "@/components/LatestMilestonePoster";
 import {
   APP_STORE_URL_BUSINESS,
   APP_STORE_URL_USER,
@@ -67,12 +68,7 @@ const RELEASES: ReleasePost[] = [
     ],
     lookingAhead:
       "We will keep onboarding more partners city by city, publish partner spotlights here, and share onboarding walkthroughs as we grow the network. If you run a gym or studio in India and want to join, reach us at partners@rivioapp.com.",
-    cover: {
-      variant: "photo",
-      imageSrc: LATEST_MILESTONE_COVER,
-      imageAlt:
-        "RIVIO milestone — 10 partner venues live in India, stable production on App Store and Google Play",
-    },
+    cover: { variant: "partner-milestone" },
     showStoreLinks: true,
   },
   {
@@ -211,35 +207,8 @@ function PostCover({ cover }: { cover: CoverVariant }) {
 
   if (cover.variant === "partner-milestone") {
     return (
-      <div
-        className={`relative flex w-full flex-col justify-between overflow-hidden bg-gradient-to-br from-white via-[#f5f5f7] to-[#fbfbfd] ${POST_COVER_HEIGHT}`}
-      >
-        <div className="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full bg-emerald-400/[0.14] blur-3xl" />
-        <div className="pointer-events-none absolute -bottom-20 -left-10 h-48 w-48 rounded-full bg-emerald-500/[0.08] blur-3xl" />
-        <div className="relative z-10 flex items-start justify-between gap-4 px-6 pt-6 md:px-8 md:pt-7">
-          <Image
-            src={RIVIO_APP_ICON}
-            alt="RIVIO"
-            width={72}
-            height={72}
-            className="h-14 w-14 rounded-2xl shadow-md ring-1 ring-black/[0.06] md:h-16 md:w-16"
-            priority
-          />
-          <span className="rounded-full bg-emerald-50 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.08em] text-emerald-700 ring-1 ring-emerald-200/80">
-            Milestone
-          </span>
-        </div>
-        <div className="relative z-10 px-6 pb-6 md:px-8 md:pb-7">
-          <p className="text-5xl font-semibold tracking-[-0.04em] text-emerald-600 md:text-6xl">
-            10
-          </p>
-          <p className="mt-1 text-lg font-semibold tracking-tight text-[#1d1d1f] md:text-xl">
-            Partner venues live in India
-          </p>
-          <p className="mt-2 text-sm text-[#86868b] md:text-[15px]">
-            Stable production · App Store &amp; Google Play
-          </p>
-        </div>
+      <div className={`relative w-full overflow-hidden ${POST_COVER_HEIGHT}`}>
+        <LatestMilestonePoster />
       </div>
     );
   }
