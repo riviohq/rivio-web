@@ -2,6 +2,7 @@
 
 import { Eye, Target, QrCode, TrendingUp, Users, Mail, Building2 } from 'lucide-react'
 import Image from 'next/image'
+import Link from 'next/link'
 import LegalEntityNotice from '@/components/LegalEntityNotice'
 
 export default function PartnerAboutPage() {
@@ -23,19 +24,75 @@ export default function PartnerAboutPage() {
               />
             </div>
             <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 tracking-tight">
-              RIVIO Partner
+              About RIVIO Partner
             </h1>
             <p className="text-2xl md:text-3xl text-amber-400 mb-4 font-semibold">
-              Business Management Platform
+              Gym &amp; Studio Business App — India
             </p>
-            <p className="text-lg text-gray-400 mb-8 italic">
+            <p className="text-lg text-gray-300 mb-4 max-w-2xl mx-auto">
+              Built by{' '}
+              <Link href="/founder/" className="text-amber-400 font-semibold hover:underline">
+                Amandeep Bishnoi
+              </Link>
+              , Founder of RIVIO. QR check-ins, live visits, earnings, and settlements for fitness venues.
+            </p>
+            <p className="text-lg text-gray-400 mb-6 italic">
               "Your route to movement."
             </p>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+              <div className="inline-flex items-center gap-2 px-6 py-3 bg-amber-500/20 backdrop-blur-sm rounded-full border border-amber-500/30">
+                <Building2 className="w-5 h-5 text-amber-400 flex-shrink-0" />
+                <span className="text-amber-200 text-sm font-medium">
+                  10 partner venues live across India
+                </span>
+              </div>
+              <div className="inline-flex items-center gap-2 px-6 py-3 bg-emerald-500/15 backdrop-blur-sm rounded-full border border-emerald-500/30">
+                <TrendingUp className="w-5 h-5 text-emerald-400 flex-shrink-0" />
+                <span className="text-emerald-200 text-sm font-medium">
+                  Stable production on App Store &amp; Google Play
+                </span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
+        {/* RIVIO Partner Today */}
+        <section className="mb-20 mt-12">
+          <div className="bg-gradient-to-br from-amber-500/10 to-emerald-500/10 backdrop-blur-sm rounded-3xl p-8 md:p-12 border border-amber-500/20 shadow-2xl">
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">RIVIO Partner today</h2>
+            <div className="space-y-4 text-lg text-gray-300 leading-relaxed">
+              <p>
+                RIVIO Partner is in stable production on <strong className="text-white">App Store</strong> and{' '}
+                <strong className="text-white">Google Play</strong>. Venue owners use it for QR check-ins, live visit
+                tracking, pass management, earnings visibility, and settlements — the operational backbone for
+                pay-per-day fitness in India.
+              </p>
+              <p>
+                We congratulate our first <strong className="text-amber-400">10 partner venues across India</strong> who
+                went live on the platform. They are proof that gyms, studios, and wellness spaces can run modern
+                day-pass and member traffic without legacy spreadsheets or rigid monthly-only contracts.
+              </p>
+              <p>
+                See the milestone on{' '}
+                <Link href="/latest/" className="text-amber-400 font-semibold hover:underline">
+                  Latest
+                </Link>
+                , learn about{' '}
+                <Link href="/founder/" className="text-amber-400 font-semibold hover:underline">
+                  Amandeep Bishnoi, Founder of RIVIO
+                </Link>
+                , or email{' '}
+                <a href="mailto:partners@rivioapp.com" className="text-amber-400 font-semibold hover:underline">
+                  partners@rivioapp.com
+                </a>{' '}
+                to onboard your venue.
+              </p>
+            </div>
+          </div>
+        </section>
+
         {/* Vision Section */}
         <section className="mb-20 mt-12">
           <div className="bg-gray-900/80 backdrop-blur-sm rounded-3xl p-8 md:p-12 border border-gray-800 shadow-2xl">
@@ -139,7 +196,7 @@ export default function PartnerAboutPage() {
               </div>
               <div>
                 <h2 className="text-3xl md:text-4xl font-bold text-white">The Founder Team's Vision</h2>
-                <p className="text-amber-400 text-sm italic mt-1">(Amandeep Bishnoi)</p>
+                <p className="text-amber-400 text-sm italic mt-1">Amandeep Bishnoi — Founder of RIVIO</p>
               </div>
             </div>
             <div className="space-y-6 text-lg text-gray-300 leading-relaxed">
@@ -149,6 +206,11 @@ export default function PartnerAboutPage() {
               <p>RIVIO Partner represents a new paradigm in business management software—one where technology truly serves the business owner. Every feature we've built, from real-time earnings tracking to automated check-ins, from flexible pass management to seamless settlements, is designed with a single purpose: to give you back your time and amplify your success.</p>
               <p>Our commitment goes beyond software. We measure our success not by features or downloads, but by your growth, your profitability, and your ability to focus on what you do best. When you thrive, we've achieved our goal. When your business scales, we've fulfilled our vision.</p>
               <p className="font-semibold text-amber-400 italic text-xl">Welcome to RIVIO—where your success is our mission, and your growth is our greatest achievement.</p>
+              <p>
+                <Link href="/founder/" className="text-amber-400 font-semibold hover:underline">
+                  Read the full founder story →
+                </Link>
+              </p>
             </div>
           </div>
         </section>

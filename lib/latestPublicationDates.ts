@@ -7,6 +7,7 @@
  * `https://rivioapp.com/sitemap.xml` (or URL Inspection on `/latest/`).
  */
 export const LATEST_PUBLICATION_DATES_ISO_NEWEST_FIRST = [
+  "2026-05-26",
   "2026-05-04",
   "2026-04-29",
   "2026-03-17",

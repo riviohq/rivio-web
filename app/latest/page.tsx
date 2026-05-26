@@ -11,8 +11,8 @@ import {
 import { getLatestNewsPageLastModified } from "@/lib/latestPublicationDates";
 import { SITE_URL } from "@/lib/siteContent";
 
-const MEMBER_ICON =
-  "https://rivio-glimps.s3.ap-south-1.amazonaws.com/rivio.png";
+const RIVIO_APP_ICON = "/logos/rivio-app-icon.png";
+const MEMBER_ICON = RIVIO_APP_ICON;
 const PARTNER_ICON =
   "https://rivio-glimps.s3.ap-south-1.amazonaws.com/rivio_business.png";
 
@@ -22,10 +22,14 @@ type ReleaseKind = "release" | "beta" | "milestone";
 
 /** Visual cover for each card — swap URLs when you add real photos. */
 type CoverVariant =
+  | { variant: "photo"; imageSrc: string; imageAlt: string }
   | { variant: "dual-apps" }
+  | { variant: "partner-milestone" }
   | { variant: "ios-gradient"; imageSrc: string; imageAlt: string }
   | { variant: "android-gradient" }
   | { variant: "site-launch" };
+
+const LATEST_MILESTONE_COVER = "/latest/2026-05-26-partners-milestone.png";
 
 type ReleasePost = {
   iso: string;
@@ -43,6 +47,26 @@ type ReleasePost = {
 
 /** Newest first. Add new entries at the top. Sync `iso` values with `lib/latestPublicationDates.ts` for sitemap `lastModified`. */
 const RELEASES: ReleasePost[] = [
+  {
+    iso: "2026-05-26",
+    label: "May 26, 2026",
+    kind: "milestone",
+    title: "Stable production is live — congratulations to our first 10 partner venues in India",
+    summary:
+      "Our cross-platform stable release is now the production baseline for RIVIO: Gym, Yoga & Sports and RIVIO: Partner & Business App on App Store and Google Play. Today we are celebrating ten partner gyms and wellness venues across India who went live with QR check-ins, pay-per-day passes, and real settlements — the network members can discover and walk into today.",
+    detail:
+      "This milestone is not just a version number — it is proof that pay-per-day fitness works end to end in the field: members top up, scan in, and build streaks; partners see live visits, earnings, and payouts without juggling spreadsheets. We built RIVIO for real venues and real workouts, and these ten partners are the first chapter of a much larger map.",
+    highlights: [
+      "Production-stable member and partner apps on iOS and Android.",
+      "Ten partner venues live across India — gyms, studios, and wellness spaces.",
+      "QR check-in, wallet top-ups, and partner settlements running in production.",
+      "rivioapp.com, About Us, and this Latest feed updated for the milestone.",
+    ],
+    lookingAhead:
+      "We will keep onboarding more partners city by city, publish partner spotlights here, and share onboarding walkthroughs as we grow the network. If you run a gym or studio in India and want to join, reach us at partners@rivioapp.com.",
+    cover: { variant: "partner-milestone" },
+    showStoreLinks: true,
+  },
   {
     iso: "2026-05-04",
     label: "May 4, 2026",
@@ -160,6 +184,55 @@ const kindLabel: Record<ReleaseKind, string> = {
 };
 
 function PostCover({ cover }: { cover: CoverVariant }) {
+  if (cover.variant === "photo") {
+    return (
+      <div className="relative h-48 w-full overflow-hidden md:h-56">
+        <Image
+          src={cover.imageSrc}
+          alt={cover.imageAlt}
+          fill
+          className="object-cover object-center"
+          sizes="(max-width: 768px) 100vw, 720px"
+          priority
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent" />
+      </div>
+    );
+  }
+
+  if (cover.variant === "partner-milestone") {
+    return (
+      <div className="relative flex h-52 w-full flex-col justify-between overflow-hidden bg-gradient-to-br from-white via-[#f5f5f7] to-[#fbfbfd] md:h-56">
+        <div className="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full bg-emerald-400/[0.14] blur-3xl" />
+        <div className="pointer-events-none absolute -bottom-20 -left-10 h-48 w-48 rounded-full bg-emerald-500/[0.08] blur-3xl" />
+        <div className="relative z-10 flex items-start justify-between gap-4 px-6 pt-6 md:px-8 md:pt-7">
+          <Image
+            src={RIVIO_APP_ICON}
+            alt="RIVIO"
+            width={72}
+            height={72}
+            className="h-14 w-14 rounded-2xl shadow-md ring-1 ring-black/[0.06] md:h-16 md:w-16"
+            priority
+          />
+          <span className="rounded-full bg-emerald-50 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.08em] text-emerald-700 ring-1 ring-emerald-200/80">
+            Milestone
+          </span>
+        </div>
+        <div className="relative z-10 px-6 pb-6 md:px-8 md:pb-7">
+          <p className="text-5xl font-semibold tracking-[-0.04em] text-emerald-600 md:text-6xl">
+            10
+          </p>
+          <p className="mt-1 text-lg font-semibold tracking-tight text-[#1d1d1f] md:text-xl">
+            Partner venues live in India
+          </p>
+          <p className="mt-2 text-sm text-[#86868b] md:text-[15px]">
+            Stable production · App Store &amp; Google Play
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   if (cover.variant === "dual-apps") {
     return (
       <div className="relative flex h-48 w-full overflow-hidden md:h-52">
@@ -249,20 +322,29 @@ function PostCover({ cover }: { cover: CoverVariant }) {
 export const metadata: Metadata = {
   title: "Latest — news & updates | RIVIO",
   description:
-    "RIVIO news and plans: rivioapp.com, App Store and Google Play betas and production releases for RIVIO: Gym, Yoga & Sports and RIVIO: Partner & Business App.",
+    "RIVIO news: stable production on App Store & Google Play, ten partner venues live in India, and release notes for RIVIO: Gym, Yoga & Sports and RIVIO: Partner & Business App.",
   alternates: { canonical: pageUrl },
   openGraph: {
     title: "Latest from RIVIO",
     description:
-      "Updates, releases, and roadmap notes for RIVIO apps and rivioapp.com.",
+      "Stable production live — celebrating 10 partner venues in India. Updates for RIVIO apps and rivioapp.com.",
     type: "website",
     url: pageUrl,
     siteName: "RIVIO",
+    images: [
+      {
+        url: `${SITE_URL}${LATEST_MILESTONE_COVER}`,
+        width: 1376,
+        height: 768,
+        alt: "RIVIO — 10 partner venues live in India",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Latest from RIVIO",
-    description: "News and releases for RIVIO apps.",
+    description: "Stable production live — 10 partner venues across India.",
+    images: [`${SITE_URL}${LATEST_MILESTONE_COVER}`],
   },
 };
 

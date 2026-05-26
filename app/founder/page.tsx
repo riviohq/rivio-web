@@ -23,12 +23,13 @@ import { SITE_CONTENT_UPDATED_DATE, SITE_URL } from "@/lib/siteContent";
 const pageUrl = `${SITE_URL}/founder/`;
 
 export const metadata: Metadata = {
-  title: `The Founder — Vision | ${FOUNDER_NAME}`,
-  description: `The Founder’s vision behind RIVIO — pay-per-day gym, yoga, and sports access in India. Founder links, App Store developer page, and RIVIO company links for ${FOUNDER_NAME}.`,
+  title: `${FOUNDER_NAME} — Founder of RIVIO | Pay-Per-Day Fitness India`,
+  description: `${FOUNDER_NAME} is the founder of RIVIO — India's pay-per-day gym, yoga, and sports platform. App Store developer for RIVIO member and partner apps. Vision, profile links, and company pages.`,
   keywords: [
     FOUNDER_NAME,
     "Amandeep Bishnoi Rivio",
     "Amandeep Bishnoi founder",
+    "Amandeep Bishnoi founder of RIVIO",
     "Amandeep Bishnoi fitness entrepreneur",
     "Rivio founder India",
     "Rivio founder",
@@ -39,17 +40,17 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: pageUrl },
   openGraph: {
-    title: `The Founder — Vision | RIVIO`,
+    title: `${FOUNDER_NAME} — Founder of RIVIO`,
     description:
-      "The Founder’s vision behind RIVIO. Founder links and App Store developer listing.",
+      "Amandeep Bishnoi founded RIVIO — pay-per-day fitness for India. App Store developer, profile links, and company pages.",
     type: "profile",
     url: pageUrl,
     siteName: "RIVIO",
   },
   twitter: {
     card: "summary",
-    title: `The Founder — Vision | RIVIO`,
-    description: "The Founder’s vision behind RIVIO — pay-per-day fitness for India.",
+    title: `${FOUNDER_NAME} — Founder of RIVIO`,
+    description: "Founder of RIVIO — pay-per-day gym, yoga, and sports access in India.",
   },
 };
 
@@ -85,10 +86,14 @@ export default function FounderPage() {
       <article className="min-h-screen bg-[#f5f5f7] text-[#1d1d1f] pt-24 pb-20 px-4">
         <div className="max-w-3xl mx-auto">
           <h1 className="text-3xl md:text-4xl font-semibold tracking-[-0.02em] mb-2">
-            The Founder — Vision
+            {FOUNDER_NAME} — Founder of RIVIO
           </h1>
-          <p className="text-lg text-[#1d1d1f] font-semibold mb-8">
-            {FOUNDER_NAME} · Founder, RIVIO
+          <p className="text-lg text-[#1d1d1f] font-semibold mb-4">
+            Pay-per-day gym, yoga &amp; sports · India
+          </p>
+          <p className="text-[#424245] leading-relaxed mb-8">
+            RIVIO is live in stable production with ten partner venues across India. This page connects{" "}
+            <strong>{FOUNDER_NAME}</strong> to RIVIO&apos;s apps, company links, and latest news.
           </p>
 
           <section className="prose prose-neutral max-w-none mb-10" aria-labelledby="about-founder">
