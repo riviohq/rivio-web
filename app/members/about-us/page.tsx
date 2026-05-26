@@ -2,6 +2,7 @@
 
 import { Eye, Target, QrCode, Trophy, Users, Mail } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import LegalEntityNotice from "@/components/LegalEntityNotice";
 
 export default function UserAboutPage() {
@@ -23,25 +24,79 @@ export default function UserAboutPage() {
               />
             </div>
             <h1 className="text-4xl md:text-7xl font-bold text-white mb-3 md:mb-6 tracking-tight">
-              RIVIO
+              About RIVIO
             </h1>
             <p className="text-xl md:text-3xl text-emerald-400 mb-2 md:mb-4 font-semibold">
-              Universal Fitness Access Platform
+              Pay-Per-Day Fitness App — India
+            </p>
+            <p className="text-base md:text-lg text-gray-300 mb-4 md:mb-6 max-w-2xl mx-auto">
+              Founded by{" "}
+              <Link href="/founder/" className="text-emerald-400 font-semibold hover:underline">
+                Amandeep Bishnoi
+              </Link>
+              . Discover gyms, yoga studios, and wellness venues — pay only for the days you use.
             </p>
             <p className="text-base md:text-lg text-gray-400 mb-4 md:mb-8 italic">
               "Your route to movement."
             </p>
-            <div className="inline-flex items-center gap-2 px-4 md:px-6 py-2 md:py-3 bg-emerald-500/20 backdrop-blur-sm rounded-full border border-emerald-500/30">
-              <Trophy className="w-4 h-4 md:w-5 md:h-5 text-emerald-400 flex-shrink-0" />
-              <span className="text-emerald-300 text-xs md:text-sm font-medium">
-                Build streaks, compete on leaderboards, and unlock achievements
-              </span>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-4 md:mb-6">
+              <div className="inline-flex items-center gap-2 px-4 md:px-6 py-2 md:py-3 bg-emerald-500/20 backdrop-blur-sm rounded-full border border-emerald-500/30">
+                <Trophy className="w-4 h-4 md:w-5 md:h-5 text-emerald-400 flex-shrink-0" />
+                <span className="text-emerald-300 text-xs md:text-sm font-medium">
+                  Stable production live on App Store &amp; Google Play
+                </span>
+              </div>
+              <div className="inline-flex items-center gap-2 px-4 md:px-6 py-2 md:py-3 bg-amber-500/15 backdrop-blur-sm rounded-full border border-amber-500/30">
+                <Users className="w-4 h-4 md:w-5 md:h-5 text-amber-400 flex-shrink-0" />
+                <span className="text-amber-200 text-xs md:text-sm font-medium">
+                  10 partner venues live across India
+                </span>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-10 md:pb-20">
+        {/* RIVIO Today */}
+        <section className="mb-6 md:mb-20 mt-8 md:mt-12">
+          <div className="bg-gradient-to-br from-emerald-500/10 to-amber-500/10 backdrop-blur-sm rounded-2xl md:rounded-3xl p-4 md:p-12 border border-emerald-500/20 shadow-2xl">
+            <h2 className="text-xl md:text-4xl font-bold text-white mb-4 md:mb-6">
+              RIVIO today
+            </h2>
+            <div className="space-y-3 md:space-y-4 text-base md:text-lg text-gray-300 leading-relaxed">
+              <p>
+                RIVIO is live in production with stable member and partner apps on{" "}
+                <strong className="text-white">App Store</strong> and{" "}
+                <strong className="text-white">Google Play</strong>. Members can top up a wallet,
+                discover venues, scan QR codes, and pay per day — no long-term gym subscription
+                required.
+              </p>
+              <p>
+                We are proud to celebrate our first{" "}
+                <strong className="text-emerald-400">10 partner venues in India</strong> — gyms,
+                studios, and wellness spaces running live check-ins, passes, and settlements on RIVIO
+                Partner. That network is what makes pay-per-day fitness real for members on the ground.
+              </p>
+              <p>
+                Read the full milestone on{" "}
+                <Link href="/latest/" className="text-emerald-400 font-semibold hover:underline">
+                  Latest
+                </Link>
+                , meet the founder on{" "}
+                <Link href="/founder/" className="text-emerald-400 font-semibold hover:underline">
+                  Amandeep Bishnoi&apos;s page
+                </Link>
+                , or{" "}
+                <Link href="/download/" className="text-emerald-400 font-semibold hover:underline">
+                  download the apps
+                </Link>
+                .
+              </p>
+            </div>
+          </div>
+        </section>
+
         {/* Vision Section */}
         <section className="mb-6 md:mb-20 mt-8 md:mt-12">
           <div className="bg-gray-900/80 backdrop-blur-sm rounded-2xl md:rounded-3xl p-4 md:p-12 border border-gray-800 shadow-2xl">
@@ -285,7 +340,7 @@ export default function UserAboutPage() {
                   The Founder Team's Vision
                 </h2>
                 <p className="text-emerald-400 text-sm italic mt-1">
-                  (Amandeep Bishnoi)
+                  Amandeep Bishnoi — Founder of RIVIO
                 </p>
               </div>
             </div>
@@ -327,8 +382,12 @@ export default function UserAboutPage() {
               <p className="font-semibold text-emerald-400 italic text-base md:text-xl">
                 Welcome to RIVIO—where your fitness journey begins, your goals
                 become reality, and every workout brings you one step closer to
-                the best version of yourself. Let's make fitness fun,
-                accessible, and inspiring together! 😊
+                the best version of yourself.
+              </p>
+              <p>
+                <Link href="/founder/" className="text-emerald-400 font-semibold hover:underline">
+                  Read the full founder story →
+                </Link>
               </p>
             </div>
           </div>
