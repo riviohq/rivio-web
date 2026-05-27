@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { AppleMark, PlayMark } from "@/components/StoreMarks";
-import LatestMilestonePoster from "@/components/LatestMilestonePoster";
+import { latestCoverPath } from "@/lib/latestAssets";
 import {
   APP_STORE_URL_BUSINESS,
   APP_STORE_URL_USER,
@@ -12,8 +12,7 @@ import {
 import { getLatestNewsPageLastModified } from "@/lib/latestPublicationDates";
 import { SITE_URL } from "@/lib/siteContent";
 
-const RIVIO_APP_ICON = "/logos/rivio-app-icon.png";
-const MEMBER_ICON = RIVIO_APP_ICON;
+const MEMBER_ICON = "/logos/rivio-app-icon.png";
 const PARTNER_ICON =
   "https://rivio-glimps.s3.ap-south-1.amazonaws.com/rivio_business.png";
 
@@ -21,16 +20,15 @@ const pageUrl = `${SITE_URL}/latest/`;
 
 type ReleaseKind = "release" | "beta" | "milestone";
 
-/** Visual cover for each card — swap URLs when you add real photos. */
+/** Visual cover for each card — PNG posters live in `public/assets/latest/` (see `lib/latestAssets.ts`). */
 type CoverVariant =
   | { variant: "photo"; imageSrc: string; imageAlt: string }
   | { variant: "dual-apps" }
-  | { variant: "partner-milestone" }
   | { variant: "ios-gradient"; imageSrc: string; imageAlt: string }
   | { variant: "android-gradient" }
   | { variant: "site-launch" };
 
-const LATEST_MILESTONE_COVER = "/latest/2026-05-26-partners-milestone.png";
+const LATEST_MILESTONE_COVER = latestCoverPath("2026-05-26-partners-milestone");
 
 /** Shared cover height — matches dual-apps and other Latest cards. */
 const POST_COVER_HEIGHT = "h-48 md:h-52";
@@ -68,7 +66,12 @@ const RELEASES: ReleasePost[] = [
     ],
     lookingAhead:
       "We will keep onboarding more partners city by city, publish partner spotlights here, and share onboarding walkthroughs as we grow the network. If you run a gym or studio in India and want to join, reach us at partners@rivioapp.com.",
-    cover: { variant: "partner-milestone" },
+    cover: {
+      variant: "photo",
+      imageSrc: LATEST_MILESTONE_COVER,
+      imageAlt:
+        "RIVIO milestone — 10 partner venues live in India, stable production on App Store and Google Play",
+    },
     showStoreLinks: true,
   },
   {
@@ -190,25 +193,15 @@ const kindLabel: Record<ReleaseKind, string> = {
 function PostCover({ cover }: { cover: CoverVariant }) {
   if (cover.variant === "photo") {
     return (
-      <div
-        className={`relative w-full overflow-hidden bg-gradient-to-br from-white via-[#f5f5f7] to-[#fbfbfd] ${POST_COVER_HEIGHT}`}
-      >
+      <div className={`relative w-full overflow-hidden ${POST_COVER_HEIGHT}`}>
         <Image
           src={cover.imageSrc}
           alt={cover.imageAlt}
           fill
-          className="object-contain object-center p-2 md:p-3"
-          sizes="(max-width: 768px) 100vw, 720px"
+          className="object-cover object-center"
+          sizes="(max-width: 768px) 100vw, 768px"
           priority
         />
-      </div>
-    );
-  }
-
-  if (cover.variant === "partner-milestone") {
-    return (
-      <div className={`relative w-full overflow-hidden ${POST_COVER_HEIGHT}`}>
-        <LatestMilestonePoster />
       </div>
     );
   }
@@ -314,8 +307,8 @@ export const metadata: Metadata = {
     images: [
       {
         url: `${SITE_URL}${LATEST_MILESTONE_COVER}`,
-        width: 1376,
-        height: 768,
+        width: 1536,
+        height: 416,
         alt: "RIVIO — 10 partner venues live in India",
       },
     ],
