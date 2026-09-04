@@ -27,11 +27,11 @@ const DIFFERENTIATORS = [
     number: "01",
     title: "Work Out Anywhere",
     tagline: "Your membership travels with you",
-    description: "Moved to a new city? Traveling for work? On vacation? Access any partner gym instantly. One app works everywhere—no new memberships needed.",
+    description: "Moved to a new city? Traveling for work? On vacation? Access any partner gym instantly. One app works everywhere, with no new memberships needed.",
     benefits: [
       "Same app works in Delhi, Mumbai, Bangalore & more",
       "No need to research gyms in new cities",
-      "Instant access—no paperwork or waiting",
+      "Instant access, no paperwork or waiting",
       "Perfect for frequent travelers & remote workers",
     ],
     highlight: "Fast-growing network across major cities",
@@ -46,7 +46,7 @@ const DIFFERENTIATORS = [
     benefits: [
       "Busy month? Pay less. Active month? Worth every rupee",
       "No guilt when life gets in the way",
-      "Prices shown upfront—no surprises",
+      "Prices shown upfront, no surprises",
       "Compare rates across gyms before you go",
     ],
     highlight: "Zero wasted money on unused days",
@@ -56,7 +56,7 @@ const DIFFERENTIATORS = [
     icon: Repeat,
     number: "03",
     title: "Try Everything",
-    tagline: "Gym, yoga, swimming, sports—all in one app",
+    tagline: "Gym, yoga, swimming, sports, all in one app",
     description: "Want to hit the gym Monday, swim Tuesday, and do yoga on weekends? No need for 3 different memberships. One app, endless possibilities.",
     benefits: [
       "Gym, swimming pool, yoga studio, CrossFit box",

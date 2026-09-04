@@ -18,16 +18,33 @@ import {
   Zap,
   Users,
   ArrowRight,
+  Download,
+  Handshake,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { AppleMark, PlayMark } from "@/components/StoreMarks";
+import {
+  detectPlatform,
+  resolveStoreUrl,
+  type Platform,
+  type StoreLinks,
+} from "@/lib/platform";
 import {
   APP_STORE_URL_BUSINESS,
   APP_STORE_URL_USER,
   GOOGLE_PLAY_URL_BUSINESS,
   GOOGLE_PLAY_URL_USER,
 } from "@/lib/storeUrls";
+
+const USER_LINKS: StoreLinks = {
+  ios: APP_STORE_URL_USER,
+  android: GOOGLE_PLAY_URL_USER,
+};
+
+const PARTNER_LINKS: StoreLinks = {
+  ios: APP_STORE_URL_BUSINESS,
+  android: GOOGLE_PLAY_URL_BUSINESS,
+};
 
 // User App Steps
 const userSteps = [
@@ -263,6 +280,14 @@ export default function AppTabs() {
 
   const [userStep, setUserStep] = useState(0);
   const [businessStep, setBusinessStep] = useState(0);
+  const [platform, setPlatform] = useState<Platform>("other");
+
+  useEffect(() => {
+    setPlatform(detectPlatform());
+  }, []);
+
+  const userStoreUrl = resolveStoreUrl(platform, USER_LINKS);
+  const partnerStoreUrl = resolveStoreUrl(platform, PARTNER_LINKS);
 
   useEffect(() => {
     if (!isInView) return;
@@ -302,7 +327,7 @@ export default function AppTabs() {
             Two Apps. One Ecosystem.
           </h2>
           <p className="text-lg md:text-xl text-[#86868b] max-w-2xl mx-auto">
-            Designed for fitness enthusiasts and business owners alike — available on{" "}
+            Designed for fitness enthusiasts and business owners alike, available on{" "}
             <span className="font-medium text-[#424245]">iOS and Android</span> (App Store &amp;
             Google Play).{" "}
             <Link
@@ -349,29 +374,17 @@ export default function AppTabs() {
                 accentColor="emerald"
               />
 
-              {/* Download Buttons */}
-              <div className="mt-6 grid w-full grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-3">
+              {/* Download Button — one tap straight to the right store */}
+              <div className="mt-6 w-full">
                 <motion.a
-                  href={APP_STORE_URL_USER}
-                  target="_blank"
+                  href={userStoreUrl}
                   rel="noopener noreferrer"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   className="flex min-h-[48px] w-full items-center justify-center gap-2 rounded-full bg-[#1d1d1f] px-4 py-3 text-center text-sm font-medium text-white transition-all hover:bg-black"
                 >
-                  <AppleMark className="h-5 w-5 shrink-0" />
-                  App Store
-                </motion.a>
-                <motion.a
-                  href={GOOGLE_PLAY_URL_USER}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="flex min-h-[48px] w-full items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 py-3 text-center text-sm font-medium text-[#1d1d1f] transition-all hover:bg-gray-50"
-                >
-                  <PlayMark className="h-5 w-5 shrink-0 text-[#01875f]" />
-                  Google Play
+                  <Download className="h-5 w-5 shrink-0" />
+                  Get the App
                 </motion.a>
               </div>
             </div>
@@ -410,29 +423,17 @@ export default function AppTabs() {
                 accentColor="amber"
               />
 
-              {/* Download Buttons */}
-              <div className="mt-6 grid w-full grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-3">
+              {/* Download Button — one tap straight to the right store */}
+              <div className="mt-6 w-full">
                 <motion.a
-                  href={APP_STORE_URL_BUSINESS}
-                  target="_blank"
+                  href={partnerStoreUrl}
                   rel="noopener noreferrer"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className="flex min-h-[48px] w-full items-center justify-center gap-2 rounded-full bg-[#1d1d1f] px-4 py-3 text-center text-sm font-medium text-white transition-all hover:bg-black"
+                  className="flex min-h-[48px] w-full items-center justify-center gap-2 rounded-full bg-amber-500 px-4 py-3 text-center text-sm font-medium text-white transition-all hover:bg-amber-600"
                 >
-                  <AppleMark className="h-5 w-5 shrink-0" />
-                  App Store
-                </motion.a>
-                <motion.a
-                  href={GOOGLE_PLAY_URL_BUSINESS}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="flex min-h-[48px] w-full items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 py-3 text-center text-sm font-medium text-[#1d1d1f] transition-all hover:bg-gray-50"
-                >
-                  <PlayMark className="h-5 w-5 shrink-0 text-[#01875f]" />
-                  Google Play
+                  <Handshake className="h-5 w-5 shrink-0" />
+                  Partner with App
                 </motion.a>
               </div>
             </div>

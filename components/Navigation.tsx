@@ -7,7 +7,23 @@ import Image from 'next/image'
 import { usePathname, useRouter } from 'next/navigation'
 import { getStaggerDelay } from '@/animation-timing'
 import { Menu, X, Sparkles, MapPin, Download, Star, Zap } from 'lucide-react'
-import { hasGooglePlayBusiness, hasGooglePlayUser } from '@/lib/storeUrls'
+import {
+  detectPlatform,
+  resolveStoreUrl,
+  type Platform,
+  type StoreLinks,
+} from '@/lib/platform'
+import {
+  APP_STORE_URL_USER,
+  GOOGLE_PLAY_URL_USER,
+  hasGooglePlayBusiness,
+  hasGooglePlayUser,
+} from '@/lib/storeUrls'
+
+const USER_LINKS: StoreLinks = {
+  ios: APP_STORE_URL_USER,
+  android: GOOGLE_PLAY_URL_USER,
+}
 
 interface NavigationProps {
   isScrolled: boolean
@@ -17,10 +33,17 @@ export default function Navigation({ isScrolled }: NavigationProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [announcementIndex, setAnnouncementIndex] = useState(0)
   const [activeSection, setActiveSection] = useState<string | null>(null)
+  const [platform, setPlatform] = useState<Platform>('other')
   const pathname = usePathname()
   const router = useRouter()
   const isHomePage = pathname === '/'
   const routeEnterWarmup = useRef(false)
+
+  useEffect(() => {
+    setPlatform(detectPlatform())
+  }, [])
+
+  const userStoreUrl = resolveStoreUrl(platform, USER_LINKS)
 
   /** Fade <main> (persists in root layout) before route changes — matches section scroll feel. */
   const withMainNavTransition = (go: () => void) => {
@@ -56,7 +79,7 @@ export default function Navigation({ isScrolled }: NavigationProps) {
     { icon: Zap, text: "We are live!!!" },
     { icon: Star, text: "No commitments. Ever." },
     { icon: MapPin, text: "Pay per day is live near you" },
-    { icon: Sparkles, text: "Highly rated startup — partners onboarding soon, stay tuned" },
+    { icon: Sparkles, text: "Highly rated startup, partners onboarding soon, stay tuned" },
     { icon: Zap, text: "One app. Any gym. Pay only when you go." },
     { icon: Star, text: "Fitness without the fine print" },
   ]
@@ -74,7 +97,7 @@ export default function Navigation({ isScrolled }: NavigationProps) {
     { name: 'Apps', href: '/', sectionId: 'apps' },
     { name: 'Network', href: '/', sectionId: 'cities' },
     { name: 'Contact', href: '/', sectionId: 'contact' },
-    { name: 'Latest', href: '/latest/' },
+    { name: 'Pulse', href: '/pulse/' },
   ]
 
   // Announcement rotation
@@ -332,38 +355,18 @@ export default function Navigation({ isScrolled }: NavigationProps) {
                 transition={{ delay: 0.4 }}
                 className="hidden md:flex items-center gap-3"
               >
-                <motion.a
-                  href="#contact"
-                  onClick={(e) => {
-                    e.preventDefault()
-                    if (isHomePage) {
-                      scrollToSection('contact')
-                    } else {
-                      withMainNavTransition(() => {
-                        router.push('/')
-                        window.setTimeout(() => scrollToSection('contact'), 420)
-                      })
-                    }
-                  }}
+                <motion.button
+                  type="button"
+                  onClick={() => withMainNavTransition(() => router.push('/partner-with-rivio/'))}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   className="px-4 py-2.5 text-sm font-medium text-[#1d1d1f] hover:text-emerald-600 transition-colors"
                 >
                   Partner with us
-                </motion.a>
+                </motion.button>
                 <motion.a
-                  href="#apps"
-                  onClick={(e) => {
-                    e.preventDefault()
-                    if (isHomePage) {
-                      scrollToSection('apps')
-                    } else {
-                      withMainNavTransition(() => {
-                        router.push('/')
-                        window.setTimeout(() => scrollToSection('apps'), 420)
-                      })
-                    }
-                  }}
+                  href={userStoreUrl}
+                  rel="noopener noreferrer"
                   whileHover={{ scale: 1.05, boxShadow: '0 10px 40px rgba(16, 185, 129, 0.3)' }}
                   whileTap={{ scale: 0.95 }}
                   className="group flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white text-sm font-medium rounded-full transition-all duration-300 shadow-lg shadow-emerald-500/25"
@@ -548,44 +551,26 @@ export default function Navigation({ isScrolled }: NavigationProps) {
               {/* Mobile CTA */}
               <div className="p-5 border-t border-gray-100 bg-gray-50/80 space-y-3">
                 <motion.a
-                  href="#apps"
-                  onClick={(e) => {
-                    e.preventDefault()
-                    setIsMobileMenuOpen(false)
-                    if (isHomePage) {
-                      setTimeout(() => scrollToSection('apps'), 300)
-                    } else {
-                      withMainNavTransition(() => {
-                        router.push('/')
-                        window.setTimeout(() => scrollToSection('apps'), 420)
-                      })
-                    }
-                  }}
+                  href={userStoreUrl}
+                  rel="noopener noreferrer"
+                  onClick={() => setIsMobileMenuOpen(false)}
                   whileTap={{ scale: 0.98 }}
                   className="flex items-center justify-center gap-2 w-full px-6 py-4 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-emerald-500/25"
                 >
                   <Sparkles className="w-5 h-5" />
                   Get the App
                 </motion.a>
-                <motion.a
-                  href="#contact"
-                  onClick={(e) => {
-                    e.preventDefault()
+                <motion.button
+                  type="button"
+                  onClick={() => {
                     setIsMobileMenuOpen(false)
-                    if (isHomePage) {
-                      setTimeout(() => scrollToSection('contact'), 300)
-                    } else {
-                      withMainNavTransition(() => {
-                        router.push('/')
-                        window.setTimeout(() => scrollToSection('contact'), 420)
-                      })
-                    }
+                    withMainNavTransition(() => router.push('/partner-with-rivio/'))
                   }}
                   whileTap={{ scale: 0.98 }}
                   className="flex items-center justify-center gap-2 w-full px-6 py-3 bg-white text-[#1d1d1f] font-medium rounded-xl transition-all duration-200 border border-gray-200"
                 >
                   Partner with us
-                </motion.a>
+                </motion.button>
                 <p className="text-center text-xs text-[#86868b]">
                   {hasGooglePlayUser || hasGooglePlayBusiness
                     ? 'Available on the App Store and Google Play'

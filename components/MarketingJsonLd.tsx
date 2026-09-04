@@ -29,7 +29,7 @@ export default function MarketingJsonLd() {
     },
     founder: { "@id": FOUNDER_ID },
     description:
-      "Pay per day at gyms, yoga studios, and wellness centers in India — flexible fitness without long-term subscriptions.",
+      "Pay per day at gyms, yoga studios, and wellness centers in India. Flexible fitness without long-term subscriptions.",
   };
 
   const founder: Record<string, unknown> = {
@@ -54,7 +54,7 @@ export default function MarketingJsonLd() {
   const userApp: Record<string, unknown> = {
     "@type": "MobileApplication",
     "@id": `${SITE_URL}/#rivio-user-app`,
-    name: "Rivio — Gym, Yoga & Sports",
+    name: "Rivio: Gym, Yoga & Sports",
     operatingSystem: "iOS, Android",
     applicationCategory: "HealthApplication",
     downloadUrl: APP_STORE_URL_USER,
@@ -70,7 +70,7 @@ export default function MarketingJsonLd() {
   const partnerApp: Record<string, unknown> = {
     "@type": "MobileApplication",
     "@id": `${SITE_URL}/#rivio-partner-app`,
-    name: "Rivio Partner — Business App",
+    name: "Rivio Partner: Business App",
     operatingSystem: "iOS, Android",
     applicationCategory: "BusinessApplication",
     downloadUrl: APP_STORE_URL_BUSINESS,

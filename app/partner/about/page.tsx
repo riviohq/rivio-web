@@ -49,7 +49,7 @@ export default function PartnerAboutPage() {
                 To become the trusted technology partner for gyms, fitness centers, and wellness studios worldwide. We envision a future where every facility owner can effortlessly manage their business, maximize revenue through intelligent systems, and build thriving communities that transform lives.
               </p>
               <p>
-                Our vision is built on empowering business owners with real-time insights, automated operations, and flexible revenue models that eliminate complexity and drive sustainable growth. We believe that when technology works seamlessly in the background, you can focus on what truly matters—helping people achieve their health and wellness goals.
+                Our vision is built on empowering business owners with real-time insights, automated operations, and flexible revenue models that eliminate complexity and drive sustainable growth. We believe that when technology works seamlessly in the background, you can focus on what truly matters, which is helping people achieve their health and wellness goals.
               </p>
             </div>
           </div>
@@ -65,7 +65,7 @@ export default function PartnerAboutPage() {
               <h2 className="text-3xl md:text-4xl font-bold text-white">Our Mission</h2>
             </div>
             <p className="text-lg text-gray-300 mb-8 leading-relaxed">
-              Our mission is to empower gym owners, fitness center managers, and wellness studio operators with intelligent technology that simplifies operations, maximizes revenue, and enables them to focus on what truly matters—creating transformative experiences for their members.
+              Our mission is to empower gym owners, fitness center managers, and wellness studio operators with intelligent technology that simplifies operations, maximizes revenue, and enables them to focus on what truly matters, which is creating great experiences for their members.
             </p>
             <p className="text-lg text-gray-300 mb-8 leading-relaxed">
               We are committed to eliminating the complexity of business management through automated systems, real-time insights, and seamless payment solutions. Every feature we build, every update we release, and every interaction we have is driven by one core purpose: to make your business more successful, more profitable, and more enjoyable to run.
@@ -143,11 +143,11 @@ export default function PartnerAboutPage() {
             </div>
             <div className="space-y-6 text-lg text-gray-300 leading-relaxed">
               <p className="font-bold text-amber-400 italic text-xl">From the Founder Team,</p>
-              <p>The fitness and wellness industry is built on passion, dedication, and the transformative power of community. Yet, we observed that business owners—the very people creating these life-changing experiences—were being held back by technology that was supposed to help them.</p>
+              <p>The fitness and wellness industry is built on passion, dedication, and the transformative power of community. Yet we saw that business owners, the very people creating these experiences, were being held back by technology that was supposed to help them.</p>
               <p>Complex systems, fragmented tools, and outdated processes were consuming valuable time that should be spent on what matters most: serving members, building communities, and growing businesses. This fundamental disconnect between technology and real-world needs inspired us to create RIVIO.</p>
-              <p>RIVIO Partner represents a new paradigm in business management software—one where technology truly serves the business owner. Every feature we've built, from real-time earnings tracking to automated check-ins, from flexible pass management to seamless settlements, is designed with a single purpose: to give you back your time and amplify your success.</p>
+              <p>RIVIO Partner is a new kind of business management software, one where the technology truly serves the business owner. Every feature we've built, from real-time earnings tracking to automated check-ins, from flexible pass management to smooth settlements, is designed with a single purpose: to give you back your time and grow your business.</p>
               <p>Our commitment goes beyond software. We measure our success not by features or downloads, but by your growth, your profitability, and your ability to focus on what you do best. When you thrive, we've achieved our goal. When your business scales, we've fulfilled our vision.</p>
-              <p className="font-semibold text-amber-400 italic text-xl">Welcome to RIVIO—where your success is our mission, and your growth is our greatest achievement.</p>
+              <p className="font-semibold text-amber-400 italic text-xl">Welcome to RIVIO, where your success is our mission, and your growth is our greatest achievement.</p>
             </div>
           </div>
         </section>

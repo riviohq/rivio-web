@@ -85,7 +85,7 @@ export default function UserPrivacyPage() {
                 <span className="font-semibold text-white">How we use it:</span> Your location data is used solely for gym discovery and is never shared with third parties. You can choose to use a manual location selection instead of sharing your precise location.
               </p>
               <p>
-                <span className="font-semibold text-white">Security:</span> All location data is encrypted and stored securely. We do not track your location continuously—only when you actively search for gyms or use location-based features.
+                <span className="font-semibold text-white">Security:</span> All location data is encrypted and stored securely. We do not track your location continuously, only when you actively search for gyms or use location-based features.
               </p>
             </div>
           </div>

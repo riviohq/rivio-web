@@ -1,13 +1,13 @@
 import { MetadataRoute } from "next";
-import { getLatestNewsPageLastModified } from "@/lib/latestPublicationDates";
+import { getPulsePageLastModified } from "@/lib/pulsePublicationDates";
 import { SITE_CONTENT_UPDATED_DATE, SITE_URL } from "@/lib/siteContent";
 
 /**
  * Production sitemap for Google Search Console & Bing Webmaster Tools.
  * Submit once: https://search.google.com/search-console → Sitemaps → {SITE_URL}/sitemap.xml
  *
- * After deploy: request indexing for `/` and `/latest/` if you ship a major update.
- * Keep `lib/latestPublicationDates.ts` in sync when you add posts on `/latest/`.
+ * After deploy: request indexing for `/` and `/pulse/` if you ship a major update.
+ * Keep `lib/pulsePublicationDates.ts` in sync when you add posts on `/pulse/`.
  */
 
 const defaultLastModified = (() => {
@@ -39,14 +39,20 @@ const ROUTES: RouteEntry[] = [
     lastModified: contentRefresh,
   },
   {
-    path: "/latest/",
+    path: "/pulse/",
     priority: 0.97,
     changeFrequency: "daily",
-    lastModified: getLatestNewsPageLastModified(),
+    lastModified: getPulsePageLastModified(),
   },
   { path: "/founder/", priority: 0.94, changeFrequency: "weekly", lastModified: contentRefresh },
   { path: "/members/about-us/", priority: 0.91, changeFrequency: "weekly", lastModified: contentRefresh },
   { path: "/business/about-us/", priority: 0.91, changeFrequency: "weekly", lastModified: contentRefresh },
+  {
+    path: "/partner-with-rivio/",
+    priority: 0.95,
+    changeFrequency: "weekly",
+    lastModified: contentRefresh,
+  },
   { path: "/partners/", priority: 0.9, changeFrequency: "monthly" },
   { path: "/business/partner-program/", priority: 0.9, changeFrequency: "monthly" },
   { path: "/features/", priority: 0.85, changeFrequency: "monthly" },

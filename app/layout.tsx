@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     template: "%s | RIVIO",
   },
   description:
-    "Pay per day at any gym, yoga studio, or wellness center. No subscription, no commitment. Download Rivio on the App Store — India's flexible fitness access.",
+    "Pay per day at any gym, yoga studio, or wellness center. No subscription, no commitment. Download Rivio on the App Store. India's flexible fitness access.",
   keywords: SITE_SEO_KEYWORDS,
   authors: [
     { name: "RIVIO", url: SITE_URL },
@@ -32,13 +32,25 @@ export const metadata: Metadata = {
     type: "website",
     url: SITE_URL,
     siteName: "RIVIO",
+    images: [
+      {
+        url: "https://rivio-glimps.s3.ap-south-1.amazonaws.com/rivio.png",
+        width: 512,
+        height: 512,
+        alt: "RIVIO",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "RIVIO | Pay Per Day Fitness",
     description: "One app. Any gym or yoga. Pay only when you go.",
+    images: ["https://rivio-glimps.s3.ap-south-1.amazonaws.com/rivio.png"],
   },
   alternates: { canonical: SITE_URL },
+  verification: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
+    ? { google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION }
+    : undefined,
 };
 
 export default function RootLayout({
