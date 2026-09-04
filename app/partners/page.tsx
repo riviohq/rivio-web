@@ -80,7 +80,7 @@ export default function PartnersPage() {
                 {
                   icon: QrCode,
                   title: "Easy Check-In System",
-                  desc: "Simple QR code system eliminates manual check-ins. Users scan and go—no paperwork, no hassle, no delays."
+                  desc: "Simple QR code system eliminates manual check-ins. Users scan and go, with no paperwork, no hassle, and no delays."
                 },
                 {
                   icon: BarChart3,

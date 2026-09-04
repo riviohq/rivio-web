@@ -23,8 +23,8 @@ import { SITE_CONTENT_UPDATED_DATE, SITE_URL } from "@/lib/siteContent";
 const pageUrl = `${SITE_URL}/founder/`;
 
 export const metadata: Metadata = {
-  title: `${FOUNDER_NAME} — Founder of RIVIO | Pay-Per-Day Fitness India`,
-  description: `${FOUNDER_NAME} is the founder of RIVIO — India's pay-per-day gym, yoga, and sports platform. App Store developer for RIVIO member and partner apps. Vision, profile links, and company pages.`,
+  title: `${FOUNDER_NAME}, Founder of RIVIO | Pay-Per-Day Fitness India`,
+  description: `${FOUNDER_NAME} is the founder of RIVIO, India's pay-per-day gym, yoga, and sports platform. App Store developer for RIVIO member and partner apps. Vision, profile links, and company pages.`,
   keywords: [
     FOUNDER_NAME,
     "Amandeep Bishnoi Rivio",
@@ -40,17 +40,17 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: pageUrl },
   openGraph: {
-    title: `${FOUNDER_NAME} — Founder of RIVIO`,
+    title: `${FOUNDER_NAME}, Founder of RIVIO`,
     description:
-      "Amandeep Bishnoi founded RIVIO — pay-per-day fitness for India. App Store developer, profile links, and company pages.",
+      "Amandeep Bishnoi founded RIVIO, pay-per-day fitness for India. App Store developer, profile links, and company pages.",
     type: "profile",
     url: pageUrl,
     siteName: "RIVIO",
   },
   twitter: {
     card: "summary",
-    title: `${FOUNDER_NAME} — Founder of RIVIO`,
-    description: "Founder of RIVIO — pay-per-day gym, yoga, and sports access in India.",
+    title: `${FOUNDER_NAME}, Founder of RIVIO`,
+    description: "Founder of RIVIO. Pay-per-day gym, yoga, and sports access in India.",
   },
 };
 
@@ -62,7 +62,7 @@ function FounderPageJsonLd() {
         "@type": "WebPage",
         "@id": `${pageUrl}#webpage`,
         url: pageUrl,
-        name: `${FOUNDER_NAME} — Founder, RIVIO`,
+        name: `${FOUNDER_NAME}, Founder, RIVIO`,
         dateModified: SITE_CONTENT_UPDATED_DATE,
         isPartOf: { "@id": `${SITE_URL}/#website` },
         about: { "@id": `${SITE_URL}/#founder` },
@@ -86,7 +86,7 @@ export default function FounderPage() {
       <article className="min-h-screen bg-[#f5f5f7] text-[#1d1d1f] pt-24 pb-20 px-4">
         <div className="max-w-3xl mx-auto">
           <h1 className="text-3xl md:text-4xl font-semibold tracking-[-0.02em] mb-2">
-            {FOUNDER_NAME} — Founder of RIVIO
+            {FOUNDER_NAME}, Founder of RIVIO
           </h1>
           <p className="text-lg text-[#1d1d1f] font-semibold mb-4">
             Pay-per-day gym, yoga &amp; sports · India
@@ -102,8 +102,8 @@ export default function FounderPage() {
             </h2>
             <p className="text-[#424245] leading-relaxed mb-4">
               Imagine a world where fitness is not locked behind expensive memberships or complicated
-              contracts. Where you can walk into any gym, yoga studio, or fitness center—anywhere,
-              anytime—and simply start your workout. No commitments. No restrictions. No barriers.
+              contracts. Where you can walk into any gym, yoga studio, or fitness center, anywhere and
+              anytime, and simply start your workout. No commitments. No restrictions. No barriers.
               That is the world we are building at <strong>RIVIO</strong>.
             </p>
             <p className="text-[#424245] leading-relaxed mb-4">
@@ -121,7 +121,7 @@ export default function FounderPage() {
             <p className="text-[#424245] leading-relaxed mb-4">
               Our vision is simple: make fitness accessible to everyone, everywhere. Whether you
               work out daily or occasionally, whether you are experienced or just getting started,
-              RIVIO adapts to you—not the other way around. We are not only building a platform; we
+              RIVIO adapts to you, not the other way around. We are not only building a platform, we
               are building a movement that empowers people to take control of their health and
               wellness on their own terms.
             </p>
@@ -129,12 +129,12 @@ export default function FounderPage() {
             <hr className="my-8 border-black/10" />
 
             <h3 className="text-lg font-semibold text-[#1d1d1f] mb-3">
-              For fitness businesses — the RIVIO Partner vision
+              For fitness businesses: the RIVIO Partner vision
             </h3>
             <p className="text-[#424245] leading-relaxed mb-4">
               The fitness and wellness industry is powered by passion, dedication, and the
-              transformative impact of community. Yet we observed that business owners—the people
-              creating these life-changing experiences—were being held back by technology that was
+              transformative impact of community. Yet we observed that business owners, the people
+              creating these life-changing experiences, were being held back by technology that was
               supposed to help them.
             </p>
             <p className="text-[#424245] leading-relaxed mb-4">
@@ -143,7 +143,7 @@ export default function FounderPage() {
               disconnect inspired us to create <strong>RIVIO Partner</strong>.
             </p>
             <p className="text-[#424245] leading-relaxed mb-4">
-              RIVIO Partner represents a new approach to business management—one where technology
+              RIVIO Partner is a new approach to business management, one where technology
               truly serves the business owner. Features like real-time earnings visibility, QR
               check-ins, flexible pass management, and smoother settlements are designed with a
               single purpose: to give you back your time and amplify your success.
@@ -253,7 +253,7 @@ export default function FounderPage() {
 
           <section className="mb-10" aria-labelledby="apps-dev">
             <h2 id="apps-dev" className="text-xl font-semibold mb-4">
-              Apps — App Store &amp; Google Play
+              Apps on the App Store &amp; Google Play
             </h2>
             <p className="text-[#424245] leading-relaxed mb-4">
               Both RIVIO consumer and RIVIO Partner apps are published under the same Apple developer
@@ -268,7 +268,7 @@ export default function FounderPage() {
                   rel="noopener noreferrer"
                   className="hover:underline break-all font-medium"
                 >
-                  App Store — developer: {FOUNDER_NAME}
+                  App Store developer: {FOUNDER_NAME}
                 </a>
               </li>
               <li>
@@ -278,7 +278,7 @@ export default function FounderPage() {
                   rel="noopener noreferrer"
                   className="hover:underline break-all font-medium"
                 >
-                  Rivio — Gym, Yoga &amp; Sports (member app, App Store)
+                  Rivio: Gym, Yoga &amp; Sports (member app, App Store)
                 </a>
               </li>
               <li>
@@ -288,7 +288,7 @@ export default function FounderPage() {
                   rel="noopener noreferrer"
                   className="hover:underline break-all font-medium"
                 >
-                  Rivio — Gym, Yoga &amp; Sports (member app, Google Play)
+                  Rivio: Gym, Yoga &amp; Sports (member app, Google Play)
                 </a>
               </li>
               <li>
@@ -298,7 +298,7 @@ export default function FounderPage() {
                   rel="noopener noreferrer"
                   className="hover:underline break-all font-medium"
                 >
-                  Rivio Partner — Business app (App Store)
+                  Rivio Partner: Business app (App Store)
                 </a>
               </li>
               <li>
@@ -308,7 +308,7 @@ export default function FounderPage() {
                   rel="noopener noreferrer"
                   className="hover:underline break-all font-medium"
                 >
-                  Rivio Partner — Business app (Google Play)
+                  Rivio Partner: Business app (Google Play)
                 </a>
               </li>
             </ul>
@@ -329,8 +329,8 @@ export default function FounderPage() {
           </section>
 
           <div className="flex flex-wrap gap-4 text-sm">
-            <Link href="/latest/" className="text-emerald-700 font-medium hover:underline">
-              Latest &amp; releases →
+            <Link href="/pulse/" className="text-emerald-700 font-medium hover:underline">
+              Rivio Pulse →
             </Link>
             <Link href="/download/" className="text-emerald-700 font-medium hover:underline">
               Download apps →

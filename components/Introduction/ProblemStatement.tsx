@@ -244,8 +244,8 @@ export const ProblemStatement = ({ isInView }: ProblemStatementProps) => {
                 className="text-base md:text-lg leading-relaxed"
               >
                 Research from <strong className="text-[#1d1d1f]">IHRSA (International Health, Racquet & Sportsclub Association)</strong> shows that 
-                the traditional gym membership model has a fundamental flaw. Most people sign up with good intentions but life gets in the way—
-                work schedules change, travel happens, motivation fluctuates. The result? <span className="bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded font-medium">Millions paying for memberships they rarely use.</span>
+                the traditional gym membership model has a fundamental flaw. Most people sign up with good intentions, but life gets in the way.
+                Work schedules change, travel happens, motivation fluctuates. The result? <span className="bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded font-medium">Millions paying for memberships they rarely use.</span>
               </motion.p>
 
               <motion.p
@@ -267,7 +267,7 @@ export const ProblemStatement = ({ isInView }: ProblemStatementProps) => {
               >
                 In India, despite a growing health-conscious population, gym penetration remains extremely low at just <strong className="text-[#1d1d1f]">0.5% compared 
                 to 20%+ in developed countries</strong>. The barrier? Expensive annual commitments that don&apos;t fit modern lifestyles. 
-                <span className="bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded font-medium">People want flexibility—the freedom to work out when and where they want, paying only for what they actually use.</span>
+                <span className="bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded font-medium">People want flexibility, the freedom to work out when and where they want, paying only for what they actually use.</span>
               </motion.p>
 
               <motion.div
@@ -278,7 +278,7 @@ export const ProblemStatement = ({ isInView }: ProblemStatementProps) => {
               >
                 <p className="text-base md:text-lg leading-relaxed text-[#1d1d1f]">
                   <strong>The Indian fitness industry is valued at ₹15,000+ Crore</strong>, yet serves less than 1% of the population. 
-                  This isn&apos;t a demand problem—it&apos;s an <span className="text-emerald-600 font-semibold">accessibility problem</span>. 
+                  This isn&apos;t a demand problem, it&apos;s an <span className="text-emerald-600 font-semibold">accessibility problem</span>. 
                   People want to stay fit, but they don&apos;t want to be locked into expensive, inflexible contracts.
                 </p>
               </motion.div>
@@ -313,7 +313,7 @@ export const ProblemStatement = ({ isInView }: ProblemStatementProps) => {
                 </h4>
                 
                 <p className="text-base md:text-lg text-white/90 mb-6 leading-relaxed max-w-2xl mx-auto">
-                  No subscriptions. No annual fees. <strong className="text-white">You pay only for the days you actually show up.</strong> One app, any venue—gym, yoga, dance, swimming, sports—pay per day and move on.
+                  No subscriptions. No annual fees. <strong className="text-white">You pay only for the days you actually show up.</strong> One app, any venue: gym, yoga, dance, swimming, sports. Pay per day and move on.
                 </p>
               </div>
 
@@ -338,7 +338,7 @@ export const ProblemStatement = ({ isInView }: ProblemStatementProps) => {
                   transition={{ duration: 0.5, delay: 1.4 }}
                   className="text-base md:text-lg leading-relaxed"
                 >
-                  <strong className="text-white">Gym on Monday, yoga on Tuesday, dance on Wednesday, swimming on Thursday?</strong> Why buy four different subscriptions? With RIVIO you pay only for the days you use each. Mix it up every week—no commitment to one place or one activity.
+                  <strong className="text-white">Gym on Monday, yoga on Tuesday, dance on Wednesday, swimming on Thursday?</strong> Why buy four different subscriptions? With RIVIO you pay only for the days you use each. Mix it up every week, with no commitment to one place or one activity.
                 </motion.p>
 
                 <motion.p
@@ -347,7 +347,7 @@ export const ProblemStatement = ({ isInView }: ProblemStatementProps) => {
                   transition={{ duration: 0.5, delay: 1.5 }}
                   className="text-base md:text-lg leading-relaxed"
                 >
-                  Not everyone wants to gym daily. Hard exercise every single day isn’t for everyone—and that’s okay. <strong className="text-white">Weekend sports, a swim when you feel like it, or a yoga class now and then?</strong> Pay for that day only. No guilt, no wasted membership, no “I didn’t go enough.”
+                  Not everyone wants to gym daily. Hard exercise every single day isn’t for everyone, and that’s okay. <strong className="text-white">Weekend sports, a swim when you feel like it, or a yoga class now and then?</strong> Pay for that day only. No guilt, no wasted membership, no “I didn’t go enough.”
                 </motion.p>
 
                 <motion.p
@@ -356,7 +356,7 @@ export const ProblemStatement = ({ isInView }: ProblemStatementProps) => {
                   transition={{ duration: 0.5, delay: 1.55 }}
                   className="text-base md:text-lg leading-relaxed"
                 >
-                  One app. Scan at the venue, pay for that day, and you’re done. <strong className="text-white">No contracts, no lock-in.</strong> Whether you’re a variety seeker, a weekend warrior, or someone who just wants to move when it suits you—RIVIO fits.
+                  One app. Scan at the venue, pay for that day, and you’re done. <strong className="text-white">No contracts, no lock-in.</strong> Whether you’re a variety seeker, a weekend warrior, or someone who just wants to move when it suits you, RIVIO fits.
                 </motion.p>
               </div>
 
@@ -370,7 +370,7 @@ export const ProblemStatement = ({ isInView }: ProblemStatementProps) => {
                   One app. Any activity. Pay only when you use.
                 </p>
                 <p className="text-sm md:text-base text-white/70 mt-2">
-                  Your week, your mix—no subscriptions.
+                  Your week, your mix. No subscriptions.
                 </p>
               </motion.div>
             </div>

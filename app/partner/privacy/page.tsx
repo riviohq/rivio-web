@@ -109,7 +109,7 @@ export default function PartnerPrivacyPage() {
                 <span className="font-semibold text-white">How we use it:</span> Your location data is used solely for business discovery and is never shared with unauthorized third parties. You can update your business location at any time.
               </p>
               <p>
-                <span className="font-semibold text-white">Security:</span> All location data is encrypted and stored securely. We do not track your location continuously—only the registered business location is stored.
+                <span className="font-semibold text-white">Security:</span> All location data is encrypted and stored securely. We do not track your location continuously. Only the registered business location is stored.
               </p>
             </div>
           </div>

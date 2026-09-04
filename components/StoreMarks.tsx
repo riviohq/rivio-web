@@ -1,4 +1,4 @@
-/** Apple / Google Play glyphs for store CTAs (used on Download, Latest, etc.). */
+/** Apple / Google Play glyphs for store CTAs (used on Download, Pulse, etc.). */
 
 export function AppleMark({ className }: { className?: string }) {
   return (

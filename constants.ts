@@ -5,19 +5,19 @@ export const userVision = [
     icon: Zap,
     title: "Universal Access",
     description:
-      "Access any gym, yoga studio, wellness center, swimming pool, or sports facility across India. No geographical limitations, no venue restrictions—your fitness journey isn't bound to one location.",
+      "Access any gym, yoga studio, wellness center, swimming pool, or sports facility across India. No geographical limitations and no venue restrictions, so your fitness journey isn't bound to one location.",
   },
   {
     icon: Users,
     title: "Easy Access Priority",
     description:
-      "Priority access to premium facilities with instant check-ins. Walk in, scan QR code, start working out—no waiting, no paperwork, no long approval processes. Fitness should be this simple.",
+      "Priority access to premium facilities with instant check-ins. Walk in, scan QR code, start working out. No waiting, no paperwork, no long approval processes. Fitness should be this simple.",
   },
   {
     icon: Globe,
     title: "Pay-Per-Day",
     description:
-      "The world's first pay-per-day model eliminates subscription waste. Pay only for days you actually use—try different venues, explore various activities, and never commit to long-term memberships.",
+      "The world's first pay-per-day model eliminates subscription waste. Pay only for days you actually use, try different venues, explore various activities, and never commit to long-term memberships.",
   },
   {
     icon: Shield,
@@ -50,6 +50,6 @@ export const partnerVision = [
     icon: Shield,
     title: "Automated Process Operations",
     description:
-      "Automated operations with QR check-ins, instant payments, subscription and expiration management, customer engagement, and multi-venue coordination—cutting manual work to focus on growth.",
+      "Automated operations with QR check-ins, instant payments, subscription and expiration management, customer engagement, and multi-venue coordination, which cuts manual work so you can focus on growth.",
   },
 ];

@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { AppleMark, PlayMark } from "@/components/StoreMarks";
+import { Download, Handshake } from "lucide-react";
+import StoreCta from "@/components/StoreCta";
 import {
   APP_STORE_URL_BUSINESS,
   APP_STORE_URL_USER,
@@ -18,7 +19,7 @@ const PARTNER_ICON =
 export const metadata: Metadata = {
   title: "Download RIVIO apps",
   description:
-    "Get Rivio for workouts and Rivio Partner for your venue — free on iPhone and Android. Pay-per-day fitness in India.",
+    "Get Rivio for workouts and Rivio Partner for your venue. Free on iPhone and Android. Pay-per-day fitness in India.",
   keywords: [
     "RIVIO app download",
     "Rivio App Store",
@@ -27,7 +28,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: `${SITE_URL}/download/` },
   openGraph: {
-    title: "Download RIVIO — Member & Partner apps",
+    title: "Download RIVIO Member & Partner apps",
     description:
       "Get Rivio and Rivio Partner on the App Store and Google Play.",
     type: "website",
@@ -53,14 +54,14 @@ function DownloadPageJsonLd() {
     about: [
       {
         "@type": "MobileApplication",
-        name: "Rivio — Gym, Yoga & Sports",
+        name: "Rivio: Gym, Yoga & Sports",
         operatingSystem: "iOS, Android",
         downloadUrl: APP_STORE_URL_USER,
         installUrl: GOOGLE_PLAY_URL_USER,
       },
       {
         "@type": "MobileApplication",
-        name: "Rivio Partner — Business App",
+        name: "Rivio Partner: Business App",
         operatingSystem: "iOS, Android",
         downloadUrl: APP_STORE_URL_BUSINESS,
         installUrl: GOOGLE_PLAY_URL_BUSINESS,
@@ -143,22 +144,13 @@ export default function DownloadPage() {
                 </div>
 
                 <div className="mt-auto flex flex-col gap-3">
-                  <a
-                    href={APP_STORE_URL_USER}
-                    rel="noopener noreferrer"
+                  <StoreCta
+                    links={{ ios: APP_STORE_URL_USER, android: GOOGLE_PLAY_URL_USER }}
                     className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-2xl bg-[#1d1d1f] text-[15px] font-semibold text-white transition-transform duration-200 hover:scale-[1.01] hover:bg-black active:scale-[0.99]"
                   >
-                    <AppleMark className="h-5 w-5" />
-                    App Store
-                  </a>
-                  <a
-                    href={GOOGLE_PLAY_URL_USER}
-                    rel="noopener noreferrer"
-                    className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-2xl border border-[#dadada] bg-white text-[15px] font-semibold text-[#1d1d1f] shadow-sm transition-all duration-200 hover:border-[#c4c4c4] hover:bg-[#fafafa] active:scale-[0.99]"
-                  >
-                    <PlayMark className="h-5 w-5 text-[#01875f]" />
-                    Google Play
-                  </a>
+                    <Download className="h-5 w-5" />
+                    Get the App
+                  </StoreCta>
                 </div>
               </div>
             </article>
@@ -201,22 +193,13 @@ export default function DownloadPage() {
                 </div>
 
                 <div className="mt-auto flex flex-col gap-3">
-                  <a
-                    href={APP_STORE_URL_BUSINESS}
-                    rel="noopener noreferrer"
-                    className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-2xl bg-[#1d1d1f] text-[15px] font-semibold text-white transition-transform duration-200 hover:scale-[1.01] hover:bg-black active:scale-[0.99]"
+                  <StoreCta
+                    links={{ ios: APP_STORE_URL_BUSINESS, android: GOOGLE_PLAY_URL_BUSINESS }}
+                    className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-2xl bg-amber-500 text-[15px] font-semibold text-white transition-transform duration-200 hover:scale-[1.01] hover:bg-amber-600 active:scale-[0.99]"
                   >
-                    <AppleMark className="h-5 w-5" />
-                    App Store
-                  </a>
-                  <a
-                    href={GOOGLE_PLAY_URL_BUSINESS}
-                    rel="noopener noreferrer"
-                    className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-2xl border border-[#dadada] bg-white text-[15px] font-semibold text-[#1d1d1f] shadow-sm transition-all duration-200 hover:border-[#c4c4c4] hover:bg-[#fafafa] active:scale-[0.99]"
-                  >
-                    <PlayMark className="h-5 w-5 text-[#01875f]" />
-                    Google Play
-                  </a>
+                    <Handshake className="h-5 w-5" />
+                    Partner with App
+                  </StoreCta>
                 </div>
               </div>
             </article>
@@ -226,10 +209,10 @@ export default function DownloadPage() {
             <p className="text-sm text-[#86868b]">
               What&apos;s new?{" "}
               <Link
-                href="/latest/"
+                href="/pulse/"
                 className="font-medium text-emerald-600 underline-offset-4 hover:text-emerald-700 hover:underline"
               >
-                See latest updates
+                See Rivio Pulse
               </Link>
               {" · "}
               <Link

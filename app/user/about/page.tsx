@@ -53,7 +53,7 @@ export default function UserAboutPage() {
             </div>
             <div className="space-y-6 text-lg text-gray-300 leading-relaxed">
               <p>
-                RIVIO introduces the pay-per-day concept—a revolutionary approach to fitness access that eliminates the need for multiple subscriptions. Why commit to a gym membership when you want yoga today, a wellness center tomorrow, and a different gym next week? With RIVIO, you pay only for the days you use, accessing any gym, yoga studio, or wellness center instantly, without long-term commitments or wasted money.
+                RIVIO introduces the pay-per-day concept, a fresh approach to fitness access that eliminates the need for multiple subscriptions. Why commit to a gym membership when you want yoga today, a wellness center tomorrow, and a different gym next week? With RIVIO, you pay only for the days you use, accessing any gym, yoga studio, or wellness center instantly, without long-term commitments or wasted money.
               </p>
               <p>
                 This flexible, on-demand model addresses a fundamental problem in the fitness industry: traditional membership models force consumers into rigid, single-venue commitments that limit choice and create financial barriers. Our vision is to transform fitness accessibility, enabling users to diversify their fitness journey while empowering venue owners to maximize utilization and revenue through our innovative pass-based platform.
@@ -78,11 +78,11 @@ export default function UserAboutPage() {
               {[
                 "Deliver pay-per-day access that eliminates long-term commitments and multiple subscription costs",
                 "Enable instant venue access through QR code technology, allowing users to work out anywhere, anytime",
-                "Provide flexible payment options—pay for a single day or purchase passes that suit your fitness journey",
+                "Provide flexible payment options, so you can pay for a single day or buy passes that suit your fitness journey",
                 "Automate check-ins and payments for a seamless, hassle-free experience at every venue",
                 "Empower venue owners to maximize facility utilization and revenue through our innovative platform",
                 "Build a transparent, accessible fitness ecosystem where everyone can explore diverse workout options",
-                "Motivate users through gamification—streaks, leaderboards, and achievements that make fitness engaging"
+                "Motivate users through gamification, with streaks, leaderboards, and achievements that make fitness engaging"
               ].map((item, index) => (
                 <div key={index} className="flex items-start gap-3 p-4 bg-gray-800/50 rounded-xl border border-gray-700">
                   <div className="w-6 h-6 bg-emerald-500 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
@@ -145,11 +145,11 @@ export default function UserAboutPage() {
             </p>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {[
-                { icon: "💵", title: "Pay-Per-Day Revolution", desc: "No more multiple subscriptions! Pay only for the days you use. Try a gym today, yoga tomorrow, wellness center next week—all without committing to expensive memberships." },
-                { icon: "⚡", title: "Instant Access, Zero Hassle", desc: "Walk into any partner venue and start working out immediately. No waiting, no paperwork, no long-term commitments. Scan, pay, and go—fitness on your terms." },
+                { icon: "💵", title: "Pay-Per-Day Revolution", desc: "No more multiple subscriptions! Pay only for the days you use. Try a gym today, yoga tomorrow, wellness center next week, all without committing to expensive memberships." },
+                { icon: "⚡", title: "Instant Access, Zero Hassle", desc: "Walk into any partner venue and start working out immediately. No waiting, no paperwork, no long-term commitments. Scan, pay, and go. Fitness on your terms." },
                 { icon: "🏆", title: "Gamified Motivation", desc: "Turn fitness into an exciting game! Build impressive streaks, compete on global leaderboards, unlock achievements, and watch your progress grow." },
-                { icon: "🗺️", title: "Nationwide Network", desc: "Access gyms, studios, and wellness centers across cities and villages. Your fitness journey isn't limited to one location—explore, experience, and enjoy diverse workout options wherever you go." },
-                { icon: "💳", title: "Complete Financial Freedom", desc: "Choose pay-per-day for ultimate flexibility or purchase passes for your favorite venues. All payments are secure, transparent, and tracked. Clear pricing from each venue—no surprises." },
+                { icon: "🗺️", title: "Nationwide Network", desc: "Access gyms, studios, and wellness centers across cities and villages. Your fitness journey isn't limited to one location, so explore, experience, and enjoy diverse workout options wherever you go." },
+                { icon: "💳", title: "Complete Financial Freedom", desc: "Choose pay-per-day for ultimate flexibility or purchase passes for your favorite venues. All payments are secure, transparent, and tracked. Clear pricing from each venue, with no surprises." },
                 { icon: "🛡️", title: "Trusted & Secure Platform", desc: "Bank-level security for all transactions. Complete transparency in pricing, payments, and progress tracking. Your data and money are always protected." }
               ].map((item, index) => (
                 <div key={index} className="p-6 bg-gray-800/50 rounded-2xl border border-gray-700 hover:border-emerald-500/30 transition-all">
@@ -176,11 +176,11 @@ export default function UserAboutPage() {
             </div>
             <div className="space-y-6 text-lg text-gray-300 leading-relaxed">
               <p className="font-bold text-emerald-400 italic text-xl">From the Founder Team,</p>
-              <p>Imagine a world where fitness isn't locked behind expensive memberships or complicated contracts. Where you can walk into any gym, yoga studio, or fitness center—anywhere, anytime—and simply start your workout. No commitments, no restrictions, no barriers. That's the world we're building at RIVIO.</p>
+              <p>Imagine a world where fitness isn't locked behind expensive memberships or complicated contracts. Where you can walk into any gym, yoga studio, or fitness center, anywhere and anytime, and simply start your workout. No commitments, no restrictions, no barriers. That's the world we're building at RIVIO.</p>
               <p>We saw the frustration in people's eyes when they couldn't access fitness because of long-term contracts they couldn't afford, or because they were tied to a single location. We watched amazing fitness enthusiasts give up on their goals simply because the system wasn't designed for their lifestyle. That didn't sit right with us.</p>
-              <p>So we built something different. RIVIO isn't just an app—it's your passport to fitness freedom. Pay for what you use, or choose a pass that fits your schedule. Build streaks, compete on leaderboards, and turn your fitness journey into an adventure. Every visit counts, every milestone matters, and every step forward is a victory worth celebrating.</p>
-              <p>Our vision is simple: make fitness accessible to everyone, everywhere. Whether you're a fitness enthusiast or just starting your journey, whether you work out daily or occasionally, RIVIO adapts to you—not the other way around. We're not just building a platform; we're building a movement that empowers people to take control of their health and wellness on their own terms.</p>
-              <p className="font-semibold text-emerald-400 italic text-xl">Welcome to RIVIO—where your fitness journey begins, your goals become reality, and every workout brings you one step closer to the best version of yourself. Let's make fitness fun, accessible, and inspiring together! 😊</p>
+              <p>So we built something different. RIVIO isn't just an app. It's your passport to fitness freedom. Pay for what you use, or choose a pass that fits your schedule. Build streaks, compete on leaderboards, and turn your fitness journey into an adventure. Every visit counts, every milestone matters, and every step forward is a victory worth celebrating.</p>
+              <p>Our vision is simple: make fitness accessible to everyone, everywhere. Whether you're a fitness enthusiast or just starting your journey, whether you work out daily or occasionally, RIVIO adapts to you, not the other way around. We're not just building a platform, we're building a movement that empowers people to take control of their health and wellness on their own terms.</p>
+              <p className="font-semibold text-emerald-400 italic text-xl">Welcome to RIVIO, where your fitness journey begins, your goals become reality, and every workout brings you one step closer to the best version of yourself. Let's make fitness fun, accessible, and inspiring together! 😊</p>
             </div>
           </div>
         </section>
