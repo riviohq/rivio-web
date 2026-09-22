@@ -30,7 +30,9 @@ type CoverVariant =
   | { variant: "approved" }
   | { variant: "ios-beta" }
   | { variant: "android-beta" }
-  | { variant: "launch" };
+  | { variant: "launch" }
+  | { variant: "member-update" }
+  | { variant: "partner-update" };
 
 const POST_COVER_HEIGHT = "h-48 md:h-52";
 
@@ -41,6 +43,8 @@ type ReleasePost = {
   title: string;
   summary: string;
   detail?: string;
+  /** Short feature bullets shown under the summary. */
+  highlights?: string[];
   whatsNext?: string;
   cover: CoverVariant;
   showStoreLinks?: boolean;
@@ -48,6 +52,52 @@ type ReleasePost = {
 
 /** Newest first. Add new entries at the top and keep `lib/pulsePublicationDates.ts` in sync. */
 const RELEASES: ReleasePost[] = [
+  {
+    iso: "2026-09-22",
+    label: "September 22, 2026",
+    kind: "release",
+    title: "Introducing pass renewals — now live for Rivio members",
+    summary:
+      "Today we are introducing a major new capability on Rivio: pass renewal. From 22 September 2026, members can renew an active pass early or renew an expired pass and send the request straight to their studio — without starting over. It is the kind of everyday feature people ask for at the desk, and it is live now on the App Store and Google Play.",
+    detail:
+      "This release is also about keeping members in the loop. Last-day pass insights, in-app notifications and studio broadcasts help you know when a membership is ending and what is happening at your favourite venues. We have been sharing Rivio with partners and at fitness industry conversations across India — and shipping features that make pay-per-day fitness feel effortless.",
+    highlights: [
+      "Pass renewal is live: renew early while a pass is running, or renew after it ends",
+      "Send a renewal request to the studio from My Passes in a single step",
+      "Last-day membership card with plan, dates and progress so you never miss an ending pass",
+      "Notifications and push alerts for streak reminders and updates from your studios",
+      "A refreshed profile and menu experience, including Profile Settings in one place",
+      "Personalised default cover photos based on your profile",
+      "Faster access to Profile, Leaderboard and Menu when you open the app",
+    ],
+    whatsNext:
+      "We will keep expanding renewal and membership tools with our partner venues. Meeting us at a fitness conference or want a live demo? Write to partners@rivioapp.com.",
+    cover: { variant: "member-update" },
+    showStoreLinks: true,
+  },
+  {
+    iso: "2026-09-18",
+    label: "September 18, 2026",
+    kind: "release",
+    title: "Introducing smarter desk tools — now live on Rivio Partner",
+    summary:
+      "On 18 September 2026 we introduced a powerful update for gym and studio owners on Rivio Partner. From today, partners can manage customers more clearly, accept walk-in payment requests with a negotiated amount or duration, and protect earnings with an owner passcode. Built for the front desk — where every second counts.",
+    detail:
+      "Rivio Partner is becoming the operating layer for pay-per-day venues: find your members, adjust a pass when needed, and accept a request with confidence. As we meet venue owners at industry events and onboarding sessions, these are the tools they ask for first — and they are live now.",
+    highlights: [
+      "My Customers is live: search and filter members visiting your venue",
+      "Accept payment requests with editable amount and pass days, plus an end-date preview",
+      "Owner passcode to protect wallet, earnings and sensitive settings",
+      "Inline editing of active pass dates when a plan needs a quick correction",
+      "Clearer pass types across week, month, year, daily and custom durations",
+      "Active passes focused on what is running now at your venue",
+      "A smoother desk experience across customers and passes screens",
+    ],
+    whatsNext:
+      "More desk workflows and clearer payouts are on the way. Running a gym or studio? Reach partners@rivioapp.com — we would love to show Rivio Partner live.",
+    cover: { variant: "partner-update" },
+    showStoreLinks: true,
+  },
   {
     iso: "2026-08-20",
     label: "August 20, 2026",
@@ -135,6 +185,108 @@ const kindLabel: Record<ReleaseKind, string> = {
 };
 
 function PostCover({ cover }: { cover: CoverVariant }) {
+  if (cover.variant === "member-update") {
+    return (
+      <div
+        className={`relative flex w-full overflow-hidden bg-gradient-to-br from-emerald-600 via-teal-600 to-slate-900 ${POST_COVER_HEIGHT}`}
+      >
+        <div
+          className="absolute inset-0 bg-[radial-gradient(circle_at_15%_30%,rgba(255,255,255,0.2),transparent_45%),radial-gradient(circle_at_85%_70%,rgba(16,185,129,0.35),transparent_40%)]"
+          aria-hidden
+        />
+        <div className="relative z-10 flex w-full items-center justify-between gap-4 px-6 py-5 md:px-10">
+          <div className="min-w-0 text-left text-white">
+            <span className="inline-flex items-center rounded-full bg-white/15 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em] text-emerald-50 ring-1 ring-white/25">
+              Now live · 22 Sep 2026
+            </span>
+            <p className="mt-3 text-2xl font-semibold leading-tight tracking-tight md:text-3xl">
+              Pass renewals
+            </p>
+            <p className="mt-1 max-w-xs text-sm font-medium text-emerald-50/90 md:text-base">
+              Renew early or after expiry — request your studio in one tap
+            </p>
+            <div className="mt-4 flex flex-wrap gap-2">
+              <span className="rounded-full bg-white/12 px-2.5 py-1 text-[11px] font-semibold text-white ring-1 ring-white/20">
+                My Passes
+              </span>
+              <span className="rounded-full bg-white/12 px-2.5 py-1 text-[11px] font-semibold text-white ring-1 ring-white/20">
+                Last-day card
+              </span>
+              <span className="rounded-full bg-white/12 px-2.5 py-1 text-[11px] font-semibold text-white ring-1 ring-white/20">
+                Alerts
+              </span>
+            </div>
+          </div>
+          <div className="relative shrink-0">
+            <div
+              className="absolute -inset-3 rounded-[1.75rem] bg-emerald-300/25 blur-xl"
+              aria-hidden
+            />
+            <Image
+              src={MEMBER_ICON}
+              alt="Rivio: Gym, Yoga & Sports app icon"
+              width={128}
+              height={128}
+              className="relative h-24 w-24 rounded-[1.35rem] shadow-2xl ring-2 ring-white/40 md:h-28 md:w-28"
+              priority
+            />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (cover.variant === "partner-update") {
+    return (
+      <div
+        className={`relative flex w-full overflow-hidden bg-gradient-to-br from-amber-400 via-orange-500 to-slate-900 ${POST_COVER_HEIGHT}`}
+      >
+        <div
+          className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(255,255,255,0.28),transparent_45%),radial-gradient(circle_at_20%_80%,rgba(251,191,36,0.35),transparent_40%)]"
+          aria-hidden
+        />
+        <div className="relative z-10 flex w-full items-center justify-between gap-4 px-6 py-5 md:px-10">
+          <div className="min-w-0 text-left text-white">
+            <span className="inline-flex items-center rounded-full bg-white/18 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em] text-amber-50 ring-1 ring-white/30">
+              Now live · 18 Sep 2026
+            </span>
+            <p className="mt-3 text-2xl font-semibold leading-tight tracking-tight md:text-3xl">
+              Desk tools for partners
+            </p>
+            <p className="mt-1 max-w-xs text-sm font-medium text-amber-50/95 md:text-base">
+              Customers, flexible accepts and owner passcode — built for the front desk
+            </p>
+            <div className="mt-4 flex flex-wrap gap-2">
+              <span className="rounded-full bg-white/14 px-2.5 py-1 text-[11px] font-semibold text-white ring-1 ring-white/25">
+                My Customers
+              </span>
+              <span className="rounded-full bg-white/14 px-2.5 py-1 text-[11px] font-semibold text-white ring-1 ring-white/25">
+                Negotiate accept
+              </span>
+              <span className="rounded-full bg-white/14 px-2.5 py-1 text-[11px] font-semibold text-white ring-1 ring-white/25">
+                Passcode
+              </span>
+            </div>
+          </div>
+          <div className="relative shrink-0">
+            <div
+              className="absolute -inset-3 rounded-[1.75rem] bg-amber-200/30 blur-xl"
+              aria-hidden
+            />
+            <Image
+              src={PARTNER_ICON}
+              alt="Rivio: Partner & Business app icon"
+              width={128}
+              height={128}
+              className="relative h-24 w-24 rounded-[1.35rem] shadow-2xl ring-2 ring-white/45 md:h-28 md:w-28"
+              priority
+            />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   if (cover.variant === "venues") {
     return (
       <div
@@ -440,6 +592,23 @@ export default function PulsePage() {
                       <p className="mt-4 text-[15px] leading-relaxed text-[#86868b] md:text-[16px]">
                         {post.detail}
                       </p>
+                    ) : null}
+
+                    {post.highlights && post.highlights.length > 0 ? (
+                      <ul className="mt-5 space-y-2.5 rounded-xl border border-black/[0.05] bg-[#fafafa] px-4 py-4 md:px-5">
+                        {post.highlights.map((item) => (
+                          <li
+                            key={item}
+                            className="flex gap-2.5 text-[14px] leading-snug text-[#3f3f46] md:text-[15px]"
+                          >
+                            <CheckCircle
+                              className="mt-0.5 h-4 w-4 shrink-0 text-emerald-600"
+                              aria-hidden
+                            />
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
                     ) : null}
 
                     {post.whatsNext ? (
