@@ -56,22 +56,22 @@ const RELEASES: ReleasePost[] = [
     iso: "2026-09-22",
     label: "September 22, 2026",
     kind: "release",
-    title: "Introducing pass renewals — now live for Rivio members",
+    title: "Pass renewals are live for Rivio members",
     summary:
-      "Today we are introducing a major new capability on Rivio: pass renewal. From 22 September 2026, members can renew an active pass early or renew an expired pass and send the request straight to their studio — without starting over. It is the kind of everyday feature people ask for at the desk, and it is live now on the App Store and Google Play.",
+      "You can renew a pass now without starting from scratch. If yours is still running, renew early. If it already ended, renew it and send the request to your studio from My Passes. Live on the App Store and Google Play from 22 September 2026.",
     detail:
-      "This release is also about keeping members in the loop. Last-day pass insights, in-app notifications and studio broadcasts help you know when a membership is ending and what is happening at your favourite venues. We have been sharing Rivio with partners and at fitness industry conversations across India — and shipping features that make pay-per-day fitness feel effortless.",
+      "We also made it easier to stay on top of ending memberships. You get a clearer last-day view of your plan and dates, plus notifications when something needs attention or your studio has an update. Small things, but they add up when you train a few times a week.",
     highlights: [
-      "Pass renewal is live: renew early while a pass is running, or renew after it ends",
-      "Send a renewal request to the studio from My Passes in a single step",
-      "Last-day membership card with plan, dates and progress so you never miss an ending pass",
-      "Notifications and push alerts for streak reminders and updates from your studios",
-      "A refreshed profile and menu experience, including Profile Settings in one place",
-      "Personalised default cover photos based on your profile",
-      "Faster access to Profile, Leaderboard and Menu when you open the app",
+      "Renew early while a pass is still active, or renew after it expires",
+      "Send the renewal request to your studio from My Passes",
+      "See plan, dates and progress clearly when a pass is on its last day",
+      "Get streak reminders and studio updates as notifications",
+      "Profile and menu feel cleaner, with Profile Settings in one place",
+      "Default cover photos that match your profile",
+      "Quicker access to Profile, Leaderboard and Menu when you open the app",
     ],
     whatsNext:
-      "We will keep expanding renewal and membership tools with our partner venues. Meeting us at a fitness conference or want a live demo? Write to partners@rivioapp.com.",
+      "We will keep improving renewals with our partner venues. Want a demo or met us at a fitness event? Write to partners@rivioapp.com.",
     cover: { variant: "member-update" },
     showStoreLinks: true,
   },
@@ -79,22 +79,22 @@ const RELEASES: ReleasePost[] = [
     iso: "2026-09-18",
     label: "September 18, 2026",
     kind: "release",
-    title: "Introducing smarter desk tools — now live on Rivio Partner",
+    title: "Better desk tools for Rivio Partner",
     summary:
-      "On 18 September 2026 we introduced a powerful update for gym and studio owners on Rivio Partner. From today, partners can manage customers more clearly, accept walk-in payment requests with a negotiated amount or duration, and protect earnings with an owner passcode. Built for the front desk — where every second counts.",
+      "A practical update for gym and studio owners. From 18 September 2026, Rivio Partner helps you find customers faster, accept a walk-in request with the amount or days you agree on, and lock wallet and earnings behind an owner passcode.",
     detail:
-      "Rivio Partner is becoming the operating layer for pay-per-day venues: find your members, adjust a pass when needed, and accept a request with confidence. As we meet venue owners at industry events and onboarding sessions, these are the tools they ask for first — and they are live now.",
+      "Front desk work moves quickly, so we focused on the basics partners ask for most: find a member, fix a pass date when something is off, and accept a request without friction. That is what shipped here.",
     highlights: [
-      "My Customers is live: search and filter members visiting your venue",
-      "Accept payment requests with editable amount and pass days, plus an end-date preview",
-      "Owner passcode to protect wallet, earnings and sensitive settings",
-      "Inline editing of active pass dates when a plan needs a quick correction",
-      "Clearer pass types across week, month, year, daily and custom durations",
-      "Active passes focused on what is running now at your venue",
-      "A smoother desk experience across customers and passes screens",
+      "My Customers: search and filter members at your venue",
+      "Accept payment requests with editable amount and pass days, and see the end date before you confirm",
+      "Owner passcode for wallet, earnings and sensitive settings",
+      "Edit active pass dates inline when a plan needs a quick fix",
+      "Clearer pass types for week, month, year, daily and custom durations",
+      "Active passes show what is running now at your venue",
+      "Customers and passes screens feel smoother day to day",
     ],
     whatsNext:
-      "More desk workflows and clearer payouts are on the way. Running a gym or studio? Reach partners@rivioapp.com — we would love to show Rivio Partner live.",
+      "More desk tools and clearer payouts are next. If you run a gym or studio, write to partners@rivioapp.com and we can walk you through Rivio Partner.",
     cover: { variant: "partner-update" },
     showStoreLinks: true,
   },
@@ -203,7 +203,7 @@ function PostCover({ cover }: { cover: CoverVariant }) {
               Pass renewals
             </p>
             <p className="mt-1 max-w-xs text-sm font-medium text-emerald-50/90 md:text-base">
-              Renew early or after expiry — request your studio in one tap
+              Renew early or after it ends, then send it to your studio
             </p>
             <div className="mt-4 flex flex-wrap gap-2">
               <span className="rounded-full bg-white/12 px-2.5 py-1 text-[11px] font-semibold text-white ring-1 ring-white/20">
@@ -254,7 +254,7 @@ function PostCover({ cover }: { cover: CoverVariant }) {
               Desk tools for partners
             </p>
             <p className="mt-1 max-w-xs text-sm font-medium text-amber-50/95 md:text-base">
-              Customers, flexible accepts and owner passcode — built for the front desk
+              Find customers, accept requests your way, lock earnings with a passcode
             </p>
             <div className="mt-4 flex flex-wrap gap-2">
               <span className="rounded-full bg-white/14 px-2.5 py-1 text-[11px] font-semibold text-white ring-1 ring-white/25">
