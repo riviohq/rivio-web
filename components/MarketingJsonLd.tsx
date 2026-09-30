@@ -29,7 +29,7 @@ export default function MarketingJsonLd() {
     },
     founder: { "@id": FOUNDER_ID },
     description:
-      "Pay per day at gyms, yoga studios, and wellness centers in India. Flexible fitness without long-term subscriptions.",
+      "Gym finder and workout tracker for India. Find gyms near you, track my workout in My Progress, pay per day, and check in with QR. No long subscription required.",
   };
 
   const founder: Record<string, unknown> = {

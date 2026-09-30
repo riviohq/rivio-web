@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { ChevronDown, ChevronUp, HelpCircle, Mail, MessageCircle, Building2, Rocket, DollarSign, Ticket, BarChart3, Settings } from 'lucide-react'
+import { ChevronDown, ChevronUp, HelpCircle, Mail, MessageCircle, Building2, Rocket, DollarSign, Ticket, BarChart3, Settings, Users } from 'lucide-react'
 
 export default function PartnerHelpPage() {
   const [openIndex, setOpenIndex] = useState<number | null>(null)
@@ -88,6 +88,34 @@ export default function PartnerHelpPage() {
         {
           question: "What analytics and insights are available?",
           answer: "RIVIO Partner provides comprehensive analytics:\n\nAvailable Metrics:\n• Total visits per day, week, month\n• Earnings breakdown (per-visit vs passes)\n• Active passes count\n• User check-in patterns\n• Peak hours and days\n• Revenue trends\n• Location-wise performance (for multiple locations)\n• Review and rating trends\n\nHow to Access:\n1. Go to Dashboard in the app\n2. View real-time metrics\n3. Switch between different time periods\n4. Filter by location (if multiple)\n5. Export reports if needed\n\nBenefits:\n• Make data-driven decisions\n• Optimize pricing based on demand\n• Identify peak hours\n• Track business growth\n• Understand customer behavior\n• Plan marketing strategies"
+        }
+      ]
+    },
+    {
+      category: 'Team & Professionals',
+      icon: Users,
+      color: 'from-indigo-500/20 to-violet-500/20',
+      borderColor: 'border-indigo-500/20',
+      items: [
+        {
+          question: "How do I manage Team in RIVIO Partner?",
+          answer: "Manage Team lets you add coaches and staff who appear on your venue profile in the member app.\n\nSteps:\n1. Open Manage Team from your business menu\n2. Add a team member with name and role\n3. Upload a staff photo if you want one on the Team tab\n4. Save and publish\n\nYou can edit or remove team members anytime. Keep roles accurate so members know who to ask for at reception or on the floor."
+        },
+        {
+          question: "How do staff photos work?",
+          answer: "Staff photos are optional profile images for each team member.\n\nGuidelines:\n• Use clear, professional photos the staff member agrees to share\n• Photos appear on the Team tab of your studio page in the Rivio member app\n• They are separate from general venue gallery images\n\nUpdate photos when someone joins or leaves. Remove profiles promptly when staff no longer represent your business."
+        },
+        {
+          question: "What is a complimentary staff pass by mobile?",
+          answer: "You can link an optional complimentary staff pass to a team member's mobile number.\n\nHow it works:\n• Enter the staff mobile in Manage Team when enabling staff access\n• Rivio uses the number only to validate staff pass eligibility, not for public display\n• Staff follow the same check-in flow as members where the pass applies\n\nTurn this off or update the number when access should end. Staff passes are a partner-controlled benefit, not automatic for every team member."
+        },
+        {
+          question: "Where do Contact and Team fit in onboarding?",
+          answer: "During onboarding, complete both your public contact details and your Team list.\n\nContact:\n• Reception phone, email, or other details members use to reach you\n\nTeam:\n• Coaches and front-desk staff you want visible on the Team tab\n• Roles, photos, and optional staff pass numbers\n\nAccurate Contact and Team sections improve trust in the gym finder and reduce support questions before the first visit."
+        },
+        {
+          question: "What do members see on the Team tab?",
+          answer: "Members see the Team tab when they open your studio from the gym finder.\n\nDisplayed items can include:\n• Staff names and roles\n• Photos you uploaded in Manage Team\n• Bios or titles you provided\n\nMembers do not see staff mobile numbers used for complimentary passes. Content is shown as you publish it, so review Team regularly for accuracy."
         }
       ]
     },

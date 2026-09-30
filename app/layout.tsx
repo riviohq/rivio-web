@@ -10,11 +10,11 @@ import { SITE_URL } from "@/lib/siteContent";
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "RIVIO | Pay Per Day Gym, Yoga & Fitness – No Subscription",
+    default: "RIVIO | Gym Finder, Workout Tracker & Pay Per Day Fitness India",
     template: "%s | RIVIO",
   },
   description:
-    "Pay per day at any gym, yoga studio, or wellness center. No subscription, no commitment. Download Rivio on the App Store. India's flexible fitness access.",
+    "Find gyms near you, track my workout with My Progress, and pay per day at gyms, yoga studios, and wellness venues. No subscription required. Rivio is India's gym finder and workout tracker in one app.",
   keywords: SITE_SEO_KEYWORDS,
   authors: [
     { name: "RIVIO", url: SITE_URL },
@@ -26,13 +26,19 @@ export const metadata: Metadata = {
     apple: "/favicon.png",
   },
   openGraph: {
-    title: "RIVIO | Pay Per Day Gym, Yoga & Fitness – No Subscription",
+    title: "RIVIO | Gym Finder & Workout Tracker | Pay Per Day Fitness",
     description:
-      "Pay per day at any gym, yoga, or studio. No subscription. Download on the App Store.",
+      "Track my workout, find gyms near me, meet coaches, and pay only for the days you train. Download Rivio.",
     type: "website",
     url: SITE_URL,
     siteName: "RIVIO",
     images: [
+      {
+        url: "/assets/progress/progress-overview.png",
+        width: 1170,
+        height: 2532,
+        alt: "Rivio My Progress workout tracker overview",
+      },
       {
         url: "https://rivio-glimps.s3.ap-south-1.amazonaws.com/rivio.png",
         width: 512,
@@ -43,9 +49,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "RIVIO | Pay Per Day Fitness",
-    description: "One app. Any gym or yoga. Pay only when you go.",
-    images: ["https://rivio-glimps.s3.ap-south-1.amazonaws.com/rivio.png"],
+    title: "RIVIO | Workout Tracker + Gym Finder",
+    description: "Log workouts, find gyms, pay per day. One app for training and access.",
+    images: ["/assets/progress/workout-history.png"],
   },
   alternates: { canonical: SITE_URL },
   verification: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION

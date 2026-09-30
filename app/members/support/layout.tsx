@@ -4,7 +4,7 @@ import { pageMetadata } from "@/lib/pageSeo";
 export const metadata = pageMetadata({
   title: "Rivio Member Support",
   description:
-    "Help and support for Rivio members. Get answers on passes, bookings, QR check in, payments, and your account.",
+    "Help for Rivio members: gym finder, My Progress workout tracking, passes, QR check in, wallet, streaks, and studio Team profiles.",
   path: "/members/support/",
 });
 

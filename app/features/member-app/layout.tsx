@@ -4,7 +4,7 @@ import { pageMetadata } from "@/lib/pageSeo";
 export const metadata = pageMetadata({
   title: "Rivio Member App Features",
   description:
-    "Find gyms, yoga, and studios near you, buy passes, pay per day, and check in with a QR code. See everything the Rivio member app offers.",
+    "Gym finder and workout tracker in one app: My Progress, pay per day, wallet, QR check in, passes, streaks, and coach Team pages on studios.",
   path: "/features/member-app/",
 });
 

@@ -14,7 +14,7 @@ export default function PartnerTermsPage() {
             </div>
             <div>
               <h1 className="text-3xl md:text-4xl font-bold text-white">Terms and Conditions</h1>
-              <p className="text-sm text-gray-400 mt-1">Last updated: January 2025 (Comprehensive Update)</p>
+              <p className="text-sm text-gray-400 mt-1">Last updated: September 2026</p>
             </div>
           </div>
         </div>
@@ -106,6 +106,8 @@ export default function PartnerTermsPage() {
                   <li>Accurately list amenities (both free and paid) available at your facilities</li>
                   <li>Keep business hours, timings, and availability information current</li>
                   <li>Ensure business photos and descriptions accurately represent your facilities</li>
+                  <li>Keep Team and staff profiles accurate, including names, roles, and photos</li>
+                  <li>Obtain any consent required before publishing staff photos or using staff mobile numbers for complimentary staff passes</li>
                   <li>Maintain the quality, safety, and cleanliness of all your facilities</li>
                 </ul>
               </div>

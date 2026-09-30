@@ -18,12 +18,14 @@ const PARTNER_ICON =
 
 export const metadata: Metadata = {
   title: "Download RIVIO apps",
-  description:
-    "Get Rivio for workouts and Rivio Partner for your venue. Free on iPhone and Android. Pay-per-day fitness in India.",
+    description:
+      "Get Rivio to find gyms, track workouts in My Progress, or join Rivio Partner for your venue. Free on iPhone and Android.",
   keywords: [
     "RIVIO app download",
     "Rivio App Store",
     "Rivio Partner app",
+    "workout tracker India download",
+    "gym finder app India",
     "pay per day gym app India",
   ],
   alternates: { canonical: `${SITE_URL}/download/` },

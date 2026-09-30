@@ -1,6 +1,6 @@
 'use client'
 
-import { Eye, Target, QrCode, TrendingUp, Users, Mail, Building2 } from 'lucide-react'
+import { Eye, Target, Users, Mail } from 'lucide-react'
 import Image from 'next/image'
 
 export default function PartnerAboutPage() {
@@ -25,7 +25,10 @@ export default function PartnerAboutPage() {
               RIVIO Partner
             </h1>
             <p className="text-2xl md:text-3xl text-amber-400 mb-4 font-semibold">
-              Business Management Platform
+              Run Your Venue &amp; Showcase Your Team
+            </p>
+            <p className="text-lg text-gray-300 mb-4 max-w-2xl mx-auto">
+              RIVIO Partner helps gyms and studios manage QR check-ins, earnings, and settlements, and showcase coaches on the Team tab for members.
             </p>
             <p className="text-lg text-gray-400 mb-8 italic">
               "Your route to movement."
@@ -46,10 +49,10 @@ export default function PartnerAboutPage() {
             </div>
             <div className="space-y-6 text-lg text-gray-300 leading-relaxed">
               <p>
-                To become the trusted technology partner for gyms, fitness centers, and wellness studios worldwide. We envision a future where every facility owner can effortlessly manage their business, maximize revenue through intelligent systems, and build thriving communities that transform lives.
+                RIVIO Partner is the trusted app for gyms, studios, and wellness venues in India to run daily operations and showcase their professionals. Manage check-ins, passes, and payouts while presenting your Team on the member app.
               </p>
               <p>
-                Our vision is built on empowering business owners with real-time insights, automated operations, and flexible revenue models that eliminate complexity and drive sustainable growth. We believe that when technology works seamlessly in the background, you can focus on what truly matters, which is helping people achieve their health and wellness goals.
+                Our vision is simple: technology stays in the background so you can focus on members. Real-time insights, automated operations, and flexible pay-per-day revenue help you grow, while coach photos and roles on the Team tab build trust before someone walks in.
               </p>
             </div>
           </div>
@@ -65,17 +68,19 @@ export default function PartnerAboutPage() {
               <h2 className="text-3xl md:text-4xl font-bold text-white">Our Mission</h2>
             </div>
             <p className="text-lg text-gray-300 mb-8 leading-relaxed">
-              Our mission is to empower gym owners, fitness center managers, and wellness studio operators with intelligent technology that simplifies operations, maximizes revenue, and enables them to focus on what truly matters, which is creating great experiences for their members.
+              Rivio Partner gives gym owners and studio operators the tools to run day-to-day operations without the usual admin drag: check-ins, passes, Team profiles, and payouts in one place so you can stay focused on members.
             </p>
             <p className="text-lg text-gray-300 mb-8 leading-relaxed">
-              We are committed to eliminating the complexity of business management through automated systems, real-time insights, and seamless payment solutions. Every feature we build, every update we release, and every interaction we have is driven by one core purpose: to make your business more successful, more profitable, and more enjoyable to run.
+              We keep building for clarity and speed on the floor. Every feature should help you earn more from pay-per-day and passes, keep staff and coaches visible to members, and make settlements simple to request and track.
             </p>
             <div className="grid md:grid-cols-2 gap-4">
               {[
-                { bold: "Empower Business Owners:", text: "Provide tools that give you complete control and visibility over your operations, earnings, and growth metrics." },
-                { bold: "Simplify Operations:", text: "Automate check-ins, payments, and administrative tasks so you can dedicate time to member engagement and business development." },
-                { bold: "Maximize Revenue:", text: "Enable flexible pricing models, instant settlements, and data-driven insights that help you optimize earnings and grow sustainably." },
-                { bold: "Build Thriving Communities:", text: "Connect you with members, facilitate engagement through reviews and feedback, and help you create spaces where people achieve their health and wellness goals." }
+                { bold: "Venue operations:", text: "Earnings, visits, and activity in one place." },
+                { bold: "Check-ins and payments:", text: "QR access, passes, and admin tools without juggling separate systems." },
+                { bold: "Team profiles:", text: "Coaches and staff with photos, roles, and bios for members to discover." },
+                { bold: "Staff access:", text: "Optional complimentary staff passes tied to team mobile numbers." },
+                { bold: "Revenue:", text: "Flexible pricing, settlement requests, and clear history for pay-per-day and pass earnings." },
+                { bold: "Brand presence:", text: "Reviews, feedback, and a venue profile that matches how you present your studio." }
               ].map((item, index) => (
                 <div key={index} className="flex items-start gap-3 p-4 bg-gray-800/50 rounded-xl border border-gray-700">
                   <div className="w-6 h-6 bg-amber-500 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
@@ -90,42 +95,6 @@ export default function PartnerAboutPage() {
             <p className="text-gray-300 mt-8 italic text-amber-400 text-lg font-semibold text-center">
               When you succeed, we succeed. Your growth is our greatest achievement.
             </p>
-          </div>
-        </section>
-
-        {/* How It Works */}
-        <section className="mb-20">
-          <div className="bg-gray-900/80 backdrop-blur-sm rounded-3xl p-8 md:p-12 border border-gray-800 shadow-2xl">
-            <div className="flex items-center gap-4 mb-10">
-              <div className="w-14 h-14 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg">
-                <QrCode className="w-7 h-7 text-white" />
-              </div>
-              <h2 className="text-3xl md:text-4xl font-bold text-white">How It Works</h2>
-            </div>
-            <div className="space-y-6">
-              {[
-                { step: "1", title: "Register & Setup Your Business", desc: "Sign up, verify with OTP, and add your business details, location, category, and pricing." },
-                { step: "2", title: "Get Your QR Code", desc: "Each location gets a unique QR code. Display it at your reception for users to scan and check in." },
-                { step: "3", title: "Users Check In & You Earn", desc: "Earn from per-visit payments (credited instantly) or pass purchases (full payment upfront)." },
-                { step: "4", title: "Track Everything in Real-Time", desc: "Dashboard shows visits, earnings, reviews, and analytics. Monitor all locations from one place." },
-                { step: "5", title: "Setup Payment Details", desc: "Configure bank account, PAN, and GSTIN in Settings (one-time setup for settlements)." },
-                { step: "6", title: "Settle Earnings to Bank", desc: "Request settlement anytime to transfer wallet funds to your bank account (processed in 2-3 days)." },
-                { step: "7", title: "Manage Multiple Locations", desc: "Add unlimited locations. Each has its own QR code and analytics. Manage all from one dashboard." },
-                { step: "8", title: "Create Pass Groups (Optional)", desc: "Group locations so users can use passes across all locations in the group." },
-                { step: "9", title: "Engage with Reviews", desc: "Respond to reviews to build trust and attract more customers. Positive reviews improve your ranking." },
-                { step: "10", title: "Grow & Scale Your Business", desc: "Use insights to optimize pricing, track performance, and make data-driven decisions to grow your business." }
-              ].map((item) => (
-                <div key={item.step} className="flex gap-6 p-6 bg-gray-800/50 rounded-2xl border border-gray-700 hover:border-amber-500/30 transition-all">
-                  <div className="w-14 h-14 bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl flex items-center justify-center font-bold text-white text-xl flex-shrink-0 shadow-lg">
-                    {item.step}
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="font-bold text-white text-xl mb-2">{item.title}</h3>
-                    <p className="text-gray-400 leading-relaxed">{item.desc}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
           </div>
         </section>
 

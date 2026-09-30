@@ -15,7 +15,7 @@ export default function UserTermsPage() {
             </div>
             <div>
               <h1 className="text-3xl md:text-4xl font-bold text-white">Terms and Conditions</h1>
-              <p className="text-sm text-gray-400 mt-1">Last updated: January 2025</p>
+              <p className="text-sm text-gray-400 mt-1">Last updated: September 2026</p>
             </div>
           </div>
         </div>
@@ -102,6 +102,9 @@ export default function UserTermsPage() {
             <div className="space-y-4 text-gray-300 leading-relaxed">
               <p>
                 You agree to use RIVIO only for lawful purposes and in accordance with these Terms. The application is intended for personal, non-commercial use to access fitness facilities and services.
+              </p>
+              <p>
+                Workout logs, body measurements, and related data in My Progress are optional and provided by you. You are responsible for the accuracy of what you enter and for your own health and training decisions. Rivio does not provide medical advice.
               </p>
               <p className="text-white font-semibold">Prohibited uses include:</p>
               <ul className="space-y-2 ml-6 list-disc">

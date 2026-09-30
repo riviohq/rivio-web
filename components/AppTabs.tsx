@@ -86,8 +86,8 @@ const userSteps = [
   {
     icon: TrendingUp,
     title: "Track",
-    subtitle: "Build your streak",
-    description: "Earn rewards",
+    subtitle: "Log in My Progress",
+    description: "Sets, history, insights",
     color: "purple",
   },
 ];

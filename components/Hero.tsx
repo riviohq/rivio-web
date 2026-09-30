@@ -45,8 +45,8 @@ const HeroDescription = memo(() => (
     animate={{ opacity: 1, y: 0 }}
     transition={{ duration: 0.8, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
   >
-    Pay only for the days you use. Access any gym, studio, or wellness center. 
-    No subscriptions. No commitments.
+    Find gyms near you, track my workout in My Progress, and pay only for the days
+    you train. Gym finder, workout tracker, and flexible access in one app.
   </motion.p>
 ));
 HeroDescription.displayName = "HeroDescription";

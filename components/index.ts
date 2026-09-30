@@ -14,3 +14,4 @@ export { default as Footer } from "./Footer";
 export { default as Hero } from "./Hero";
 export { default as Navigation } from "./Navigation";
 export { default as ScreenshotShowcase } from "./ScreenshotShowcase";
+export { default as ProgressShowcase } from "./ProgressShowcase";
