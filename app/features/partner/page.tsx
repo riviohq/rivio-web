@@ -8,24 +8,24 @@ import Image from 'next/image'
 import { DURATION, DELAY, EASE_IN_OUT, getStaggerDelay, getOrbDuration } from '@/animation-timing'
 
 const partnerSteps = [
-  { icon: Building2, text: 'Onboard Your Venue', description: 'Register your fitness business' },
-  { icon: QrCode, text: 'Generate QR Codes', description: 'Get unique codes for each location' },
-  { icon: CheckCircle, text: 'Real-Time Check-Ins', description: 'Monitor live customer entries' },
-  { icon: DollarSign, text: 'Dual Revenue Streams', description: 'Maximize earnings potential' },
-  { icon: BarChart3, text: 'Advanced Analytics', description: 'Data-driven business insights' },
-  { icon: Settings, text: 'Multi-Location Management', description: 'Manage all venues from one platform' },
+  { icon: Building2, text: 'Onboard your venue', description: 'Register your gym or studio' },
+  { icon: QrCode, text: 'Set up QR codes', description: 'One code per location for check-in' },
+  { icon: CheckCircle, text: 'Live check-ins', description: 'See members as they arrive' },
+  { icon: DollarSign, text: 'Pay-per-day and passes', description: 'Earn from day visits and longer passes' },
+  { icon: BarChart3, text: 'Clear activity', description: 'Visits, renewals, and earnings at a glance' },
+  { icon: Settings, text: 'Run every location', description: 'Manage venues from one Partner app' },
 ]
 
 const partnerFeatures = [
-  { title: 'Executive Dashboard', description: 'Real-time revenue tracking, visitor analytics, and performance metrics.' },
-  { title: 'Revenue Management', description: 'Instant settlements, secure history, and bank-level protection.' },
-  { title: 'Live Activity Monitor', description: 'Customer interactions: check-ins, subscriptions, and pass purchases.' },
-  { title: 'QR Code Infrastructure', description: 'Enterprise-grade QR generation and management across locations.' },
-  { title: 'Multi-Location Control', description: 'Centralized platform for multiple venues with capacity monitoring.' },
-  { title: 'Business Intelligence', description: 'Forecasting, peak hour analysis, and growth insights.' },
-  { title: 'Customer Management', description: 'Visit history, engagement metrics, and retention tools.' },
-  { title: 'Subscription Lifecycle', description: 'End-to-end subscription management with alerts and renewals.' },
-  { title: 'Business Operations', description: 'Active subscriptions, expiring passes, pricing, and location management.' },
+  { title: 'Dashboard', description: 'Revenue, visitors, and activity for the locations you run.' },
+  { title: 'Earnings and settlements', description: 'Request payouts and review transaction history securely.' },
+  { title: 'Live activity', description: 'Check-ins, pass purchases, and renewals as they happen.' },
+  { title: 'QR check-in', description: 'Generate and manage venue QR codes across locations.' },
+  { title: 'Multi-location', description: 'One Partner app for every venue you operate.' },
+  { title: 'Insights', description: 'Peak hours, visit patterns, and growth signals you can act on.' },
+  { title: 'Members', description: 'Visit history and engagement signals for people who train with you.' },
+  { title: 'Passes and renewals', description: 'Active passes, expiry alerts, and renewal flows.' },
+  { title: 'Team and operations', description: 'Manage Team profiles, pricing, and location details in one place.' },
 ]
 
 export default function PartnerFeaturesPage() {

@@ -71,10 +71,11 @@ const DIFFERENTIATORS = [
 
 const HOW_IT_WORKS = [
   { number: "1", icon: MapPin, title: "Find", text: "Discover nearby venues" },
-  { number: "2", icon: QrCode, title: "Scan", text: "Scan QR & check-in" },
+  { number: "2", icon: QrCode, title: "Scan", text: "Scan QR and check in" },
   { number: "3", icon: CheckCircle2, title: "Mark Visit", text: "Confirm your entry" },
   { number: "4", icon: Wallet, title: "Pay", text: "Pay for that day only" },
   { number: "5", icon: Clock, title: "Train", text: "Enjoy your workout" },
+  { number: "6", icon: Sparkles, title: "Track", text: "Log sets in My Progress" },
 ];
 
 const DifferentiatorCard = ({

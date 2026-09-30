@@ -1,22 +1,17 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { useInView } from 'framer-motion'
-import { useRef, useEffect } from 'react'
+import { useEffect } from 'react'
 import ScreenshotShowcase from '@/components/ScreenshotShowcase'
+import ProgressShowcase from '@/components/ProgressShowcase'
 
 export default function MemberAppFeaturesPage() {
-  const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: '0px' })
-
   useEffect(() => {
-    // Scroll to top on mount
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }, [])
 
   return (
     <div className="min-h-screen bg-[#f5f5f7]">
-      {/* Header */}
       <div className="bg-white/80 backdrop-blur-xl backdrop-saturate-[180%] border-b border-black/[0.08]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pt-28">
           <motion.h1
@@ -27,13 +22,14 @@ export default function MemberAppFeaturesPage() {
           >
             Member <span className="text-emerald-500">App Features</span>
           </motion.h1>
-          <p className="text-center text-[#86868b] mt-2 text-lg">
-            Discover the premium features designed for fitness enthusiasts
+          <p className="text-center text-[#86868b] mt-2 text-lg max-w-3xl mx-auto">
+            Gym finder, QR check-in, wallet, streaks, studio Team profiles, and My Progress
+            workout tracker so you can find a gym and track my workout in one place.
           </p>
         </div>
       </div>
 
-      {/* Feature Cards Section - Show only user/member cards */}
+      <ProgressShowcase />
       <ScreenshotShowcase showUser={true} showPartner={false} />
     </div>
   )

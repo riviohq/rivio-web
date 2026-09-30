@@ -4,7 +4,7 @@ import { pageMetadata } from "@/lib/pageSeo";
 export const metadata = pageMetadata({
   title: "Rivio Partner Help Center",
   description:
-    "Answers for Rivio partners: studio setup, pricing and passes, attendance, and settlements in the Rivio partner app.",
+    "Partner help: Manage Team, staff photos, staff passes, QR check in, passes, earnings, and what members see on the Team tab.",
   path: "/partner/help/",
 });
 

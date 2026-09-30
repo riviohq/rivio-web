@@ -10,13 +10,13 @@ const copy: Record<
 > = {
   members: {
     title: `About RIVIO: Pay-Per-Day Gym & Fitness App India | ${FOUNDER_NAME}`,
-    description: `RIVIO is India's pay-per-day fitness platform founded by ${FOUNDER_NAME}. Discover gyms, yoga & wellness venues, check in with QR, and pay only for days you use, with no long-term subscription. Member app on App Store & Google Play.`,
+    description: `RIVIO is India's gym finder and workout tracker with pay-per-day access, founded by ${FOUNDER_NAME}. Discover gyms and studios, log training in My Progress, check in with QR, and pay only for days you use. Member app on App Store & Google Play.`,
     h1Context:
       "Universal fitness access. Pay per day, no subscription lock-in. Founded by Amandeep Bishnoi.",
   },
   business: {
     title: `About RIVIO Partner: Gym Business App India | ${FOUNDER_NAME}`,
-    description: `RIVIO Partner helps gyms and wellness venues in India manage QR check-ins, visits, earnings, and settlements. Built by founder ${FOUNDER_NAME}. Partner app on App Store & Google Play.`,
+    description: `RIVIO Partner helps gyms and studios in India manage QR check-ins, earnings, settlements, and Team profiles for coaches and staff. Built by founder ${FOUNDER_NAME}. Partner app on App Store & Google Play.`,
     h1Context:
       "Business management for gyms & studios: live visits, payouts, and venue tools. By Amandeep Bishnoi, Founder of RIVIO.",
   },

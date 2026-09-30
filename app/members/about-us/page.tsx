@@ -1,6 +1,6 @@
 "use client";
 
-import { Eye, Target, QrCode, Trophy, Users, Mail } from "lucide-react";
+import { Eye, Target, Trophy, Users, Mail } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import LegalEntityNotice from "@/components/LegalEntityNotice";
@@ -27,14 +27,14 @@ export default function UserAboutPage() {
               About RIVIO
             </h1>
             <p className="text-xl md:text-3xl text-emerald-400 mb-2 md:mb-4 font-semibold">
-              Pay-Per-Day Fitness App for India
+              Gym Finder &amp; Workout Tracker for India
             </p>
             <p className="text-base md:text-lg text-gray-300 mb-4 md:mb-6 max-w-2xl mx-auto">
               Founded by{" "}
               <Link href="/founder/" className="text-emerald-400 font-semibold hover:underline">
                 Amandeep Bishnoi
               </Link>
-              . Discover gyms, yoga studios, and wellness venues, and pay only for the days you use.
+              . RIVIO is a gym finder and workout tracker with pay-per-day access. Discover venues, log training in My Progress, and pay only for the days you use.
             </p>
             <p className="text-base md:text-lg text-gray-400 mb-4 md:mb-8 italic">
               "Your route to movement."
@@ -66,10 +66,13 @@ export default function UserAboutPage() {
             </h2>
             <div className="space-y-3 md:space-y-4 text-base md:text-lg text-gray-300 leading-relaxed">
               <p>
+                <strong className="text-white">What is RIVIO?</strong> RIVIO is a gym finder and workout tracker with pay-per-day access in India. One app to discover gyms and studios, check in with QR, top up your wallet, and track workouts in My Progress.
+              </p>
+              <p>
                 RIVIO is live in production with stable member and partner apps on{" "}
                 <strong className="text-white">App Store</strong> and{" "}
                 <strong className="text-white">Google Play</strong>. Members can top up a wallet,
-                discover venues, scan QR codes, and pay per day, with no long-term gym subscription
+                discover venues, scan QR codes, log training, and pay per day, with no long-term gym subscription
                 required.
               </p>
               <p>
@@ -110,22 +113,10 @@ export default function UserAboutPage() {
             </div>
             <div className="space-y-3 md:space-y-6 text-base md:text-lg text-gray-300 leading-relaxed">
               <p>
-                RIVIO introduces the pay-per-day concept, a fresh
-                approach to fitness access that eliminates the need for multiple
-                subscriptions. Why commit to a gym membership when you want yoga
-                today, a wellness center tomorrow, and a different gym next
-                week? With RIVIO, you pay only for the days you use, accessing
-                any gym, yoga studio, or wellness center instantly, without
-                long-term commitments or wasted money.
+                RIVIO pairs flexible pay-per-day access with tools to track your training. Pay only for the days you visit, while My Progress helps you log workouts, body measurements, and trends over time.
               </p>
               <p>
-                This flexible, on-demand model addresses a fundamental problem
-                in the fitness industry: traditional membership models force
-                consumers into rigid, single-venue commitments that limit choice
-                and create financial barriers. Our vision is to transform
-                fitness accessibility, enabling users to diversify their fitness
-                journey while empowering venue owners to maximize utilization
-                and revenue through our innovative pass-based platform.
+                Why commit to one gym when you want yoga today, a studio tomorrow, and a different gym next week? Our vision is a fitness ecosystem in India where discovery, access, and progress live in one place. Members explore freely, partners run smooth operations, and everyone builds sustainable habits without rigid contracts.
               </p>
             </div>
           </div>
@@ -143,20 +134,17 @@ export default function UserAboutPage() {
               </h2>
             </div>
             <p className="text-base md:text-lg text-gray-300 mb-4 md:mb-8 leading-relaxed">
-              Our mission is to eliminate the need for multiple fitness
-              subscriptions by providing pay-per-day access to any gym, yoga
-              studio, or wellness center. We're committed to making fitness
-              truly flexible, affordable, and accessible.
+              Our mission is to make fitness flexible in India through gym discovery, pay-per-day access, and My Progress workout tracking. We connect members, venues, and coaches in one trusted app.
             </p>
             <div className="grid md:grid-cols-2 gap-2 md:gap-4">
               {[
-                "Deliver pay-per-day access that eliminates long-term commitments and multiple subscription costs",
-                "Enable instant venue access through QR code technology, allowing users to work out anywhere, anytime",
-                "Provide flexible payment options, so you can pay for a single day or buy passes that suit your fitness journey",
-                "Automate check-ins and payments for a seamless, hassle-free experience at every venue",
-                "Empower venue owners to maximize facility utilization and revenue through our innovative platform",
-                "Build a transparent, accessible fitness ecosystem where everyone can explore diverse workout options",
-                "Motivate users through gamification, with streaks, leaderboards, and achievements that make fitness engaging",
+                "Gym finder for gyms, yoga studios, and wellness venues across India",
+                "My Progress workout tracking for sessions, measurements, insights, and personal records",
+                "Pay-per-day access and an in-app wallet so members pay only for days they train",
+                "QR check-in at partner venues, plus passes for longer access",
+                "Studio Team profiles for coaches and staff at each venue",
+                "Streaks, leaderboards, and achievements tied to venue check-ins",
+                "Keep check-ins and payments simple at every partner venue",
               ].map((item, index) => (
                 <div
                   key={index}
@@ -176,85 +164,29 @@ export default function UserAboutPage() {
           </div>
         </section>
 
-        {/* How It Works */}
+        {/* My Progress */}
         <section className="mb-6 md:mb-20">
           <div className="bg-gray-900/80 backdrop-blur-sm rounded-2xl md:rounded-3xl p-4 md:p-12 border border-gray-800 shadow-2xl">
-            <div className="flex items-center gap-3 md:gap-4 mb-6 md:mb-10">
-              <div className="w-10 h-10 md:w-14 md:h-14 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl md:rounded-2xl flex items-center justify-center shadow-lg">
-                <QrCode className="w-5 h-5 md:w-7 md:h-7 text-white" />
+            <div className="flex items-center gap-3 md:gap-4 mb-4 md:mb-6">
+              <div className="w-10 h-10 md:w-14 md:h-14 bg-gradient-to-br from-violet-500 to-violet-600 rounded-xl md:rounded-2xl flex items-center justify-center shadow-lg">
+                <Trophy className="w-5 h-5 md:w-7 md:h-7 text-white" />
               </div>
               <h2 className="text-xl md:text-4xl font-bold text-white">
-                How RIVIO Works
+                My Progress
               </h2>
             </div>
-            <div className="space-y-3 md:space-y-6">
+            <p className="text-sm md:text-lg text-gray-300 mb-4 md:mb-8 leading-relaxed">
+              My Progress is Rivio&apos;s built-in workout tracker: a personal training diary for logged workouts, separate from gym streaks that come from venue check-ins.
+            </p>
+            <div className="grid md:grid-cols-3 gap-3 md:gap-4">
               {[
-                {
-                  step: "1",
-                  title: "Sign Up & Create Account",
-                  desc: "Download the app, sign up with your phone number, verify with OTP, and complete your profile.",
-                },
-                {
-                  step: "2",
-                  title: "Discover Gyms & Venues",
-                  desc: "Browse nearby gyms, yoga studios, and wellness centers. See pricing, ratings, amenities, and opening hours.",
-                },
-                {
-                  step: "3",
-                  title: "Choose Your Access Method",
-                  desc: "Pay-per-day for instant access or purchase passes (weekly, monthly, quarterly, semiannual, or yearly) for your favorite venues.",
-                },
-                {
-                  step: "4",
-                  title: "Add Wallet Balance or Buy Pass",
-                  desc: "For pay-per-day, add money to your wallet. For passes, purchase directly and enjoy auto-attendance daily.",
-                },
-                {
-                  step: "5",
-                  title: "Visit & Scan QR Code",
-                  desc: "Walk into the venue and scan their QR code. Payment is deducted automatically or covered by your active pass.",
-                },
-                {
-                  step: "6",
-                  title: "Track Your Progress",
-                  desc: "Build streaks, climb leaderboards, earn achievements, and watch your fitness journey unfold.",
-                },
-                {
-                  step: "7",
-                  title: "Manage Your Passes",
-                  desc: "View active passes, check remaining days, and renew or purchase new passes anytime from your dashboard.",
-                },
-                {
-                  step: "8",
-                  title: "Review & Rate Venues",
-                  desc: "Share your experience by rating and reviewing venues. Help others make informed choices.",
-                },
-                {
-                  step: "9",
-                  title: "Explore Different Venues",
-                  desc: "Try different gyms, yoga studios, or wellness centers without multiple subscriptions. Pay only for the days you use.",
-                },
-                {
-                  step: "10",
-                  title: "Build Your Fitness Journey",
-                  desc: "Maintain consistency, compete with others, unlock achievements, and achieve your fitness goals with flexibility and motivation.",
-                },
+                { title: "Workout logging", text: "Exercises with sets, weight, reps, duration, or distance, plus bodyweight, how you felt, and notes for each session." },
+                { title: "Workout history", text: "Recent sessions and a full calendar of past training so your history stays easy to review." },
+                { title: "Insights and records", text: "Period-based overview, measurements, and personal records that reflect the date range you care about." },
               ].map((item) => (
-                <div
-                  key={item.step}
-                  className="flex gap-4 md:gap-6 p-4 md:p-6 bg-gray-800/50 rounded-2xl border border-gray-700 hover:border-emerald-500/30 transition-all"
-                >
-                  <div className="hidden md:flex w-14 h-14 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl items-center justify-center font-bold text-white text-xl flex-shrink-0 shadow-lg">
-                    {item.step}
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="font-bold text-white text-base md:text-xl mb-1 md:mb-2">
-                      {item.title}
-                    </h3>
-                    <p className="text-gray-400 leading-relaxed text-sm md:text-base">
-                      {item.desc}
-                    </p>
-                  </div>
+                <div key={item.title} className="p-4 md:p-5 bg-gray-800/50 rounded-xl md:rounded-2xl border border-gray-700">
+                  <h3 className="font-bold text-white text-base md:text-lg mb-1 md:mb-2">{item.title}</h3>
+                  <p className="text-gray-400 leading-relaxed text-sm">{item.text}</p>
                 </div>
               ))}
             </div>
@@ -364,20 +296,10 @@ export default function UserAboutPage() {
                 That didn't sit right with us.
               </p>
               <p>
-                So we built something different. RIVIO isn't just an app. It's
-                your passport to fitness freedom. Pay for what you use, or
-                choose a pass that fits your schedule. Build streaks, compete on
-                leaderboards, and turn your fitness journey into an adventure.
-                Every visit counts, every milestone matters, and every step
-                forward is a victory worth celebrating.
+                So we built Rivio around how people actually train: find a gym near you, check in with QR, pay for the day or pick a pass, and log sets in My Progress when you want the history. Streaks and leaderboards are there when you want the extra push.
               </p>
               <p>
-                Our vision is simple: make fitness accessible to everyone,
-                everywhere. Whether you're a fitness enthusiast or just starting
-                your journey, whether you work out daily or occasionally, RIVIO
-                adapts to you, not the other way around. We're not just building
-                a platform; we're building a movement that empowers people to
-                take control of their health and wellness on their own terms.
+                Our vision is simple: make fitness accessible without locking people into long memberships. Whether you train daily or a few times a month, Rivio is built around how you show up, not around a fixed plan you forget to cancel.
               </p>
               <p className="font-semibold text-emerald-400 italic text-base md:text-xl">
                 Welcome to RIVIO, where your fitness journey begins, your goals

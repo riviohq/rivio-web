@@ -1919,9 +1919,9 @@ export default function ScreenshotShowcase({
 
   const userScreens = [
     {
-      title: "Intelligent Discovery",
+      title: "Nearby gym discovery",
       description:
-        "AI-powered venue discovery with real-time availability and proximity-based recommendations within 100m radius",
+        "Find gyms and studios near you with live details, amenities, and clear directions",
       icon: Smartphone,
       color: "emerald",
       mockup: <AnimatedHomeScreen />,
@@ -1961,8 +1961,8 @@ export default function ScreenshotShowcase({
     {
       title: "Personalized Analytics",
       description:
-        "Comprehensive fitness journey tracking with detailed insights, progress metrics, and social rankings",
-      icon: Users,
+        "My Progress workout tracker with history, measurements, personal records, and insights for the date range you choose",
+      icon: BarChart3,
       color: "emerald",
       mockup: <AnimatedProfile />,
     },
@@ -1980,7 +1980,7 @@ export default function ScreenshotShowcase({
     {
       title: "Revenue Management",
       description:
-        "Automated earnings tracking, instant settlement requests, and comprehensive transaction history with bank-level security",
+        "Earnings tracking, settlement requests, and clear transaction history with secure payouts",
       icon: Wallet,
       color: "gold",
       mockup: <AnimatedPartnerWallet />,
@@ -1994,9 +1994,9 @@ export default function ScreenshotShowcase({
       mockup: <AnimatedActivities />,
     },
     {
-      title: "QR Code Infrastructure",
+      title: "QR check-in tools",
       description:
-        "Enterprise-grade QR code generation and management system for seamless check-ins across all venue locations",
+        "Generate and manage venue QR codes for reliable check-ins across every location",
       icon: QrCode,
       color: "gold",
       mockup: <AnimatedQRManagement />,
@@ -2020,7 +2020,7 @@ export default function ScreenshotShowcase({
     {
       title: "Customer Relationship",
       description:
-        "Comprehensive customer database with visit history, engagement metrics, and automated retention tools",
+        "Members, renewals, and Manage Team for coaches and trainers with photos, roles, and optional complimentary staff passes",
       icon: UserCheck,
       color: "gold",
       mockup: <AnimatedCustomerManagement />,

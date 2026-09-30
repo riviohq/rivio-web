@@ -4,7 +4,7 @@ import { pageMetadata } from "@/lib/pageSeo";
 export const metadata = pageMetadata({
   title: "About the Rivio User App",
   description:
-    "What the Rivio user app is and how pay per day fitness works for members across gyms, yoga studios, and wellness centers in India.",
+    "About Rivio: gym finder and workout tracker with pay-per-day access in India. My Progress, QR check in, wallet, and studio Team profiles.",
   path: "/user/about/",
 });
 

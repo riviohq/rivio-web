@@ -42,8 +42,8 @@ export const Introduction = () => {
             A new way to fitness
           </motion.h2>
           <p className="text-xl md:text-2xl text-[#86868b] max-w-3xl mx-auto leading-relaxed">
-            Flexibility, transparency, and access for everyone.
-            No subscriptions. No commitments. Just fitness, your way.
+            Find a gym, track my workout, and pay only when you train.
+            Gym finder and workout tracker together, with no forced memberships.
           </p>
         </motion.div>
 

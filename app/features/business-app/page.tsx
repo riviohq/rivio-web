@@ -28,7 +28,7 @@ export default function BusinessAppFeaturesPage() {
             Business <span className="text-amber-500">App Features</span>
           </motion.h1>
           <p className="text-center text-[#86868b] mt-2 text-lg">
-            Explore the enterprise-grade tools built for fitness businesses
+            Tools built for gyms and studios: teams, passes, check-ins, and payouts
           </p>
         </div>
       </div>

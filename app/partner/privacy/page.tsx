@@ -14,7 +14,7 @@ export default function PartnerPrivacyPage() {
             </div>
             <div>
               <h1 className="text-3xl md:text-4xl font-bold text-white">Privacy Policy</h1>
-              <p className="text-sm text-gray-400 mt-1">Last updated: January 2025 (Comprehensive Update)</p>
+              <p className="text-sm text-gray-400 mt-1">Last updated: September 2026</p>
             </div>
           </div>
         </div>
@@ -62,6 +62,14 @@ export default function PartnerPrivacyPage() {
                   <li>Amenities offered (free and paid amenities)</li>
                   <li>Business photos and images</li>
                   <li>Pass groups configuration (grouping multiple locations together)</li>
+                </ul>
+              </div>
+              <div>
+                <h3 className="font-semibold text-white text-lg mb-3">Team &amp; Staff Information:</h3>
+                <ul className="space-y-2 text-gray-300 ml-6 list-disc">
+                  <li>Staff and coach names, roles, titles, and optional bios you add in Manage Team</li>
+                  <li>Staff profile photos shown on the Team tab in the member app (separate from venue gallery images)</li>
+                  <li>Mobile numbers you provide only for optional complimentary staff pass validation (not shown publicly to members)</li>
                 </ul>
               </div>
               <div>
@@ -134,6 +142,8 @@ export default function PartnerPrivacyPage() {
                   <li>Enable user check-ins and validate passes</li>
                   <li>Manage pass groups and cross-location access</li>
                   <li>Display your business listings to potential users</li>
+                  <li>Show Team profiles and staff photos you publish on studio pages in the member app</li>
+                  <li>Validate optional complimentary staff passes using mobile numbers you provide (not shown publicly)</li>
                   <li>Process and track user visits and attendance</li>
                 </ul>
               </div>

@@ -4,11 +4,19 @@ import { SITE_CONTENT_UPDATED_DATE, SITE_URL } from "@/lib/siteContent";
 
 /**
  * Production sitemap for Google Search Console & Bing Webmaster Tools.
- * Submit once: https://search.google.com/search-console → Sitemaps → {SITE_URL}/sitemap.xml
+ * Live URL: https://rivioapp.com/sitemap.xml
  *
- * After deploy: request indexing for `/` and `/pulse/` if you ship a major update.
- * Keep `lib/pulsePublicationDates.ts` in sync when you add posts on `/pulse/`.
+ * SEO rules for this file:
+ * - Only indexable, canonical URLs (trailing slash matches next.config).
+ * - Skip redirects (`/latest/`) and noindex landings (`/get-the-app/`).
+ * - `lastModified` must move when page copy or Pulse posts ship.
+ * - Keep `lib/pulsePublicationDates.ts` and `SITE_CONTENT_UPDATED_DATE` in sync.
+ *
+ * After deploy: resubmit sitemap in Search Console; request indexing for `/`,
+ * `/pulse/`, `/features/`, and About pages when content changes.
  */
+
+const contentRefresh = new Date(`${SITE_CONTENT_UPDATED_DATE}T12:00:00.000Z`);
 
 const defaultLastModified = (() => {
   const envDate = process.env.BUILD_DATE || process.env.SITEMAP_LAST_MODIFIED;
@@ -16,10 +24,10 @@ const defaultLastModified = (() => {
     const d = new Date(envDate);
     if (!Number.isNaN(d.getTime())) return d;
   }
-  return new Date(`${SITE_CONTENT_UPDATED_DATE}T12:00:00.000Z`);
+  return contentRefresh;
 })();
 
-const contentRefresh = new Date(`${SITE_CONTENT_UPDATED_DATE}T12:00:00.000Z`);
+const pulseLastModified = getPulsePageLastModified();
 
 type Change = MetadataRoute.Sitemap[number]["changeFrequency"];
 
@@ -30,7 +38,13 @@ type RouteEntry = {
   lastModified?: Date;
 };
 
+/**
+ * Priority map (rough intent for crawlers):
+ * 1.00 home · 0.98 download · 0.97 pulse · 0.95 partner CTA ·
+ * 0.92–0.94 about / founder · 0.88–0.90 features · help/support · legal lower.
+ */
 const ROUTES: RouteEntry[] = [
+  // Core discovery
   { path: "/", priority: 1, changeFrequency: "weekly", lastModified: contentRefresh },
   {
     path: "/download/",
@@ -42,38 +56,165 @@ const ROUTES: RouteEntry[] = [
     path: "/pulse/",
     priority: 0.97,
     changeFrequency: "daily",
-    lastModified: getPulsePageLastModified(),
+    lastModified: pulseLastModified,
   },
-  { path: "/founder/", priority: 0.94, changeFrequency: "weekly", lastModified: contentRefresh },
-  { path: "/members/about-us/", priority: 0.91, changeFrequency: "weekly", lastModified: contentRefresh },
-  { path: "/business/about-us/", priority: 0.91, changeFrequency: "weekly", lastModified: contentRefresh },
+
+  // Partner acquisition
   {
     path: "/partner-with-rivio/",
     priority: 0.95,
     changeFrequency: "weekly",
     lastModified: contentRefresh,
   },
-  { path: "/partners/", priority: 0.9, changeFrequency: "monthly" },
-  { path: "/business/partner-program/", priority: 0.9, changeFrequency: "monthly" },
-  { path: "/features/", priority: 0.85, changeFrequency: "monthly" },
-  { path: "/features/member-app/", priority: 0.88, changeFrequency: "monthly" },
-  { path: "/features/business-app/", priority: 0.88, changeFrequency: "monthly" },
-  { path: "/features/partner/", priority: 0.82, changeFrequency: "monthly" },
-  { path: "/features/user/", priority: 0.82, changeFrequency: "monthly" },
-  { path: "/partner/about/", priority: 0.7, changeFrequency: "monthly" },
-  { path: "/user/about/", priority: 0.7, changeFrequency: "monthly" },
-  { path: "/business/support/", priority: 0.62, changeFrequency: "monthly" },
-  { path: "/members/support/", priority: 0.62, changeFrequency: "monthly" },
-  { path: "/partner/help/", priority: 0.6, changeFrequency: "monthly" },
-  { path: "/user/help/", priority: 0.6, changeFrequency: "monthly" },
-  { path: "/business/privacy-policy/", priority: 0.48, changeFrequency: "yearly" },
-  { path: "/business/terms-conditions/", priority: 0.48, changeFrequency: "yearly" },
-  { path: "/members/privacy-policy/", priority: 0.48, changeFrequency: "yearly" },
-  { path: "/members/terms-conditions/", priority: 0.48, changeFrequency: "yearly" },
-  { path: "/partner/privacy/", priority: 0.48, changeFrequency: "yearly" },
-  { path: "/partner/terms/", priority: 0.48, changeFrequency: "yearly" },
-  { path: "/user/privacy/", priority: 0.48, changeFrequency: "yearly" },
-  { path: "/user/terms/", priority: 0.48, changeFrequency: "yearly" },
+  { path: "/founder/", priority: 0.94, changeFrequency: "weekly", lastModified: contentRefresh },
+
+  // About (member + partner) — refreshed with My Progress & Manage Team
+  {
+    path: "/members/about-us/",
+    priority: 0.93,
+    changeFrequency: "weekly",
+    lastModified: contentRefresh,
+  },
+  {
+    path: "/business/about-us/",
+    priority: 0.93,
+    changeFrequency: "weekly",
+    lastModified: contentRefresh,
+  },
+  {
+    path: "/user/about/",
+    priority: 0.9,
+    changeFrequency: "weekly",
+    lastModified: contentRefresh,
+  },
+  {
+    path: "/partner/about/",
+    priority: 0.9,
+    changeFrequency: "weekly",
+    lastModified: contentRefresh,
+  },
+
+  // Product / features (gym finder + workout tracker + Partner Team)
+  {
+    path: "/features/",
+    priority: 0.9,
+    changeFrequency: "weekly",
+    lastModified: contentRefresh,
+  },
+  {
+    path: "/features/member-app/",
+    priority: 0.89,
+    changeFrequency: "weekly",
+    lastModified: contentRefresh,
+  },
+  {
+    path: "/features/business-app/",
+    priority: 0.89,
+    changeFrequency: "weekly",
+    lastModified: contentRefresh,
+  },
+  {
+    path: "/features/user/",
+    priority: 0.86,
+    changeFrequency: "weekly",
+    lastModified: contentRefresh,
+  },
+  {
+    path: "/features/partner/",
+    priority: 0.86,
+    changeFrequency: "weekly",
+    lastModified: contentRefresh,
+  },
+
+  // Partner program aliases
+  {
+    path: "/partners/",
+    priority: 0.88,
+    changeFrequency: "monthly",
+    lastModified: contentRefresh,
+  },
+  {
+    path: "/business/partner-program/",
+    priority: 0.88,
+    changeFrequency: "monthly",
+    lastModified: contentRefresh,
+  },
+
+  // Help / support (Progress + Team FAQs)
+  {
+    path: "/members/support/",
+    priority: 0.72,
+    changeFrequency: "weekly",
+    lastModified: contentRefresh,
+  },
+  {
+    path: "/business/support/",
+    priority: 0.72,
+    changeFrequency: "weekly",
+    lastModified: contentRefresh,
+  },
+  {
+    path: "/user/help/",
+    priority: 0.7,
+    changeFrequency: "weekly",
+    lastModified: contentRefresh,
+  },
+  {
+    path: "/partner/help/",
+    priority: 0.7,
+    changeFrequency: "weekly",
+    lastModified: contentRefresh,
+  },
+
+  // Legal — updated for My Progress / Team data practices
+  {
+    path: "/members/privacy-policy/",
+    priority: 0.5,
+    changeFrequency: "monthly",
+    lastModified: contentRefresh,
+  },
+  {
+    path: "/members/terms-conditions/",
+    priority: 0.5,
+    changeFrequency: "monthly",
+    lastModified: contentRefresh,
+  },
+  {
+    path: "/business/privacy-policy/",
+    priority: 0.5,
+    changeFrequency: "monthly",
+    lastModified: contentRefresh,
+  },
+  {
+    path: "/business/terms-conditions/",
+    priority: 0.5,
+    changeFrequency: "monthly",
+    lastModified: contentRefresh,
+  },
+  {
+    path: "/user/privacy/",
+    priority: 0.48,
+    changeFrequency: "monthly",
+    lastModified: contentRefresh,
+  },
+  {
+    path: "/user/terms/",
+    priority: 0.48,
+    changeFrequency: "monthly",
+    lastModified: contentRefresh,
+  },
+  {
+    path: "/partner/privacy/",
+    priority: 0.48,
+    changeFrequency: "monthly",
+    lastModified: contentRefresh,
+  },
+  {
+    path: "/partner/terms/",
+    priority: 0.48,
+    changeFrequency: "monthly",
+    lastModified: contentRefresh,
+  },
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {

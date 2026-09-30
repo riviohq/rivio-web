@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { ChevronDown, ChevronUp, HelpCircle, Mail, MessageCircle, Flame, CheckCircle, CreditCard, Trophy } from 'lucide-react'
+import { ChevronDown, ChevronUp, HelpCircle, Mail, MessageCircle, Flame, CheckCircle, CreditCard, Trophy, Dumbbell } from 'lucide-react'
 
 export default function UserHelpPage() {
   const [openIndex, setOpenIndex] = useState<number | null>(null)
@@ -76,6 +76,42 @@ export default function UserHelpPage() {
         {
           question: "What Payment Methods Are Supported?",
           answer: "We support multiple convenient and secure payment methods for wallet recharge:\n\nSupported Methods:\n• UPI (Google Pay, PhonePe, Paytm, BHIM, etc.)\n• Credit Cards (Visa, Mastercard, American Express)\n• Debit Cards (All major banks)\n• Net Banking (All major banks)\n• Digital Wallets (Paytm, PhonePe)\n\nPayment Process:\n1. Go to Wallet section\n2. Choose 'Add Money'\n3. Enter amount\n4. Select payment method\n5. Complete payment securely\n6. Instant balance update\n\nSecurity:\n• All transactions are encrypted\n• PCI-DSS compliant payment gateway\n• No card details stored on our servers\n• Secure transaction monitoring\n• Instant payment confirmation\n\nMinimum Recharge: ₹100\nMaximum Recharge: ₹50,000 per transaction"
+        }
+      ]
+    },
+    {
+      category: 'My Progress & Workout Tracker',
+      icon: Dumbbell,
+      color: 'from-teal-500/20 to-emerald-500/20',
+      borderColor: 'border-teal-500/20',
+      items: [
+        {
+          question: "How do I open My Progress?",
+          answer: "My Progress is your workout tracker inside the Rivio member app.\n\nHow to open:\n• Tap the My Progress tab on the bottom navigation\n• Or open it from your profile shortcuts\n\nWhat you will see:\n• Quick actions to log a workout or add measurements\n• Recent activity and gym streak summary\n• Links to history, calendar, and insights\n\nMy Progress is optional. You can use Rivio for gym discovery and check-in without logging workouts."
+        },
+        {
+          question: "How do I log a workout?",
+          answer: "Logging a workout takes a minute from My Progress.\n\nSteps:\n1. Open My Progress\n2. Tap Log Workout (or the plus action)\n3. Add exercises, sets, reps, weight, or notes as shown\n4. Save the session\n\nTips:\n• You can log home or gym sessions\n• Edits and deletes are available from workout history\n• Logged workouts are separate from QR check-in streaks unless you also check in at a venue"
+        },
+        {
+          question: "How do workout history and the calendar work?",
+          answer: "History shows your logged workouts for easy review.\n\nLast 7 days:\n• The home view highlights workouts from the past week\n• Tap a session to see details\n\nCalendar:\n• Open the calendar from My Progress to browse by date\n• Days with logged workouts are marked\n• Use it to spot training patterns over time\n\nCheck-in history for venue visits lives in your profile stats. Workout logs in My Progress are your training diary."
+        },
+        {
+          question: "How do I track body measurements?",
+          answer: "Measurements help you track weight and body metrics over time.\n\nTo add a measurement:\n1. Open My Progress\n2. Go to Measurements\n3. Enter values such as bodyweight or other supported fields\n4. Save\n\nYou can view trends over time and delete entries you no longer want. Measurements are optional and stored for your personal progress only."
+        },
+        {
+          question: "What are insights and date ranges?",
+          answer: "Insights summarize your logged training across a time range you choose.\n\nFeatures:\n• Pick a date range to see volume, frequency, or highlights\n• Compare periods to see if you are training more consistently\n• Personal records may appear when you beat previous bests\n\nInsights use workouts and measurements you enter. They do not replace medical advice. For health decisions, talk to a qualified professional."
+        },
+        {
+          question: "What is the difference between gym streak and logged workouts?",
+          answer: "These track different things:\n\nGym streak (check-in streak):\n• Based on QR or self check-in at partner venues\n• Follows Rivio streak rules (including the 12-day-per-month guideline)\n• Powers leaderboards and visit stats\n\nLogged workouts (My Progress):\n• Workouts you manually record in the app\n• Can include gym, home, or any session you log\n• Does not automatically change your venue check-in streak\n\nBest practice: check in when you visit a partner gym, and log workouts when you want a full training diary."
+        },
+        {
+          question: "What is the Team tab on a studio page?",
+          answer: "When you open a gym or studio in the gym finder, the Team tab shows coaches and staff the venue added in RIVIO Partner.\n\nWhat you may see:\n• Names, roles, and photos\n• Short bios when the partner provided them\n\nTeam profiles are managed by the venue. Rivio displays what the partner publishes. For questions about a coach, contact the studio directly."
         }
       ]
     },

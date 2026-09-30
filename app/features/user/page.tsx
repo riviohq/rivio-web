@@ -8,21 +8,21 @@ import Image from 'next/image'
 import { DURATION, DELAY, EASE_IN_OUT, getStaggerDelay, getOrbDuration } from '@/animation-timing'
 
 const userSteps = [
-  { icon: MapPin, text: 'Discover Nearby Venues', description: 'Find gyms within 100m radius' },
-  { icon: Activity, text: 'Select Activity & Venue', description: 'Choose your preferred workout' },
+  { icon: MapPin, text: 'Discover Nearby Venues', description: 'Gym finder for studios near you' },
+  { icon: Activity, text: 'Track My Workout', description: 'Log sets in My Progress' },
   { icon: QrCode, text: 'Scan QR Code & Check-In', description: 'Instant access, no waiting' },
-  { icon: Star, text: 'Select Amenities & Start', description: 'Customize your experience' },
-  { icon: TrendingUp, text: 'Build Streaks & Achievements', description: 'Track your fitness journey' },
+  { icon: Star, text: 'Meet Coaches on Team', description: 'See trainers listed by the venue' },
+  { icon: TrendingUp, text: 'Build Streaks & Progress', description: 'Attendance streak plus training insights' },
   { icon: CreditCard, text: 'Flexible Payment & Access', description: 'Pay only for days you use' },
 ]
 
 const userFeatures = [
-  { title: 'Intelligent Discovery', description: 'AI-powered venue discovery with real-time availability and proximity-based recommendations.' },
-  { title: 'Seamless Check-In', description: 'One-tap QR code scanning with instant verification and automated attendance tracking.' },
-  { title: 'Gamified Engagement', description: 'Streaks, leaderboards, and achievements to keep you motivated.' },
-  { title: 'Smart Wallet', description: 'Instant top-ups, transparent history, and automated pay-per-day deductions.' },
-  { title: 'Advanced Booking', description: 'Reserve slots with live availability and instant confirmations.' },
-  { title: 'Personalized Analytics', description: 'Progress metrics, insights, and social rankings in one view.' },
+  { title: 'Gym Finder', description: 'Find gyms, yoga studios, and wellness venues near you with live details, amenities, and directions.' },
+  { title: 'Workout Tracker', description: 'My Progress logs exercises, sets, reps, cardio, bodyweight, and measurements with history and insights.' },
+  { title: 'Seamless Check-In', description: 'One-tap QR scanning with location checks and attendance that powers your gym streak.' },
+  { title: 'Team & Coaches', description: 'Open the Team tab on a studio to meet professionals and trainers the venue has listed.' },
+  { title: 'Smart Wallet', description: 'Top up, pay per day or buy passes, and keep a clear history of every charge.' },
+  { title: 'Progress Insights', description: 'Custom date ranges, personal records, charts, and body part progress so improvement stays visible.' },
 ]
 
 export default function UserFeaturesPage() {
@@ -50,7 +50,7 @@ export default function UserFeaturesPage() {
             RIVIO User App <span className="bg-gradient-to-r from-emerald-400 to-emerald-200 bg-clip-text text-transparent">Features</span>
           </motion.h1>
           <p className="text-center text-gray-400 mt-2 text-lg">
-            Explore the key experiences of the RIVIO User app
+            Explore Rivio User: gym finder, workout tracker, check-in, wallet, and Team
           </p>
         </div>
       </div>

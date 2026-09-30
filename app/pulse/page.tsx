@@ -31,8 +31,20 @@ type CoverVariant =
   | { variant: "ios-beta" }
   | { variant: "android-beta" }
   | { variant: "launch" }
-  | { variant: "member-update" }
-  | { variant: "partner-update" };
+  | {
+      variant: "member-update";
+      badge: string;
+      headline: string;
+      subline: string;
+      tags: string[];
+    }
+  | {
+      variant: "partner-update";
+      badge: string;
+      headline: string;
+      subline: string;
+      tags: string[];
+    };
 
 const POST_COVER_HEIGHT = "h-48 md:h-52";
 
@@ -53,6 +65,63 @@ type ReleasePost = {
 /** Newest first. Add new entries at the top and keep `lib/pulsePublicationDates.ts` in sync. */
 const RELEASES: ReleasePost[] = [
   {
+    iso: "2026-09-30",
+    label: "September 30, 2026",
+    kind: "release",
+    title: "My Progress is live: workout tracking in the Rivio app",
+    summary:
+      "From 30 September 2026, Rivio members get My Progress, a built-in workout tracker living in the center dumbbell tab. Log training, review history, and see insights for any date range, live on the App Store and Google Play.",
+    detail:
+      "My Progress is separate from gym streaks. Streaks still come from check-ins at partner venues. Logged workouts are your personal training diary: sets, measurements, personal records, and charts scoped to the period you pick. Open Progress for overview and insights, Workout History for the last 7 days plus a calendar for older sessions, and New Entry to log exercises with weight, reps, duration, or distance.",
+    highlights: [
+      "Center tab (dumbbell): open My Progress anytime",
+      "New Entry: exercises, sets, bodyweight, how you felt, and notes; today or a past date",
+      "Workout History: last 7 days strip, calendar for older days, do-it-again or delete",
+      "Progress insights: 7D, 1M, 3M, 6M, 1Y, All, or custom Dates",
+      "Measurements and personal records filtered to the range you select",
+      "Team tab on studio pages: see coaches and staff partners publish",
+      "Gym streaks stay on check-ins; logged workouts stay in your diary",
+    ],
+    whatsNext:
+      "My Progress is in active use. Tell us what you want next at hi@rivioapp.com. Updates land on Rivio Pulse.",
+    cover: {
+      variant: "member-update",
+      badge: "Now live · 30 Sep 2026",
+      headline: "My Progress",
+      subline: "Log sets, history, measurements, and insights in one tab",
+      tags: ["New Entry", "History", "Insights"],
+    },
+    showStoreLinks: true,
+  },
+  {
+    iso: "2026-09-29",
+    label: "September 29, 2026",
+    kind: "release",
+    title: "Manage Team is live for Rivio Partner",
+    summary:
+      "From 29 September 2026, Rivio Partner lets gym and studio owners add coaches and staff under Manage Team. Photos, roles, and bios show on the Team tab in the member app so people know who trains at your venue before they walk in.",
+    detail:
+      "Add professionals per location, upload a staff photo (stored separately from venue gallery images), set role or title, and write an optional bio. Members open your studio page, tap Team, and can enlarge a photo. Removing someone soft-deletes their profile and clears their staff photo. Optional complimentary staff passes can be tied to a team mobile number from the same flow.",
+    highlights: [
+      "Manage Team: add coaches, trainers, and staff per venue",
+      "Photo, name, role, and optional bio for each professional",
+      "Team tab on the member app studio page for discovery and trust",
+      "Tap a team photo to view it larger",
+      "Optional complimentary staff passes linked to mobile numbers",
+      "Remove staff to soft-delete the profile and delete the photo",
+    ],
+    whatsNext:
+      "Keep Team profiles current as your floor changes. Questions? Write to partners@rivioapp.com.",
+    cover: {
+      variant: "partner-update",
+      badge: "Now live · 29 Sep 2026",
+      headline: "Manage Team",
+      subline: "Showcase coaches and staff on the member Team tab",
+      tags: ["Staff photos", "Roles", "Staff passes"],
+    },
+    showStoreLinks: true,
+  },
+  {
     iso: "2026-09-22",
     label: "September 22, 2026",
     kind: "release",
@@ -72,7 +141,13 @@ const RELEASES: ReleasePost[] = [
     ],
     whatsNext:
       "We will keep improving renewals with our partner venues. Want a demo or met us at a fitness event? Write to partners@rivioapp.com.",
-    cover: { variant: "member-update" },
+    cover: {
+      variant: "member-update",
+      badge: "Now live · 22 Sep 2026",
+      headline: "Pass renewals",
+      subline: "Renew early or after it ends, then send it to your studio",
+      tags: ["My Passes", "Last-day card", "Alerts"],
+    },
     showStoreLinks: true,
   },
   {
@@ -95,7 +170,13 @@ const RELEASES: ReleasePost[] = [
     ],
     whatsNext:
       "More desk tools and clearer payouts are next. If you run a gym or studio, write to partners@rivioapp.com and we can walk you through Rivio Partner.",
-    cover: { variant: "partner-update" },
+    cover: {
+      variant: "partner-update",
+      badge: "Now live · 18 Sep 2026",
+      headline: "Desk tools for partners",
+      subline: "Find customers, accept requests your way, lock earnings with a passcode",
+      tags: ["My Customers", "Negotiate accept", "Passcode"],
+    },
     showStoreLinks: true,
   },
   {
@@ -197,24 +278,23 @@ function PostCover({ cover }: { cover: CoverVariant }) {
         <div className="relative z-10 flex w-full items-center justify-between gap-4 px-6 py-5 md:px-10">
           <div className="min-w-0 text-left text-white">
             <span className="inline-flex items-center rounded-full bg-white/15 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em] text-emerald-50 ring-1 ring-white/25">
-              Now live · 22 Sep 2026
+              {cover.badge}
             </span>
             <p className="mt-3 text-2xl font-semibold leading-tight tracking-tight md:text-3xl">
-              Pass renewals
+              {cover.headline}
             </p>
             <p className="mt-1 max-w-xs text-sm font-medium text-emerald-50/90 md:text-base">
-              Renew early or after it ends, then send it to your studio
+              {cover.subline}
             </p>
             <div className="mt-4 flex flex-wrap gap-2">
-              <span className="rounded-full bg-white/12 px-2.5 py-1 text-[11px] font-semibold text-white ring-1 ring-white/20">
-                My Passes
-              </span>
-              <span className="rounded-full bg-white/12 px-2.5 py-1 text-[11px] font-semibold text-white ring-1 ring-white/20">
-                Last-day card
-              </span>
-              <span className="rounded-full bg-white/12 px-2.5 py-1 text-[11px] font-semibold text-white ring-1 ring-white/20">
-                Alerts
-              </span>
+              {cover.tags.map((tag) => (
+                <span
+                  key={tag}
+                  className="rounded-full bg-white/12 px-2.5 py-1 text-[11px] font-semibold text-white ring-1 ring-white/20"
+                >
+                  {tag}
+                </span>
+              ))}
             </div>
           </div>
           <div className="relative shrink-0">
@@ -248,24 +328,23 @@ function PostCover({ cover }: { cover: CoverVariant }) {
         <div className="relative z-10 flex w-full items-center justify-between gap-4 px-6 py-5 md:px-10">
           <div className="min-w-0 text-left text-white">
             <span className="inline-flex items-center rounded-full bg-white/18 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em] text-amber-50 ring-1 ring-white/30">
-              Now live · 18 Sep 2026
+              {cover.badge}
             </span>
             <p className="mt-3 text-2xl font-semibold leading-tight tracking-tight md:text-3xl">
-              Desk tools for partners
+              {cover.headline}
             </p>
             <p className="mt-1 max-w-xs text-sm font-medium text-amber-50/95 md:text-base">
-              Find customers, accept requests your way, lock earnings with a passcode
+              {cover.subline}
             </p>
             <div className="mt-4 flex flex-wrap gap-2">
-              <span className="rounded-full bg-white/14 px-2.5 py-1 text-[11px] font-semibold text-white ring-1 ring-white/25">
-                My Customers
-              </span>
-              <span className="rounded-full bg-white/14 px-2.5 py-1 text-[11px] font-semibold text-white ring-1 ring-white/25">
-                Negotiate accept
-              </span>
-              <span className="rounded-full bg-white/14 px-2.5 py-1 text-[11px] font-semibold text-white ring-1 ring-white/25">
-                Passcode
-              </span>
+              {cover.tags.map((tag) => (
+                <span
+                  key={tag}
+                  className="rounded-full bg-white/14 px-2.5 py-1 text-[11px] font-semibold text-white ring-1 ring-white/25"
+                >
+                  {tag}
+                </span>
+              ))}
             </div>
           </div>
           <div className="relative shrink-0">

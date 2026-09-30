@@ -15,7 +15,7 @@ export default function UserPrivacyPage() {
             </div>
             <div>
               <h1 className="text-3xl md:text-4xl font-bold text-white">Privacy Policy</h1>
-              <p className="text-sm text-gray-400 mt-1">Last updated: January 2025</p>
+              <p className="text-sm text-gray-400 mt-1">Last updated: September 2026</p>
             </div>
           </div>
         </div>
@@ -59,9 +59,18 @@ export default function UserPrivacyPage() {
                 <h3 className="font-semibold text-white text-lg mb-3">Usage Information:</h3>
                 <ul className="space-y-2 text-gray-300 ml-6 list-disc">
                   <li>Gym check-ins and attendance records</li>
-                  <li>Workout history and fitness streaks</li>
+                  <li>Fitness streaks, leaderboards, and visit statistics</li>
+                  <li>Optional workout logs you enter in My Progress (exercises, sets, reps, notes)</li>
+                  <li>Optional body measurements and bodyweight entries</li>
+                  <li>Personal records and training insights derived from your logged data</li>
                   <li>Reviews and ratings you submit</li>
                   <li>Favorite venues and saved locations</li>
+                </ul>
+              </div>
+              <div>
+                <h3 className="font-semibold text-white text-lg mb-3">Venue &amp; Team Content:</h3>
+                <ul className="space-y-2 text-gray-300 ml-6 list-disc">
+                  <li>Team profiles and staff photos partners publish for their venues (displayed on studio pages)</li>
                 </ul>
               </div>
             </div>
@@ -127,11 +136,11 @@ export default function UserPrivacyPage() {
             <ul className="space-y-2 text-gray-300 ml-6 list-disc">
               <li>Provide and improve our services</li>
               <li>Process payments and manage your wallet</li>
-              <li>Track your fitness progress and streaks</li>
-              <li>Show you relevant gyms and recommendations</li>
+              <li>Track check-in streaks, visits, leaderboards, and achievements</li>
+              <li>Power My Progress, including workout history, measurements, insights, and personal records when you choose to log them</li>
+              <li>Show you relevant gyms, studio Team profiles, and recommendations</li>
               <li>Send you important updates and notifications</li>
               <li>Respond to your support requests</li>
-              <li>Maintain leaderboards and achievements</li>
             </ul>
           </div>
         </section>
@@ -194,6 +203,7 @@ export default function UserPrivacyPage() {
             <p className="text-gray-300 mb-4">You have the right to:</p>
             <ul className="space-y-2 text-gray-300 ml-6 list-disc">
               <li>Access and update your personal information</li>
+              <li>Delete individual workouts and measurements in the app</li>
               <li>Delete your account and all associated data</li>
               <li>Opt out of non-essential notifications</li>
               <li>Request a copy of your data</li>
