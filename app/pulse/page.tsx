@@ -48,6 +48,12 @@ type CoverVariant =
 
 const POST_COVER_HEIGHT = "h-48 md:h-52";
 
+type GalleryShot = {
+  src: string;
+  alt: string;
+  caption: string;
+};
+
 type ReleasePost = {
   iso: string;
   label: string;
@@ -60,17 +66,23 @@ type ReleasePost = {
   whatsNext?: string;
   cover: CoverVariant;
   showStoreLinks?: boolean;
+  /** e.g. Rivio App Release - 1.10.261001 */
+  releaseName?: string;
+  releaseVersion?: string;
+  gallery?: GalleryShot[];
 };
 
 /** Newest first. Add new entries at the top and keep `lib/pulsePublicationDates.ts` in sync. */
 const RELEASES: ReleasePost[] = [
   {
-    iso: "2026-09-30",
-    label: "September 30, 2026",
+    iso: "2026-10-01",
+    label: "October 1, 2026",
     kind: "release",
+    releaseName: "Rivio App Release - 1.10.261001",
+    releaseVersion: "1.10.261001",
     title: "My Progress is live: workout tracking in the Rivio app",
     summary:
-      "From 30 September 2026, Rivio members get My Progress, a built-in workout tracker living in the center dumbbell tab. Log training, review history, and see insights for any date range, live on the App Store and Google Play.",
+      "Shipping in Rivio App Release 1.10.261001 on 1 October 2026. Members get My Progress, a built-in workout tracker in the center dumbbell tab. Log training, review history, and see insights for any date range on the App Store and Google Play.",
     detail:
       "My Progress is separate from gym streaks. Streaks still come from check-ins at partner venues. Logged workouts are your personal training diary: sets, measurements, personal records, and charts scoped to the period you pick. Open Progress for overview and insights, Workout History for the last 7 days plus a calendar for older sessions, and New Entry to log exercises with weight, reps, duration, or distance.",
     highlights: [
@@ -86,27 +98,51 @@ const RELEASES: ReleasePost[] = [
       "My Progress is in active use. Tell us what you want next at hi@rivioapp.com. Updates land on Rivio Pulse.",
     cover: {
       variant: "member-update",
-      badge: "Now live · 30 Sep 2026",
+      badge: "Release 1.10.261001 · 1 Oct 2026",
       headline: "My Progress",
       subline: "Log sets, history, measurements, and insights in one tab",
       tags: ["New Entry", "History", "Insights"],
     },
+    gallery: [
+      {
+        src: "/assets/progress/progress-overview.PNG",
+        alt: "My Progress overview with insights and body-part progress",
+        caption: "Progress overview",
+      },
+      {
+        src: "/assets/progress/workout-history.PNG",
+        alt: "Workout History with recent sessions and volume stats",
+        caption: "Workout History",
+      },
+      {
+        src: "/assets/progress/new-entry.PNG",
+        alt: "New Entry form to start a workout from scratch or a past day",
+        caption: "New Entry",
+      },
+      {
+        src: "/assets/progress/log-sets.PNG",
+        alt: "Logging sets, weight, and distance for an exercise",
+        caption: "Log sets",
+      },
+    ],
     showStoreLinks: true,
   },
   {
     iso: "2026-09-29",
     label: "September 29, 2026",
     kind: "release",
+    releaseName: "Rivio App Release - 1.10.261001",
+    releaseVersion: "1.10.261001",
     title: "Manage Team is live for Rivio Partner",
     summary:
-      "From 29 September 2026, Rivio Partner lets gym and studio owners add coaches and staff under Manage Team. Photos, roles, and bios show on the Team tab in the member app so people know who trains at your venue before they walk in.",
+      "Part of Rivio App Release 1.10.261001. From 29 September 2026, Rivio Partner lets gym and studio owners add coaches and staff under Manage Team. Photos, roles, and bios show on the Team tab in the member app so people know who trains at your venue before they walk in.",
     detail:
-      "Add professionals per location, upload a staff photo (stored separately from venue gallery images), set role or title, and write an optional bio. Members open your studio page, tap Team, and can enlarge a photo. Removing someone soft-deletes their profile and clears their staff photo. Optional complimentary staff passes can be tied to a team mobile number from the same flow.",
+      "Add professionals per location, upload a staff photo (stored separately from venue gallery images), set role or title, experience, bio, and achievements. Members open your studio page, tap Team, and can enlarge a photo. Removing someone soft-deletes their profile and clears their staff photo. Optional complimentary staff passes can be tied to a team mobile number from the same flow.",
     highlights: [
       "Manage Team: add coaches, trainers, and staff per venue",
-      "Photo, name, role, and optional bio for each professional",
+      "Photo, name, role, rank, experience, bio, and achievements",
       "Team tab on the member app studio page for discovery and trust",
-      "Tap a team photo to view it larger",
+      "Staff pass status on partner Team list (active or pending signup)",
       "Optional complimentary staff passes linked to mobile numbers",
       "Remove staff to soft-delete the profile and delete the photo",
     ],
@@ -114,11 +150,28 @@ const RELEASES: ReleasePost[] = [
       "Keep Team profiles current as your floor changes. Questions? Write to partners@rivioapp.com.",
     cover: {
       variant: "partner-update",
-      badge: "Now live · 29 Sep 2026",
+      badge: "Release 1.10.261001 · 29 Sep 2026",
       headline: "Manage Team",
       subline: "Showcase coaches and staff on the member Team tab",
       tags: ["Staff photos", "Roles", "Staff passes"],
     },
+    gallery: [
+      {
+        src: "/assets/team/partner-team-list.jpg",
+        alt: "Rivio Partner Team list with coaches and staff pass status",
+        caption: "Partner · Team list",
+      },
+      {
+        src: "/assets/team/partner-add-member.jpg",
+        alt: "Add team member form with photo, role, rank, and bio",
+        caption: "Partner · Add member",
+      },
+      {
+        src: "/assets/team/member-team-tab.jpg",
+        alt: "Member app studio Team tab showing coaches and trainers",
+        caption: "Member · Team tab",
+      },
+    ],
     showStoreLinks: true,
   },
   {
@@ -264,6 +317,65 @@ const kindLabel: Record<ReleaseKind, string> = {
   beta: "Beta",
   milestone: "Milestone",
 };
+
+function PulseGallery({
+  shots,
+  tone = "member",
+}: {
+  shots: GalleryShot[];
+  tone?: "member" | "partner";
+}) {
+  const frameRing =
+    tone === "partner"
+      ? "ring-amber-200/80 shadow-amber-900/10"
+      : "ring-emerald-200/80 shadow-emerald-900/10";
+  const captionTone =
+    tone === "partner" ? "text-amber-900/80" : "text-emerald-900/80";
+
+  return (
+    <div className="mt-6">
+      <p className="mb-3 text-xs font-bold uppercase tracking-wider text-[#86868b]">
+        In the app
+      </p>
+      <div className="-mx-5 overflow-x-auto px-5 pb-2 md:-mx-6 md:px-6 [scrollbar-width:thin]">
+        <ul
+          className={`flex snap-x snap-mandatory gap-4 ${
+            shots.length >= 4 ? "min-w-max md:grid md:min-w-0 md:grid-cols-4 md:gap-3" : "min-w-max md:grid md:min-w-0 md:grid-cols-3 md:gap-4"
+          }`}
+        >
+          {shots.map((shot) => (
+            <li
+              key={shot.src}
+              className="w-[148px] shrink-0 snap-center sm:w-[168px] md:w-auto"
+            >
+              <figure className="h-full">
+                <div
+                  className={`overflow-hidden rounded-[1.35rem] bg-[#0f172a] p-1.5 shadow-lg ring-1 ${frameRing}`}
+                >
+                  <div className="overflow-hidden rounded-[1.05rem] bg-white">
+                    <Image
+                      src={shot.src}
+                      alt={shot.alt}
+                      width={390}
+                      height={844}
+                      className="h-auto w-full object-cover object-top"
+                      sizes="(max-width: 768px) 168px, 180px"
+                    />
+                  </div>
+                </div>
+                <figcaption
+                  className={`mt-2.5 text-center text-[12px] font-semibold ${captionTone}`}
+                >
+                  {shot.caption}
+                </figcaption>
+              </figure>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+}
 
 function PostCover({ cover }: { cover: CoverVariant }) {
   if (cover.variant === "member-update") {
@@ -611,6 +723,23 @@ export default function PulsePage() {
               milestones, new venues, and honest notes on what we are building
               next. Newest first.
             </p>
+            <div className="mt-6 inline-flex flex-wrap items-center justify-center gap-2 rounded-full border border-black/[0.06] bg-white/80 px-4 py-2 text-sm text-[#3f3f46] shadow-sm backdrop-blur">
+              <span className="font-semibold text-[#1d1d1f]">
+                Rivio App Release
+              </span>
+              <span className="text-[#c7c7cc]" aria-hidden>
+                ·
+              </span>
+              <span className="font-mono text-[13px] font-semibold tabular-nums text-emerald-700">
+                1.10.261001
+              </span>
+              <span className="text-[#c7c7cc]" aria-hidden>
+                ·
+              </span>
+              <time dateTime="2026-10-01" className="text-[#6e6e73]">
+                1 Oct 2026
+              </time>
+            </div>
           </div>
         </div>
 
@@ -658,6 +787,16 @@ export default function PulsePage() {
                     >
                       {kindLabel[post.kind]}
                     </span>
+                    {post.releaseVersion ? (
+                      <span className="rounded-full bg-[#1d1d1f] px-2.5 py-0.5 font-mono text-[11px] font-semibold tabular-nums tracking-tight text-white">
+                        {post.releaseVersion}
+                      </span>
+                    ) : null}
+                    {post.releaseName ? (
+                      <span className="w-full text-[12px] font-medium text-[#86868b] sm:ml-auto sm:w-auto sm:text-right">
+                        {post.releaseName}
+                      </span>
+                    ) : null}
                   </div>
 
                   <div className="px-5 py-6 md:px-6 md:py-7">
@@ -688,6 +827,17 @@ export default function PulsePage() {
                           </li>
                         ))}
                       </ul>
+                    ) : null}
+
+                    {post.gallery && post.gallery.length > 0 ? (
+                      <PulseGallery
+                        shots={post.gallery}
+                        tone={
+                          post.cover.variant === "partner-update"
+                            ? "partner"
+                            : "member"
+                        }
+                      />
                     ) : null}
 
                     {post.whatsNext ? (
