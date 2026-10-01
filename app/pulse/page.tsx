@@ -105,22 +105,22 @@ const RELEASES: ReleasePost[] = [
     },
     gallery: [
       {
-        src: "/assets/progress/progress-overview.PNG",
+        src: "/assets/progress/progress-overview.png",
         alt: "My Progress overview with insights and body-part progress",
         caption: "Progress overview",
       },
       {
-        src: "/assets/progress/workout-history.PNG",
+        src: "/assets/progress/workout-history.png",
         alt: "Workout History with recent sessions and volume stats",
         caption: "Workout History",
       },
       {
-        src: "/assets/progress/new-entry.PNG",
+        src: "/assets/progress/new-entry.png",
         alt: "New Entry form to start a workout from scratch or a past day",
         caption: "New Entry",
       },
       {
-        src: "/assets/progress/log-sets.PNG",
+        src: "/assets/progress/log-sets.png",
         alt: "Logging sets, weight, and distance for an exercise",
         caption: "Log sets",
       },
