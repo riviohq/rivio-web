@@ -377,104 +377,128 @@ function PulseGallery({
   );
 }
 
+const POST_COVER_HEIGHT = "h-48 md:h-52";
+
+/** Shared layout for member/partner update covers — height grows so badges are never clipped. */
+function UpdateCoverShell({
+  tone,
+  badge,
+  headline,
+  subline,
+  tags,
+  iconSrc,
+  iconAlt,
+}: {
+  tone: "member" | "partner";
+  badge: string;
+  headline: string;
+  subline: string;
+  tags: string[];
+  iconSrc: string;
+  iconAlt: string;
+}) {
+  const isPartner = tone === "partner";
+  return (
+    <div
+      className={`relative flex w-full overflow-hidden ${
+        isPartner
+          ? "bg-gradient-to-br from-amber-400 via-orange-500 to-slate-900"
+          : "bg-gradient-to-br from-emerald-600 via-teal-600 to-slate-900"
+      }`}
+    >
+      <div
+        className={`absolute inset-0 ${
+          isPartner
+            ? "bg-[radial-gradient(circle_at_80%_20%,rgba(255,255,255,0.28),transparent_45%),radial-gradient(circle_at_20%_80%,rgba(251,191,36,0.35),transparent_40%)]"
+            : "bg-[radial-gradient(circle_at_15%_30%,rgba(255,255,255,0.2),transparent_45%),radial-gradient(circle_at_85%_70%,rgba(16,185,129,0.35),transparent_40%)]"
+        }`}
+        aria-hidden
+      />
+      <div className="relative z-10 flex w-full flex-col gap-4 px-4 py-5 sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:px-6 sm:py-6 md:px-10 md:py-7">
+        <div className="min-w-0 flex-1 text-left text-white">
+          <span
+            className={`inline-flex max-w-full items-center rounded-full px-2.5 py-1 text-[10px] font-bold uppercase leading-snug tracking-[0.08em] ring-1 sm:px-3 sm:text-[11px] sm:tracking-[0.12em] ${
+              isPartner
+                ? "bg-white/18 text-amber-50 ring-white/30"
+                : "bg-white/15 text-emerald-50 ring-white/25"
+            }`}
+          >
+            {badge}
+          </span>
+          <p className="mt-2.5 text-xl font-semibold leading-tight tracking-tight sm:mt-3 sm:text-2xl md:text-3xl">
+            {headline}
+          </p>
+          <p
+            className={`mt-1 max-w-md text-sm font-medium sm:text-base ${
+              isPartner ? "text-amber-50/95" : "text-emerald-50/90"
+            }`}
+          >
+            {subline}
+          </p>
+          <div className="mt-3 flex flex-wrap gap-2 sm:mt-4">
+            {tags.map((tag) => (
+              <span
+                key={tag}
+                className={`rounded-full px-2.5 py-1 text-[11px] font-semibold text-white ring-1 ${
+                  isPartner
+                    ? "bg-white/14 ring-white/25"
+                    : "bg-white/12 ring-white/20"
+                }`}
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        </div>
+        <div className="relative mx-auto shrink-0 sm:mx-0">
+          <div
+            className={`absolute -inset-3 rounded-[1.75rem] blur-xl ${
+              isPartner ? "bg-amber-200/30" : "bg-emerald-300/25"
+            }`}
+            aria-hidden
+          />
+          <Image
+            src={iconSrc}
+            alt={iconAlt}
+            width={128}
+            height={128}
+            className={`relative h-16 w-16 rounded-[1.1rem] shadow-2xl ring-2 sm:h-24 sm:w-24 sm:rounded-[1.35rem] md:h-28 md:w-28 ${
+              isPartner ? "ring-white/45" : "ring-white/40"
+            }`}
+            priority
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function PostCover({ cover }: { cover: CoverVariant }) {
   if (cover.variant === "member-update") {
     return (
-      <div
-        className={`relative flex w-full overflow-hidden bg-gradient-to-br from-emerald-600 via-teal-600 to-slate-900 ${POST_COVER_HEIGHT}`}
-      >
-        <div
-          className="absolute inset-0 bg-[radial-gradient(circle_at_15%_30%,rgba(255,255,255,0.2),transparent_45%),radial-gradient(circle_at_85%_70%,rgba(16,185,129,0.35),transparent_40%)]"
-          aria-hidden
-        />
-        <div className="relative z-10 flex w-full items-center justify-between gap-4 px-6 py-5 md:px-10">
-          <div className="min-w-0 text-left text-white">
-            <span className="inline-flex items-center rounded-full bg-white/15 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em] text-emerald-50 ring-1 ring-white/25">
-              {cover.badge}
-            </span>
-            <p className="mt-3 text-2xl font-semibold leading-tight tracking-tight md:text-3xl">
-              {cover.headline}
-            </p>
-            <p className="mt-1 max-w-xs text-sm font-medium text-emerald-50/90 md:text-base">
-              {cover.subline}
-            </p>
-            <div className="mt-4 flex flex-wrap gap-2">
-              {cover.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="rounded-full bg-white/12 px-2.5 py-1 text-[11px] font-semibold text-white ring-1 ring-white/20"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-          </div>
-          <div className="relative shrink-0">
-            <div
-              className="absolute -inset-3 rounded-[1.75rem] bg-emerald-300/25 blur-xl"
-              aria-hidden
-            />
-            <Image
-              src={MEMBER_ICON}
-              alt="Rivio: Gym, Yoga & Sports app icon"
-              width={128}
-              height={128}
-              className="relative h-24 w-24 rounded-[1.35rem] shadow-2xl ring-2 ring-white/40 md:h-28 md:w-28"
-              priority
-            />
-          </div>
-        </div>
-      </div>
+      <UpdateCoverShell
+        tone="member"
+        badge={cover.badge}
+        headline={cover.headline}
+        subline={cover.subline}
+        tags={cover.tags}
+        iconSrc={MEMBER_ICON}
+        iconAlt="Rivio: Gym, Yoga & Sports app icon"
+      />
     );
   }
 
   if (cover.variant === "partner-update") {
     return (
-      <div
-        className={`relative flex w-full overflow-hidden bg-gradient-to-br from-amber-400 via-orange-500 to-slate-900 ${POST_COVER_HEIGHT}`}
-      >
-        <div
-          className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(255,255,255,0.28),transparent_45%),radial-gradient(circle_at_20%_80%,rgba(251,191,36,0.35),transparent_40%)]"
-          aria-hidden
-        />
-        <div className="relative z-10 flex w-full items-center justify-between gap-4 px-6 py-5 md:px-10">
-          <div className="min-w-0 text-left text-white">
-            <span className="inline-flex items-center rounded-full bg-white/18 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em] text-amber-50 ring-1 ring-white/30">
-              {cover.badge}
-            </span>
-            <p className="mt-3 text-2xl font-semibold leading-tight tracking-tight md:text-3xl">
-              {cover.headline}
-            </p>
-            <p className="mt-1 max-w-xs text-sm font-medium text-amber-50/95 md:text-base">
-              {cover.subline}
-            </p>
-            <div className="mt-4 flex flex-wrap gap-2">
-              {cover.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="rounded-full bg-white/14 px-2.5 py-1 text-[11px] font-semibold text-white ring-1 ring-white/25"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-          </div>
-          <div className="relative shrink-0">
-            <div
-              className="absolute -inset-3 rounded-[1.75rem] bg-amber-200/30 blur-xl"
-              aria-hidden
-            />
-            <Image
-              src={PARTNER_ICON}
-              alt="Rivio: Partner & Business app icon"
-              width={128}
-              height={128}
-              className="relative h-24 w-24 rounded-[1.35rem] shadow-2xl ring-2 ring-white/45 md:h-28 md:w-28"
-              priority
-            />
-          </div>
-        </div>
-      </div>
+      <UpdateCoverShell
+        tone="partner"
+        badge={cover.badge}
+        headline={cover.headline}
+        subline={cover.subline}
+        tags={cover.tags}
+        iconSrc={PARTNER_ICON}
+        iconAlt="Rivio: Partner & Business app icon"
+      />
     );
   }
 
@@ -723,17 +747,17 @@ export default function PulsePage() {
               milestones, new venues, and honest notes on what we are building
               next. Newest first.
             </p>
-            <div className="mt-6 inline-flex flex-wrap items-center justify-center gap-2 rounded-full border border-black/[0.06] bg-white/80 px-4 py-2 text-sm text-[#3f3f46] shadow-sm backdrop-blur">
+            <div className="mx-auto mt-6 flex max-w-full flex-wrap items-center justify-center gap-x-2 gap-y-1 rounded-2xl border border-black/[0.06] bg-white/80 px-3 py-2.5 text-sm text-[#3f3f46] shadow-sm backdrop-blur sm:inline-flex sm:rounded-full sm:px-4 sm:py-2">
               <span className="font-semibold text-[#1d1d1f]">
                 Rivio App Release
               </span>
-              <span className="text-[#c7c7cc]" aria-hidden>
+              <span className="hidden text-[#c7c7cc] sm:inline" aria-hidden>
                 ·
               </span>
               <span className="font-mono text-[13px] font-semibold tabular-nums text-emerald-700">
                 1.10.261001
               </span>
-              <span className="text-[#c7c7cc]" aria-hidden>
+              <span className="hidden text-[#c7c7cc] sm:inline" aria-hidden>
                 ·
               </span>
               <time dateTime="2026-10-01" className="text-[#6e6e73]">
