@@ -377,8 +377,6 @@ function PulseGallery({
   );
 }
 
-const POST_COVER_HEIGHT = "h-48 md:h-52";
-
 /** Shared layout for member/partner update covers — height grows so badges are never clipped. */
 function UpdateCoverShell({
   tone,
