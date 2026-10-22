@@ -216,6 +216,12 @@ export default function SmartDoorLockHelpPage() {
                 <strong>Wi‑Fi relay</strong> with a cloud unlock URL (e.g. Shelly), entered as an
                 HTTPS unlock link in Rivio.
               </p>
+              <p className="mt-3 text-gray-600">
+                Already have <strong>ZKTeco</strong> or <strong>eSSL</strong> on the wall? Use{" "}
+                <strong>ZKBio / eBioserver cloud</strong> unlock, or point the device at{" "}
+                <strong>Rivio ADMS</strong> (see Path C below). The unit must control a door relay —
+                fingerprint attendance-only machines cannot remote-unlock.
+              </p>
             </div>
           </div>
         </section>
@@ -383,6 +389,48 @@ export default function SmartDoorLockHelpPage() {
             Rivio treats HTTP 2xx within about 6 seconds as unlocked. For Shelly, set auto-off (~3s)
             in the Shelly app so the door locks again by itself.
           </p>
+        </section>
+
+        {/* Path C ZKTeco / eSSL */}
+        <section className="space-y-6">
+          <div className="flex items-center gap-3">
+            <Wifi className="h-7 w-7 text-emerald-600" />
+            <h2 className="text-2xl font-bold text-gray-900">Path C — ZKTeco / eSSL (common in Indian gyms)</h2>
+          </div>
+          <p className="text-gray-700">
+            Many clubs already have ZKTeco or eSSL fingerprint units. Rivio supports{" "}
+            <strong>partner cloud unlock</strong> (ZKBio / eBioserverNew) and{" "}
+            <strong>Rivio ADMS</strong> (device points its cloud URL at Rivio). The device must drive
+            a door relay — attendance-only readers without unlock cannot open from the app.
+          </p>
+          <div className="grid gap-4 md:grid-cols-2">
+            <div className="rounded-2xl border border-gray-200 bg-white p-6">
+              <h3 className="font-bold text-gray-900">C1. ZKBio / eBioserver cloud</h3>
+              <ol className="mt-3 list-decimal space-y-2 pl-5 text-gray-700">
+                <li>Door Lock Setup → brand ZKTeco or eSSL.</li>
+                <li>Choose ZKTeco cloud (ZKBio) or eSSL cloud (eBioserver).</li>
+                <li>
+                  Enter server URL, API token or username/password, and door ID / device serial.
+                </li>
+                <li>Save → Test unlock → Available for pass holders.</li>
+              </ol>
+            </div>
+            <div className="rounded-2xl border border-gray-200 bg-white p-6">
+              <h3 className="font-bold text-gray-900">C2. Point device to Rivio (ADMS)</h3>
+              <ol className="mt-3 list-decimal space-y-2 pl-5 text-gray-700">
+                <li>Choose Point device to Rivio (ADMS).</li>
+                <li>
+                  Copy the Rivio ADMS URL (shown in the app, typically{" "}
+                  <code className="rounded bg-gray-100 px-1 text-xs">
+                    https://apis.rivioapp.com/api/iclock
+                  </code>
+                  ) into the device Cloud / ADMS setting.
+                </li>
+                <li>Enter the device serial (SN) → Save.</li>
+                <li>Wait until the manage screen shows Online → Test unlock.</li>
+              </ol>
+            </div>
+          </div>
         </section>
 
         {/* Godrej etc */}

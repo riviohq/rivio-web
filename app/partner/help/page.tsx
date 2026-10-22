@@ -129,12 +129,17 @@ export default function PartnerHelpPage() {
         {
           question: 'What is Door Lock Setup?',
           answer:
-            'Door Lock Setup lets members with an active pass, staff pass, or paid day visit unlock your studio door from the Rivio member app.\n\nWhere: More → Door Lock Setup in Rivio Partner.\n\nRecommended: TTLock-compatible lock + TTLock Wi‑Fi gateway (e.g. G2) on gym Wi‑Fi.\n\nAlso supported: HTTPS unlock link from a Wi‑Fi relay or access-controller cloud.\n\nFull step-by-step guide: https://rivioapp.com/help/smart-door-lock/',
+            'Door Lock Setup lets members with an active pass, staff pass, or paid day visit unlock your studio door from the Rivio member app.\n\nWhere: More → Door Lock Setup in Rivio Partner.\n\nRecommended: TTLock-compatible lock + TTLock Wi‑Fi gateway (e.g. G2) on gym Wi‑Fi.\n\nAlso supported: ZKTeco (ZKBio or Rivio ADMS), eSSL (eBioserver or ADMS), HTTPS unlock link (Shelly / relay).\n\nFull step-by-step guide: https://rivioapp.com/help/smart-door-lock/',
         },
         {
           question: 'How do I set up TTLock step by step?',
           answer:
             '1. Install lock + TTLock Wi‑Fi gateway; pair both in the TTLock app and confirm remote unlock works.\n2. Rivio Partner → More → Door Lock Setup → choose venue.\n3. Choose “Configured with the TTLock app”, pick brand, enter your TTLock username/password → Find my locks → select door.\n4. Save → Test unlock at the door.\n5. Turn on Available for pass holders.\n\nPartners never enter a TTLock client ID — Rivio holds one platform key. You only use your TTLock app login.\n\nWithout a gateway, the lock is Bluetooth-only and Rivio cannot open it remotely.',
+        },
+        {
+          question: 'How do I connect ZKTeco or eSSL?',
+          answer:
+            'Brand ZKTeco or eSSL in Door Lock Setup, then pick one:\n\n• ZKBio / eBioserver cloud — enter server URL, API token or login, door ID or device serial → Test unlock.\n• Point device to Rivio (ADMS) — paste the Rivio ADMS URL into the device cloud setting, enter device SN, wait until Online → Test unlock.\n\nThe unit must control a door relay. Fingerprint attendance-only machines cannot remote-unlock.\n\nGuide: https://rivioapp.com/help/smart-door-lock/',
         },
         {
           question: 'How do I use an HTTPS unlock link (Shelly / relay)?',
