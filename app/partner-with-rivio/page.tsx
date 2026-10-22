@@ -19,15 +19,16 @@ import {
   Wallet,
   ChevronDown,
   Flag,
+  Lock,
 } from "lucide-react";
 import StoreCta from "@/components/StoreCta";
 import { APP_STORE_URL_BUSINESS, GOOGLE_PLAY_URL_BUSINESS } from "@/lib/storeUrls";
 import { SITE_CONTENT_UPDATED_DATE, SITE_URL } from "@/lib/siteContent";
 
 export const metadata: Metadata = {
-  title: "Partner with Rivio: Register Your Studio",
+  title: "Partner with Rivio: Register Your Studio + Smart Door Lock",
   description:
-    "List your gym, yoga, or wellness studio on Rivio. Download the Rivio Business App and follow a simple 8 step onboarding to go live. No upfront registration charges.",
+    "List your gym or wellness studio on Rivio. QR check-ins, passes, earnings — and optional smart door unlock so pass holders open the door from the Rivio app. No upfront registration charges.",
   keywords: [
     "partner with Rivio",
     "register studio on Rivio",
@@ -35,6 +36,8 @@ export const metadata: Metadata = {
     "list my gym",
     "gym onboarding",
     "pay per day fitness partner",
+    "gym smart door lock Rivio",
+    "TTLock gym unlock",
   ],
   alternates: { canonical: `${SITE_URL}/partner-with-rivio/` },
   robots: { index: true, follow: true },
@@ -75,6 +78,7 @@ const businessFeatures = [
   { icon: Users, text: "Manage all your customers from one place" },
   { icon: CreditCard, text: "Track memberships and passes" },
   { icon: QrCode, text: "Monitor attendance with QR check in" },
+  { icon: Lock, text: "Optional smart door unlock for pass holders" },
   { icon: BarChart3, text: "View transactions and earnings" },
   { icon: Tag, text: "Manage pricing and passes" },
   { icon: Building2, text: "Update business information anytime" },
@@ -446,6 +450,60 @@ export default function PartnerWithRivioPage() {
                   Once all eight steps are completed, your studio is successfully onboarded and ready
                   to welcome members. You can update any detail anytime from the Business App.
                 </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Smart door lock */}
+        <section className="mb-16">
+          <div className="overflow-hidden rounded-3xl border border-emerald-200 bg-gradient-to-br from-emerald-50 via-white to-white p-8 shadow-xl shadow-emerald-900/5 md:p-12">
+            <div className="mb-6 flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+              <div className="max-w-xl">
+                <div className="mb-4 flex items-center gap-3">
+                  <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-emerald-500 to-emerald-600 shadow-lg shadow-emerald-500/25">
+                    <Lock className="h-7 w-7 text-white" />
+                  </div>
+                  <h2 className="text-2xl font-bold text-gray-900 md:text-3xl">
+                    Smart door unlock for fitness businesses
+                  </h2>
+                </div>
+                <p className="leading-relaxed text-gray-700">
+                  After you list your studio, connect a door lock in Rivio Partner. Members who buy a
+                  pass can unlock at the door from the Rivio app — no extra member setup, no waiting
+                  at reception for entry.
+                </p>
+                <ul className="mt-4 space-y-2 text-gray-700">
+                  <li className="flex gap-2">
+                    <CheckCircle className="mt-0.5 h-5 w-5 flex-shrink-0 text-emerald-600" />
+                    Recommended: TTLock-compatible lock + Wi‑Fi gateway on gym Wi‑Fi
+                  </li>
+                  <li className="flex gap-2">
+                    <CheckCircle className="mt-0.5 h-5 w-5 flex-shrink-0 text-emerald-600" />
+                    Or HTTPS unlock link for a relay / access controller
+                  </li>
+                  <li className="flex gap-2">
+                    <CheckCircle className="mt-0.5 h-5 w-5 flex-shrink-0 text-emerald-600" />
+                    Test unlock, then go live for pass holders — activity logged in Rivio
+                  </li>
+                </ul>
+                <Link
+                  href="/help/smart-door-lock/"
+                  className="mt-6 inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-5 py-3 text-sm font-semibold text-white shadow-md shadow-emerald-600/25 hover:bg-emerald-700"
+                >
+                  How to set up smart door lock
+                  <ChevronDown className="h-4 w-4 -rotate-90" />
+                </Link>
+              </div>
+              <div className="grid w-full max-w-md grid-cols-2 gap-3 lg:max-w-sm">
+                <PhoneFrame
+                  src="/assets/smart-lock/partner-manage.png"
+                  alt="Rivio Partner door lock manage screen"
+                />
+                <PhoneFrame
+                  src="/assets/smart-lock/member-unlock.png"
+                  alt="Rivio member Unlock button"
+                />
               </div>
             </div>
           </div>

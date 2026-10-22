@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import { useEffect } from 'react'
 import ScreenshotShowcase from '@/components/ScreenshotShowcase'
 import ProgressShowcase from '@/components/ProgressShowcase'
+import SmartLockShowcase from '@/components/SmartLockShowcase'
 
 export default function FeaturesPage() {
   useEffect(() => {
@@ -23,12 +24,13 @@ export default function FeaturesPage() {
             App <span className="text-emerald-500">Features</span>
           </motion.h1>
           <p className="text-center text-[#86868b] mt-2 text-lg max-w-3xl mx-auto">
-            Gym finder, workout tracker, pay per day, partner Team tools, and everything else in the
-            Rivio member and business apps.
+            Gym finder, workout tracker, pay per day, smart door unlock, partner Team tools, and
+            everything else in the Rivio member and business apps.
           </p>
         </div>
       </div>
 
+      <SmartLockShowcase />
       <ProgressShowcase />
       <ScreenshotShowcase showUser={true} showPartner={true} />
     </div>
