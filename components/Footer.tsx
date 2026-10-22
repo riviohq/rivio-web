@@ -16,6 +16,8 @@ export default function Footer() {
     ],
     partner: [
       { name: 'Partner with Rivio', href: '/partner-with-rivio/' },
+      { name: 'Smart door lock setup', href: '/help/smart-door-lock/' },
+      { name: 'Partner help & support', href: '/business/support/' },
       { name: 'App Features', href: '/features/business-app' },
       { name: 'About Us', href: '/business/about-us' },
       { name: 'Partner Program', href: '/business/partner-program' },

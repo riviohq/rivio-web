@@ -52,6 +52,11 @@ export default function UserHelpPage() {
         {
           question: "Can I Check-in Multiple Times in a Day?",
           answer: "This depends on whether you have an active pass:\n\nWithout Pass:\n• One check-in per day per gym\n• Each check-in charges based on the venue's day pass pricing\n• Cannot re-enter same gym on same day\n• Attempting duplicate check-in will show error\n\nWith Active Pass:\n• Unlimited check-ins per day\n• No additional charges\n• Re-entries are free\n• Perfect for multiple workout sessions\n\nImportant Note:\nOnly your FIRST check-in of the day counts toward your streak statistics. Additional re-entries update your check-in time but don't add to your daily count (since streaks count unique days, not total check-ins)."
+        },
+        {
+          question: "How does Unlock door work at a studio?",
+          answer:
+            "Some Rivio partner studios enable smart door unlock.\n\nHow to use it:\n1. Buy a pass (or have a staff pass / paid day visit) for that studio\n2. Open the studio page in the Rivio app while logged in\n3. When Unlock is available, tap it near the entrance (about 50 m)\n4. Allow location when prompted\n\nNotes:\n• Not every studio has a smart lock yet — Unlock only appears when the partner has turned it on\n• First unlock of the day can mark attendance for pass holders\n• After unlocking, wait a few seconds before unlocking again\n• Turn off fake GPS apps; weak GPS may block unlock\n\nNo extra setup for members — your Rivio pass is enough.",
         }
       ]
     },

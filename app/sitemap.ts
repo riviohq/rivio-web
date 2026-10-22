@@ -140,7 +140,7 @@ const ROUTES: RouteEntry[] = [
     lastModified: contentRefresh,
   },
 
-  // Help / support (Progress + Team FAQs)
+  // Help / support (Progress + Team + Door Lock FAQs)
   {
     path: "/members/support/",
     priority: 0.72,
@@ -150,6 +150,12 @@ const ROUTES: RouteEntry[] = [
   {
     path: "/business/support/",
     priority: 0.72,
+    changeFrequency: "weekly",
+    lastModified: contentRefresh,
+  },
+  {
+    path: "/help/smart-door-lock/",
+    priority: 0.9,
     changeFrequency: "weekly",
     lastModified: contentRefresh,
   },

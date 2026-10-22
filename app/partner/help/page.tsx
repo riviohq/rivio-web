@@ -1,7 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import { ChevronDown, ChevronUp, HelpCircle, Mail, MessageCircle, Building2, Rocket, DollarSign, Ticket, BarChart3, Settings, Users } from 'lucide-react'
+import { ChevronDown, ChevronUp, Mail, MessageCircle, Building2, Rocket, DollarSign, Ticket, BarChart3, Settings, Users, Lock } from 'lucide-react'
+import Link from 'next/link'
 
 export default function PartnerHelpPage() {
   const [openIndex, setOpenIndex] = useState<number | null>(null)
@@ -120,6 +121,44 @@ export default function PartnerHelpPage() {
       ]
     },
     {
+      category: 'Door Lock',
+      icon: Lock,
+      color: 'from-emerald-500/20 to-teal-500/20',
+      borderColor: 'border-emerald-500/20',
+      items: [
+        {
+          question: 'What is Door Lock Setup?',
+          answer:
+            'Door Lock Setup lets members with an active pass, staff pass, or paid day visit unlock your studio door from the Rivio member app.\n\nWhere: More → Door Lock Setup in Rivio Partner.\n\nRecommended: TTLock-compatible lock + TTLock Wi‑Fi gateway (e.g. G2) on gym Wi‑Fi.\n\nAlso supported: HTTPS unlock link from a Wi‑Fi relay or access-controller cloud.\n\nFull step-by-step guide: https://rivioapp.com/help/smart-door-lock/',
+        },
+        {
+          question: 'How do I set up TTLock step by step?',
+          answer:
+            '1. Install lock + TTLock Wi‑Fi gateway; pair both in the TTLock app and confirm remote unlock works.\n2. Rivio Partner → More → Door Lock Setup → choose venue.\n3. Choose “Configured with the TTLock app”, pick brand, enter your TTLock username/password → Find my locks → select door.\n4. Save → Test unlock at the door.\n5. Turn on Available for pass holders.\n\nPartners never enter a TTLock client ID — Rivio holds one platform key. You only use your TTLock app login.\n\nWithout a gateway, the lock is Bluetooth-only and Rivio cannot open it remotely.',
+        },
+        {
+          question: 'How do I use an HTTPS unlock link (Shelly / relay)?',
+          answer:
+            '1. Door Lock Setup → Unlock link (HTTPS).\n2. Enter a public https:// unlock URL (local 192.168… addresses are blocked).\n3. Set method (usually POST), optional Authorization header / body.\n4. Save → Test unlock → Available for pass holders.\n\nBrand names are labels only. Rivio treats HTTP 2xx within ~6 seconds as unlocked. For Shelly, set auto-off (~3s) so the door locks again.',
+        },
+        {
+          question: 'Why is Available for pass holders disabled?',
+          answer:
+            'You must run a successful Test unlock first. This stops a half-configured lock from appearing to members. Fix any test error (wrong URL, key, TTLock login, or offline gateway), then enable the switch.',
+        },
+        {
+          question: 'Where is unlock activity stored?',
+          answer:
+            'In Rivio’s backend door access logs — not on the lock maker’s website. Recent activity shows name, full mobile, pass type, result, distance, and IST time. The HTTPS/TTLock call only opens the door.',
+        },
+        {
+          question: 'Members do not see Unlock. What should I check?',
+          answer:
+            '1. Lock status is Live (tested + Available ON).\n2. Member has an active pass / staff pass / paid visit for that venue.\n3. Member opens the correct studio page while logged in and is near the door (~50 m).\n4. Pull to refresh the studio page.\n\nSee also: https://rivioapp.com/help/smart-door-lock/',
+        },
+      ],
+    },
+    {
       category: 'Technical Support',
       icon: Settings,
       color: 'from-gray-500/20 to-slate-500/20',
@@ -181,7 +220,16 @@ export default function PartnerHelpPage() {
             How can we help your business?
           </h2>
           <p className="text-xl text-gray-500 max-w-2xl mx-auto">
-            Everything you need to know about managing your business on RIVIO Partner. Browse our frequently asked questions or contact our support team.
+            Everything you need to know about managing your business on RIVIO Partner — including smart door lock. Browse FAQs or contact support.
+          </p>
+          <p className="mt-4">
+            <Link
+              href="/help/smart-door-lock/"
+              className="inline-flex items-center gap-2 rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-5 py-2.5 text-sm font-semibold text-emerald-300 hover:bg-emerald-500/20"
+            >
+              <Lock className="w-4 h-4" />
+              Smart door lock setup guide
+            </Link>
           </p>
         </div>
 

@@ -75,6 +75,57 @@ type ReleasePost = {
 /** Newest first. Add new entries at the top and keep `lib/pulsePublicationDates.ts` in sync. */
 const RELEASES: ReleasePost[] = [
   {
+    iso: "2026-10-22",
+    label: "October 22, 2026",
+    kind: "release",
+    title: "Smart door lock is live: unlock the gym with your Rivio pass",
+    summary:
+      "From 22 October 2026, Rivio Partner can connect a studio door (TTLock + Wi‑Fi gateway, or an HTTPS unlock link). Members with an active pass, staff pass, or paid day visit tap Unlock on the studio page — no extra app, no desk wait.",
+    detail:
+      "Partners open More → Door Lock Setup, connect TTLock (recommended) or a cloud unlock URL, run Test unlock at the door, then turn on Available for pass holders. Rivio logs every unlock in Recent activity (name, mobile, pass type, distance, IST time). Activity is stored on Rivio’s servers, not on the lock vendor. Staff passes can unlock outside public hours when you restrict members to opening hours. Setup guide: rivioapp.com/help/smart-door-lock/",
+    highlights: [
+      "Recommended: TTLock app lock + Wi‑Fi gateway (e.g. G2) on gym Wi‑Fi",
+      "Or HTTPS unlock link for relays / access controllers (e.g. Shelly)",
+      "Test unlock required before members see Unlock (safe go-live gate)",
+      "Member Unlock on the studio page within ~50 m of the door",
+      "First unlock of the day can mark attendance for pass holders",
+      "Partner Recent activity: who unlocked, pass type, full mobile, distance",
+      "Manage screen after setup: status, toggles, Edit lock, activity",
+    ],
+    whatsNext:
+      "Full partner FAQ under Door Lock in Help & Support. Step-by-step: https://rivioapp.com/help/smart-door-lock/. Questions: partners@rivioapp.com.",
+    cover: {
+      variant: "partner-update",
+      badge: "Now live · 22 Oct 2026",
+      headline: "Smart door lock",
+      subline: "Pass holders unlock at the door from the Rivio app",
+      tags: ["TTLock", "Unlock link", "Activity"],
+    },
+    gallery: [
+      {
+        src: "/assets/smart-lock/partner-setup.png",
+        alt: "Rivio Partner Door Lock Setup screen",
+        caption: "Partner · Door Lock Setup",
+      },
+      {
+        src: "/assets/smart-lock/partner-manage.png",
+        alt: "Rivio Partner manage lock and recent activity",
+        caption: "Partner · Manage & activity",
+      },
+      {
+        src: "/assets/smart-lock/member-unlock.png",
+        alt: "Rivio member app Unlock door button on studio page",
+        caption: "Member · Unlock",
+      },
+      {
+        src: "/assets/smart-lock/member-unlock-2.png",
+        alt: "Rivio member ready to unlock near the gym door",
+        caption: "Member · Near the door",
+      },
+    ],
+    showStoreLinks: true,
+  },
+  {
     iso: "2026-10-01",
     label: "October 1, 2026",
     kind: "release",

@@ -4,7 +4,7 @@ import { pageMetadata } from "@/lib/pageSeo";
 export const metadata = pageMetadata({
   title: "Rivio Business App Support",
   description:
-    "Partner support: Manage Team, staff photos, staff passes, onboarding, QR check in, passes, payouts, and member-facing Team tab.",
+    "Partner support: smart door lock, Manage Team, staff passes, QR check-in, passes, payouts, and FAQs. Setup guide at /help/smart-door-lock/.",
   path: "/business/support/",
 });
 
