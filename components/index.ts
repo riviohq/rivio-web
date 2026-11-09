@@ -15,3 +15,5 @@ export { default as Hero } from "./Hero";
 export { default as Navigation } from "./Navigation";
 export { default as ScreenshotShowcase } from "./ScreenshotShowcase";
 export { default as ProgressShowcase } from "./ProgressShowcase";
+export { default as LearnShowcase } from "./LearnShowcase";
+export { default as FrontDeskShowcase } from "./FrontDeskShowcase";

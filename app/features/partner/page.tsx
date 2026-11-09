@@ -10,20 +10,21 @@ import { DURATION, DELAY, EASE_IN_OUT, getStaggerDelay, getOrbDuration } from '@
 const partnerSteps = [
   { icon: Building2, text: 'Onboard your venue', description: 'Register your gym or studio' },
   { icon: QrCode, text: 'Set up QR codes', description: 'One code per location for check-in' },
-  { icon: CheckCircle, text: 'Live check-ins', description: 'See members as they arrive' },
+  { icon: CheckCircle, text: 'Add customer at desk', description: 'Cash pass onboard in one flow' },
   { icon: DollarSign, text: 'Pay-per-day and passes', description: 'Earn from day visits and longer passes' },
   { icon: BarChart3, text: 'Clear activity', description: 'Visits, renewals, and earnings at a glance' },
   { icon: Settings, text: 'Run every location', description: 'Manage venues from one Partner app' },
 ]
 
 const partnerFeatures = [
-  { title: 'Dashboard', description: 'Revenue, visitors, and activity for the locations you run.' },
+  { title: 'Dashboard & Front Desk', description: 'Revenue overview plus shortcuts to customers, visits, passes, wallet, and your space.' },
+  { title: 'Add customer', description: 'Onboard members and issue cash passes. Existing profiles stay unchanged when you only add a pass.' },
   { title: 'Earnings and settlements', description: 'Request payouts and review transaction history securely.' },
   { title: 'Live activity', description: 'Check-ins, pass purchases, and renewals as they happen.' },
   { title: 'QR check-in', description: 'Generate and manage venue QR codes across locations.' },
+  { title: 'Smart door unlock', description: 'Connect TTLock or an unlock link so pass holders open the door from Rivio.' },
   { title: 'Multi-location', description: 'One Partner app for every venue you operate.' },
-  { title: 'Insights', description: 'Peak hours, visit patterns, and growth signals you can act on.' },
-  { title: 'Members', description: 'Visit history and engagement signals for people who train with you.' },
+  { title: 'Members', description: 'My Customers search with wider date defaults so past visits stay findable.' },
   { title: 'Passes and renewals', description: 'Active passes, expiry alerts, and renewal flows.' },
   { title: 'Team and operations', description: 'Manage Team profiles, pricing, and location details in one place.' },
 ]

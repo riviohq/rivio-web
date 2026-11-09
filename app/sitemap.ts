@@ -14,6 +14,9 @@ import { SITE_CONTENT_UPDATED_DATE, SITE_URL } from "@/lib/siteContent";
  *
  * After deploy: resubmit sitemap in Search Console; request indexing for `/`,
  * `/pulse/`, `/features/`, and About pages when content changes.
+ *
+ * Current bump (SITE_CONTENT_UPDATED_DATE): Rivio 1.10.261109 —
+ * Learn hub / AI Personal Trainer (member) + Add customer / Front Desk (partner).
  */
 
 const contentRefresh = new Date(`${SITE_CONTENT_UPDATED_DATE}T12:00:00.000Z`);
@@ -68,7 +71,7 @@ const ROUTES: RouteEntry[] = [
   },
   { path: "/founder/", priority: 0.94, changeFrequency: "weekly", lastModified: contentRefresh },
 
-  // About (member + partner) — refreshed with My Progress & Manage Team
+  // About (member + partner) — refreshed with Learn hub & Front Desk
   {
     path: "/members/about-us/",
     priority: 0.93,
@@ -94,7 +97,7 @@ const ROUTES: RouteEntry[] = [
     lastModified: contentRefresh,
   },
 
-  // Product / features (gym finder + workout tracker + Partner Team)
+  // Product / features (Learn hub + Front Desk + workout tracker + door lock)
   {
     path: "/features/",
     priority: 0.9,
@@ -140,7 +143,7 @@ const ROUTES: RouteEntry[] = [
     lastModified: contentRefresh,
   },
 
-  // Help / support (Progress + Team + Door Lock FAQs)
+  // Help / support (Progress + Team + Door Lock + desk FAQs)
   {
     path: "/members/support/",
     priority: 0.72,
@@ -172,7 +175,7 @@ const ROUTES: RouteEntry[] = [
     lastModified: contentRefresh,
   },
 
-  // Legal — updated for My Progress / Team data practices
+  // Legal — privacy / terms lastmod follows content refresh
   {
     path: "/members/privacy-policy/",
     priority: 0.5,

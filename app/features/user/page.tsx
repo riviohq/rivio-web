@@ -9,15 +9,16 @@ import { DURATION, DELAY, EASE_IN_OUT, getStaggerDelay, getOrbDuration } from '@
 
 const userSteps = [
   { icon: MapPin, text: 'Discover Nearby Venues', description: 'Gym finder for studios near you' },
-  { icon: Activity, text: 'Track My Workout', description: 'Log sets in My Progress' },
+  { icon: Activity, text: 'Learn Hub', description: 'Gym and yoga tracks, learn how to' },
   { icon: QrCode, text: 'Scan QR Code & Check-In', description: 'Instant access, no waiting' },
   { icon: Star, text: 'Meet Coaches on Team', description: 'See trainers listed by the venue' },
-  { icon: TrendingUp, text: 'Build Streaks & Progress', description: 'Attendance streak plus training insights' },
+  { icon: TrendingUp, text: 'Track My Workout', description: 'Log sets in My Progress' },
   { icon: CreditCard, text: 'Flexible Payment & Access', description: 'Pay only for days you use' },
 ]
 
 const userFeatures = [
   { title: 'Gym Finder', description: 'Find gyms, yoga studios, and wellness venues near you with live details, amenities, and directions.' },
+  { title: 'Learn Hub', description: 'Swipe between Gym and Yoga tracks with learn-how-to guides. AI Personal Trainer coming soon.' },
   { title: 'Workout Tracker', description: 'My Progress logs exercises, sets, reps, cardio, bodyweight, and measurements with history and insights.' },
   { title: 'Seamless Check-In', description: 'One-tap QR scanning with location checks and attendance that powers your gym streak.' },
   { title: 'Team & Coaches', description: 'Open the Team tab on a studio to meet professionals and trainers the venue has listed.' },

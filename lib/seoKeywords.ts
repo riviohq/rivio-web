@@ -93,6 +93,26 @@ const features = k([
   "OTP login fitness app",
 ]);
 
+const learnHub = k([
+  "Rivio Learn hub",
+  "gym learn how to app",
+  "yoga learn how to app",
+  "AI Personal Trainer Rivio",
+  "AI personal trainer fitness app India",
+  "gym and yoga learn app",
+  "learn gym exercises app",
+  "yoga poses guide app India",
+]);
+
+const partnerDesk = k([
+  "Rivio Add customer",
+  "gym front desk app India",
+  "cash pass gym app",
+  "onboard gym member app",
+  "Rivio Partner Front Desk",
+  "gym walk-in pass app",
+]);
+
 const workoutTracker = k([
   "workout tracker",
   "workout tracker app",
@@ -324,6 +344,8 @@ export const SITE_SEO_KEYWORDS = dedupe([
   ...partnerB2b,
   ...features,
   ...workoutTracker,
+  ...learnHub,
+  ...partnerDesk,
   ...founder,
   ...premium,
   ...longTail,

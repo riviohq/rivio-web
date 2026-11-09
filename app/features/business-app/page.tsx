@@ -4,6 +4,8 @@ import { motion } from 'framer-motion'
 import { useInView } from 'framer-motion'
 import { useRef, useEffect } from 'react'
 import ScreenshotShowcase from '@/components/ScreenshotShowcase'
+import FrontDeskShowcase from '@/components/FrontDeskShowcase'
+import SmartLockShowcase from '@/components/SmartLockShowcase'
 
 export default function BusinessAppFeaturesPage() {
   const ref = useRef(null)
@@ -27,12 +29,15 @@ export default function BusinessAppFeaturesPage() {
           >
             Business <span className="text-amber-500">App Features</span>
           </motion.h1>
-          <p className="text-center text-[#86868b] mt-2 text-lg">
-            Tools built for gyms and studios: teams, passes, check-ins, and payouts
+          <p className="text-center text-[#86868b] mt-2 text-lg max-w-3xl mx-auto">
+            Tools built for gyms and studios: Add customer, Front Desk, teams, smart door
+            unlock, passes, check-ins, and payouts
           </p>
         </div>
       </div>
 
+      <FrontDeskShowcase />
+      <SmartLockShowcase />
       {/* Feature Cards Section - Show only partner/business cards */}
       <ScreenshotShowcase showUser={false} showPartner={true} />
     </div>
