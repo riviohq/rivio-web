@@ -20,15 +20,17 @@ import {
   ChevronDown,
   Flag,
   Lock,
+  UserPlus,
+  LayoutDashboard,
 } from "lucide-react";
 import StoreCta from "@/components/StoreCta";
 import { APP_STORE_URL_BUSINESS, GOOGLE_PLAY_URL_BUSINESS } from "@/lib/storeUrls";
 import { SITE_CONTENT_UPDATED_DATE, SITE_URL } from "@/lib/siteContent";
 
 export const metadata: Metadata = {
-  title: "Partner with Rivio: Register Your Studio + Smart Door Lock",
+  title: "Partner with Rivio: Register Your Studio + Front Desk Tools",
   description:
-    "List your gym or wellness studio on Rivio. QR check-ins, passes, earnings — and optional smart door unlock so pass holders open the door from the Rivio app. No upfront registration charges.",
+    "List your gym or wellness studio on Rivio. Add customers at the desk, QR check-ins, passes, earnings, and optional smart door unlock. No upfront registration charges.",
   keywords: [
     "partner with Rivio",
     "register studio on Rivio",
@@ -36,6 +38,8 @@ export const metadata: Metadata = {
     "list my gym",
     "gym onboarding",
     "pay per day fitness partner",
+    "Rivio Add customer",
+    "gym front desk app",
     "gym smart door lock Rivio",
     "TTLock gym unlock",
   ],
@@ -452,6 +456,49 @@ export default function PartnerWithRivioPage() {
                 </p>
               </div>
             </div>
+          </div>
+        </section>
+
+        {/* Front Desk / Add customer */}
+        <section className="mb-16">
+          <div className="overflow-hidden rounded-3xl border border-amber-200 bg-gradient-to-br from-amber-50 via-white to-white p-8 shadow-xl shadow-amber-900/5 md:p-12">
+            <div className="mb-4 flex items-center gap-3">
+              <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-amber-500 to-amber-600 shadow-lg shadow-amber-500/25">
+                <UserPlus className="h-7 w-7 text-white" />
+              </div>
+              <h2 className="text-2xl font-bold text-gray-900 md:text-3xl">
+                Add customer & Front Desk
+              </h2>
+            </div>
+            <p className="max-w-3xl leading-relaxed text-gray-700">
+              Onboard walk-ins from Rivio Partner, issue a cash pass, and open desk tools from the
+              Dashboard. Existing members get a pass only — their profile stays as they set it.
+            </p>
+            <ul className="mt-4 grid gap-3 sm:grid-cols-2">
+              <li className="flex gap-2 text-gray-700">
+                <CheckCircle className="mt-0.5 h-5 w-5 flex-shrink-0 text-amber-600" />
+                Add customer: new member or cash pass for someone already on Rivio
+              </li>
+              <li className="flex gap-2 text-gray-700">
+                <CheckCircle className="mt-0.5 h-5 w-5 flex-shrink-0 text-amber-600" />
+                Front Desk shortcuts: customers, visits, passes, wallet, your space
+              </li>
+              <li className="flex gap-2 text-gray-700">
+                <CheckCircle className="mt-0.5 h-5 w-5 flex-shrink-0 text-amber-600" />
+                Safer desk flow when the phone number already has an account
+              </li>
+              <li className="flex gap-2 text-gray-700">
+                <LayoutDashboard className="mt-0.5 h-5 w-5 flex-shrink-0 text-amber-600" />
+                Wider defaults for My Customers, visits, and expired passes
+              </li>
+            </ul>
+            <Link
+              href="/features/business-app/#front-desk"
+              className="mt-6 inline-flex items-center gap-2 rounded-xl bg-amber-600 px-5 py-3 text-sm font-semibold text-white shadow-md shadow-amber-600/25 hover:bg-amber-700"
+            >
+              See partner desk features
+              <ChevronDown className="h-4 w-4 -rotate-90" />
+            </Link>
           </div>
         </section>
 

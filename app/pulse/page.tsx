@@ -75,6 +75,67 @@ type ReleasePost = {
 /** Newest first. Add new entries at the top and keep `lib/pulsePublicationDates.ts` in sync. */
 const RELEASES: ReleasePost[] = [
   {
+    iso: "2026-11-09",
+    label: "November 9, 2026",
+    kind: "release",
+    releaseName: "Rivio App Release - 1.10.261109",
+    releaseVersion: "1.10.261109",
+    title: "Add customer is live: onboard members and issue a cash pass from Rivio Partner",
+    summary:
+      "Shipping in Rivio Release 1.10.261109 on 9 November 2026. Rivio Partner can add a walk-in or existing member from the app, issue a cash pass, and jump into desk work from a new Front Desk on the Dashboard — live on the App Store and Google Play.",
+    detail:
+      "Partners open Add customer from My Customers or the Dashboard Front Desk, pick the venue, enter member details, choose a pass, and collect cash at the desk. If the phone is new, Rivio creates the member profile (photo optional). If the member already exists, Rivio only adds the pass and leaves name, photo, DOB, and gender unchanged — so a mistyped desk entry cannot overwrite their account. Welcome SMS can notify the member when your DLT template is live. Default lists are wider too: My Customers looks back 3 years, All Visits 3 months, and Expired Passes 1 year.",
+    highlights: [
+      "Add customer: onboard a member and issue a cash pass in one flow",
+      "Existing members: pass only — profile, name, and photo stay as they are",
+      "Optional profile photo for new members only",
+      "Dashboard Front Desk: select your business, then open customers, visits, passes, wallet, or your space",
+      "My Customers defaults to the last 3 years (active and past)",
+      "All Visits defaults to the last 3 months; Expired Passes to the last 1 year",
+      "Clearer alert when a pass already overlaps the dates you picked",
+    ],
+    whatsNext:
+      "Welcome SMS rolls out with your approved MSG91 / DLT template. Questions? Write to partners@rivioapp.com.",
+    cover: {
+      variant: "partner-update",
+      badge: "Release 1.10.261109 · 9 Nov 2026",
+      headline: "Add customer",
+      subline: "Onboard members and issue cash passes from the desk",
+      tags: ["Front Desk", "Cash pass", "My Customers"],
+    },
+    showStoreLinks: true,
+  },
+  {
+    iso: "2026-11-09",
+    label: "November 9, 2026",
+    kind: "release",
+    releaseName: "Rivio App Release - 1.10.261109",
+    releaseVersion: "1.10.261109",
+    title: "Learn hub is live: gym and yoga tracks in the Rivio app",
+    summary:
+      "Shipping in Rivio Release 1.10.261109 on 9 November 2026. Members get a swipeable Learn hub with separate Gym and Yoga tracks, clearer “learn how to” motion guides, and a note that AI Personal Trainer is coming soon — on the App Store and Google Play.",
+    detail:
+      "We replaced the single exercise catalog with a pager so you can train gym or yoga without mixing the two. Each track filters its own catalog, with yoga-specific motion mappings and animations where they help. “Learn how to” guidance sits with the moves you are practicing. AI Personal Trainer is marked coming soon — we will share more on Rivio Pulse when it ships.",
+    highlights: [
+      "Swipeable Learn hub with separate Gym and Yoga tracks",
+      "Catalogs filtered for each track, with clearer motion guides",
+      "“Learn how to” workout guidance in the app",
+      "Coming soon: AI Personal Trainer",
+      "Latest Expo SDK update for smoother performance on modern devices",
+      "Payment checkout and day-to-day stability improvements",
+    ],
+    whatsNext:
+      "AI Personal Trainer is next on the Learn roadmap. Tell us what you want at hi@rivioapp.com.",
+    cover: {
+      variant: "member-update",
+      badge: "Release 1.10.261109 · 9 Nov 2026",
+      headline: "Learn hub",
+      subline: "Gym and yoga tracks, learn how to, AI trainer coming soon",
+      tags: ["Gym", "Yoga", "Coming soon"],
+    },
+    showStoreLinks: true,
+  },
+  {
     iso: "2026-10-22",
     label: "October 22, 2026",
     kind: "release",
@@ -804,13 +865,13 @@ export default function PulsePage() {
                 ·
               </span>
               <span className="font-mono text-[13px] font-semibold tabular-nums text-emerald-700">
-                1.10.261001
+                1.10.261109
               </span>
               <span className="hidden text-[#c7c7cc] sm:inline" aria-hidden>
                 ·
               </span>
-              <time dateTime="2026-10-01" className="text-[#6e6e73]">
-                1 Oct 2026
+              <time dateTime="2026-11-09" className="text-[#6e6e73]">
+                9 Nov 2026
               </time>
             </div>
           </div>

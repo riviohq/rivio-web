@@ -7,6 +7,8 @@
  * `https://rivioapp.com/sitemap.xml` (or URL Inspection on `/pulse/`).
  */
 export const PULSE_PUBLICATION_DATES_ISO_NEWEST_FIRST = [
+  "2026-11-09",
+  "2026-11-09",
   "2026-10-22",
   "2026-10-01",
   "2026-09-29",
