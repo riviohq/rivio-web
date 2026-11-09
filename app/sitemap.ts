@@ -16,7 +16,7 @@ import { SITE_CONTENT_UPDATED_DATE, SITE_URL } from "@/lib/siteContent";
  * `/pulse/`, `/features/`, and About pages when content changes.
  *
  * Current bump (SITE_CONTENT_UPDATED_DATE): Rivio 1.10.261109 —
- * Learn hub / AI Personal Trainer (member) + Add customer / Front Desk (partner).
+ * Learn hub + AI Personal Trainer (member) + Add customer / Front Desk (partner).
  */
 
 const contentRefresh = new Date(`${SITE_CONTENT_UPDATED_DATE}T12:00:00.000Z`);

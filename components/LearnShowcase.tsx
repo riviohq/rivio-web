@@ -3,36 +3,28 @@
 import Link from "next/link";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import {
-  BookOpen,
-  Dumbbell,
-  Flower2,
-  Sparkles,
-  PlayCircle,
-  Brain,
-} from "lucide-react";
+import { BookOpen, Brain, Dumbbell, Flower2, PlayCircle } from "lucide-react";
 
 const TRACKS = [
   {
     icon: Dumbbell,
-    title: "Gym track",
-    text: "Strength and cardio moves in one swipeable Learn hub, separate from yoga.",
+    title: "Gym",
+    text: "Strength and cardio in a dedicated Learn track — separate from yoga.",
   },
   {
     icon: Flower2,
-    title: "Yoga track",
-    text: "Yoga-focused catalog and motion guides so poses stay clear and on-track.",
+    title: "Yoga",
+    text: "Yoga-focused catalog and motion guides so poses stay clear.",
   },
   {
     icon: PlayCircle,
     title: "Learn how to",
-    text: "Short guidance on form and movement while you practice in the app.",
+    text: "Short form and movement guidance while you practice in the app.",
   },
   {
     icon: Brain,
     title: "AI Personal Trainer",
-    text: "Coming soon — smarter coaching built on the Learn hub. Watch Rivio Pulse.",
-    badge: "Coming soon",
+    text: "Get coaching help in Rivio — guidance built around your Learn hub training.",
   },
 ];
 
@@ -54,19 +46,22 @@ export default function LearnShowcase() {
           transition={{ duration: 0.5 }}
           className="text-center max-w-3xl mx-auto mb-10 md:mb-14"
         >
-          <p className="text-emerald-600 font-semibold text-sm tracking-wide uppercase mb-3 inline-flex items-center justify-center gap-2">
+          <p className="text-emerald-600 font-semibold text-sm tracking-wide uppercase mb-4 inline-flex items-center justify-center gap-2">
             <BookOpen className="h-4 w-4" />
-            New in Rivio · Release 1.10.261109
+            New in the Rivio app
           </p>
           <h2
             id="learn-hub-heading"
-            className="text-3xl md:text-5xl font-semibold text-[#1d1d1f] tracking-[-0.02em] mb-4"
+            className="text-4xl sm:text-5xl md:text-6xl font-semibold text-[#1d1d1f] tracking-[-0.03em] leading-[1.05] mb-5"
           >
-            Learn hub: gym, yoga, and AI next
+            Learn hub is live
           </h2>
-          <p className="text-lg md:text-xl text-[#86868b] leading-relaxed">
-            Swipe between Gym and Yoga tracks, follow learn-how-to guides, and get
-            ready for AI Personal Trainer — all inside the Rivio member app.
+          <p className="text-xl md:text-2xl text-[#3f3f46] font-medium leading-snug mb-4">
+            Gym, yoga, and AI Personal Trainer
+          </p>
+          <p className="text-base md:text-lg text-[#86868b] leading-relaxed max-w-2xl mx-auto">
+            Swipe between Gym and Yoga, open learn-how-to guides, and train with AI
+            Personal Trainer — all inside the Rivio member app.
           </p>
         </motion.div>
 
@@ -79,21 +74,15 @@ export default function LearnShowcase() {
                 initial={{ opacity: 0, y: 14 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.4, delay: 0.06 * index }}
-                className="relative rounded-2xl p-5 md:p-6 bg-white border border-black/[0.06] shadow-sm"
+                className="rounded-2xl p-6 md:p-7 bg-white border border-black/[0.06] shadow-sm"
               >
-                {"badge" in item && item.badge ? (
-                  <span className="absolute right-4 top-4 inline-flex items-center gap-1 rounded-full bg-emerald-100 px-2.5 py-0.5 text-[11px] font-semibold text-emerald-800">
-                    <Sparkles className="h-3 w-3" />
-                    {item.badge}
-                  </span>
-                ) : null}
-                <div className="w-10 h-10 rounded-xl bg-emerald-500/15 text-emerald-600 flex items-center justify-center mb-3">
+                <div className="w-11 h-11 rounded-xl bg-emerald-500/15 text-emerald-600 flex items-center justify-center mb-4">
                   <Icon className="w-5 h-5" />
                 </div>
-                <h3 className="text-lg font-semibold text-[#1d1d1f] mb-2 pr-16">
-                  {item.title}
-                </h3>
-                <p className="text-sm text-[#6e6e73] leading-relaxed">{item.text}</p>
+                <h3 className="text-xl font-semibold text-[#1d1d1f] mb-2">{item.title}</h3>
+                <p className="text-sm md:text-base text-[#6e6e73] leading-relaxed">
+                  {item.text}
+                </p>
               </motion.article>
             );
           })}
