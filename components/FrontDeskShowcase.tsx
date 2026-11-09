@@ -64,7 +64,7 @@ export default function FrontDeskShowcase() {
           className="text-center max-w-3xl mx-auto mb-10 md:mb-14"
         >
           <p className="text-amber-600 font-semibold text-sm tracking-wide uppercase mb-3">
-            New in Rivio Partner · Release 1.10.261109
+            New in Rivio Partner
           </p>
           <h2
             id="front-desk-heading"

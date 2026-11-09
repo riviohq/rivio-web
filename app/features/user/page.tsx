@@ -9,7 +9,7 @@ import { DURATION, DELAY, EASE_IN_OUT, getStaggerDelay, getOrbDuration } from '@
 
 const userSteps = [
   { icon: MapPin, text: 'Discover Nearby Venues', description: 'Gym finder for studios near you' },
-  { icon: Activity, text: 'Learn Hub', description: 'Gym and yoga tracks, learn how to' },
+  { icon: Activity, text: 'Learn Hub', description: 'Gym, yoga, and AI Personal Trainer' },
   { icon: QrCode, text: 'Scan QR Code & Check-In', description: 'Instant access, no waiting' },
   { icon: Star, text: 'Meet Coaches on Team', description: 'See trainers listed by the venue' },
   { icon: TrendingUp, text: 'Track My Workout', description: 'Log sets in My Progress' },
@@ -18,7 +18,8 @@ const userSteps = [
 
 const userFeatures = [
   { title: 'Gym Finder', description: 'Find gyms, yoga studios, and wellness venues near you with live details, amenities, and directions.' },
-  { title: 'Learn Hub', description: 'Swipe between Gym and Yoga tracks with learn-how-to guides. AI Personal Trainer coming soon.' },
+  { title: 'Learn Hub', description: 'Swipe between Gym and Yoga tracks, learn-how-to guides, and AI Personal Trainer in the Rivio member app.' },
+  { title: 'AI Personal Trainer', description: 'Get coaching help in Rivio alongside your Gym and Yoga Learn tracks.' },
   { title: 'Workout Tracker', description: 'My Progress logs exercises, sets, reps, cardio, bodyweight, and measurements with history and insights.' },
   { title: 'Seamless Check-In', description: 'One-tap QR scanning with location checks and attendance that powers your gym streak.' },
   { title: 'Team & Coaches', description: 'Open the Team tab on a studio to meet professionals and trainers the venue has listed.' },

@@ -26,8 +26,8 @@ export default function FeaturesPage() {
             App <span className="text-emerald-500">Features</span>
           </motion.h1>
           <p className="text-center text-[#86868b] mt-2 text-lg max-w-3xl mx-auto">
-            Gym finder, Learn hub, workout tracker, pay per day, smart door unlock, Add customer,
-            partner Team tools, and everything else in the Rivio member and business apps.
+            Gym finder, Learn hub with AI Personal Trainer, workout tracker, pay per day,
+            smart door unlock, Add customer, partner Team tools, and everything else in Rivio.
           </p>
         </div>
       </div>

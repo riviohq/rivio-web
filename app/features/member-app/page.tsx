@@ -24,8 +24,8 @@ export default function MemberAppFeaturesPage() {
             Member <span className="text-emerald-500">App Features</span>
           </motion.h1>
           <p className="text-center text-[#86868b] mt-2 text-lg max-w-3xl mx-auto">
-            Gym finder, Learn hub (gym & yoga), QR check-in, wallet, streaks, studio Team
-            profiles, and My Progress workout tracker — find a gym and train in one place.
+            Gym finder, Learn hub (gym, yoga, AI Personal Trainer), QR check-in, wallet,
+            streaks, studio Team profiles, and My Progress — find a gym and train in one place.
           </p>
         </div>
       </div>
